@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 1: Probability | Mathematical Statistics</title>
+    
+    <style>
+        :root {
+            --primary-color: #e91e63;
+            --secondary-color: #ad1457;
+            --accent-color: #ff6b9d;
+            --accent-lighter: #fce4ec;
+            --background-light: #f8f9fa;
+            --text-primary: #2c3e50;
+            --text-dark: #1a252f;
+            --border-light: #e9ecef;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, #e91e63, #ff6b9d);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .chapter-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--shadow-light);
+        }
+
+        .chapter-number {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .chapter-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+        }
+
+        .chapter-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-top: 1rem;
+            font-weight: 300;
+        }
+
+        .chapter-nav {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px var(--shadow-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            background: var(--accent-lighter);
+            color: var(--primary-color);
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+            scroll-margin-top: 100px;
+        }
+
+        .section.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Text input question styling */
+        .section-practice {
+            background: linear-gradient(135deg, #f8bbd9 0%, #fce4ec 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--primary-color);
+        }
+
+        .practice-question {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            border: 1px solid var(--border-light);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .question-number {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            background: var(--accent-lighter);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .regenerate-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .regenerate-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .question-input-area {
+            margin: 1.5rem 0;
+        }
+
+        .input-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .answer-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border: 2px solid var(--border-light);
+            border-radius: 10px;
+            background: var(--background-light);
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.1);
+        }
+
+        .answer-input.correct {
+            border-color: #4caf50;
+            background: #e8f5e8;
+        }
+
+        .answer-input.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        .input-hint {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .question-buttons {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .check-btn, .steps-btn, .new-question-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .check-btn {
+            background: #4caf50;
+            color: white;
+        }
+
+        .check-btn:hover {
+            background: #388e3c;
+            transform: translateY(-2px);
+        }
+
+        .steps-btn {
+            background: #ff9800;
+            color: white;
+        }
+
+        .steps-btn:hover {
+            background: #f57c00;
+            transform: translateY(-2px);
+        }
+
+        .new-question-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .new-question-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .question-feedback {
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            font-weight: 600;
+            border: 2px solid;
+        }
+
+        .feedback-correct {
+            background: #e8f5e8;
+            color: #2e7d32;
+            border-color: #4caf50;
+        }
+
+        .feedback-incorrect {
+            background: #ffebee;
+            color: #c62828;
+            border-color: #f44336;
+        }
+
+        .question-steps {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .step-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .step-content {
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .step-content ol, .step-content ul {
+            margin-left: 1.5rem;
+        }
+
+        .step-content li {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Chapter Header -->
+        <header class="chapter-header fade-in">
+            <div class="chapter-number">Chapter 1</div>
+            <h1 class="chapter-title">🎲 Probability</h1>
+            <p class="chapter-subtitle">Foundations of Mathematical Statistics</p>
+        </header>
+
+        <!-- Navigation -->
+        <div class="chapter-nav fade-in">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link" style="background: var(--primary-color); color: white;">← Course Home</a>
+                <a href="#sample-spaces" class="nav-link">1.1 Sample Spaces</a>
+                <a href="#probability-rules" class="nav-link">1.2 Probability Rules</a>
+                <a href="#conditional" class="nav-link">1.3 Conditional Probability</a>
+                <a href="#independence" class="nav-link">1.4 Independence</a>
+                <a href="#counting" class="nav-link">1.5 Counting Techniques</a>
+                <a href="#bayes" class="nav-link">1.6 Bayes' Theorem</a>
+                <a href="#simulation" class="nav-link">1.7 Simulation</a>
+            </div>
+        </div>
+
+        <!-- Section 1.1: Sample Spaces -->
+        <div class="section fade-in" id="sample-spaces">
+            <h2 class="section-title">🎲 1.1 Experiments and Sample Spaces</h2>
+            <div class="section-content">
+                <p>Probability theory begins with the concept of a <strong>random experiment</strong> - a process that produces one of several possible outcomes, where the specific outcome cannot be predicted with certainty.</p>
+                
+                <p><strong>Sample Space (Ω):</strong> The set of all possible outcomes of a random experiment.</p>
+                <p><strong>Event:</strong> A subset of the sample space; a collection of outcomes.</p>
+            </div>
+
+            <!-- Section 1.1 Practice Questions -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 1.1 Practice</h3>
+                
+                <div class="practice-question" id="question-1-1">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion11()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-11-content">
+                        <!-- Question will be generated by JavaScript -->
+                    </div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-11">Your Answer:</label>
+                        <input type="text" id="answer-11" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer11()">
+                        <div class="input-hint" id="hint-11">
+                            <!-- Hint will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer11()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps11()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion11()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-11" style="display: none;"></div>
+                    <div class="question-steps" id="steps-11" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1.2: Probability Rules -->
+        <div class="section fade-in" id="probability-rules">
+            <h2 class="section-title">📊 1.2 Probability Rules</h2>
+            <div class="section-content">
+                <p>Probability rules provide the mathematical foundation for calculating probabilities of events.</p>
+                
+                <p><strong>Addition Rule:</strong> P(A ∪ B) = P(A) + P(B) - P(A ∩ B)</p>
+                <p><strong>Complement Rule:</strong> P(A) + P(A^c) = 1</p>
+                <p><strong>Multiplication Rule:</strong> P(A ∩ B) = P(A) × P(B|A)</p>
+            </div>
+
+            <!-- Section 1.2 Practice Questions -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 1.2 Practice</h3>
+                
+                <div class="practice-question" id="question-1-2">
+                    <div class="question-header">
+                        <span class="question-number">Question 2</span>
+                        <button class="regenerate-btn" onclick="generateQuestion12()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-12-content">
+                        <!-- Question will be generated by JavaScript -->
+                    </div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-12">Your Answer:</label>
+                        <input type="text" id="answer-12" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer12()">
+                        <div class="input-hint" id="hint-12">
+                            <!-- Hint will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer12()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps12()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion12()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-12" style="display: none;"></div>
+                    <div class="question-steps" id="steps-12" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Placeholder sections -->
+        <div class="section fade-in" id="conditional">
+            <h2 class="section-title">🔄 1.3 Conditional Probability</h2>
+            <p>Coming soon...</p>
+        </div>
+
+        <div class="section fade-in" id="independence">
+            <h2 class="section-title">🎯 1.4 Independence</h2>
+            <p>Coming soon...</p>
+        </div>
+
+        <div class="section fade-in" id="counting">
+            <h2 class="section-title">🧮 1.5 Counting Techniques</h2>
+            <p>Coming soon...</p>
+        </div>
+
+        <div class="section fade-in" id="bayes">
+            <h2 class="section-title">📈 1.6 Bayes' Theorem</h2>
+            <p>Coming soon...</p>
+        </div>
+
+        <div class="section fade-in" id="simulation">
+            <h2 class="section-title">🖥️ 1.7 Simulation</h2>
+            <p>Coming soon...</p>
+        </div>
+    </div>
+
+    <script>
+        // Question arrays
+        let currentQuestion11 = null;
+        let currentQuestion12 = null;
+
+        const sampleSpaceQuestions = [
+            {
+                question: "An experiment consists of tossing a coin three times. What is the size of the sample space?",
+                correctAnswers: ["8", "eight"],
+                hint: "Count the total number of possible outcomes (each toss has 2 outcomes)",
+                explanation: "Each coin toss has 2 outcomes, so three tosses have 2³ = 8 total outcomes: {HHH, HHT, HTH, HTT, THH, THT, TTH, TTT}",
+                steps: `<div class="step-title">Step-by-Step Solution:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Identify basic outcomes:</strong> Each coin toss has 2 outcomes (H or T)</li>
+                                <li><strong>Count tosses:</strong> The experiment has 3 tosses</li>
+                                <li><strong>Apply multiplication principle:</strong> Total outcomes = 2 × 2 × 2 = 8</li>
+                                <li><strong>List all outcomes:</strong> {HHH, HHT, HTH, HTT, THH, THT, TTH, TTT}</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A die is rolled twice. How many outcomes are in the event 'sum equals 7'?",
+                correctAnswers: ["6", "six"],
+                hint: "List all pairs (die1, die2) where die1 + die2 = 7",
+                explanation: "The outcomes that sum to 7 are: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) - that's 6 outcomes",
+                steps: `<div class="step-title">Finding Outcomes for Sum = 7:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Target:</strong> Pairs (a,b) where a + b = 7</li>
+                                <li><strong>List systematically:</strong> (1,6), (2,5), (3,4), (4,3), (5,2), (6,1)</li>
+                                <li><strong>Count:</strong> 6 total outcomes</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "From a standard deck of 52 cards, how many red cards are there?",
+                correctAnswers: ["26", "twenty-six", "twenty six"],
+                hint: "Count hearts and diamonds in a standard deck",
+                explanation: "A standard deck has 26 red cards: 13 hearts + 13 diamonds = 26 total.",
+                steps: `<div class="step-title">Counting Red Cards:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Identify red suits:</strong> Hearts and Diamonds are red</li>
+                                <li><strong>Count hearts:</strong> 13 cards</li>
+                                <li><strong>Count diamonds:</strong> 13 cards</li>
+                                <li><strong>Total red cards:</strong> 13 + 13 = 26</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "In how many ways can the letters A, B, and C be arranged in a row?",
+                correctAnswers: ["6", "six"],
+                hint: "This is a permutation: 3! = 3 × 2 × 1",
+                explanation: "There are 3! = 6 arrangements: ABC, ACB, BAC, BCA, CAB, CBA.",
+                steps: `<div class="step-title">Counting Permutations:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>First position:</strong> 3 choices (A, B, or C)</li>
+                                <li><strong>Second position:</strong> 2 remaining choices</li>
+                                <li><strong>Third position:</strong> 1 remaining choice</li>
+                                <li><strong>Total arrangements:</strong> 3 × 2 × 1 = 6</li>
+                                <li><strong>List them:</strong> ABC, ACB, BAC, BCA, CAB, CBA</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "What is the size of the sample space when rolling a single fair six-sided die?",
+                correctAnswers: ["6", "six"],
+                hint: "Count all possible outcomes on a standard die",
+                explanation: "A standard die has 6 faces, so the sample space is {1, 2, 3, 4, 5, 6} with size 6.",
+                steps: `<div class="step-title">Sample Space for Die:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Identify the experiment:</strong> Rolling a six-sided die</li>
+                                <li><strong>List all outcomes:</strong> {1, 2, 3, 4, 5, 6}</li>
+                                <li><strong>Count outcomes:</strong> 6 distinct outcomes</li>
+                                <li><strong>Sample space size:</strong> |Ω| = 6</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const probabilityRulesQuestions = [
+            {
+                question: "If P(A) = 0.6, P(B) = 0.4, and P(A ∩ B) = 0.2, what is P(A ∪ B)?",
+                correctAnswers: ["0.8", "0.80", ".8", ".80"],
+                hint: "Use the addition rule: P(A ∪ B) = P(A) + P(B) - P(A ∩ B)",
+                explanation: "Using the addition rule: P(A ∪ B) = P(A) + P(B) - P(A ∩ B) = 0.6 + 0.4 - 0.2 = 0.8",
+                steps: `<div class="step-title">Using the Addition Rule:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Given:</strong> P(A) = 0.6, P(B) = 0.4, P(A ∩ B) = 0.2</li>
+                                <li><strong>Apply addition rule:</strong> P(A ∪ B) = P(A) + P(B) - P(A ∩ B)</li>
+                                <li><strong>Substitute:</strong> P(A ∪ B) = 0.6 + 0.4 - 0.2</li>
+                                <li><strong>Calculate:</strong> P(A ∪ B) = 1.0 - 0.2 = 0.8</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If A and B are mutually exclusive events, what is P(A ∩ B)?",
+                correctAnswers: ["0", "0.0", "0.00", "zero"],
+                hint: "Mutually exclusive means the events cannot occur simultaneously",
+                explanation: "Mutually exclusive events cannot occur simultaneously, so P(A ∩ B) = 0",
+                steps: `<div class="step-title">Understanding Mutual Exclusivity:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Definition:</strong> Events cannot occur at the same time</li>
+                                <li><strong>Mathematical:</strong> A ∩ B = ∅ (empty set)</li>
+                                <li><strong>Probability:</strong> P(A ∩ B) = P(∅) = 0</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If P(A) = 0.3, what is P(Aᶜ)?",
+                correctAnswers: ["0.7", "0.70", ".7", ".70"],
+                hint: "Use the complement rule: P(A) + P(Aᶜ) = 1",
+                explanation: "Using the complement rule: P(Aᶜ) = 1 - P(A) = 1 - 0.3 = 0.7",
+                steps: `<div class="step-title">The Complement Rule:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Complement rule:</strong> P(A) + P(Aᶜ) = 1</li>
+                                <li><strong>Rearrange:</strong> P(Aᶜ) = 1 - P(A)</li>
+                                <li><strong>Calculate:</strong> P(Aᶜ) = 1 - 0.3 = 0.7</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "From a standard deck, how many cards are either hearts OR face cards?",
+                correctAnswers: ["22", "twenty-two", "twenty two"],
+                hint: "Count hearts + face cards, but don't double-count heart face cards",
+                explanation: "13 hearts + 12 face cards - 3 heart face cards = 22 cards total",
+                steps: `<div class="step-title">Counting Union of Sets:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Hearts:</strong> 13 cards</li>
+                                <li><strong>Face cards:</strong> 12 cards (J,Q,K in all suits)</li>
+                                <li><strong>Overlap:</strong> 3 cards (J♥, Q♥, K♥)</li>
+                                <li><strong>Total:</strong> 13 + 12 - 3 = 22</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If P(A) = 0.4 and P(B) = 0.7, what is the maximum possible value of P(A ∩ B)?",
+                correctAnswers: ["0.4", "0.40", ".4", ".40"],
+                hint: "P(A ∩ B) cannot exceed the probability of the smaller event",
+                explanation: "Since A ∩ B ⊆ A, we have P(A ∩ B) ≤ P(A) = 0.4",
+                steps: `<div class="step-title">Maximum Intersection:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Key principle:</strong> A ∩ B is subset of both A and B</li>
+                                <li><strong>Therefore:</strong> P(A ∩ B) ≤ min(P(A), P(B))</li>
+                                <li><strong>Maximum:</strong> P(A ∩ B) ≤ min(0.4, 0.7) = 0.4</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        // Question 1.1 Functions
+        function generateQuestion11() {
+            document.getElementById('feedback-11').style.display = 'none';
+            document.getElementById('steps-11').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-11');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion11 = sampleSpaceQuestions[Math.floor(Math.random() * sampleSpaceQuestions.length)];
+            
+            document.getElementById('question-11-content').innerHTML = currentQuestion11.question;
+            document.getElementById('hint-11').innerHTML = currentQuestion11.hint;
+        }
+
+        function checkAnswer11() {
+            const userAnswer = document.getElementById('answer-11').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-11');
+            const feedbackDiv = document.getElementById('feedback-11');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion11.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion11.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps11() {
+            const stepsDiv = document.getElementById('steps-11');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion11.steps;
+        }
+
+        // Question 1.2 Functions
+        function generateQuestion12() {
+            document.getElementById('feedback-12').style.display = 'none';
+            document.getElementById('steps-12').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-12');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion12 = probabilityRulesQuestions[Math.floor(Math.random() * probabilityRulesQuestions.length)];
+            
+            document.getElementById('question-12-content').innerHTML = currentQuestion12.question;
+            document.getElementById('hint-12').innerHTML = currentQuestion12.hint;
+        }
+
+        function checkAnswer12() {
+            const userAnswer = document.getElementById('answer-12').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-12');
+            const feedbackDiv = document.getElementById('feedback-12');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion12.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion12.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps12() {
+            const stepsDiv = document.getElementById('steps-12');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion12.steps;
+        }
+
+        // Page initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Chapter 1: Probability loaded successfully! 🎲');
+            
+            // Add fade-in animations
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+            
+            // Generate initial questions
+            setTimeout(() => {
+                generateQuestion11();
+                generateQuestion12();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
