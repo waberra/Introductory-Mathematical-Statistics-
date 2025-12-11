@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Larsen & Marx Mathematical Statistics Tutorial</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <style>
+        :root {
+            /* Mathematical Statistics Theme - Professional academic colors */
+            --primary-math: #1a237e;
+            --secondary-math: #283593;
+            --accent-probability: #e91e63;
+            --accent-distributions: #00acc1;
+            --accent-inference: #43a047;
+            --accent-regression: #ff9800;
+            --accent-advanced: #9c27b0;
+            --text-primary: #212121;
+            --text-secondary: #757575;
+            --background-light: #fafafa;
+            --background-white: #ffffff;
+            --border-light: #e0e0e0;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            
+            /* Chapter-specific colors */
+            --chapter-1-probability: #e91e63;
+            --chapter-2-discrete: #673ab7;
+            --chapter-3-continuous: #3f51b5;
+            --chapter-4-sampling: #2196f3;
+            --chapter-5-estimation: #00bcd4;
+            --chapter-6-hypothesis: #009688;
+            --chapter-7-normal: #4caf50;
+            --chapter-8-regression: #8bc34a;
+            --chapter-9-categorical: #cddc39;
+            --chapter-10-anova: #ffeb3b;
+            --chapter-11-nonparametric: #ff9800;
+            
+            /* Typography */
+            --font-primary: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+            --font-math: 'Computer Modern', 'Latin Modern Math', 'STIX Two Math', serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Animated mathematical background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(233, 30, 99, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 172, 193, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 40% 70%, rgba(67, 160, 71, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(255, 152, 0, 0.05) 0%, transparent 50%),
+                linear-gradient(45deg, transparent 48%, rgba(26, 35, 126, 0.02) 50%, transparent 52%),
+                linear-gradient(-45deg, transparent 48%, rgba(156, 39, 176, 0.02) 50%, transparent 52%);
+            background-size: 150px 150px, 200px 200px, 120px 120px, 180px 180px, 60px 60px, 80px 80px;
+            z-index: -1;
+            animation: mathematicalFlow 25s ease-in-out infinite alternate;
+        }
+
+        @keyframes mathematicalFlow {
+            0% { opacity: 0.7; transform: rotate(0deg) scale(1); }
+            100% { opacity: 0.9; transform: rotate(2deg) scale(1.02); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--primary-math), var(--secondary-math), var(--accent-probability));
+            color: white;
+            margin-bottom: 3rem;
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px var(--shadow-medium);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(255, 255, 255, 0.08) 0%, transparent 40%);
+            animation: headerShine 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes headerShine {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.6; }
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffffff, #e3f2fd, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.95;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .course-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 2rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            margin-top: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .course-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* Navigation Cards */
+        .nav-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary-math);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .chapter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .chapter-card {
+            background: var(--background-white);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border-light);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 8px 30px var(--shadow-light);
+        }
+
+        .chapter-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            border-radius: 20px 20px 0 0;
+            transition: height 0.3s ease;
+        }
+
+        .chapter-card.probability::before { background: var(--chapter-1-probability); }
+        .chapter-card.discrete::before { background: var(--chapter-2-discrete); }
+        .chapter-card.continuous::before { background: var(--chapter-3-continuous); }
+        .chapter-card.sampling::before { background: var(--chapter-4-sampling); }
+        .chapter-card.estimation::before { background: var(--chapter-5-estimation); }
+        .chapter-card.hypothesis::before { background: var(--chapter-6-hypothesis); }
+        .chapter-card.normal::before { background: var(--chapter-7-normal); }
+        .chapter-card.regression::before { background: var(--chapter-8-regression); }
+        .chapter-card.categorical::before { background: var(--chapter-9-categorical); }
+        .chapter-card.anova::before { background: var(--chapter-10-anova); }
+        .chapter-card.nonparametric::before { background: var(--chapter-11-nonparametric); }
+
+        .chapter-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 50px var(--shadow-medium);
+        }
+
+        .chapter-card:hover::before {
+            height: 100%;
+            opacity: 0.05;
+        }
+
+        .chapter-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-math), var(--secondary-math));
+            color: white;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .chapter-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
+        }
+
+        .chapter-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .chapter-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .topic-tag {
+            background: var(--background-light);
+            color: var(--text-secondary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .chapter-features {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .feature-list {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .progress-indicator {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-probability);
+        }
+
+        /* Course Overview Section */
+        .overview-section {
+            background: var(--background-white);
+            border-radius: 25px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 10px 40px var(--shadow-light);
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .overview-card {
+            text-align: center;
+            padding: 2rem;
+            background: var(--background-light);
+            border-radius: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .overview-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .overview-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .overview-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-math);
+        }
+
+        .overview-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Prerequisites Section */
+        .prerequisites-section {
+            background: linear-gradient(135deg, rgba(26, 35, 126, 0.05), rgba(233, 30, 99, 0.05));
+            border-radius: 25px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            border: 1px solid var(--border-light);
+        }
+
+        .prerequisites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .prerequisite-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--background-white);
+            border-radius: 15px;
+            border-left: 4px solid var(--accent-probability);
+        }
+
+        .prerequisite-icon {
+            font-size: 1.5rem;
+            margin-top: 0.2rem;
+        }
+
+        /* Features Section */
+        .features-section {
+            background: var(--background-white);
+            border-radius: 25px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 10px 40px var(--shadow-light);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            background: var(--background-light);
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            border-radius: 20px 0 0 20px;
+        }
+
+        .feature-card:nth-child(1)::before { background: var(--accent-probability); }
+        .feature-card:nth-child(2)::before { background: var(--accent-distributions); }
+        .feature-card:nth-child(3)::before { background: var(--accent-inference); }
+        .feature-card:nth-child(4)::before { background: var(--accent-regression); }
+
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-math);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        /* Getting Started Section */
+        .getting-started {
+            background: linear-gradient(135deg, var(--primary-math), var(--secondary-math));
+            color: white;
+            border-radius: 25px;
+            padding: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .getting-started::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 20%, transparent 40%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+
+        .start-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .start-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-light);
+            background: var(--background-white);
+            border-radius: 25px 25px 0 0;
+        }
+
+        /* Progress tracking */
+        .progress-section {
+            background: var(--background-white);
+            border-radius: 25px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            box-shadow: 0 10px 40px var(--shadow-light);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: var(--border-light);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-probability), var(--accent-distributions));
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .course-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .chapter-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .chapter-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="main-title">📊 Mathematical Statistics</h1>
+            <p class="subtitle">Comprehensive Tutorial Based on Larsen & Marx (6th Edition)</p>
+            <div class="course-info">
+                <div class="course-detail">
+                    <span>📚</span>
+                    <span>14+ Complete Chapters</span>
+                </div>
+                <div class="course-detail">
+                    <span>🎯</span>
+                    <span>Upper Undergraduate</span>
+                </div>
+                <div class="course-detail">
+                    <span>🔗</span>
+                    <span>Econometrics Preparation</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Progress Section -->
+        <div class="progress-section">
+            <h2 class="section-title">📈 Course Progress</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Track your advancement through mathematical statistics</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p id="progressText" style="color: var(--text-secondary);">0 of 14 chapters completed (0%)</p>
+        </div>
+
+        <!-- Course Overview -->
+        <div class="overview-section">
+            <h2 class="section-title">🎯 Course Overview</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">
+                Master the mathematical foundations essential for econometric analysis. This comprehensive course provides rigorous training in probability theory, statistical inference, and data analysis methods.
+            </p>
+            <div class="overview-grid">
+                <div class="overview-card">
+                    <div class="overview-icon">🎲</div>
+                    <h3>Probability Theory</h3>
+                    <p>Build solid foundations in probability rules, conditional probability, Bayes' theorem, and counting techniques.</p>
+                </div>
+                <div class="overview-card">
+                    <div class="overview-icon">📊</div>
+                    <h3>Random Variables</h3>
+                    <p>Master discrete and continuous distributions, expected values, variance, and joint distributions.</p>
+                </div>
+                <div class="overview-card">
+                    <div class="overview-icon">🔬</div>
+                    <h3>Statistical Inference</h3>
+                    <p>Learn estimation theory, hypothesis testing, confidence intervals, and maximum likelihood methods.</p>
+                </div>
+                <div class="overview-card">
+                    <div class="overview-icon">📈</div>
+                    <h3>Applied Methods</h3>
+                    <p>Apply statistical methods to regression, ANOVA, categorical data, and nonparametric analysis.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prerequisites -->
+        <div class="prerequisites-section">
+            <h2 class="section-title">📋 Prerequisites</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">
+                Essential background knowledge for success in mathematical statistics
+            </p>
+            <div class="prerequisites-grid">
+                <div class="prerequisite-item">
+                    <div class="prerequisite-icon">🧮</div>
+                    <div>
+                        <h4>Calculus</h4>
+                        <p>Derivatives, integrals, multivariable calculus, and basic optimization</p>
+                    </div>
+                </div>
+                <div class="prerequisite-item">
+                    <div class="prerequisite-icon">🔢</div>
+                    <div>
+                        <h4>Linear Algebra</h4>
+                        <p>Matrix operations, determinants, eigenvalues, and vector spaces</p>
+                    </div>
+                </div>
+                <div class="prerequisite-item">
+                    <div class="prerequisite-icon">📐</div>
+                    <div>
+                        <h4>Basic Statistics</h4>
+                        <p>Descriptive statistics, basic probability, and data visualization</p>
+                    </div>
+                </div>
+                <div class="prerequisite-item">
+                    <div class="prerequisite-icon">💻</div>
+                    <div>
+                        <h4>Computing Skills</h4>
+                        <p>Basic programming (R or Python) and statistical software familiarity</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter Navigation -->
+        <div class="nav-section">
+            <h2 class="section-title">📚 Chapter Navigation</h2>
+            
+            <div class="chapter-grid">
+                <!-- Chapter 1: Probability -->
+                <a href="chapter01.html" class="chapter-card probability">
+                    <div class="chapter-number">1</div>
+                    <h3 class="chapter-title">Probability</h3>
+                    <p class="chapter-description">
+                        Foundation of statistical theory including sample spaces, probability rules, conditional probability, independence, and Bayes' theorem.
+                    </p>
+                    <div class="chapter-topics">
+                        <span class="topic-tag">Sample Spaces</span>
+                        <span class="topic-tag">Probability Rules</span>
+                        <span class="topic-tag">Conditional Probability</span>
+                        <span class="topic-tag">Bayes' Theorem</span>
+                        <span class="topic-tag">Counting Methods</span>
+                    </div>
+                    <div class="chapter-features">
+                        <div class="feature-list">
+                            <span>🧮 Interactive Calculators</span>
+                            <span>📊 Visualizations</span>
+                            <span>🎯 30 Practice Questions</span>
+                        </div>
+                        <div class="progress-indicator">Available Now</div>
+                    </div>
+                </a>
+
+                <!-- Chapter 2: Discrete Random Variables -->
+                <a href="chapter02.html" class="chapter-card discrete">
+                    <div class="chapter-number">2</div>
+                    <h3 class="chapter-title">Discrete Random Variables</h3>
+                    <p class="chapter-description">
+                        Probability mass functions, cumulative distributions, expected values, and key discrete distributions including binomial, geometric, and Poisson.
+                    </p>
+                    <div class="chapter-topics">
+                        <span class="topic-tag">PMF & CDF</span>
+                        <span class="topic-tag">Expected Value</span>
+                        <span class="topic-tag">Variance</span>
+                        <span class="topic-tag">Binomial</span>
+                        <span class="topic-tag">Poisson</span>
+                    </div>
+                    <div class="chapter-features">
+                        <div class="feature-list">
+                            <span>📊 Distribution Explorer</span>
+                            <span>🎲 Random Generators</span>
+                            <span>🧮 Moment Calculators</span>
+                        </div>
+                        <div class="progress-indicator">Coming Soon</div>
+                    </div>
+                </a>
+
+                <!-- Chapter 3: Continuous Random Variables -->
+                <a href="chapter03.html" class="chapter-card continuous">
+                    <div class="chapter-number">3</div>
+                    <h3 class="chapter-title">Continuous Random Variables</h3>
+                    <p class="chapter-description">
+                        Probability density functions, continuous distributions including uniform, exponential, normal, and gamma, plus variable transformations.
+                    </p>
+                    <div class="chapter-topics">
+                        <span class="topic-tag">PDF & CDF</span>
+                        <span class="topic-tag">Normal Distribution</span>
+                        <span class="topic-tag">Exponential</span>
+                        <span class="topic-tag">Transformations</span>
+                        <span class="topic-tag">Joint Distributions</span>
+                    </div>
+                    <div class="chapter-features">
+                        <div class="feature-list">
+                            <span>📈 Density Plotters</span>
+                            <span>🔄 Transformation Tools</span>
+                            <span>📊 Joint Distribution Viz</span>
+                        </div>
+                        <div class="progress-indicator">Coming Soon</div>
+                    </div>
+                </a>
+
+                <!-- Chapter 4: Sampling Distributions -->
+                <a href="chapter04.html" class="chapter-card sampling">
+                    <div class="chapter-number">4</div>
+                    <h3 class="chapter-title">Random Samples & Sampling Distributions</h3>
+                    <p class="chapter-description">
+                        Random sampling theory, order statistics, distribution of sample mean, Central Limit Theorem, and chi-square, t, and F distributions.
+                    </p>
+                    <div class="chapter-topics">
+                        <span class="topic-tag">Random Sampling</span>
+                        <span class="topic-tag">Sample Mean</span>
+                        <span class="topic-tag">Central Limit Theorem</span>
+                        <span class="topic-tag">Chi-Square</span>
+                        <span class="topic-tag">t-Distribution</span>
+                    </div>
+                    <div class="chapter-features">
+                        <div class="feature-list">
+                            <span>🎯 CLT Simulator</span>
+                            <span>📊 Sampling Demonstrations</span>
+                            <span>📈 Distribution Comparisons</span>
+                        </div>
+                        <div class="progress-indicator">Coming Soon</div>
+                    </div>
+                </a>
+
+                <!-- Chapter 5: Estimation -->
+                <a href="chapter05.html" class="chapter-card estimation">
+                    <div class="chapter-number">5</div>
+                    <h3 class="chapter-title">Estimation</h3>
+                    <p class="chapter-description">
+                        Method of moments, maximum likelihood estimation, properties of estimators including bias, variance, MSE, efficiency, and confidence intervals.
+                    </p>
+                    <div class="chapter-topics">
+                        <span class="topic-tag">Method of Moments</span>
+                        <span class="topic-tag">MLE</span>
+                        <span class="topic-tag">Bias & Efficiency</span>
+                        <span class="topic-tag">Confidence Intervals</span>
+                        <span class="topic-tag">Bayesian Estimation</span>
+                    </div>
+                    <div class="chapter-features">
+                        <div class="feature-list">
+                            <span>🎯 MLE Calculator</span>
+                            <span>📊 Estimator Comparisons</span>
+                            <span>📈 CI Visualizations</span>
+                        </div>
+                        <div class="progress-indicator">Coming Soon</div>
+                    </div>
+                </a>
+
+                <!-- Chapter 6: Hypothesis Testing -->
+                <a href="chapter06.html" class="chapter-card hypothesis">
+                    <div class="chapter-number">6</div>
+                    <h3 class="chapter-title">Hypothesis Testing</h3>
+                    <p class="chapter-description">
+                        General theory of hypothesis tests, likelihood ratio tests, tests for means, variances, proportions, p-values, and decision rules.
+                    </p>
+                    <div class="chapter-topics">
+                        <span class="topic-tag">Test Theory</span>
+                        <span class="topic-tag">Type I & II Errors</span>
+                        <span class="topic-tag">Likelihood Ratio</span>
+                        <span class="topic-tag">Power Functions</span>
+                        <span class="topic-tag">p-values</span>
+                    </div>
+                    <div class="chapter-features">
+                        <div class="feature-list">
+                            <span>🧪 Test Calculators</span>
+                            <span>📊 Power Analysis</span>
+                            <span>🎯 Interactive Examples</span>
+                        </div>
+                        <div class="progress-indicator">Coming Soon</div>
+                    </div>
+                </a>
+
+                <!-- Chapter 7: Normal Distribution Inference -->
+                <a href="chapter07.html" class="chapter-card normal">
+                    <div class="chapter-number">7</div>
+                    <h3 class="chapter-title">Inference Based on Normal Distribution</h3>
+                    <p class="chapter-description">
+                        One-sample and two-sample inference, paired samples, confidence intervals and tests for means and variances using normal theory.
+                    </p>
+                    <div class="chapter-topics">
+                        <span class="topic-tag">One-Sample Tests</span>
+                        <span class="topic-tag">Two-Sample Tests</span>
+                        <span class="topic-tag">Paired Samples</span>
+                        <span class="topic-tag">Variance Tests</span>
+                        <span class="topic-tag">Normal Theory</span>
+                    </div>
+                    <div class="chapter-features">
+                        <div class="feature-list">
+                            <span>🧮 t-Test Calculator</span>
+                            <span>📊 Sample Size Tools</span>
+                            <span>📈 CI Generators</span>
+                        </div>
+                        <div class="progress-indicator">Coming Soon</div>
+                    </div>
+                </a>
+
+                <!-- Chapter 8: Regression and Correlation -->
+                <a href="chapter08.html" class="chapter-card regression">
+                    <div class="chapter-number">8</div>
+                    <h3 class="chapter-title">Regression and Correlation</h3>
+                    <p class="chapter-description">
+                        Simple linear regression, inference on regression parameters, prediction, introduction to multiple regression, and model checking.
+                    </p>
+                    <div class="chapter-topics">
+                        <span class="topic-tag">Linear Regression</span>
+                        <span class="topic-tag">Parameter Inference</span>
+                        <span class="topic-tag">Prediction</span>
+                        <span class="topic-tag">Model Diagnostics</span>
+                        <span class="topic-tag">Correlation</span>
+                    </div>
+                    <div class="chapter-features">
+                        <div class="feature-list">
+                            <span>📈 Regression Calculator</span>
+                            <span>🎯 Prediction Tools</span>
+                            <span>📊 Diagnostic Plots</span>
+                        </div>
+                        <div class="progress-indicator">Coming Soon</div>
+                    </div>
+                </a>
+
+                <!-- Chapter 9: Categorical Data Analysis -->
+                <a href="chapter09.html" class="chapter-card categorical">
+                    <div class="chapter-number">9</div>
+                    <h3 class="chapter-title">Analysis of Categorical Data</h3>
+                    <p class="chapter-description">
+                        Contingency tables, chi-square tests of independence, goodness-of-fit tests, and multinomial models for categorical data analysis.
+                    </p>
+                    <div class="chapter-topics">
+                        <span class="topic-tag">Contingency Tables</span>
+                        <span class="topic-tag">Chi-Square Tests</span>
+                        <span class="topic-tag">Goodness-of-Fit</span>
+                        <span class="topic-tag">Independence Tests</span>
+                        <span class="topic-tag">Multinomial Models</span>
+                    </div>
+                    <div class="chapter-features">
+                        <div class="feature-list">
+                            <span>📊 Contingency Tables</span>
+                            <span>🧮 Chi-Square Calculator</span>
+                            <span>🎯 Independence Tests</span>
+                        </div>
+                        <div class="progress-indicator">Coming Soon</div>
+                    </div>
+                </a>
+
+                <!-- Chapter 10: ANOVA -->
+                <a href="chapter10.html" class="chapter-card anova">
+                    <div class="chapter-number">10</div>
+                    <h3 class="chapter-title">Analysis of Variance</h3>
+                    <p class="chapter-description">
+                        One-way ANOVA, multiple comparisons, two-way ANOVA, random effects models, and analysis of variance techniques.
+                    </p>
+                    <div class="chapter-topics">
+                        <span class="topic-tag">One-Way ANOVA</span>
+                        <span class="topic-tag">F-Tests</span>
+                        <span class="topic-tag">Multiple Comparisons</span>
+                        <span class="topic-tag">Two-Way ANOVA</span>
+                        <span class="topic-tag">Random Effects</span>
+                    </div>
+                    <div class="chapter-features">
+                        <div class="feature-list">
+                            <span>📊 ANOVA Calculator</span>
+                            <span>🎯 F-Test Tools</span>
+                            <span>📈 Effect Size Analysis</span>
+                        </div>
+                        <div class="progress-indicator">Coming Soon</div>
+                    </div>
+                </a>
+
+                <!-- Chapter 11: Basic Nonparametric Methods -->
+                <a href="chapter11.html" class="chapter-card nonparametric">
+                    <div class="chapter-number">11</div>
+                    <h3 class="chapter-title">Basic Nonparametric Methods</h3>
+                    <p class="chapter-description">
+                        Distribution-free methods including sign test, runs test, and basic rank-based procedures for location and randomness.
+                    </p>
+                    <div class="chapter-topics">
+                        <span class="topic-tag">Sign Test</span>
+                        <span class="topic-tag">Runs Test</span>
+                        <span class="topic-tag">Rank Methods</span>
+                        <span class="topic-tag">Distribution-Free</span>
+                        <span class="topic-tag">Location Tests</span>
+                    </div>
+                    <div class="chapter-features">
+                        <div class="feature-list">
+                            <span>🎯 Basic NP Tests</span>
+                            <span>📊 Rank Methods</span>
+                            <span>📈 Efficiency Comparisons</span>
+                        </div>
+                        <div class="progress-indicator">Coming Soon</div>
+                    </div>
+                </a>
+
+                <!-- Chapter 12: Experimental Design -->
+                <a href="chapter12.html" class="chapter-card" style="--chapter-color: #795548;">
+                    <div class="chapter-number">12</div>
+                    <h3 class="chapter-title">Design of Experiments</h3>
+                    <p class="chapter-description">
+                        Principles of experimental design, randomization, blocking, factorial designs, and analysis of designed experiments.
+                    </p>
+                    <div class="chapter-topics">
+                        <span class="topic-tag">Randomization</span>
+                        <span class="topic-tag">Blocking</span>
+                        <span class="topic-tag">Factorial Design</span>
+                        <span class="topic-tag">Split-Plot</span>
+                        <span class="topic-tag">Optimization</span>
+                    </div>
+                    <div class="chapter-features">
+                        <div class="feature-list">
+                            <span>🎯 Design Tools</span>
+                            <span>📊 Factorial Explorer</span>
+                            <span>📈 Power Analysis</span>
+                        </div>
+                        <div class="progress-indicator">Coming Soon</div>
+                    </div>
+                </a>
+
+                <!-- Chapter 13: Quality Control -->
+                <a href="chapter13.html" class="chapter-card" style="--chapter-color: #607d8b;">
+                    <div class="chapter-number">13</div>
+                    <h3 class="chapter-title">Quality Control & Process Improvement</h3>
+                    <p class="chapter-description">
+                        Statistical process control, control charts, capability analysis, and quality improvement methodologies.
+                    </p>
+                    <div class="chapter-topics">
+                        <span class="topic-tag">Control Charts</span>
+                        <span class="topic-tag">Process Capability</span>
+                        <span class="topic-tag">SPC Methods</span>
+                        <span class="topic-tag">Six Sigma</span>
+                        <span class="topic-tag">Improvement</span>
+                    </div>
+                    <div class="chapter-features">
+                        <div class="feature-list">
+                            <span>📊 Control Charts</span>
+                            <span>🎯 Capability Analysis</span>
+                            <span>📈 Process Monitoring</span>
+                        </div>
+                        <div class="progress-indicator">Coming Soon</div>
+                    </div>
+                </a>
+
+                <!-- Chapter 14: Advanced Nonparametric Methods -->
+                <a href="chapter14.html" class="chapter-card" style="--chapter-color: #e91e63;">
+                    <div class="chapter-number">14</div>
+                    <h3 class="chapter-title">Advanced Nonparametric Methods</h3>
+                    <p class="chapter-description">
+                        Wilcoxon tests, Kruskal-Wallis test, Friedman test, randomness testing, and comparative analysis of parametric vs nonparametric procedures.
+                    </p>
+                    <div class="chapter-topics">
+                        <span class="topic-tag">Wilcoxon Tests</span>
+                        <span class="topic-tag">Kruskal-Wallis</span>
+                        <span class="topic-tag">Friedman Test</span>
+                        <span class="topic-tag">Randomness Tests</span>
+                        <span class="topic-tag">Minitab Applications</span>
+                    </div>
+                    <div class="chapter-features">
+                        <div class="feature-list">
+                            <span>🎯 Advanced NP Tests</span>
+                            <span>📊 Rank-Based ANOVA</span>
+                            <span>💻 Software Applications</span>
+                        </div>
+                        <div class="progress-indicator">Coming Soon</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Interactive Features -->
+        <div class="features-section">
+            <h2 class="section-title">🛠️ Interactive Learning Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-title">
+                        <span>🧮</span>
+                        Mathematical Calculators
+                    </div>
+                    <p>Interactive tools for probability calculations, distribution functions, hypothesis tests, confidence intervals, and statistical inference.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">
+                        <span>📊</span>
+                        Dynamic Visualizations
+                    </div>
+                    <p>Real-time plots of probability distributions, sampling distributions, Central Limit Theorem demonstrations, and statistical concepts.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">
+                        <span>🎯</span>
+                        Comprehensive Practice
+                    </div>
+                    <p>Over 330 practice questions with detailed solutions, step-by-step explanations, and immediate feedback for mastery.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">
+                        <span>🔗</span>
+                        Econometrics Bridge
+                    </div>
+                    <p>Direct integration with Wooldridge Econometrics tutorial, providing seamless transition from statistics to econometrics.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Getting Started -->
+        <div class="getting-started">
+            <h2 style="margin-bottom: 1rem; position: relative; z-index: 1;">🚀 Ready to Begin?</h2>
+            <p style="font-size: 1.1rem; opacity: 0.9; position: relative; z-index: 1;">
+                Master mathematical statistics and build the foundation for advanced econometric analysis
+            </p>
+            <a href="chapter01.html" class="start-button">Start with Chapter 1: Probability</a>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p><strong>Mathematical Statistics Tutorial</strong> - Based on Larsen & Marx (6th Edition)</p>
+            <p>© 2024 - Educational Resource for Upper Undergraduate Statistics</p>
+            <p>Foundation Course for <a href="../wooldridge_econometrics_tutorial/" style="color: var(--accent-probability);">Wooldridge Econometrics</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // Progress tracking functionality
+        function updateProgress() {
+            const totalChapters = 14;
+            const completedChapters = parseInt(localStorage.getItem('mathStatsProgress') || '0');
+            const progressPercent = Math.round((completedChapters / totalChapters) * 100);
+            
+            document.getElementById('progressFill').style.width = progressPercent + '%';
+            document.getElementById('progressText').textContent = 
+                `${completedChapters} of ${totalChapters} chapters completed (${progressPercent}%)`;
+        }
+
+        // Chapter completion tracking
+        function markChapterComplete(chapterNumber) {
+            const completed = JSON.parse(localStorage.getItem('mathStatsChapters') || '[]');
+            if (!completed.includes(chapterNumber)) {
+                completed.push(chapterNumber);
+                localStorage.setItem('mathStatsChapters', JSON.stringify(completed));
+                localStorage.setItem('mathStatsProgress', completed.length.toString());
+                updateProgress();
+            }
+        }
+
+        // Update chapter progress indicators
+        function updateChapterIndicators() {
+            const completed = JSON.parse(localStorage.getItem('mathStatsChapters') || '[]');
+            const indicators = document.querySelectorAll('.progress-indicator');
+            
+            indicators.forEach((indicator, index) => {
+                const chapterNum = index + 1;
+                if (completed.includes(chapterNum)) {
+                    indicator.textContent = 'Completed ✅';
+                    indicator.style.color = 'var(--accent-inference)';
+                } else if (chapterNum === 1) {
+                    indicator.textContent = 'Start Here 🎯';
+                    indicator.style.color = 'var(--accent-probability)';
+                } else {
+                    indicator.textContent = 'Coming Soon';
+                    indicator.style.color = 'var(--text-secondary)';
+                }
+            });
+        }
+
+        // Animation for chapter cards
+        function animateCards() {
+            const cards = document.querySelectorAll('.chapter-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+            updateChapterIndicators();
+            animateCards();
+
+            // Add smooth scrolling to chapter links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            console.log('📊 Mathematical Statistics Tutorial loaded successfully!');
+            console.log('🎯 Ready to build foundations for econometric analysis');
+            console.log('📈 Now supporting complete 14-chapter curriculum');
+        });
+
+        // Feature demonstration
+        function showFeatureDemo(feature) {
+            alert(`🎯 ${feature} Feature\n\nThis interactive feature will help you understand ${feature.toLowerCase()} concepts through hands-on practice and visualization.\n\nAvailable in Chapter 1!`);
+        }
+    </script>
+</body>
+</html>
