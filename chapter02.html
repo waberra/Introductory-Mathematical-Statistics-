@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 2: Discrete Random Variables | Mathematical Statistics</title>
+    
+    <!-- MathJax for mathematical notation -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    
+    <style>
+        :root {
+            /* Chapter 2 Theme - Discrete Random Variables (Purple) */
+            --primary-color: #673ab7;
+            --secondary-color: #512da8;
+            --accent-color: #9c27b0;
+            --accent-lighter: #f3e5f5;
+            --background-light: #f8f9fa;
+            --text-primary: #2c3e50;
+            --text-dark: #1a252f;
+            --border-light: #e9ecef;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, #673ab7, #9c27b0);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .chapter-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--shadow-light);
+        }
+
+        .chapter-number {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .chapter-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+        }
+
+        .chapter-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-top: 1rem;
+            font-weight: 300;
+        }
+
+        .chapter-nav {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px var(--shadow-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            background: var(--accent-lighter);
+            color: var(--primary-color);
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+            scroll-margin-top: 100px;
+        }
+
+        .section.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Mathematical notation styling */
+        .math-definition {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 10px;
+        }
+
+        .math-formula {
+            background: #f8f9fa;
+            border: 2px solid var(--border-light);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border: 2px solid #ff9800;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example-box h4 {
+            color: #e65100;
+            margin-bottom: 1rem;
+        }
+
+        /* Text input question styling */
+        .section-practice {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--primary-color);
+        }
+
+        .practice-question {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            border: 1px solid var(--border-light);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .question-number {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            background: var(--accent-lighter);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .regenerate-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .regenerate-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .question-input-area {
+            margin: 1.5rem 0;
+        }
+
+        .input-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .answer-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border: 2px solid var(--border-light);
+            border-radius: 10px;
+            background: var(--background-light);
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(103, 58, 183, 0.1);
+        }
+
+        .answer-input.correct {
+            border-color: #4caf50;
+            background: #e8f5e8;
+        }
+
+        .answer-input.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        .input-hint {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .question-buttons {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .check-btn, .steps-btn, .new-question-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .check-btn {
+            background: #4caf50;
+            color: white;
+        }
+
+        .check-btn:hover {
+            background: #388e3c;
+            transform: translateY(-2px);
+        }
+
+        .steps-btn {
+            background: #ff9800;
+            color: white;
+        }
+
+        .steps-btn:hover {
+            background: #f57c00;
+            transform: translateY(-2px);
+        }
+
+        .new-question-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .new-question-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .question-feedback {
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            font-weight: 600;
+            border: 2px solid;
+        }
+
+        .feedback-correct {
+            background: #e8f5e8;
+            color: #2e7d32;
+            border-color: #4caf50;
+        }
+
+        .feedback-incorrect {
+            background: #ffebee;
+            color: #c62828;
+            border-color: #f44336;
+        }
+
+        .question-steps {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .step-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .step-content {
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .step-content ol, .step-content ul {
+            margin-left: 1.5rem;
+        }
+
+        .step-content li {
+            margin: 0.5rem 0;
+        }
+
+        /* Distribution tables */
+        .distribution-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px var(--shadow-light);
+        }
+
+        .distribution-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .distribution-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .distribution-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .distribution-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Chapter Header -->
+        <header class="chapter-header fade-in">
+            <div class="chapter-number">Chapter 2</div>
+            <h1 class="chapter-title">📊 Discrete Random Variables</h1>
+            <p class="chapter-subtitle">From Outcomes to Numbers: Probability Mass Functions and Distributions</p>
+        </header>
+
+        <!-- Navigation -->
+        <div class="chapter-nav fade-in">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link" style="background: var(--primary-color); color: white;">← Course Home</a>
+                <a href="#definition" class="nav-link">2.1 Definition</a>
+                <a href="#pmf-cdf" class="nav-link">2.2 PMF & CDF</a>
+                <a href="#expectation" class="nav-link">2.3 Expected Value</a>
+                <a href="#variance" class="nav-link">2.4 Variance</a>
+                <a href="#binomial" class="nav-link">2.5 Binomial</a>
+                <a href="#geometric" class="nav-link">2.6 Geometric</a>
+                <a href="#poisson" class="nav-link">2.7 Poisson</a>
+            </div>
+        </div>
+
+        <!-- Section 2.1: Definition of Random Variables -->
+        <div class="section fade-in" id="definition">
+            <h2 class="section-title">🎯 2.1 Random Variables</h2>
+            <div class="section-content">
+                <p>A <strong>random variable</strong> is a function that assigns a real number to each outcome of a random experiment.</p>
+                
+                <div class="math-definition">
+                    <h4>Definition: Random Variable</h4>
+                    <p>Let $\Omega$ be a sample space. A <strong>random variable $X$</strong> is a function $X: \Omega \rightarrow \mathbb{R}$ that assigns a real number $X(\omega)$ to each outcome $\omega \in \Omega$.</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 2.1: Coin Tosses</h4>
+                    <p><strong>Experiment:</strong> Toss a coin twice</p>
+                    <p><strong>Sample Space:</strong> $\Omega = \{HH, HT, TH, TT\}$</p>
+                    <p><strong>Random Variable:</strong> $X$ = number of heads</p>
+                    <ul>
+                        <li>$X(HH) = 2$</li>
+                        <li>$X(HT) = X(TH) = 1$</li>
+                        <li>$X(TT) = 0$</li>
+                    </ul>
+                    <p><strong>Range of $X$:</strong> $\{0, 1, 2\}$</p>
+                </div>
+
+                <p><strong>Types of Random Variables:</strong></p>
+                <ul>
+                    <li><strong>Discrete:</strong> Countable range (finite or countably infinite)</li>
+                    <li><strong>Continuous:</strong> Uncountable range (intervals of real numbers)</li>
+                </ul>
+            </div>
+
+            <!-- Section 2.1 Practice Questions -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 2.1 Practice</h3>
+                
+                <div class="practice-question" id="question-2-1">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion21()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-21-content">
+                        <!-- Question will be generated by JavaScript -->
+                    </div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-21">Your Answer:</label>
+                        <input type="text" id="answer-21" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer21()">
+                        <div class="input-hint" id="hint-21">
+                            <!-- Hint will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer21()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps21()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion21()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-21" style="display: none;"></div>
+                    <div class="question-steps" id="steps-21" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2.2: PMF and CDF -->
+        <div class="section fade-in" id="pmf-cdf">
+            <h2 class="section-title">📈 2.2 Probability Mass Function & Cumulative Distribution Function</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Probability Mass Function (PMF)</h4>
+                    <p>For a discrete random variable $X$, the <strong>probability mass function (PMF)</strong> is:</p>
+                    <div class="math-formula">
+                        $p(x) = P(X = x)$ for all $x \in \mathbb{R}$
+                    </div>
+                    <p><strong>Properties:</strong></p>
+                    <ul>
+                        <li>$p(x) \geq 0$ for all $x$</li>
+                        <li>$p(x) = 0$ if $x$ is not in the range of $X$</li>
+                        <li>$\sum_{x} p(x) = 1$ (sum over all possible values)</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Cumulative Distribution Function (CDF)</h4>
+                    <p>The <strong>cumulative distribution function (CDF)</strong> is:</p>
+                    <div class="math-formula">
+                        $F(x) = P(X \leq x) = \sum_{t \leq x} p(t)$
+                    </div>
+                    <p><strong>Properties:</strong></p>
+                    <ul>
+                        <li>$0 \leq F(x) \leq 1$ for all $x$</li>
+                        <li>$F(x)$ is non-decreasing</li>
+                        <li>$\lim_{x \to -\infty} F(x) = 0$ and $\lim_{x \to \infty} F(x) = 1$</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 2.2: PMF and CDF for Coin Tosses</h4>
+                    <p>For $X$ = number of heads in 2 coin tosses:</p>
+                    <table class="distribution-table">
+                        <tr>
+                            <th>$x$</th>
+                            <th>$p(x) = P(X = x)$</th>
+                            <th>$F(x) = P(X \leq x)$</th>
+                        </tr>
+                        <tr>
+                            <td>0</td>
+                            <td>1/4</td>
+                            <td>1/4</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>2/4 = 1/2</td>
+                            <td>3/4</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>1/4</td>
+                            <td>1</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Section 2.2 Practice Questions -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 2.2 Practice</h3>
+                
+                <div class="practice-question" id="question-2-2">
+                    <div class="question-header">
+                        <span class="question-number">Question 2</span>
+                        <button class="regenerate-btn" onclick="generateQuestion22()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-22-content">
+                        <!-- Question will be generated by JavaScript -->
+                    </div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-22">Your Answer:</label>
+                        <input type="text" id="answer-22" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer22()">
+                        <div class="input-hint" id="hint-22">
+                            <!-- Hint will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer22()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps22()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion22()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-22" style="display: none;"></div>
+                    <div class="question-steps" id="steps-22" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2.3: Expected Value -->
+        <div class="section fade-in" id="expectation">
+            <h2 class="section-title">🎯 2.3 Expected Value</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Expected Value (Mean)</h4>
+                    <p>The <strong>expected value</strong> of a discrete random variable $X$ is:</p>
+                    <div class="math-formula">
+                        $E[X] = \mu_X = \sum_{x} x \cdot p(x)$
+                    </div>
+                    <p>This is the weighted average of all possible values, where weights are the probabilities.</p>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Properties of Expected Value</h4>
+                    <ul>
+                        <li><strong>Linearity:</strong> $E[aX + b] = aE[X] + b$</li>
+                        <li><strong>Sum rule:</strong> $E[X + Y] = E[X] + E[Y]$</li>
+                        <li><strong>Function of X:</strong> $E[g(X)] = \sum_{x} g(x) \cdot p(x)$</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 2.3: Expected Value of Dice Roll</h4>
+                    <p>For a fair six-sided die with $X \in \{1, 2, 3, 4, 5, 6\}$ and $p(x) = 1/6$ for each:</p>
+                    <div class="math-formula">
+                        $E[X] = 1 \cdot \frac{1}{6} + 2 \cdot \frac{1}{6} + \cdots + 6 \cdot \frac{1}{6} = \frac{21}{6} = 3.5$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2.3 Practice Questions -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 2.3 Practice</h3>
+                
+                <div class="practice-question" id="question-2-3">
+                    <div class="question-header">
+                        <span class="question-number">Question 3</span>
+                        <button class="regenerate-btn" onclick="generateQuestion23()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-23-content">
+                        <!-- Question will be generated by JavaScript -->
+                    </div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-23">Your Answer:</label>
+                        <input type="text" id="answer-23" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer23()">
+                        <div class="input-hint" id="hint-23">
+                            <!-- Hint will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer23()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps23()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion23()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-23" style="display: none;"></div>
+                    <div class="question-steps" id="steps-23" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Placeholder sections for remaining topics -->
+        <div class="section fade-in" id="variance">
+            <h2 class="section-title">📏 2.4 Variance and Standard Deviation</h2>
+            <p>Coming soon...</p>
+        </div>
+
+        <div class="section fade-in" id="binomial">
+            <h2 class="section-title">🪙 2.5 Binomial Distribution</h2>
+            <p>Coming soon...</p>
+        </div>
+
+        <div class="section fade-in" id="geometric">
+            <h2 class="section-title">🎯 2.6 Geometric Distribution</h2>
+            <p>Coming soon...</p>
+        </div>
+
+        <div class="section fade-in" id="poisson">
+            <h2 class="section-title">⚡ 2.7 Poisson Distribution</h2>
+            <p>Coming soon...</p>
+        </div>
+    </div>
+
+    <script>
+        // Question arrays
+        let currentQuestion21 = null;
+        let currentQuestion22 = null;
+        let currentQuestion23 = null;
+
+        const randomVariableQuestions = [
+            {
+                question: "A die is rolled. Let X be the result if the outcome is even, and X = 0 if the outcome is odd. What is the range of X?",
+                correctAnswers: ["{0,2,4,6}", "{0, 2, 4, 6}", "0,2,4,6", "0 2 4 6"],
+                hint: "List all possible values that X can take",
+                explanation: "When the die shows 1, 3, or 5 (odd), X = 0. When it shows 2, 4, or 6 (even), X equals that value. So X can be 0, 2, 4, or 6.",
+                steps: `<div class="step-title">Finding the Range of X:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Sample space:</strong> {1, 2, 3, 4, 5, 6}</li>
+                                <li><strong>Rule for X:</strong> X = outcome if even, X = 0 if odd</li>
+                                <li><strong>Apply rule:</strong>
+                                    <ul>
+                                        <li>Outcome 1 (odd) → X = 0</li>
+                                        <li>Outcome 2 (even) → X = 2</li>
+                                        <li>Outcome 3 (odd) → X = 0</li>
+                                        <li>Outcome 4 (even) → X = 4</li>
+                                        <li>Outcome 5 (odd) → X = 0</li>
+                                        <li>Outcome 6 (even) → X = 6</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Range of X:</strong> {0, 2, 4, 6}</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Two coins are tossed. Let Y be the absolute difference between the number of heads and tails. What values can Y take?",
+                correctAnswers: ["{0,2}", "{0, 2}", "0,2", "0 2", "0 and 2"],
+                hint: "Calculate |# heads - # tails| for each possible outcome",
+                explanation: "With 2 coins: HH gives |2-0|=2, HT and TH give |1-1|=0, TT gives |0-2|=2. So Y ∈ {0, 2}.",
+                steps: `<div class="step-title">Finding Values of Y:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Sample space:</strong> {HH, HT, TH, TT}</li>
+                                <li><strong>Count heads and tails for each outcome:</strong>
+                                    <ul>
+                                        <li>HH: 2 heads, 0 tails → Y = |2-0| = 2</li>
+                                        <li>HT: 1 head, 1 tail → Y = |1-1| = 0</li>
+                                        <li>TH: 1 head, 1 tail → Y = |1-1| = 0</li>
+                                        <li>TT: 0 heads, 2 tails → Y = |0-2| = 2</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Possible values:</strong> Y ∈ {0, 2}</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Cards are drawn from a deck until an ace appears. Let Z be the number of cards drawn (including the ace). What type of random variable is Z?",
+                correctAnswers: ["discrete", "Discrete", "countable", "Countable"],
+                hint: "Can Z take on any non-negative integer value? Is the range countable?",
+                explanation: "Z can be 1, 2, 3, ... up to 49 (worst case: ace is last card). This is a countable set, so Z is discrete.",
+                steps: `<div class="step-title">Classifying Z:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Possible values:</strong> Z can be 1, 2, 3, ..., up to 49</li>
+                                <li><strong>Minimum:</strong> Z = 1 (ace on first draw)</li>
+                                <li><strong>Maximum:</strong> Z = 49 (ace is the last possible card)</li>
+                                <li><strong>Nature of range:</strong> Finite set {1, 2, 3, ..., 49}</li>
+                                <li><strong>Classification:</strong> Since the range is countable, Z is discrete</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const pmfCdfQuestions = [
+            {
+                question: "For X with PMF p(1)=0.2, p(2)=0.3, p(3)=0.5, what is F(2)?",
+                correctAnswers: ["0.5", "0.50", ".5", ".50", "1/2"],
+                hint: "F(2) = P(X ≤ 2) = p(1) + p(2)",
+                explanation: "F(2) = P(X ≤ 2) = P(X = 1) + P(X = 2) = 0.2 + 0.3 = 0.5",
+                steps: `<div class="step-title">Computing CDF F(2):</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Definition:</strong> F(2) = P(X ≤ 2)</li>
+                                <li><strong>Values ≤ 2:</strong> X can be 1 or 2</li>
+                                <li><strong>Sum probabilities:</strong> F(2) = p(1) + p(2)</li>
+                                <li><strong>Calculate:</strong> F(2) = 0.2 + 0.3 = 0.5</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A random variable X has PMF p(0)=1/4, p(1)=1/2, p(2)=1/4. What is P(X > 0)?",
+                correctAnswers: ["0.75", "0.750", ".75", ".750", "3/4", "75%"],
+                hint: "P(X > 0) = 1 - P(X = 0) or P(X > 0) = p(1) + p(2)",
+                explanation: "P(X > 0) = p(1) + p(2) = 1/2 + 1/4 = 3/4 = 0.75",
+                steps: `<div class="step-title">Computing P(X > 0):</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Method 1 - Direct:</strong> P(X > 0) = p(1) + p(2) = 1/2 + 1/4 = 3/4</li>
+                                <li><strong>Method 2 - Complement:</strong> P(X > 0) = 1 - P(X = 0) = 1 - 1/4 = 3/4</li>
+                                <li><strong>Convert to decimal:</strong> 3/4 = 0.75</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If P(X ≤ 3) = 0.8 and P(X = 3) = 0.1, what is P(X < 3)?",
+                correctAnswers: ["0.7", "0.70", ".7", ".70", "7/10"],
+                hint: "P(X < 3) = P(X ≤ 3) - P(X = 3)",
+                explanation: "P(X < 3) = P(X ≤ 3) - P(X = 3) = 0.8 - 0.1 = 0.7",
+                steps: `<div class="step-title">Finding P(X < 3):</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Relationship:</strong> P(X ≤ 3) = P(X < 3) + P(X = 3)</li>
+                                <li><strong>Rearrange:</strong> P(X < 3) = P(X ≤ 3) - P(X = 3)</li>
+                                <li><strong>Substitute:</strong> P(X < 3) = 0.8 - 0.1</li>
+                                <li><strong>Calculate:</strong> P(X < 3) = 0.7</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const expectedValueQuestions = [
+            {
+                question: "A random variable X has values 1, 2, 3 with probabilities 0.2, 0.3, 0.5 respectively. What is E[X]?",
+                correctAnswers: ["2.3", "2.30", "23/10"],
+                hint: "E[X] = Σ x · p(x) = 1(0.2) + 2(0.3) + 3(0.5)",
+                explanation: "E[X] = 1(0.2) + 2(0.3) + 3(0.5) = 0.2 + 0.6 + 1.5 = 2.3",
+                steps: `<div class="step-title">Computing Expected Value:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Formula:</strong> E[X] = Σ x · p(x)</li>
+                                <li><strong>Terms:</strong>
+                                    <ul>
+                                        <li>x = 1: 1 × 0.2 = 0.2</li>
+                                        <li>x = 2: 2 × 0.3 = 0.6</li>
+                                        <li>x = 3: 3 × 0.5 = 1.5</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Sum:</strong> E[X] = 0.2 + 0.6 + 1.5 = 2.3</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If E[X] = 4 and E[Y] = 6, what is E[2X + 3Y - 1]?",
+                correctAnswers: ["25", "25.0", "25.00"],
+                hint: "Use linearity: E[aX + bY + c] = aE[X] + bE[Y] + c",
+                explanation: "E[2X + 3Y - 1] = 2E[X] + 3E[Y] - 1 = 2(4) + 3(6) - 1 = 8 + 18 - 1 = 25",
+                steps: `<div class="step-title">Using Linearity of Expectation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Property:</strong> E[aX + bY + c] = aE[X] + bE[Y] + c</li>
+                                <li><strong>Apply:</strong> E[2X + 3Y - 1] = 2E[X] + 3E[Y] - 1</li>
+                                <li><strong>Substitute:</strong> = 2(4) + 3(6) - 1</li>
+                                <li><strong>Calculate:</strong> = 8 + 18 - 1 = 25</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A fair coin is tossed 3 times. Let X be the number of heads. What is E[X]?",
+                correctAnswers: ["1.5", "1.50", "3/2"],
+                hint: "This is a binomial with n=3, p=0.5. E[X] = np",
+                explanation: "For binomial distribution with n=3 trials and p=0.5 probability of success: E[X] = np = 3(0.5) = 1.5",
+                steps: `<div class="step-title">Expected Value of Binomial:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Identify distribution:</strong> X ~ Binomial(n=3, p=0.5)</li>
+                                <li><strong>Formula:</strong> For binomial, E[X] = np</li>
+                                <li><strong>Calculate:</strong> E[X] = 3 × 0.5 = 1.5</li>
+                                <li><strong>Interpretation:</strong> On average, we expect 1.5 heads in 3 tosses</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        // Question generation functions
+        function generateQuestion21() {
+            document.getElementById('feedback-21').style.display = 'none';
+            document.getElementById('steps-21').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-21');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion21 = randomVariableQuestions[Math.floor(Math.random() * randomVariableQuestions.length)];
+            
+            document.getElementById('question-21-content').innerHTML = currentQuestion21.question;
+            document.getElementById('hint-21').innerHTML = currentQuestion21.hint;
+        }
+
+        function checkAnswer21() {
+            const userAnswer = document.getElementById('answer-21').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-21');
+            const feedbackDiv = document.getElementById('feedback-21');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion21.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion21.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps21() {
+            const stepsDiv = document.getElementById('steps-21');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion21.steps;
+        }
+
+        function generateQuestion22() {
+            document.getElementById('feedback-22').style.display = 'none';
+            document.getElementById('steps-22').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-22');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion22 = pmfCdfQuestions[Math.floor(Math.random() * pmfCdfQuestions.length)];
+            
+            document.getElementById('question-22-content').innerHTML = currentQuestion22.question;
+            document.getElementById('hint-22').innerHTML = currentQuestion22.hint;
+        }
+
+        function checkAnswer22() {
+            const userAnswer = document.getElementById('answer-22').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-22');
+            const feedbackDiv = document.getElementById('feedback-22');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion22.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion22.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps22() {
+            const stepsDiv = document.getElementById('steps-22');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion22.steps;
+        }
+
+        function generateQuestion23() {
+            document.getElementById('feedback-23').style.display = 'none';
+            document.getElementById('steps-23').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-23');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion23 = expectedValueQuestions[Math.floor(Math.random() * expectedValueQuestions.length)];
+            
+            document.getElementById('question-23-content').innerHTML = currentQuestion23.question;
+            document.getElementById('hint-23').innerHTML = currentQuestion23.hint;
+        }
+
+        function checkAnswer23() {
+            const userAnswer = document.getElementById('answer-23').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-23');
+            const feedbackDiv = document.getElementById('feedback-23');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion23.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion23.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps23() {
+            const stepsDiv = document.getElementById('steps-23');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion23.steps;
+        }
+
+        // Page initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Chapter 2: Discrete Random Variables loaded successfully! 📊');
+            
+            // Add fade-in animations
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+            
+            // Generate initial questions
+            setTimeout(() => {
+                generateQuestion21();
+                generateQuestion22();
+                generateQuestion23();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
