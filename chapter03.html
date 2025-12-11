@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 3: Continuous Random Variables | Mathematical Statistics</title>
+    
+    <!-- MathJax for mathematical notation -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    
+    <style>
+        :root {
+            /* Chapter 3 Theme - Continuous Random Variables (Blue) */
+            --primary-color: #3f51b5;
+            --secondary-color: #303f9f;
+            --accent-color: #5c6bc0;
+            --accent-lighter: #e8eaf6;
+            --background-light: #f8f9fa;
+            --text-primary: #2c3e50;
+            --text-dark: #1a252f;
+            --border-light: #e9ecef;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, #3f51b5, #5c6bc0);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .chapter-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--shadow-light);
+        }
+
+        .chapter-number {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .chapter-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+        }
+
+        .chapter-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-top: 1rem;
+            font-weight: 300;
+        }
+
+        .chapter-nav {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px var(--shadow-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            background: var(--accent-lighter);
+            color: var(--primary-color);
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+            scroll-margin-top: 100px;
+        }
+
+        .section.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Mathematical notation styling */
+        .math-definition {
+            background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 10px;
+        }
+
+        .math-formula {
+            background: #f8f9fa;
+            border: 2px solid var(--border-light);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border: 2px solid #ff9800;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example-box h4 {
+            color: #e65100;
+            margin-bottom: 1rem;
+        }
+
+        /* Key theorem boxes */
+        .theorem-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .theorem-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Distribution comparison table */
+        .distribution-comparison {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px var(--shadow-light);
+        }
+
+        .distribution-comparison th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .distribution-comparison td {
+            padding: 0.8rem;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+
+        .distribution-comparison tr:last-child td {
+            border-bottom: none;
+        }
+
+        .distribution-comparison tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        /* Text input question styling */
+        .section-practice {
+            background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--primary-color);
+        }
+
+        .practice-question {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            border: 1px solid var(--border-light);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .question-number {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            background: var(--accent-lighter);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .regenerate-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .regenerate-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .question-input-area {
+            margin: 1.5rem 0;
+        }
+
+        .input-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .answer-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border: 2px solid var(--border-light);
+            border-radius: 10px;
+            background: var(--background-light);
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.1);
+        }
+
+        .answer-input.correct {
+            border-color: #4caf50;
+            background: #e8f5e8;
+        }
+
+        .answer-input.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        .input-hint {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .question-buttons {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .check-btn, .steps-btn, .new-question-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .check-btn {
+            background: #4caf50;
+            color: white;
+        }
+
+        .check-btn:hover {
+            background: #388e3c;
+            transform: translateY(-2px);
+        }
+
+        .steps-btn {
+            background: #ff9800;
+            color: white;
+        }
+
+        .steps-btn:hover {
+            background: #f57c00;
+            transform: translateY(-2px);
+        }
+
+        .new-question-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .new-question-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .question-feedback {
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            font-weight: 600;
+            border: 2px solid;
+        }
+
+        .feedback-correct {
+            background: #e8f5e8;
+            color: #2e7d32;
+            border-color: #4caf50;
+        }
+
+        .feedback-incorrect {
+            background: #ffebee;
+            color: #c62828;
+            border-color: #f44336;
+        }
+
+        .question-steps {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .step-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .step-content {
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .step-content ol, .step-content ul {
+            margin-left: 1.5rem;
+        }
+
+        .step-content li {
+            margin: 0.5rem 0;
+        }
+
+        /* Visual function displays */
+        .function-visualization {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+            border: 2px solid var(--accent-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Chapter Header -->
+        <header class="chapter-header fade-in">
+            <div class="chapter-number">Chapter 3</div>
+            <h1 class="chapter-title">📈 Continuous Random Variables</h1>
+            <p class="chapter-subtitle">From Discrete Points to Continuous Curves: Density Functions and Distributions</p>
+        </header>
+
+        <!-- Navigation -->
+        <div class="chapter-nav fade-in">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link" style="background: var(--primary-color); color: white;">← Course Home</a>
+                <a href="#definition" class="nav-link">3.1 Definition</a>
+                <a href="#pdf-cdf" class="nav-link">3.2 PDF & CDF</a>
+                <a href="#expectation" class="nav-link">3.3 Expected Value</a>
+                <a href="#uniform" class="nav-link">3.4 Uniform</a>
+                <a href="#exponential" class="nav-link">3.5 Exponential</a>
+                <a href="#normal" class="nav-link">3.6 Normal</a>
+                <a href="#transformations" class="nav-link">3.7 Transformations</a>
+            </div>
+        </div>
+
+        <!-- Section 3.1: Definition of Continuous Random Variables -->
+        <div class="section fade-in" id="definition">
+            <h2 class="section-title">📊 3.1 Continuous Random Variables</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Definition: Continuous Random Variable</h4>
+                    <p>A random variable $X$ is <strong>continuous</strong> if there exists a non-negative function $f(x)$ called the <strong>probability density function (PDF)</strong> such that for any interval $[a,b]$:</p>
+                    <div class="math-formula">
+                        $P(a \leq X \leq b) = \int_a^b f(x) \, dx$
+                    </div>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Key Properties of Continuous Random Variables</h4>
+                    <ul>
+                        <li><strong>Point Probability:</strong> $P(X = c) = 0$ for any constant $c$</li>
+                        <li><strong>Interval Equivalence:</strong> $P(a < X < b) = P(a \leq X \leq b) = P(a < X \leq b) = P(a \leq X < b)$</li>
+                        <li><strong>Range:</strong> Uncountable (typically intervals of real numbers)</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 3.1: Height Measurements</h4>
+                    <p><strong>Experiment:</strong> Measure the height of a randomly selected adult</p>
+                    <p><strong>Random Variable:</strong> $X$ = height in inches</p>
+                    <p><strong>Range:</strong> $(0, \infty)$ or realistically $[48, 84]$ inches</p>
+                    <p><strong>Key Insight:</strong> $P(X = 70.0000...)$ = 0, but $P(69.5 \leq X \leq 70.5) > 0$</p>
+                </div>
+
+                <div class="function-visualization">
+                    <h4>Discrete vs. Continuous Comparison</h4>
+                    <table class="distribution-comparison">
+                        <tr>
+                            <th>Property</th>
+                            <th>Discrete</th>
+                            <th>Continuous</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Range</strong></td>
+                            <td>Countable set</td>
+                            <td>Uncountable set (intervals)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Probabilities</strong></td>
+                            <td>PMF: $p(x) = P(X = x)$</td>
+                            <td>PDF: $f(x)$ (not a probability)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Point Probability</strong></td>
+                            <td>$P(X = c) \geq 0$</td>
+                            <td>$P(X = c) = 0$</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Intervals</strong></td>
+                            <td>$P(a \leq X \leq b) = \sum_{x=a}^b p(x)$</td>
+                            <td>$P(a \leq X \leq b) = \int_a^b f(x) dx$</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Section 3.1 Practice Questions -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 3.1 Practice</h3>
+                
+                <div class="practice-question" id="question-3-1">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion31()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-31-content">
+                        <!-- Question will be generated by JavaScript -->
+                    </div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-31">Your Answer:</label>
+                        <input type="text" id="answer-31" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer31()">
+                        <div class="input-hint" id="hint-31">
+                            <!-- Hint will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer31()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps31()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion31()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-31" style="display: none;"></div>
+                    <div class="question-steps" id="steps-31" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3.2: PDF and CDF -->
+        <div class="section fade-in" id="pdf-cdf">
+            <h2 class="section-title">📈 3.2 Probability Density Function & Cumulative Distribution Function</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Probability Density Function (PDF)</h4>
+                    <p>For a continuous random variable $X$, the <strong>PDF $f(x)$</strong> satisfies:</p>
+                    <div class="math-formula">
+                        $P(a \leq X \leq b) = \int_a^b f(x) \, dx$
+                    </div>
+                    <p><strong>Properties:</strong></p>
+                    <ul>
+                        <li>$f(x) \geq 0$ for all $x$</li>
+                        <li>$\int_{-\infty}^{\infty} f(x) \, dx = 1$</li>
+                        <li>$f(x)$ is <em>not</em> a probability (can be > 1)</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Cumulative Distribution Function (CDF)</h4>
+                    <p>The <strong>CDF $F(x)$</strong> for continuous variables is:</p>
+                    <div class="math-formula">
+                        $F(x) = P(X \leq x) = \int_{-\infty}^{x} f(t) \, dt$
+                    </div>
+                    <p><strong>Relationship with PDF:</strong></p>
+                    <div class="math-formula">
+                        $f(x) = \frac{d}{dx} F(x) = F'(x)$
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 3.2: Simple Uniform Distribution</h4>
+                    <p>Let $X$ be uniform on $[0, 2]$ with PDF:</p>
+                    <div class="math-formula">
+                        $f(x) = \begin{cases} \frac{1}{2} & \text{if } 0 \leq x \leq 2 \\ 0 & \text{otherwise} \end{cases}$
+                    </div>
+                    <p><strong>CDF:</strong> $F(x) = \begin{cases} 0 & \text{if } x < 0 \\ \frac{x}{2} & \text{if } 0 \leq x \leq 2 \\ 1 & \text{if } x > 2 \end{cases}$</p>
+                    <p><strong>Example:</strong> $P(0.5 \leq X \leq 1.5) = \int_{0.5}^{1.5} \frac{1}{2} dx = \frac{1}{2} \cdot 1 = 0.5$</p>
+                </div>
+            </div>
+
+            <!-- Section 3.2 Practice Questions -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 3.2 Practice</h3>
+                
+                <div class="practice-question" id="question-3-2">
+                    <div class="question-header">
+                        <span class="question-number">Question 2</span>
+                        <button class="regenerate-btn" onclick="generateQuestion32()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-32-content">
+                        <!-- Question will be generated by JavaScript -->
+                    </div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-32">Your Answer:</label>
+                        <input type="text" id="answer-32" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer32()">
+                        <div class="input-hint" id="hint-32">
+                            <!-- Hint will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer32()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps32()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion32()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-32" style="display: none;"></div>
+                    <div class="question-steps" id="steps-32" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3.3: Expected Value for Continuous Variables -->
+        <div class="section fade-in" id="expectation">
+            <h2 class="section-title">🎯 3.3 Expected Value and Variance</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Expected Value for Continuous Random Variables</h4>
+                    <p>For a continuous random variable $X$ with PDF $f(x)$:</p>
+                    <div class="math-formula">
+                        $E[X] = \mu = \int_{-\infty}^{\infty} x \cdot f(x) \, dx$
+                    </div>
+                    <p><strong>Function of X:</strong> $E[g(X)] = \int_{-\infty}^{\infty} g(x) \cdot f(x) \, dx$</p>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Variance for Continuous Random Variables</h4>
+                    <div class="math-formula">
+                        $\text{Var}(X) = \sigma^2 = E[(X - \mu)^2] = \int_{-\infty}^{\infty} (x - \mu)^2 f(x) \, dx$
+                    </div>
+                    <p><strong>Computational formula:</strong> $\text{Var}(X) = E[X^2] - (E[X])^2$</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 3.3: Expected Value of Uniform[0,2]</h4>
+                    <p>For $X \sim \text{Uniform}(0, 2)$ with $f(x) = \frac{1}{2}$ on $[0,2]$:</p>
+                    <div class="math-formula">
+                        $E[X] = \int_0^2 x \cdot \frac{1}{2} \, dx = \frac{1}{2} \int_0^2 x \, dx = \frac{1}{2} \cdot \frac{x^2}{2}\Big|_0^2 = \frac{1}{4} \cdot 4 = 1$
+                    </div>
+                    <p><strong>Intuition:</strong> The expected value is the center of the uniform interval.</p>
+                </div>
+            </div>
+
+            <!-- Section 3.3 Practice Questions -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 3.3 Practice</h3>
+                
+                <div class="practice-question" id="question-3-3">
+                    <div class="question-header">
+                        <span class="question-number">Question 3</span>
+                        <button class="regenerate-btn" onclick="generateQuestion33()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-33-content">
+                        <!-- Question will be generated by JavaScript -->
+                    </div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-33">Your Answer:</label>
+                        <input type="text" id="answer-33" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer33()">
+                        <div class="input-hint" id="hint-33">
+                            <!-- Hint will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer33()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps33()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion33()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-33" style="display: none;"></div>
+                    <div class="question-steps" id="steps-33" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Placeholder sections for specific distributions -->
+        <div class="section fade-in" id="uniform">
+            <h2 class="section-title">📏 3.4 Uniform Distribution</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Uniform Distribution: $X \sim \text{Uniform}(a, b)$</h4>
+                    <div class="math-formula">
+                        $f(x) = \begin{cases} \frac{1}{b-a} & \text{if } a \leq x \leq b \\ 0 & \text{otherwise} \end{cases}$
+                    </div>
+                    <p><strong>Properties:</strong></p>
+                    <ul>
+                        <li><strong>Mean:</strong> $E[X] = \frac{a+b}{2}$</li>
+                        <li><strong>Variance:</strong> $\text{Var}(X) = \frac{(b-a)^2}{12}$</li>
+                        <li><strong>CDF:</strong> $F(x) = \frac{x-a}{b-a}$ for $a \leq x \leq b$</li>
+                    </ul>
+                </div>
+                <p><em>More detailed content and practice questions coming soon...</em></p>
+            </div>
+        </div>
+
+        <div class="section fade-in" id="exponential">
+            <h2 class="section-title">⚡ 3.5 Exponential Distribution</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Exponential Distribution: $X \sim \text{Exponential}(\lambda)$</h4>
+                    <div class="math-formula">
+                        $f(x) = \lambda e^{-\lambda x}$ for $x \geq 0$, $\lambda > 0$
+                    </div>
+                    <p><strong>Properties:</strong></p>
+                    <ul>
+                        <li><strong>Mean:</strong> $E[X] = \frac{1}{\lambda}$</li>
+                        <li><strong>Variance:</strong> $\text{Var}(X) = \frac{1}{\lambda^2}$</li>
+                        <li><strong>CDF:</strong> $F(x) = 1 - e^{-\lambda x}$ for $x \geq 0$</li>
+                        <li><strong>Memoryless Property:</strong> $P(X > s + t | X > s) = P(X > t)$</li>
+                    </ul>
+                </div>
+                <p><em>More detailed content and practice questions coming soon...</em></p>
+            </div>
+        </div>
+
+        <div class="section fade-in" id="normal">
+            <h2 class="section-title">🔔 3.6 Normal Distribution</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Normal Distribution: $X \sim N(\mu, \sigma^2)$</h4>
+                    <div class="math-formula">
+                        $f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$
+                    </div>
+                    <p><strong>Properties:</strong></p>
+                    <ul>
+                        <li><strong>Mean:</strong> $E[X] = \mu$</li>
+                        <li><strong>Variance:</strong> $\text{Var}(X) = \sigma^2$</li>
+                        <li><strong>Symmetric:</strong> Bell-shaped curve centered at $\mu$</li>
+                        <li><strong>68-95-99.7 Rule:</strong> Approximately 68%, 95%, 99.7% within 1, 2, 3 standard deviations</li>
+                    </ul>
+                </div>
+                <p><em>More detailed content and practice questions coming soon...</em></p>
+            </div>
+        </div>
+
+        <div class="section fade-in" id="transformations">
+            <h2 class="section-title">🔄 3.7 Transformations of Random Variables</h2>
+            <div class="section-content">
+                <div class="theorem-box">
+                    <h4>Transformation Technique</h4>
+                    <p>If $X$ has PDF $f_X(x)$ and $Y = g(X)$ where $g$ is strictly monotonic, then:</p>
+                    <div class="math-formula">
+                        $f_Y(y) = f_X(g^{-1}(y)) \left| \frac{d}{dy} g^{-1}(y) \right|$
+                    </div>
+                </div>
+                <p><em>More detailed content and practice questions coming soon...</em></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Question arrays
+        let currentQuestion31 = null;
+        let currentQuestion32 = null;
+        let currentQuestion33 = null;
+
+        const continuousDefinitionQuestions = [
+            {
+                question: "For a continuous random variable X, what is P(X = 5)?",
+                correctAnswers: ["0", "0.0", "0.00", "zero"],
+                hint: "For continuous variables, the probability of any specific point is always 0",
+                explanation: "For any continuous random variable, P(X = c) = 0 for any constant c, because the probability is calculated over intervals, not points.",
+                steps: `<div class="step-title">Point Probability for Continuous Variables:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Key principle:</strong> Continuous random variables have uncountable ranges</li>
+                                <li><strong>Point probability:</strong> P(X = c) represents the area under the PDF at a single point</li>
+                                <li><strong>Geometric interpretation:</strong> A single point has zero width, so zero area</li>
+                                <li><strong>Mathematical result:</strong> P(X = 5) = ∫₅⁵ f(x) dx = 0</li>
+                                <li><strong>Conclusion:</strong> For any continuous X and constant c: P(X = c) = 0</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For a continuous random variable, is P(2 < X < 3) equal to P(2 ≤ X ≤ 3)?",
+                correctAnswers: ["yes", "Yes", "true", "True", "equal", "same"],
+                hint: "Think about what happens to point probabilities in continuous distributions",
+                explanation: "Yes, they are equal because P(X = 2) = P(X = 3) = 0 for continuous variables, so including or excluding endpoints doesn't change the probability.",
+                steps: `<div class="step-title">Interval Equivalence for Continuous Variables:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Break down the intervals:</strong>
+                                    <ul>
+                                        <li>P(2 ≤ X ≤ 3) = P(2 < X < 3) + P(X = 2) + P(X = 3)</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Point probabilities:</strong> P(X = 2) = 0 and P(X = 3) = 0</li>
+                                <li><strong>Simplify:</strong> P(2 ≤ X ≤ 3) = P(2 < X < 3) + 0 + 0</li>
+                                <li><strong>Conclusion:</strong> P(2 < X < 3) = P(2 ≤ X ≤ 3) = P(2 < X ≤ 3) = P(2 ≤ X < 3)</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "What type of random variable has a range consisting of all real numbers in an interval [a,b]?",
+                correctAnswers: ["continuous", "Continuous"],
+                hint: "Consider whether the range is countable or uncountable",
+                explanation: "A random variable with range [a,b] (an interval of real numbers) is continuous because intervals contain uncountably many values.",
+                steps: `<div class="step-title">Classifying Random Variables by Range:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Range analysis:</strong> [a,b] contains all real numbers between a and b</li>
+                                <li><strong>Countability:</strong> Real intervals are uncountable (infinite and non-listable)</li>
+                                <li><strong>Definition:</strong> Continuous variables have uncountable ranges</li>
+                                <li><strong>Examples:</strong> Height, weight, time, temperature</li>
+                                <li><strong>Classification:</strong> Since [a,b] is uncountable, X is continuous</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const pdfCdfQuestions = [
+            {
+                question: "For X uniform on [0,3] with f(x) = 1/3, what is P(1 ≤ X ≤ 2)?",
+                correctAnswers: ["1/3", "0.333", "0.3333", ".333", ".3333", "0.33"],
+                hint: "Integrate the PDF over the interval [1,2]",
+                explanation: "P(1 ≤ X ≤ 2) = ∫₁² (1/3) dx = (1/3) × (2-1) = 1/3",
+                steps: `<div class="step-title">Computing Probability from PDF:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Setup integral:</strong> P(1 ≤ X ≤ 2) = ∫₁² f(x) dx</li>
+                                <li><strong>Substitute PDF:</strong> = ∫₁² (1/3) dx</li>
+                                <li><strong>Factor out constant:</strong> = (1/3) ∫₁² 1 dx</li>
+                                <li><strong>Evaluate integral:</strong> = (1/3) × [x]₁²</li>
+                                <li><strong>Apply limits:</strong> = (1/3) × (2 - 1) = 1/3</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If X has CDF F(x) = x²/4 for 0 ≤ x ≤ 2, what is the PDF f(x)?",
+                correctAnswers: ["x/2", "0.5x", ".5x", "0.5*x"],
+                hint: "The PDF is the derivative of the CDF: f(x) = F'(x)",
+                explanation: "f(x) = dF(x)/dx = d(x²/4)/dx = 2x/4 = x/2",
+                steps: `<div class="step-title">Finding PDF from CDF:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Relationship:</strong> f(x) = F'(x) = dF(x)/dx</li>
+                                <li><strong>Given CDF:</strong> F(x) = x²/4</li>
+                                <li><strong>Differentiate:</strong> f(x) = d(x²/4)/dx</li>
+                                <li><strong>Apply power rule:</strong> = (1/4) × 2x = 2x/4</li>
+                                <li><strong>Simplify:</strong> f(x) = x/2 for 0 ≤ x ≤ 2</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For a PDF f(x) = cx² on [0,2], what must the constant c be?",
+                correctAnswers: ["3/8", "0.375", ".375", "0.3750"],
+                hint: "Use the fact that ∫ f(x) dx = 1 over the entire range",
+                explanation: "We need ∫₀² cx² dx = 1. This gives c[x³/3]₀² = c(8/3) = 1, so c = 3/8.",
+                steps: `<div class="step-title">Finding Normalization Constant:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Normalization condition:</strong> ∫₋∞^∞ f(x) dx = 1</li>
+                                <li><strong>For our range:</strong> ∫₀² cx² dx = 1</li>
+                                <li><strong>Factor out c:</strong> c ∫₀² x² dx = 1</li>
+                                <li><strong>Evaluate integral:</strong> c [x³/3]₀² = c(8/3 - 0) = 1</li>
+                                <li><strong>Solve for c:</strong> c × 8/3 = 1, so c = 3/8</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const continuousExpectedValueQuestions = [
+            {
+                question: "For X uniform on [0,4], what is E[X]?",
+                correctAnswers: ["2", "2.0", "2.00"],
+                hint: "For uniform distribution on [a,b], E[X] = (a+b)/2",
+                explanation: "For uniform distribution on [0,4], E[X] = (0+4)/2 = 2",
+                steps: `<div class="step-title">Expected Value of Uniform Distribution:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Formula for uniform:</strong> If X ~ Uniform(a,b), then E[X] = (a+b)/2</li>
+                                <li><strong>Identify parameters:</strong> a = 0, b = 4</li>
+                                <li><strong>Apply formula:</strong> E[X] = (0 + 4)/2 = 4/2 = 2</li>
+                                <li><strong>Interpretation:</strong> Expected value is the midpoint of the interval</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For X with PDF f(x) = 2x on [0,1], what is E[X]?",
+                correctAnswers: ["2/3", "0.667", "0.6667", ".667", ".6667"],
+                hint: "E[X] = ∫ x·f(x) dx = ∫₀¹ x·(2x) dx",
+                explanation: "E[X] = ∫₀¹ x·(2x) dx = ∫₀¹ 2x² dx = 2[x³/3]₀¹ = 2(1/3) = 2/3",
+                steps: `<div class="step-title">Computing Expected Value with Integration:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Expected value formula:</strong> E[X] = ∫ x·f(x) dx</li>
+                                <li><strong>Setup integral:</strong> E[X] = ∫₀¹ x·(2x) dx</li>
+                                <li><strong>Simplify integrand:</strong> = ∫₀¹ 2x² dx</li>
+                                <li><strong>Evaluate integral:</strong> = 2 ∫₀¹ x² dx = 2[x³/3]₀¹</li>
+                                <li><strong>Apply limits:</strong> = 2(1/3 - 0) = 2/3</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If E[X] = 3 and E[Y] = 5, what is E[2X - Y + 1]?",
+                correctAnswers: ["2", "2.0", "2.00"],
+                hint: "Use linearity: E[aX + bY + c] = aE[X] + bE[Y] + c",
+                explanation: "E[2X - Y + 1] = 2E[X] - E[Y] + 1 = 2(3) - 5 + 1 = 6 - 5 + 1 = 2",
+                steps: `<div class="step-title">Using Linearity of Expectation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Linearity property:</strong> E[aX + bY + c] = aE[X] + bE[Y] + c</li>
+                                <li><strong>Apply to our expression:</strong> E[2X - Y + 1] = 2E[X] - E[Y] + 1</li>
+                                <li><strong>Substitute values:</strong> = 2(3) - 5 + 1</li>
+                                <li><strong>Calculate:</strong> = 6 - 5 + 1 = 2</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        // Question generation functions
+        function generateQuestion31() {
+            document.getElementById('feedback-31').style.display = 'none';
+            document.getElementById('steps-31').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-31');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion31 = continuousDefinitionQuestions[Math.floor(Math.random() * continuousDefinitionQuestions.length)];
+            
+            document.getElementById('question-31-content').innerHTML = currentQuestion31.question;
+            document.getElementById('hint-31').innerHTML = currentQuestion31.hint;
+        }
+
+        function checkAnswer31() {
+            const userAnswer = document.getElementById('answer-31').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-31');
+            const feedbackDiv = document.getElementById('feedback-31');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion31.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion31.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps31() {
+            const stepsDiv = document.getElementById('steps-31');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion31.steps;
+        }
+
+        function generateQuestion32() {
+            document.getElementById('feedback-32').style.display = 'none';
+            document.getElementById('steps-32').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-32');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion32 = pdfCdfQuestions[Math.floor(Math.random() * pdfCdfQuestions.length)];
+            
+            document.getElementById('question-32-content').innerHTML = currentQuestion32.question;
+            document.getElementById('hint-32').innerHTML = currentQuestion32.hint;
+        }
+
+        function checkAnswer32() {
+            const userAnswer = document.getElementById('answer-32').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-32');
+            const feedbackDiv = document.getElementById('feedback-32');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion32.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion32.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps32() {
+            const stepsDiv = document.getElementById('steps-32');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion32.steps;
+        }
+
+        function generateQuestion33() {
+            document.getElementById('feedback-33').style.display = 'none';
+            document.getElementById('steps-33').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-33');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion33 = continuousExpectedValueQuestions[Math.floor(Math.random() * continuousExpectedValueQuestions.length)];
+            
+            document.getElementById('question-33-content').innerHTML = currentQuestion33.question;
+            document.getElementById('hint-33').innerHTML = currentQuestion33.hint;
+        }
+
+        function checkAnswer33() {
+            const userAnswer = document.getElementById('answer-33').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-33');
+            const feedbackDiv = document.getElementById('feedback-33');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion33.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion33.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps33() {
+            const stepsDiv = document.getElementById('steps-33');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion33.steps;
+        }
+
+        // Page initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Chapter 3: Continuous Random Variables loaded successfully! 📈');
+            
+            // Add fade-in animations
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+            
+            // Generate initial questions
+            setTimeout(() => {
+                generateQuestion31();
+                generateQuestion32();
+                generateQuestion33();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
