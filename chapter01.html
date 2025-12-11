@@ -544,6 +544,85 @@
                                 <li><strong>Sample space size:</strong> |Ω| = 6</li>
                             </ol>
                         </div>`
+            },
+            {
+                question: "An experiment consists of selecting two cards from a deck without replacement. Is this sample space finite or infinite?",
+                correctAnswers: ["finite", "Finite"],
+                hint: "Think about whether you can count all possible outcomes",
+                explanation: "This is finite because there are only C(52,2) = 1,326 possible pairs of cards that can be selected.",
+                steps: `<div class="step-title">Finite vs Infinite Sample Spaces:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Sample space:</strong> All possible pairs of cards</li>
+                                <li><strong>Count:</strong> Choose 2 cards from 52 = C(52,2)</li>
+                                <li><strong>Calculate:</strong> C(52,2) = 52!/(2!×50!) = 1,326</li>
+                                <li><strong>Conclusion:</strong> 1,326 is a finite number, so finite sample space</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A coin is tossed until the first head appears. How many outcomes are in this sample space?",
+                correctAnswers: ["infinite", "Infinite", "countably infinite", "∞"],
+                hint: "Consider that the coin could theoretically be tossed forever",
+                explanation: "The sample space is {H, TH, TTH, TTTH, ...} which is countably infinite since heads might never appear (though with probability 0).",
+                steps: `<div class="step-title">Infinite Sample Space:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Possible outcomes:</strong> H, TH, TTH, TTTH, TTTTH, ...</li>
+                                <li><strong>Pattern:</strong> k-1 tails followed by 1 head, for k = 1, 2, 3, ...</li>
+                                <li><strong>Count:</strong> No upper bound on number of tails before head</li>
+                                <li><strong>Type:</strong> Countably infinite sample space</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "In a race with 5 runners, how many different orders of finish are possible?",
+                correctAnswers: ["120", "one hundred twenty", "5!", "5 factorial"],
+                hint: "This is asking for the number of permutations of 5 people",
+                explanation: "There are 5! = 5 × 4 × 3 × 2 × 1 = 120 different orders of finish.",
+                steps: `<div class="step-title">Counting Race Finishes:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>1st place:</strong> 5 possible runners</li>
+                                <li><strong>2nd place:</strong> 4 remaining runners</li>
+                                <li><strong>3rd place:</strong> 3 remaining runners</li>
+                                <li><strong>4th place:</strong> 2 remaining runners</li>
+                                <li><strong>5th place:</strong> 1 remaining runner</li>
+                                <li><strong>Total:</strong> 5 × 4 × 3 × 2 × 1 = 120 orders</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "An experiment involves measuring the exact height of a person. Is this sample space discrete or continuous?",
+                correctAnswers: ["continuous", "Continuous"],
+                hint: "Think about whether height can take any value in an interval",
+                explanation: "Height is continuous because it can take any value in an interval (e.g., 5.8237... feet), not just discrete values.",
+                steps: `<div class="step-title">Discrete vs Continuous:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Discrete:</strong> Countable outcomes (integers, finite lists)</li>
+                                <li><strong>Continuous:</strong> Uncountable outcomes (real intervals)</li>
+                                <li><strong>Height measurement:</strong> Can be any real number in a range</li>
+                                <li><strong>Example values:</strong> 5.8, 5.82, 5.823, 5.8237, ... (uncountable)</li>
+                                <li><strong>Conclusion:</strong> Continuous sample space</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Two dice are rolled. How many outcomes have at least one die showing a 6?",
+                correctAnswers: ["11", "eleven"],
+                hint: "Use complement: total outcomes minus outcomes with no 6's",
+                explanation: "Total outcomes = 36. Outcomes with no 6's = 5×5 = 25. Outcomes with at least one 6 = 36 - 25 = 11.",
+                steps: `<div class="step-title">Using Complement to Count:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Total outcomes:</strong> 6 × 6 = 36</li>
+                                <li><strong>Complement event:</strong> No 6's on either die</li>
+                                <li><strong>Count complement:</strong> Each die shows {1,2,3,4,5} → 5 × 5 = 25</li>
+                                <li><strong>Apply complement:</strong> At least one 6 = 36 - 25 = 11</li>
+                                <li><strong>Verification:</strong> (1,6), (2,6), ..., (5,6), (6,1), ..., (6,5), (6,6)</li>
+                            </ol>
+                        </div>`
             }
         ];
 
@@ -617,6 +696,82 @@
                                 <li><strong>Key principle:</strong> A ∩ B is subset of both A and B</li>
                                 <li><strong>Therefore:</strong> P(A ∩ B) ≤ min(P(A), P(B))</li>
                                 <li><strong>Maximum:</strong> P(A ∩ B) ≤ min(0.4, 0.7) = 0.4</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If A and B are independent events with P(A) = 0.3 and P(B) = 0.5, what is P(A ∩ B)?",
+                correctAnswers: ["0.15", "0.150", ".15", ".150"],
+                hint: "For independent events: P(A ∩ B) = P(A) × P(B)",
+                explanation: "Since A and B are independent: P(A ∩ B) = P(A) × P(B) = 0.3 × 0.5 = 0.15",
+                steps: `<div class="step-title">Independence Rule:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Independence condition:</strong> P(A ∩ B) = P(A) × P(B)</li>
+                                <li><strong>Given:</strong> P(A) = 0.3, P(B) = 0.5</li>
+                                <li><strong>Apply rule:</strong> P(A ∩ B) = 0.3 × 0.5</li>
+                                <li><strong>Calculate:</strong> P(A ∩ B) = 0.15</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If P(A ∪ B) = 0.9, P(A) = 0.5, and P(B) = 0.6, what is P(A ∩ B)?",
+                correctAnswers: ["0.2", "0.20", ".2", ".20"],
+                hint: "Rearrange the addition rule to solve for the intersection",
+                explanation: "Using P(A ∪ B) = P(A) + P(B) - P(A ∩ B), we get: P(A ∩ B) = 0.5 + 0.6 - 0.9 = 0.2",
+                steps: `<div class="step-title">Finding Intersection from Union:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Addition rule:</strong> P(A ∪ B) = P(A) + P(B) - P(A ∩ B)</li>
+                                <li><strong>Rearrange:</strong> P(A ∩ B) = P(A) + P(B) - P(A ∪ B)</li>
+                                <li><strong>Substitute:</strong> P(A ∩ B) = 0.5 + 0.6 - 0.9</li>
+                                <li><strong>Calculate:</strong> P(A ∩ B) = 1.1 - 0.9 = 0.2</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A fair die is rolled. What is the probability of rolling an even number?",
+                correctAnswers: ["0.5", "1/2", ".5", "0.50"],
+                hint: "Count the favorable outcomes: {2, 4, 6}",
+                explanation: "Even outcomes are {2, 4, 6} out of {1, 2, 3, 4, 5, 6}, so P(even) = 3/6 = 1/2 = 0.5",
+                steps: `<div class="step-title">Classical Probability:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Sample space:</strong> {1, 2, 3, 4, 5, 6}</li>
+                                <li><strong>Even outcomes:</strong> {2, 4, 6}</li>
+                                <li><strong>Count favorable:</strong> 3 outcomes</li>
+                                <li><strong>Count total:</strong> 6 outcomes</li>
+                                <li><strong>Probability:</strong> 3/6 = 1/2 = 0.5</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If P(A|B) = 0.8 and P(B) = 0.3, what is P(A ∩ B)?",
+                correctAnswers: ["0.24", "0.240", ".24", ".240"],
+                hint: "Use the definition of conditional probability: P(A|B) = P(A ∩ B)/P(B)",
+                explanation: "From P(A|B) = P(A ∩ B)/P(B), we get: P(A ∩ B) = P(A|B) × P(B) = 0.8 × 0.3 = 0.24",
+                steps: `<div class="step-title">Conditional Probability Rule:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Definition:</strong> P(A|B) = P(A ∩ B)/P(B)</li>
+                                <li><strong>Rearrange:</strong> P(A ∩ B) = P(A|B) × P(B)</li>
+                                <li><strong>Given:</strong> P(A|B) = 0.8, P(B) = 0.3</li>
+                                <li><strong>Calculate:</strong> P(A ∩ B) = 0.8 × 0.3 = 0.24</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Two events A and B have P(A) = 0.4, P(B) = 0.5, and P(A ∩ B) = 0.1. What is P(Aᶜ ∩ Bᶜ)?",
+                correctAnswers: ["0.2", "0.20", ".2", ".20"],
+                hint: "Use De Morgan's Law: (A ∪ B)ᶜ = Aᶜ ∩ Bᶜ",
+                explanation: "P(Aᶜ ∩ Bᶜ) = P((A ∪ B)ᶜ) = 1 - P(A ∪ B). Since P(A ∪ B) = 0.4 + 0.5 - 0.1 = 0.8, we get P(Aᶜ ∩ Bᶜ) = 1 - 0.8 = 0.2",
+                steps: `<div class="step-title">Using De Morgan's Law:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>De Morgan's Law:</strong> (A ∪ B)ᶜ = Aᶜ ∩ Bᶜ</li>
+                                <li><strong>Therefore:</strong> P(Aᶜ ∩ Bᶜ) = P((A ∪ B)ᶜ) = 1 - P(A ∪ B)</li>
+                                <li><strong>Find P(A ∪ B):</strong> P(A ∪ B) = 0.4 + 0.5 - 0.1 = 0.8</li>
+                                <li><strong>Apply complement:</strong> P(Aᶜ ∩ Bᶜ) = 1 - 0.8 = 0.2</li>
                             </ol>
                         </div>`
             }
