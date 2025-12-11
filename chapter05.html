@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 5: Statistical Estimation | Mathematical Statistics</title>
+    
+    <!-- MathJax for mathematical notation -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    
+    <style>
+        :root {
+            /* Chapter 5 Theme - Statistical Estimation (Cyan) */
+            --primary-color: #00bcd4;
+            --secondary-color: #0097a7;
+            --accent-color: #26c6da;
+            --accent-lighter: #e0f2f1;
+            --background-light: #f8f9fa;
+            --text-primary: #2c3e50;
+            --text-dark: #1a252f;
+            --border-light: #e9ecef;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, #00bcd4, #26c6da);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .chapter-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--shadow-light);
+        }
+
+        .chapter-number {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .chapter-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+        }
+
+        .chapter-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-top: 1rem;
+            font-weight: 300;
+        }
+
+        .chapter-nav {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px var(--shadow-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            background: var(--accent-lighter);
+            color: var(--primary-color);
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+            scroll-margin-top: 100px;
+        }
+
+        .section.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Mathematical notation styling */
+        .math-definition {
+            background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 10px;
+        }
+
+        .math-formula {
+            background: #f8f9fa;
+            border: 2px solid var(--border-light);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border: 2px solid #ff9800;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example-box h4 {
+            color: #e65100;
+            margin-bottom: 1rem;
+        }
+
+        /* MLE special styling */
+        .mle-box {
+            background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+            border: 3px solid #ffc107;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            box-shadow: 0 8px 20px rgba(255, 193, 7, 0.2);
+        }
+
+        .mle-box::before {
+            content: "📈 MAXIMUM LIKELIHOOD ESTIMATION";
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: #ffc107;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .mle-box h4 {
+            color: #ff8f00;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Key theorem boxes */
+        .theorem-box {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            border: 2px solid #9c27b0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .theorem-box h4 {
+            color: #7b1fa2;
+            margin-bottom: 1rem;
+        }
+
+        /* Confidence interval styling */
+        .ci-box {
+            background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c8 100%);
+            border: 3px solid #4caf50;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.2);
+        }
+
+        .ci-box::before {
+            content: "📊 CONFIDENCE INTERVALS";
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .ci-box h4 {
+            color: #2e7d32;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Estimator properties table */
+        .estimator-properties {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px var(--shadow-light);
+        }
+
+        .estimator-properties th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .estimator-properties td {
+            padding: 0.8rem;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+
+        .estimator-properties tr:last-child td {
+            border-bottom: none;
+        }
+
+        .estimator-properties tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        /* Text input question styling */
+        .section-practice {
+            background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--primary-color);
+        }
+
+        .practice-question {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            border: 1px solid var(--border-light);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .question-number {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            background: var(--accent-lighter);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .regenerate-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .regenerate-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .question-input-area {
+            margin: 1.5rem 0;
+        }
+
+        .input-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .answer-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border: 2px solid var(--border-light);
+            border-radius: 10px;
+            background: var(--background-light);
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.1);
+        }
+
+        .answer-input.correct {
+            border-color: #4caf50;
+            background: #e8f5e8;
+        }
+
+        .answer-input.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        .input-hint {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .question-buttons {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .check-btn, .steps-btn, .new-question-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .check-btn {
+            background: #4caf50;
+            color: white;
+        }
+
+        .check-btn:hover {
+            background: #388e3c;
+            transform: translateY(-2px);
+        }
+
+        .steps-btn {
+            background: #ff9800;
+            color: white;
+        }
+
+        .steps-btn:hover {
+            background: #f57c00;
+            transform: translateY(-2px);
+        }
+
+        .new-question-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .new-question-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .question-feedback {
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            font-weight: 600;
+            border: 2px solid;
+        }
+
+        .feedback-correct {
+            background: #e8f5e8;
+            color: #2e7d32;
+            border-color: #4caf50;
+        }
+
+        .feedback-incorrect {
+            background: #ffebee;
+            color: #c62828;
+            border-color: #f44336;
+        }
+
+        .question-steps {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .step-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .step-content {
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .step-content ol, .step-content ul {
+            margin-left: 1.5rem;
+        }
+
+        .step-content li {
+            margin: 0.5rem 0;
+        }
+
+        /* Method comparison table */
+        .method-comparison {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px var(--shadow-light);
+        }
+
+        .method-comparison th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .method-comparison td {
+            padding: 0.8rem;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+
+        .method-comparison tr:last-child td {
+            border-bottom: none;
+        }
+
+        .method-comparison tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Chapter Header -->
+        <header class="chapter-header fade-in">
+            <div class="chapter-number">Chapter 5</div>
+            <h1 class="chapter-title">📊 Statistical Estimation</h1>
+            <p class="chapter-subtitle">From Sample to Population: Inferring Parameters from Data</p>
+        </header>
+
+        <!-- Navigation -->
+        <div class="chapter-nav fade-in">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link" style="background: var(--primary-color); color: white;">← Course Home</a>
+                <a href="#point-estimation" class="nav-link">5.1 Point Estimation</a>
+                <a href="#method-of-moments" class="nav-link">5.2 Method of Moments</a>
+                <a href="#mle" class="nav-link">5.3 Maximum Likelihood</a>
+                <a href="#properties" class="nav-link">5.4 Estimator Properties</a>
+                <a href="#confidence-intervals" class="nav-link">5.5 Confidence Intervals</a>
+                <a href="#bayesian" class="nav-link">5.6 Bayesian Estimation</a>
+            </div>
+        </div>
+
+        <!-- Section 5.1: Point Estimation -->
+        <div class="section fade-in" id="point-estimation">
+            <h2 class="section-title">🎯 5.1 Point Estimation</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Definition: Point Estimator</h4>
+                    <p>A <strong>point estimator</strong> $\hat{\theta}$ is a statistic used to estimate an unknown population parameter $\theta$.</p>
+                    <p>Given a random sample $X_1, X_2, \ldots, X_n$, an estimator is a function:</p>
+                    <div class="math-formula">
+                        $\hat{\theta} = T(X_1, X_2, \ldots, X_n)$
+                    </div>
+                    <p><strong>Key:</strong> $\hat{\theta}$ is a random variable (before observing data), $\hat{\theta}_{obs}$ is the observed estimate.</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 5.1: Common Estimators</h4>
+                    <p><strong>Population Mean μ:</strong> $\hat{\mu} = \bar{X} = \frac{1}{n} \sum_{i=1}^n X_i$</p>
+                    <p><strong>Population Variance σ²:</strong> $\hat{\sigma}^2 = S^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2$</p>
+                    <p><strong>Population Proportion p:</strong> $\hat{p} = \frac{\text{# successes}}{n}$ (for Bernoulli trials)</p>
+                    <p><strong>Population Maximum:</strong> $\hat{\theta} = X_{(n)}$ (for Uniform[0,θ])</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Estimation Problem Framework</h4>
+                    <ol>
+                        <li><strong>Population:</strong> Has unknown parameter θ</li>
+                        <li><strong>Sample:</strong> Observe $X_1, \ldots, X_n \stackrel{\text{iid}}{\sim} f(x; \theta)$</li>
+                        <li><strong>Goal:</strong> Use sample to estimate θ</li>
+                        <li><strong>Methods:</strong> Method of Moments, Maximum Likelihood, Bayesian</li>
+                        <li><strong>Evaluation:</strong> Bias, variance, MSE, efficiency</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Section 5.1 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 5.1 Practice</h3>
+                
+                <div class="practice-question" id="question-5-1">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion51()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-51-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-51">Your Answer:</label>
+                        <input type="text" id="answer-51" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer51()">
+                        <div class="input-hint" id="hint-51"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer51()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps51()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion51()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-51" style="display: none;"></div>
+                    <div class="question-steps" id="steps-51" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5.2: Method of Moments -->
+        <div class="section fade-in" id="method-of-moments">
+            <h2 class="section-title">⚖️ 5.2 Method of Moments</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Method of Moments (MOM)</h4>
+                    <p>Estimate parameters by <strong>equating sample moments to population moments</strong>.</p>
+                    <p><strong>Step 1:</strong> Express population moments in terms of parameters</p>
+                    <p><strong>Step 2:</strong> Set sample moments equal to population moments</p>
+                    <p><strong>Step 3:</strong> Solve for parameter estimates</p>
+                    
+                    <div class="math-formula">
+                        $\text{Sample moment } k: \quad M_k = \frac{1}{n} \sum_{i=1}^n X_i^k$
+                    </div>
+                    <div class="math-formula">
+                        $\text{Population moment } k: \quad \mu_k' = E[X^k]$
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 5.2: Normal Distribution MOM</h4>
+                    <p><strong>Population:</strong> $X \sim N(\mu, \sigma^2)$</p>
+                    <p><strong>Population moments:</strong> $E[X] = \mu$, $E[X^2] = \mu^2 + \sigma^2$</p>
+                    <p><strong>Sample moments:</strong> $M_1 = \bar{X}$, $M_2 = \frac{1}{n}\sum X_i^2$</p>
+                    <p><strong>Equations:</strong></p>
+                    <ul>
+                        <li>$\bar{X} = \mu \Rightarrow \hat{\mu}_{MOM} = \bar{X}$</li>
+                        <li>$M_2 = \mu^2 + \sigma^2 \Rightarrow \hat{\sigma}^2_{MOM} = M_2 - \bar{X}^2$</li>
+                    </ul>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>MOM Properties</h4>
+                    <ul>
+                        <li><strong>Simple:</strong> Easy to compute, just solve equations</li>
+                        <li><strong>General:</strong> Works for any distribution</li>
+                        <li><strong>Consistent:</strong> Converges to true parameter as n → ∞</li>
+                        <li><strong>Not always optimal:</strong> May not be most efficient</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 5.2 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 5.2 Practice</h3>
+                
+                <div class="practice-question" id="question-5-2">
+                    <div class="question-header">
+                        <span class="question-number">Question 2</span>
+                        <button class="regenerate-btn" onclick="generateQuestion52()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-52-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-52">Your Answer:</label>
+                        <input type="text" id="answer-52" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer52()">
+                        <div class="input-hint" id="hint-52"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer52()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps52()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion52()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-52" style="display: none;"></div>
+                    <div class="question-steps" id="steps-52" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5.3: Maximum Likelihood Estimation -->
+        <div class="section fade-in" id="mle">
+            <h2 class="section-title">📈 5.3 Maximum Likelihood Estimation</h2>
+            <div class="section-content">
+                <div class="mle-box">
+                    <h4>Maximum Likelihood Estimation (MLE)</h4>
+                    <p>Find the parameter value $\theta$ that <strong>maximizes the likelihood</strong> of observing the sample.</p>
+                    <div class="math-formula">
+                        $L(\theta) = \prod_{i=1}^n f(x_i; \theta) = f(x_1; \theta) \cdot f(x_2; \theta) \cdot \ldots \cdot f(x_n; \theta)$
+                    </div>
+                    <p><strong>Log-likelihood:</strong> $\ell(\theta) = \ln L(\theta) = \sum_{i=1}^n \ln f(x_i; \theta)$</p>
+                    <p><strong>MLE:</strong> $\hat{\theta}_{MLE} = \arg\max_\theta L(\theta) = \arg\max_\theta \ell(\theta)$</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>MLE Procedure</h4>
+                    <ol>
+                        <li><strong>Write likelihood:</strong> $L(\theta) = \prod_{i=1}^n f(x_i; \theta)$</li>
+                        <li><strong>Take log-likelihood:</strong> $\ell(\theta) = \sum_{i=1}^n \ln f(x_i; \theta)$</li>
+                        <li><strong>Differentiate:</strong> $\frac{d\ell(\theta)}{d\theta} = 0$ (likelihood equation)</li>
+                        <li><strong>Solve:</strong> Find $\hat{\theta}_{MLE}$</li>
+                        <li><strong>Verify:</strong> Check second derivative < 0 (maximum)</li>
+                    </ol>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 5.3: Exponential Distribution MLE</h4>
+                    <p><strong>Population:</strong> $X \sim \text{Exponential}(\lambda)$ with $f(x) = \lambda e^{-\lambda x}$</p>
+                    <p><strong>Likelihood:</strong> $L(\lambda) = \prod_{i=1}^n \lambda e^{-\lambda x_i} = \lambda^n e^{-\lambda \sum x_i}$</p>
+                    <p><strong>Log-likelihood:</strong> $\ell(\lambda) = n \ln \lambda - \lambda \sum_{i=1}^n x_i$</p>
+                    <p><strong>Differentiate:</strong> $\frac{d\ell}{d\lambda} = \frac{n}{\lambda} - \sum_{i=1}^n x_i = 0$</p>
+                    <p><strong>Solve:</strong> $\hat{\lambda}_{MLE} = \frac{n}{\sum_{i=1}^n x_i} = \frac{1}{\bar{x}}$</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>MLE Properties</h4>
+                    <ul>
+                        <li><strong>Consistent:</strong> $\hat{\theta}_{MLE} \xrightarrow{P} \theta$ as $n \to \infty$</li>
+                        <li><strong>Asymptotically Normal:</strong> $\sqrt{n}(\hat{\theta}_{MLE} - \theta) \xrightarrow{d} N(0, I(\theta)^{-1})$</li>
+                        <li><strong>Asymptotically Efficient:</strong> Achieves Cramér-Rao Lower Bound</li>
+                        <li><strong>Invariant:</strong> If $\hat{\theta}_{MLE}$ estimates $\theta$, then $g(\hat{\theta}_{MLE})$ estimates $g(\theta)$</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 5.3 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 5.3 Practice</h3>
+                
+                <div class="practice-question" id="question-5-3">
+                    <div class="question-header">
+                        <span class="question-number">Question 3</span>
+                        <button class="regenerate-btn" onclick="generateQuestion53()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-53-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-53">Your Answer:</label>
+                        <input type="text" id="answer-53" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer53()">
+                        <div class="input-hint" id="hint-53"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer53()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps53()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion53()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-53" style="display: none;"></div>
+                    <div class="question-steps" id="steps-53" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5.4: Properties of Estimators -->
+        <div class="section fade-in" id="properties">
+            <h2 class="section-title">⚖️ 5.4 Properties of Estimators</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Key Properties of Estimators</h4>
+                    <table class="estimator-properties">
+                        <tr>
+                            <th>Property</th>
+                            <th>Definition</th>
+                            <th>Formula</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Bias</strong></td>
+                            <td>Expected difference from true parameter</td>
+                            <td>$\text{Bias}(\hat{\theta}) = E[\hat{\theta}] - \theta$</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Unbiased</strong></td>
+                            <td>No systematic error</td>
+                            <td>$E[\hat{\theta}] = \theta$ (Bias = 0)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Variance</strong></td>
+                            <td>Measure of precision</td>
+                            <td>$\text{Var}(\hat{\theta}) = E[(\hat{\theta} - E[\hat{\theta}])^2]$</td>
+                        </tr>
+                        <tr>
+                            <td><strong>MSE</strong></td>
+                            <td>Total error (bias² + variance)</td>
+                            <td>$\text{MSE}(\hat{\theta}) = \text{Bias}^2 + \text{Var}(\hat{\theta})$</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Consistent</strong></td>
+                            <td>Converges to true parameter</td>
+                            <td>$\hat{\theta}_n \xrightarrow{P} \theta$ as $n \to \infty$</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 5.4: Sample Variance Properties</h4>
+                    <p><strong>Biased estimator:</strong> $\hat{\sigma}^2_B = \frac{1}{n}\sum(X_i - \bar{X})^2$</p>
+                    <p>$E[\hat{\sigma}^2_B] = \frac{n-1}{n}\sigma^2 < \sigma^2$ (underestimates)</p>
+                    <p><strong>Unbiased estimator:</strong> $\hat{\sigma}^2_U = \frac{1}{n-1}\sum(X_i - \bar{X})^2 = S^2$</p>
+                    <p>$E[S^2] = \sigma^2$ (unbiased)</p>
+                    <p><strong>Trade-off:</strong> Unbiased estimator has larger variance than biased!</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Bias-Variance Trade-off</h4>
+                    <p>For any estimator $\hat{\theta}$:</p>
+                    <div class="math-formula">
+                        $\text{MSE}(\hat{\theta}) = [\text{Bias}(\hat{\theta})]^2 + \text{Var}(\hat{\theta})$
+                    </div>
+                    <ul>
+                        <li><strong>Lower bias</strong> may increase variance</li>
+                        <li><strong>Lower variance</strong> may increase bias</li>
+                        <li><strong>Goal:</strong> Minimize MSE (optimal trade-off)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 5.4 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 5.4 Practice</h3>
+                
+                <div class="practice-question" id="question-5-4">
+                    <div class="question-header">
+                        <span class="question-number">Question 4</span>
+                        <button class="regenerate-btn" onclick="generateQuestion54()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-54-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-54">Your Answer:</label>
+                        <input type="text" id="answer-54" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer54()">
+                        <div class="input-hint" id="hint-54"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer54()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps54()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion54()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-54" style="display: none;"></div>
+                    <div class="question-steps" id="steps-54" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5.5: Confidence Intervals -->
+        <div class="section fade-in" id="confidence-intervals">
+            <h2 class="section-title">📊 5.5 Confidence Intervals</h2>
+            <div class="section-content">
+                <div class="ci-box">
+                    <h4>Confidence Interval</h4>
+                    <p>A <strong>$(1-\alpha)100\%$ confidence interval</strong> for parameter $\theta$ is a random interval $[L, U]$ such that:</p>
+                    <div class="math-formula">
+                        $P(L \leq \theta \leq U) = 1 - \alpha$
+                    </div>
+                    <p><strong>Interpretation:</strong> If we repeat sampling many times, $(1-\alpha)100\%$ of intervals will contain the true $\theta$.</p>
+                </div>
+
+                <div class="math-definition">
+                    <h4>General CI Construction</h4>
+                    <ol>
+                        <li><strong>Find a pivot:</strong> $Q(\hat{\theta}, \theta)$ with known distribution</li>
+                        <li><strong>Find critical values:</strong> $P(a \leq Q \leq b) = 1 - \alpha$</li>
+                        <li><strong>Invert inequality:</strong> Solve for $\theta$ bounds</li>
+                        <li><strong>Result:</strong> $(1-\alpha)100\%$ CI for $\theta$</li>
+                    </ol>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 5.5: Mean with Known Variance</h4>
+                    <p><strong>Setup:</strong> $X_1, \ldots, X_n \stackrel{\text{iid}}{\sim} N(\mu, \sigma^2)$ with $\sigma^2$ known</p>
+                    <p><strong>Pivot:</strong> $Z = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0,1)$</p>
+                    <p><strong>Critical values:</strong> $P(-z_{\alpha/2} \leq Z \leq z_{\alpha/2}) = 1 - \alpha$</p>
+                    <p><strong>95% CI:</strong> $\bar{x} \pm 1.96 \cdot \frac{\sigma}{\sqrt{n}}$</p>
+                    <p><strong>General CI:</strong> $\bar{x} \pm z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}$</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>CI Properties</h4>
+                    <ul>
+                        <li><strong>Coverage probability:</strong> $P(\theta \in [L,U]) = 1 - \alpha$ (exactly)</li>
+                        <li><strong>Width:</strong> Smaller width = more precise estimate</li>
+                        <li><strong>Confidence level:</strong> Higher confidence = wider interval</li>
+                        <li><strong>Sample size:</strong> Larger n = narrower interval</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 5.5 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 5.5 Practice</h3>
+                
+                <div class="practice-question" id="question-5-5">
+                    <div class="question-header">
+                        <span class="question-number">Question 5</span>
+                        <button class="regenerate-btn" onclick="generateQuestion55()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-55-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-55">Your Answer:</label>
+                        <input type="text" id="answer-55" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer55()">
+                        <div class="input-hint" id="hint-55"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer55()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps55()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion55()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-55" style="display: none;"></div>
+                    <div class="question-steps" id="steps-55" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5.6: Bayesian Estimation -->
+        <div class="section fade-in" id="bayesian">
+            <h2 class="section-title">🔮 5.6 Bayesian Estimation</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Bayesian Approach</h4>
+                    <p>Treat the parameter $\theta$ as a random variable with a <strong>prior distribution</strong>.</p>
+                    <div class="math-formula">
+                        $\text{Posterior} \propto \text{Likelihood} \times \text{Prior}$
+                    </div>
+                    <div class="math-formula">
+                        $\pi(\theta | x_1, \ldots, x_n) = \frac{L(\theta) \pi(\theta)}{\int L(\theta) \pi(\theta) d\theta}$
+                    </div>
+                    <p><strong>Point estimates:</strong> Posterior mean, median, or mode</p>
+                    <p><strong>Interval estimates:</strong> Credible intervals from posterior</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 5.6: Beta-Binomial Model</h4>
+                    <p><strong>Likelihood:</strong> $X \sim \text{Binomial}(n, p)$</p>
+                    <p><strong>Prior:</strong> $p \sim \text{Beta}(\alpha, \beta)$</p>
+                    <p><strong>Posterior:</strong> $p | X \sim \text{Beta}(\alpha + X, \beta + n - X)$</p>
+                    <p><strong>Posterior mean:</strong> $E[p | X] = \frac{\alpha + X}{\alpha + \beta + n}$</p>
+                    <p><strong>Interpretation:</strong> Combines prior belief with observed data</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Bayesian vs. Frequentist</h4>
+                    <table class="method-comparison">
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Frequentist</th>
+                            <th>Bayesian</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Parameter</strong></td>
+                            <td>Fixed unknown constant</td>
+                            <td>Random variable</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Information</strong></td>
+                            <td>Data only</td>
+                            <td>Data + Prior knowledge</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Intervals</strong></td>
+                            <td>Confidence intervals</td>
+                            <td>Credible intervals</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Interpretation</strong></td>
+                            <td>Long-run frequency</td>
+                            <td>Probability statement</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Question arrays and current question variables
+        let currentQuestion51 = null;
+        let currentQuestion52 = null;
+        let currentQuestion53 = null;
+        let currentQuestion54 = null;
+        let currentQuestion55 = null;
+
+        const pointEstimationQuestions = [
+            {
+                question: "What is the most common estimator for the population mean μ?",
+                correctAnswers: ["sample mean", "x̄", "x bar", "xbar", "mean"],
+                hint: "Think about the most natural statistic to estimate the center",
+                explanation: "The sample mean X̄ = (1/n)∑Xᵢ is the most common and natural estimator for the population mean μ.",
+                steps: `<div class="step-title">Estimating Population Mean:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Parameter:</strong> Population mean μ</li>
+                                <li><strong>Natural choice:</strong> Use sample average</li>
+                                <li><strong>Estimator:</strong> X̄ = (1/n)∑Xᵢ</li>
+                                <li><strong>Properties:</strong> Unbiased, consistent, efficient</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "True or False: A point estimator is a fixed number.",
+                correctAnswers: ["false", "False", "no", "No"],
+                hint: "Think about what an estimator is before you observe the data",
+                explanation: "False. A point estimator is a random variable (function of random sample) before observing data. After observing data, we get a specific estimate.",
+                steps: `<div class="step-title">Understanding Estimators:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Estimator:</strong> θ̂ = T(X₁, X₂, ..., Xₙ) - random variable</li>
+                                <li><strong>Before data:</strong> Random function of random variables</li>
+                                <li><strong>After data:</strong> θ̂obs = specific number</li>
+                                <li><strong>Key:</strong> Estimator ≠ Estimate</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For Uniform[0,θ] distribution, what is a natural estimator for the maximum θ?",
+                correctAnswers: ["max", "maximum", "x(n)", "largest", "x max"],
+                hint: "What sample statistic gives information about the upper bound?",
+                explanation: "For Uniform[0,θ], the maximum value X₍ₙ₎ = max{X₁,...,Xₙ} is a natural estimator since θ must be at least as large as any observed value.",
+                steps: `<div class="step-title">Estimating Uniform Maximum:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Distribution:</strong> Uniform[0, θ]</li>
+                                <li><strong>Constraint:</strong> θ ≥ max{observed values}</li>
+                                <li><strong>Natural choice:</strong> θ̂ = X₍ₙ₎ = max{X₁,...,Xₙ}</li>
+                                <li><strong>Properties:</strong> Biased but consistent</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const methodOfMomentsQuestions = [
+            {
+                question: "In the method of moments, what do you equate to estimate parameters?",
+                correctAnswers: ["sample and population moments", "moments", "sample moments to population moments"],
+                hint: "Think about what moments are being matched",
+                explanation: "Method of Moments equates sample moments to population moments to estimate parameters.",
+                steps: `<div class="step-title">Method of Moments Principle:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Idea:</strong> Sample should resemble population</li>
+                                <li><strong>Moments:</strong> E[X], E[X²], E[X³], ...</li>
+                                <li><strong>Equation:</strong> Sample moment = Population moment</li>
+                                <li><strong>Solve:</strong> For parameter estimates</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For Exponential(λ), if sample mean is 2.5, what is the MOM estimate of λ?",
+                correctAnswers: ["0.4", "2/5", ".4", "0.40"],
+                hint: "For exponential, E[X] = 1/λ, so λ = 1/E[X]",
+                explanation: "For Exponential(λ), E[X] = 1/λ. Setting sample mean = population mean: 2.5 = 1/λ, so λ̂ = 1/2.5 = 0.4",
+                steps: `<div class="step-title">Exponential MOM:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Population mean:</strong> E[X] = 1/λ</li>
+                                <li><strong>Sample mean:</strong> X̄ = 2.5</li>
+                                <li><strong>Equation:</strong> 2.5 = 1/λ</li>
+                                <li><strong>Solve:</strong> λ̂ = 1/2.5 = 0.4</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "How many equations do you need for k unknown parameters in MOM?",
+                correctAnswers: ["k", "same number", "equal number"],
+                hint: "Think about solving a system of equations",
+                explanation: "You need k equations for k unknown parameters - typically use the first k moments to form k equations.",
+                steps: `<div class="step-title">MOM System Size:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Parameters:</strong> k unknowns</li>
+                                <li><strong>Equations needed:</strong> k equations</li>
+                                <li><strong>Source:</strong> First k sample moments</li>
+                                <li><strong>System:</strong> k equations in k unknowns</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const mleQuestions = [
+            {
+                question: "What does MLE maximize?",
+                correctAnswers: ["likelihood", "likelihood function", "probability of data"],
+                hint: "Think about what MLE stands for",
+                explanation: "Maximum Likelihood Estimation (MLE) maximizes the likelihood function L(θ), which represents the probability of observing the sample.",
+                steps: `<div class="step-title">MLE Objective:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Goal:</strong> Find most likely parameter value</li>
+                                <li><strong>Likelihood:</strong> L(θ) = P(observe sample | θ)</li>
+                                <li><strong>Maximize:</strong> L(θ) over all possible θ</li>
+                                <li><strong>Result:</strong> θ̂MLE = argmax L(θ)</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Why do we often maximize log-likelihood instead of likelihood?",
+                correctAnswers: ["easier", "computational", "products become sums", "logarithm"],
+                hint: "Think about what happens to products when you take logarithms",
+                explanation: "Log-likelihood is easier to work with because: (1) products become sums, (2) exponentials become linear, (3) same maximum as likelihood.",
+                steps: `<div class="step-title">Advantages of Log-Likelihood:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Products → Sums:</strong> ln(abc) = ln(a) + ln(b) + ln(c)</li>
+                                <li><strong>Exponentials:</strong> ln(eˣ) = x</li>
+                                <li><strong>Monotonic:</strong> Same maximum as L(θ)</li>
+                                <li><strong>Numerical stability:</strong> Avoids underflow</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For Normal(μ,1) with sample mean x̄=5, what is the MLE of μ?",
+                correctAnswers: ["5", "5.0", "sample mean", "x̄"],
+                hint: "For normal distribution, MLE of mean equals sample mean",
+                explanation: "For Normal(μ,σ²), the MLE of μ is the sample mean. So μ̂MLE = x̄ = 5.",
+                steps: `<div class="step-title">Normal Mean MLE:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Distribution:</strong> Normal(μ, 1)</li>
+                                <li><strong>Log-likelihood:</strong> ℓ(μ) = -½∑(xᵢ - μ)²</li>
+                                <li><strong>Derivative:</strong> dℓ/dμ = ∑(xᵢ - μ)</li>
+                                <li><strong>Set to 0:</strong> ∑(xᵢ - μ) = 0 → μ̂ = x̄ = 5</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const estimatorPropertiesQuestions = [
+            {
+                question: "If E[θ̂] = θ, what property does the estimator have?",
+                correctAnswers: ["unbiased", "unbiasedness", "no bias"],
+                hint: "What does it mean when expected value equals the parameter?",
+                explanation: "If E[θ̂] = θ, the estimator is unbiased - it has no systematic error and equals the true parameter on average.",
+                steps: `<div class="step-title">Unbiased Estimator:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Definition:</strong> E[θ̂] = θ</li>
+                                <li><strong>Meaning:</strong> No systematic error</li>
+                                <li><strong>On average:</strong> Estimator equals true value</li>
+                                <li><strong>Bias:</strong> Bias(θ̂) = E[θ̂] - θ = 0</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "What does MSE stand for?",
+                correctAnswers: ["mean squared error", "mean square error"],
+                hint: "Think about the acronym M-S-E",
+                explanation: "MSE stands for Mean Squared Error, which measures total error as bias² + variance.",
+                steps: `<div class="step-title">Mean Squared Error:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Definition:</strong> MSE(θ̂) = E[(θ̂ - θ)²]</li>
+                                <li><strong>Decomposition:</strong> MSE = Bias² + Variance</li>
+                                <li><strong>Measures:</strong> Total estimation error</li>
+                                <li><strong>Goal:</strong> Minimize MSE</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If Bias²=4 and Var=9, what is the MSE?",
+                correctAnswers: ["13", "13.0"],
+                hint: "MSE = Bias² + Variance",
+                explanation: "MSE = Bias² + Variance = 4 + 9 = 13",
+                steps: `<div class="step-title">MSE Calculation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Formula:</strong> MSE = Bias² + Var</li>
+                                <li><strong>Given:</strong> Bias² = 4, Var = 9</li>
+                                <li><strong>Calculate:</strong> MSE = 4 + 9 = 13</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const confidenceIntervalQuestions = [
+            {
+                question: "What does a 95% confidence interval mean?",
+                correctAnswers: ["95% of intervals contain true parameter", "95% coverage", "long run frequency"],
+                hint: "Think about the long-run interpretation",
+                explanation: "A 95% CI means that if we repeat sampling many times, 95% of the intervals will contain the true parameter.",
+                steps: `<div class="step-title">CI Interpretation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Frequency interpretation:</strong> Long-run coverage</li>
+                                <li><strong>95% means:</strong> 95 out of 100 intervals contain θ</li>
+                                <li><strong>NOT:</strong> 95% probability θ is in this interval</li>
+                                <li><strong>Parameter is fixed:</strong> Interval is random</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "As sample size increases, what happens to CI width?",
+                correctAnswers: ["decreases", "gets smaller", "narrows", "shrinks"],
+                hint: "Think about the standard error in CI formulas",
+                explanation: "As n increases, standard error decreases (∝ 1/√n), making confidence intervals narrower and more precise.",
+                steps: `<div class="step-title">Sample Size Effect on CI:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>CI width ∝ standard error</strong></li>
+                                <li><strong>Standard error ∝ 1/√n</strong></li>
+                                <li><strong>Larger n → smaller SE → narrower CI</strong></li>
+                                <li><strong>Result:</strong> More precise estimation</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For 99% CI compared to 95% CI, the width is:",
+                correctAnswers: ["wider", "larger", "bigger", "increased"],
+                hint: "Higher confidence requires capturing the parameter more often",
+                explanation: "99% CI is wider than 95% CI because we need a wider interval to capture the true parameter 99% of the time instead of 95%.",
+                steps: `<div class="step-title">Confidence Level vs Width:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Higher confidence:</strong> Must capture θ more often</li>
+                                <li><strong>99% vs 95%:</strong> z₀.₀₀₅ > z₀.₀₂₅</li>
+                                <li><strong>Critical value larger:</strong> Wider interval</li>
+                                <li><strong>Trade-off:</strong> Confidence vs Precision</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        // Question generation functions
+        function generateQuestion51() {
+            document.getElementById('feedback-51').style.display = 'none';
+            document.getElementById('steps-51').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-51');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion51 = pointEstimationQuestions[Math.floor(Math.random() * pointEstimationQuestions.length)];
+            
+            document.getElementById('question-51-content').innerHTML = currentQuestion51.question;
+            document.getElementById('hint-51').innerHTML = currentQuestion51.hint;
+        }
+
+        function checkAnswer51() {
+            const userAnswer = document.getElementById('answer-51').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-51');
+            const feedbackDiv = document.getElementById('feedback-51');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion51.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion51.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps51() {
+            const stepsDiv = document.getElementById('steps-51');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion51.steps;
+        }
+
+        // Similar functions for questions 52-55 (abbreviated for space)
+        function generateQuestion52() {
+            document.getElementById('feedback-52').style.display = 'none';
+            document.getElementById('steps-52').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-52');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion52 = methodOfMomentsQuestions[Math.floor(Math.random() * methodOfMomentsQuestions.length)];
+            
+            document.getElementById('question-52-content').innerHTML = currentQuestion52.question;
+            document.getElementById('hint-52').innerHTML = currentQuestion52.hint;
+        }
+
+        function checkAnswer52() {
+            const userAnswer = document.getElementById('answer-52').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-52');
+            const feedbackDiv = document.getElementById('feedback-52');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion52.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion52.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps52() {
+            const stepsDiv = document.getElementById('steps-52');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion52.steps;
+        }
+
+        function generateQuestion53() {
+            document.getElementById('feedback-53').style.display = 'none';
+            document.getElementById('steps-53').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-53');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion53 = mleQuestions[Math.floor(Math.random() * mleQuestions.length)];
+            
+            document.getElementById('question-53-content').innerHTML = currentQuestion53.question;
+            document.getElementById('hint-53').innerHTML = currentQuestion53.hint;
+        }
+
+        function checkAnswer53() {
+            const userAnswer = document.getElementById('answer-53').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-53');
+            const feedbackDiv = document.getElementById('feedback-53');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion53.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion53.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps53() {
+            const stepsDiv = document.getElementById('steps-53');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion53.steps;
+        }
+
+        function generateQuestion54() {
+            document.getElementById('feedback-54').style.display = 'none';
+            document.getElementById('steps-54').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-54');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion54 = estimatorPropertiesQuestions[Math.floor(Math.random() * estimatorPropertiesQuestions.length)];
+            
+            document.getElementById('question-54-content').innerHTML = currentQuestion54.question;
+            document.getElementById('hint-54').innerHTML = currentQuestion54.hint;
+        }
+
+        function checkAnswer54() {
+            const userAnswer = document.getElementById('answer-54').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-54');
+            const feedbackDiv = document.getElementById('feedback-54');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion54.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion54.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps54() {
+            const stepsDiv = document.getElementById('steps-54');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion54.steps;
+        }
+
+        function generateQuestion55() {
+            document.getElementById('feedback-55').style.display = 'none';
+            document.getElementById('steps-55').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-55');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion55 = confidenceIntervalQuestions[Math.floor(Math.random() * confidenceIntervalQuestions.length)];
+            
+            document.getElementById('question-55-content').innerHTML = currentQuestion55.question;
+            document.getElementById('hint-55').innerHTML = currentQuestion55.hint;
+        }
+
+        function checkAnswer55() {
+            const userAnswer = document.getElementById('answer-55').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-55');
+            const feedbackDiv = document.getElementById('feedback-55');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion55.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion55.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps55() {
+            const stepsDiv = document.getElementById('steps-55');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion55.steps;
+        }
+
+        // Page initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Chapter 5: Statistical Estimation loaded successfully! 📊');
+            
+            // Add fade-in animations
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+            
+            // Generate initial questions
+            setTimeout(() => {
+                generateQuestion51();
+                generateQuestion52();
+                generateQuestion53();
+                generateQuestion54();
+                generateQuestion55();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
