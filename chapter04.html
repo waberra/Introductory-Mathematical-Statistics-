@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 4: Random Samples & Sampling Distributions | Mathematical Statistics</title>
+    
+    <!-- MathJax for mathematical notation -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    
+    <style>
+        :root {
+            /* Chapter 4 Theme - Sampling Distributions (Light Blue) */
+            --primary-color: #2196f3;
+            --secondary-color: #1976d2;
+            --accent-color: #42a5f5;
+            --accent-lighter: #e3f2fd;
+            --background-light: #f8f9fa;
+            --text-primary: #2c3e50;
+            --text-dark: #1a252f;
+            --border-light: #e9ecef;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, #2196f3, #42a5f5);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .chapter-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--shadow-light);
+        }
+
+        .chapter-number {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .chapter-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+        }
+
+        .chapter-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-top: 1rem;
+            font-weight: 300;
+        }
+
+        .chapter-nav {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px var(--shadow-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            background: var(--accent-lighter);
+            color: var(--primary-color);
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+            scroll-margin-top: 100px;
+        }
+
+        .section.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Mathematical notation styling */
+        .math-definition {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 10px;
+        }
+
+        .math-formula {
+            background: #f8f9fa;
+            border: 2px solid var(--border-light);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border: 2px solid #ff9800;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example-box h4 {
+            color: #e65100;
+            margin-bottom: 1rem;
+        }
+
+        /* Central Limit Theorem special styling */
+        .clt-box {
+            background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c8 100%);
+            border: 3px solid #4caf50;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.2);
+        }
+
+        .clt-box::before {
+            content: "🎯 CENTRAL LIMIT THEOREM";
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .clt-box h4 {
+            color: #2e7d32;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Key theorem boxes */
+        .theorem-box {
+            background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .theorem-box h4 {
+            color: #ff8f00;
+            margin-bottom: 1rem;
+        }
+
+        /* Text input question styling */
+        .section-practice {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--primary-color);
+        }
+
+        .practice-question {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            border: 1px solid var(--border-light);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .question-number {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            background: var(--accent-lighter);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .regenerate-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .regenerate-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .question-input-area {
+            margin: 1.5rem 0;
+        }
+
+        .input-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .answer-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border: 2px solid var(--border-light);
+            border-radius: 10px;
+            background: var(--background-light);
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+        }
+
+        .answer-input.correct {
+            border-color: #4caf50;
+            background: #e8f5e8;
+        }
+
+        .answer-input.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        .input-hint {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .question-buttons {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .check-btn, .steps-btn, .new-question-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .check-btn {
+            background: #4caf50;
+            color: white;
+        }
+
+        .check-btn:hover {
+            background: #388e3c;
+            transform: translateY(-2px);
+        }
+
+        .steps-btn {
+            background: #ff9800;
+            color: white;
+        }
+
+        .steps-btn:hover {
+            background: #f57c00;
+            transform: translateY(-2px);
+        }
+
+        .new-question-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .new-question-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .question-feedback {
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            font-weight: 600;
+            border: 2px solid;
+        }
+
+        .feedback-correct {
+            background: #e8f5e8;
+            color: #2e7d32;
+            border-color: #4caf50;
+        }
+
+        .feedback-incorrect {
+            background: #ffebee;
+            color: #c62828;
+            border-color: #f44336;
+        }
+
+        .question-steps {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .step-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .step-content {
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .step-content ol, .step-content ul {
+            margin-left: 1.5rem;
+        }
+
+        .step-content li {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Chapter Header -->
+        <header class="chapter-header fade-in">
+            <div class="chapter-number">Chapter 4</div>
+            <h1 class="chapter-title">🎯 Random Samples & Sampling Distributions</h1>
+            <p class="chapter-subtitle">From Population to Sample: The Foundation of Statistical Inference</p>
+        </header>
+
+        <!-- Navigation -->
+        <div class="chapter-nav fade-in">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link" style="background: var(--primary-color); color: white;">← Course Home</a>
+                <a href="#random-samples" class="nav-link">4.1 Random Samples</a>
+                <a href="#sample-statistics" class="nav-link">4.2 Sample Statistics</a>
+                <a href="#sample-mean" class="nav-link">4.3 Sample Mean</a>
+                <a href="#clt" class="nav-link">4.4 Central Limit Theorem</a>
+                <a href="#distributions" class="nav-link">4.5 Key Distributions</a>
+            </div>
+        </div>
+
+        <!-- Section 4.1: Random Samples -->
+        <div class="section fade-in" id="random-samples">
+            <h2 class="section-title">🎲 4.1 Random Samples</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Definition: Random Sample</h4>
+                    <p>Random variables $X_1, X_2, \ldots, X_n$ form a <strong>random sample of size $n$</strong> if:</p>
+                    <ol>
+                        <li>Each $X_i$ has the same distribution as population $X$</li>
+                        <li>$X_1, X_2, \ldots, X_n$ are mutually independent</li>
+                    </ol>
+                    <p>Notation: $X_1, X_2, \ldots, X_n \stackrel{\text{iid}}{\sim} X$</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 4.1: Coin Flips</h4>
+                    <p><strong>Population:</strong> Single coin flip with $P(\text{Heads}) = 0.5$</p>
+                    <p><strong>Random Sample:</strong> 10 independent flips</p>
+                    <p><strong>Joint PDF:</strong> $f(x_1, x_2, \ldots, x_{10}) = \prod_{i=1}^{10} f(x_i)$</p>
+                </div>
+            </div>
+
+            <!-- Section 4.1 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 4.1 Practice</h3>
+                
+                <div class="practice-question" id="question-4-1">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion41()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-41-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-41">Your Answer:</label>
+                        <input type="text" id="answer-41" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer41()">
+                        <div class="input-hint" id="hint-41"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer41()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps41()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion41()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-41" style="display: none;"></div>
+                    <div class="question-steps" id="steps-41" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4.2: Sample Statistics -->
+        <div class="section fade-in" id="sample-statistics">
+            <h2 class="section-title">📊 4.2 Sample Statistics</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Common Sample Statistics</h4>
+                    <ul>
+                        <li><strong>Sample Mean:</strong> $\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i$</li>
+                        <li><strong>Sample Variance:</strong> $S^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2$</li>
+                        <li><strong>Sample Standard Deviation:</strong> $S = \sqrt{S^2}$</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 4.2: Sample Statistics</h4>
+                    <p><strong>Sample:</strong> 2, 4, 6</p>
+                    <p><strong>Sample Mean:</strong> $\bar{X} = (2 + 4 + 6)/3 = 4$</p>
+                    <p><strong>Sample Variance:</strong> $S^2 = [(2-4)^2 + (4-4)^2 + (6-4)^2]/(3-1) = 4$</p>
+                </div>
+            </div>
+
+            <!-- Section 4.2 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 4.2 Practice</h3>
+                
+                <div class="practice-question" id="question-4-2">
+                    <div class="question-header">
+                        <span class="question-number">Question 2</span>
+                        <button class="regenerate-btn" onclick="generateQuestion42()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-42-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-42">Your Answer:</label>
+                        <input type="text" id="answer-42" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer42()">
+                        <div class="input-hint" id="hint-42"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer42()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps42()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion42()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-42" style="display: none;"></div>
+                    <div class="question-steps" id="steps-42" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4.3: Sample Mean Distribution -->
+        <div class="section fade-in" id="sample-mean">
+            <h2 class="section-title">📈 4.3 Distribution of Sample Mean</h2>
+            <div class="section-content">
+                <div class="theorem-box">
+                    <h4>Sample Mean Properties</h4>
+                    <p>If $X_1, X_2, \ldots, X_n \stackrel{\text{iid}}{\sim} X$ with $E[X] = \mu$ and $\text{Var}(X) = \sigma^2$:</p>
+                    <div class="math-formula">
+                        $E[\bar{X}] = \mu$ and $\text{Var}(\bar{X}) = \frac{\sigma^2}{n}$
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 4.3: Standard Error</h4>
+                    <p>For $\sigma = 10$ and $n = 25$:</p>
+                    <p>$SE(\bar{X}) = \frac{\sigma}{\sqrt{n}} = \frac{10}{\sqrt{25}} = \frac{10}{5} = 2$</p>
+                </div>
+            </div>
+
+            <!-- Section 4.3 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 4.3 Practice</h3>
+                
+                <div class="practice-question" id="question-4-3">
+                    <div class="question-header">
+                        <span class="question-number">Question 3</span>
+                        <button class="regenerate-btn" onclick="generateQuestion43()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-43-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-43">Your Answer:</label>
+                        <input type="text" id="answer-43" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer43()">
+                        <div class="input-hint" id="hint-43"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer43()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps43()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion43()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-43" style="display: none;"></div>
+                    <div class="question-steps" id="steps-43" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4.4: Central Limit Theorem -->
+        <div class="section fade-in" id="clt">
+            <h2 class="section-title">🎯 4.4 Central Limit Theorem</h2>
+            <div class="section-content">
+                <div class="clt-box">
+                    <h4>Central Limit Theorem (CLT)</h4>
+                    <p>For $X_1, X_2, \ldots, X_n \stackrel{\text{iid}}{\sim} X$ with $E[X] = \mu$ and $\text{Var}(X) = \sigma^2 < \infty$:</p>
+                    <div class="math-formula">
+                        $\bar{X} \xrightarrow{d} N\left(\mu, \frac{\sigma^2}{n}\right)$ as $n \to \infty$
+                    </div>
+                    <p><strong>Key:</strong> Works for ANY population distribution!</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>CLT Applications</h4>
+                    <ul>
+                        <li><strong>Universal:</strong> Population can be any shape</li>
+                        <li><strong>Sample size:</strong> Usually good for $n \geq 30$</li>
+                        <li><strong>Standardization:</strong> $Z = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0,1)$</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 4.4 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 4.4 Practice</h3>
+                
+                <div class="practice-question" id="question-4-4">
+                    <div class="question-header">
+                        <span class="question-number">Question 4</span>
+                        <button class="regenerate-btn" onclick="generateQuestion44()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-44-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-44">Your Answer:</label>
+                        <input type="text" id="answer-44" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer44()">
+                        <div class="input-hint" id="hint-44"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer44()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps44()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion44()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-44" style="display: none;"></div>
+                    <div class="question-steps" id="steps-44" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4.5: Key Distributions -->
+        <div class="section fade-in" id="distributions">
+            <h2 class="section-title">📊 4.5 Key Sampling Distributions</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Chi-Square Distribution: $\chi^2_\nu$</h4>
+                    <p>If $Z_1, \ldots, Z_\nu \stackrel{\text{iid}}{\sim} N(0,1)$, then $Y = \sum Z_i^2 \sim \chi^2_\nu$</p>
+                    <p><strong>Properties:</strong> $E[Y] = \nu$, $\text{Var}(Y) = 2\nu$</p>
+                </div>
+
+                <div class="math-definition">
+                    <h4>t-Distribution: $t_\nu$</h4>
+                    <p>If $Z \sim N(0,1)$ and $Y \sim \chi^2_\nu$ independent, then $T = \frac{Z}{\sqrt{Y/\nu}} \sim t_\nu$</p>
+                    <p><strong>Properties:</strong> Symmetric, heavier tails than normal</p>
+                </div>
+
+                <div class="math-definition">
+                    <h4>F-Distribution: $F_{\nu_1,\nu_2}$</h4>
+                    <p>If $Y_1 \sim \chi^2_{\nu_1}$ and $Y_2 \sim \chi^2_{\nu_2}$ independent, then $F = \frac{Y_1/\nu_1}{Y_2/\nu_2} \sim F_{\nu_1,\nu_2}$</p>
+                    <p><strong>Used for:</strong> Comparing variances, ANOVA</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Question arrays
+        let currentQuestion41 = null;
+        let currentQuestion42 = null;
+        let currentQuestion43 = null;
+        let currentQuestion44 = null;
+
+        const randomSamplesQuestions = [
+            {
+                question: "If X₁, X₂, X₃ are independent observations from the same population, what condition makes them a random sample?",
+                correctAnswers: ["identical distribution", "identically distributed", "same distribution", "iid"],
+                hint: "Think about the two requirements for a random sample",
+                explanation: "For a random sample, observations must be both independent AND identically distributed (from the same population).",
+                steps: `<div class="step-title">Random Sample Requirements:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Independence:</strong> Observations don't affect each other ✓</li>
+                                <li><strong>Identical distribution:</strong> Same population ✓</li>
+                                <li><strong>Result:</strong> iid random sample</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "True or False: A random sample requires that all observations have the same numerical value.",
+                correctAnswers: ["false", "False", "no", "No"],
+                hint: "Think about what 'identically distributed' means",
+                explanation: "False. Identically distributed means same probability distribution, not same values.",
+                steps: `<div class="step-title">Understanding 'Identically Distributed':</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Common mistake:</strong> Identical = same values</li>
+                                <li><strong>Correct meaning:</strong> Same distribution/population</li>
+                                <li><strong>Values vary randomly</strong> from this distribution</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const sampleStatisticsQuestions = [
+            {
+                question: "For sample values 2, 4, 6, what is the sample mean?",
+                correctAnswers: ["4", "4.0", "4.00"],
+                hint: "Add the values and divide by the number of observations",
+                explanation: "Sample mean = (2 + 4 + 6)/3 = 12/3 = 4",
+                steps: `<div class="step-title">Computing Sample Mean:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Formula:</strong> X̄ = (1/n)∑Xᵢ</li>
+                                <li><strong>Sum:</strong> 2 + 4 + 6 = 12</li>
+                                <li><strong>Mean:</strong> 12/3 = 4</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "What makes a function of sample observations a 'statistic'?",
+                correctAnswers: ["no unknown parameters", "parameter free", "observable"],
+                hint: "Think about what you can compute from just the sample",
+                explanation: "A statistic cannot depend on unknown parameters - it must be computable from sample data alone.",
+                steps: `<div class="step-title">Definition of Statistic:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Must be computable</strong> from observed data</li>
+                                <li><strong>Cannot depend</strong> on unknown parameters</li>
+                                <li><strong>Examples:</strong> X̄, S², median</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const sampleMeanQuestions = [
+            {
+                question: "If Var(X) = 16 and n = 25, what is Var(X̄)?",
+                correctAnswers: ["0.64", "16/25", ".64"],
+                hint: "Use Var(X̄) = σ²/n",
+                explanation: "Var(X̄) = 16/25 = 0.64",
+                steps: `<div class="step-title">Variance of Sample Mean:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Formula:</strong> Var(X̄) = σ²/n</li>
+                                <li><strong>Calculate:</strong> 16/25 = 0.64</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "As sample size n increases, what happens to the standard error of X̄?",
+                correctAnswers: ["decreases", "gets smaller", "reduces"],
+                hint: "Standard error is σ/√n",
+                explanation: "Standard error = σ/√n decreases as n increases, making X̄ more precise.",
+                steps: `<div class="step-title">Standard Error Behavior:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>SE(X̄) = σ/√n</strong></li>
+                                <li><strong>As n increases:</strong> SE decreases</li>
+                                <li><strong>Result:</strong> More precise estimates</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const cltQuestions = [
+            {
+                question: "According to the CLT, what distribution does X̄ approach for large n?",
+                correctAnswers: ["normal", "Normal", "gaussian"],
+                hint: "The CLT gives the limiting distribution",
+                explanation: "By the CLT, X̄ is approximately N(μ, σ²/n) for large n.",
+                steps: `<div class="step-title">CLT Result:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>X̄ → N(μ, σ²/n)</strong> as n → ∞</li>
+                                <li><strong>Works for any</strong> population distribution</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For practical use, the CLT approximation is typically good when n ≥ ?",
+                correctAnswers: ["30", "thirty"],
+                hint: "What sample size threshold is commonly used?",
+                explanation: "The rule of thumb is n ≥ 30 for good CLT approximation.",
+                steps: `<div class="step-title">CLT Rule of Thumb:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>General rule:</strong> n ≥ 30</li>
+                                <li><strong>May need more</strong> for highly skewed populations</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        // Question functions
+        function generateQuestion41() {
+            document.getElementById('feedback-41').style.display = 'none';
+            document.getElementById('steps-41').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-41');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion41 = randomSamplesQuestions[Math.floor(Math.random() * randomSamplesQuestions.length)];
+            
+            document.getElementById('question-41-content').innerHTML = currentQuestion41.question;
+            document.getElementById('hint-41').innerHTML = currentQuestion41.hint;
+        }
+
+        function checkAnswer41() {
+            const userAnswer = document.getElementById('answer-41').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-41');
+            const feedbackDiv = document.getElementById('feedback-41');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion41.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion41.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps41() {
+            const stepsDiv = document.getElementById('steps-41');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion41.steps;
+        }
+
+        // Similar functions for questions 42, 43, 44
+        function generateQuestion42() {
+            document.getElementById('feedback-42').style.display = 'none';
+            document.getElementById('steps-42').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-42');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion42 = sampleStatisticsQuestions[Math.floor(Math.random() * sampleStatisticsQuestions.length)];
+            
+            document.getElementById('question-42-content').innerHTML = currentQuestion42.question;
+            document.getElementById('hint-42').innerHTML = currentQuestion42.hint;
+        }
+
+        function checkAnswer42() {
+            const userAnswer = document.getElementById('answer-42').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-42');
+            const feedbackDiv = document.getElementById('feedback-42');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion42.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion42.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps42() {
+            const stepsDiv = document.getElementById('steps-42');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion42.steps;
+        }
+
+        function generateQuestion43() {
+            document.getElementById('feedback-43').style.display = 'none';
+            document.getElementById('steps-43').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-43');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion43 = sampleMeanQuestions[Math.floor(Math.random() * sampleMeanQuestions.length)];
+            
+            document.getElementById('question-43-content').innerHTML = currentQuestion43.question;
+            document.getElementById('hint-43').innerHTML = currentQuestion43.hint;
+        }
+
+        function checkAnswer43() {
+            const userAnswer = document.getElementById('answer-43').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-43');
+            const feedbackDiv = document.getElementById('feedback-43');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion43.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion43.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps43() {
+            const stepsDiv = document.getElementById('steps-43');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion43.steps;
+        }
+
+        function generateQuestion44() {
+            document.getElementById('feedback-44').style.display = 'none';
+            document.getElementById('steps-44').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-44');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion44 = cltQuestions[Math.floor(Math.random() * cltQuestions.length)];
+            
+            document.getElementById('question-44-content').innerHTML = currentQuestion44.question;
+            document.getElementById('hint-44').innerHTML = currentQuestion44.hint;
+        }
+
+        function checkAnswer44() {
+            const userAnswer = document.getElementById('answer-44').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-44');
+            const feedbackDiv = document.getElementById('feedback-44');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion44.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion44.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps44() {
+            const stepsDiv = document.getElementById('steps-44');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion44.steps;
+        }
+
+        // Page initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Chapter 4: Random Samples & Sampling Distributions loaded successfully! 🎯');
+            
+            // Add fade-in animations
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+            
+            // Generate initial questions
+            setTimeout(() => {
+                generateQuestion41();
+                generateQuestion42();
+                generateQuestion43();
+                generateQuestion44();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
