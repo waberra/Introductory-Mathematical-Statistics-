@@ -437,30 +437,525 @@
             </div>
         </div>
 
-        <!-- Placeholder sections -->
         <div class="section fade-in" id="conditional">
             <h2 class="section-title">🔄 1.3 Conditional Probability</h2>
-            <p>Coming soon...</p>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Definition of Conditional Probability</h4>
+                    <p><strong>Conditional Probability</strong> is the probability of an event occurring given that another event has already occurred.</p>
+                    <div class="math-formula">
+                        $P(A|B) = \frac{P(A \cap B)}{P(B)}$, provided $P(B) > 0$
+                    </div>
+                    <p><strong>Interpretation:</strong> P(A|B) is the probability of A occurring, given that B has occurred.</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 1.3: Card Drawing</h4>
+                    <p><strong>Problem:</strong> Draw a card from a standard deck. Given that it's red, what's the probability it's a heart?</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>A = "card is a heart", B = "card is red"</li>
+                        <li>P(B) = 26/52 = 1/2 (26 red cards)</li>
+                        <li>P(A ∩ B) = 13/52 = 1/4 (13 hearts, all red)</li>
+                        <li>P(A|B) = (1/4)/(1/2) = 1/2</li>
+                    </ul>
+                    <p><strong>Intuition:</strong> Among 26 red cards, 13 are hearts, so P(Heart|Red) = 13/26 = 1/2</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Multiplication Rule</h4>
+                    <p>From the definition of conditional probability:</p>
+                    <div class="math-formula">
+                        $P(A \cap B) = P(A|B) \cdot P(B) = P(B|A) \cdot P(A)$
+                    </div>
+                    <p><strong>General form:</strong> $P(A_1 \cap A_2 \cap \cdots \cap A_n) = P(A_1) \cdot P(A_2|A_1) \cdot P(A_3|A_1 \cap A_2) \cdots$</p>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Properties of Conditional Probability</h4>
+                    <ul>
+                        <li><strong>Range:</strong> $0 \leq P(A|B) \leq 1$</li>
+                        <li><strong>Certainty:</strong> $P(\Omega|B) = 1$</li>
+                        <li><strong>Addition:</strong> $P(A_1 \cup A_2|B) = P(A_1|B) + P(A_2|B) - P(A_1 \cap A_2|B)$</li>
+                        <li><strong>Complement:</strong> $P(A^c|B) = 1 - P(A|B)$</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 1.4: Medical Testing</h4>
+                    <p><strong>Problem:</strong> 5% of population has disease. Test correctly identifies 90% of sick people and 95% of healthy people. If someone tests positive, what's P(has disease)?</p>
+                    <p><strong>Solution using conditional probability:</strong></p>
+                    <ul>
+                        <li>P(Disease) = 0.05, P(Healthy) = 0.95</li>
+                        <li>P(+|Disease) = 0.90, P(+|Healthy) = 0.05</li>
+                        <li>P(+ and Disease) = P(+|Disease) × P(Disease) = 0.90 × 0.05 = 0.045</li>
+                        <li>P(+) = P(+|Disease) × P(Disease) + P(+|Healthy) × P(Healthy) = 0.045 + 0.0475 = 0.0925</li>
+                        <li>P(Disease|+) = P(+ and Disease) / P(+) = 0.045 / 0.0925 ≈ 0.486</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 1.3 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 1.3 Practice</h3>
+                
+                <div class="practice-question" id="question-1-3">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion13()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-13-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-13">Your Answer:</label>
+                        <input type="text" id="answer-13" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer13()">
+                        <div class="input-hint" id="hint-13"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer13()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps13()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion13()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-13" style="display: none;"></div>
+                    <div class="question-steps" id="steps-13" style="display: none;"></div>
+                </div>
+            </div>
         </div>
 
         <div class="section fade-in" id="independence">
             <h2 class="section-title">🎯 1.4 Independence</h2>
-            <p>Coming soon...</p>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Definition of Independence</h4>
+                    <p>Two events A and B are <strong>independent</strong> if the occurrence of one does not affect the probability of the other.</p>
+                    <div class="math-formula">
+                        $P(A \cap B) = P(A) \cdot P(B)$
+                    </div>
+                    <p><strong>Equivalent conditions:</strong></p>
+                    <ul>
+                        <li>$P(A|B) = P(A)$ (if P(B) > 0)</li>
+                        <li>$P(B|A) = P(B)$ (if P(A) > 0)</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 1.5: Coin and Die Independence</h4>
+                    <p><strong>Experiment:</strong> Flip a coin and roll a die simultaneously.</p>
+                    <p><strong>Events:</strong> A = "coin shows heads", B = "die shows 6"</p>
+                    <p><strong>Independence check:</strong></p>
+                    <ul>
+                        <li>P(A) = 1/2, P(B) = 1/6</li>
+                        <li>P(A ∩ B) = P(heads and 6) = 1/12</li>
+                        <li>P(A) × P(B) = 1/2 × 1/6 = 1/12 ✓</li>
+                        <li>Since P(A ∩ B) = P(A) × P(B), events are independent</li>
+                    </ul>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Properties of Independent Events</h4>
+                    <ul>
+                        <li><strong>Symmetry:</strong> If A and B are independent, then B and A are independent</li>
+                        <li><strong>Complements:</strong> If A and B are independent, then:
+                            <ul>
+                                <li>A and B^c are independent</li>
+                                <li>A^c and B are independent</li>
+                                <li>A^c and B^c are independent</li>
+                            </ul>
+                        </li>
+                        <li><strong>Multiple events:</strong> A₁, A₂, ..., Aₙ are independent if for any subset I:
+                            $P(\bigcap_{i \in I} A_i) = \prod_{i \in I} P(A_i)$</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Pairwise vs Mutual Independence</h4>
+                    <p><strong>Pairwise Independent:</strong> Every pair is independent</p>
+                    <p><strong>Mutually Independent:</strong> Every subset is independent (stronger condition)</p>
+                    <p><strong>Example where they differ:</strong> Roll two dice, A = "first die even", B = "second die even", C = "sum is even"</p>
+                    <ul>
+                        <li>A, B, C are pairwise independent</li>
+                        <li>But NOT mutually independent: P(A ∩ B ∩ C) ≠ P(A)P(B)P(C)</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 1.6: Quality Control</h4>
+                    <p><strong>Problem:</strong> Two machines work independently. Each fails with probability 0.1. What's the probability both fail?</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>A = "machine 1 fails", B = "machine 2 fails"</li>
+                        <li>P(A) = P(B) = 0.1</li>
+                        <li>By independence: P(A ∩ B) = P(A) × P(B) = 0.1 × 0.1 = 0.01</li>
+                        <li>P(at least one works) = 1 - P(both fail) = 1 - 0.01 = 0.99</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 1.4 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 1.4 Practice</h3>
+                
+                <div class="practice-question" id="question-1-4">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion14()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-14-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-14">Your Answer:</label>
+                        <input type="text" id="answer-14" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer14()">
+                        <div class="input-hint" id="hint-14"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer14()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps14()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion14()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-14" style="display: none;"></div>
+                    <div class="question-steps" id="steps-14" style="display: none;"></div>
+                </div>
+            </div>
         </div>
 
         <div class="section fade-in" id="counting">
             <h2 class="section-title">🧮 1.5 Counting Techniques</h2>
-            <p>Coming soon...</p>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Fundamental Counting Principle</h4>
+                    <p>If there are n₁ ways to perform task 1, n₂ ways to perform task 2, ..., nₖ ways to perform task k, then there are:</p>
+                    <div class="math-formula">
+                        $n_1 \times n_2 \times \cdots \times n_k$ ways to perform all k tasks
+                    </div>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Permutations</h4>
+                    <p><strong>Permutation:</strong> Arrangement of objects where order matters</p>
+                    <div class="math-formula">
+                        $P(n,r) = \frac{n!}{(n-r)!}$ = number of ways to arrange r objects from n objects
+                    </div>
+                    <p><strong>Special case:</strong> $P(n,n) = n!$ (arrange all n objects)</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Combinations</h4>
+                    <p><strong>Combination:</strong> Selection of objects where order does NOT matter</p>
+                    <div class="math-formula">
+                        $C(n,r) = \binom{n}{r} = \frac{n!}{r!(n-r)!}$ = number of ways to choose r objects from n objects
+                    </div>
+                    <p><strong>Properties:</strong> $\binom{n}{r} = \binom{n}{n-r}$, $\binom{n}{0} = \binom{n}{n} = 1$</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 1.7: Committee Formation</h4>
+                    <p><strong>Problem:</strong> From 12 people, form a committee of 5. How many committees possible?</p>
+                    <p><strong>Solution:</strong></p>
+                    <p>Order doesn't matter (committee of {A,B,C,D,E} = committee of {E,D,C,B,A})</p>
+                    <div class="math-formula">
+                        $\binom{12}{5} = \frac{12!}{5! \cdot 7!} = \frac{12 \times 11 \times 10 \times 9 \times 8}{5 \times 4 \times 3 \times 2 \times 1} = 792$
+                    </div>
+                </div>
+
+                <div class="math-definition">
+                    <h4>When to Use Which?</h4>
+                    <ul>
+                        <li><strong>Permutations (order matters):</strong> Race positions, passwords, seating arrangements</li>
+                        <li><strong>Combinations (order doesn't matter):</strong> Committees, poker hands, lottery numbers</li>
+                        <li><strong>Fundamental principle:</strong> Multi-step processes with independent choices</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 1.8: Poker Hand Probability</h4>
+                    <p><strong>Problem:</strong> What's the probability of getting a full house in 5-card poker?</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>Total 5-card hands: $\binom{52}{5} = 2,598,960$</li>
+                        <li>Full house = 3 of one rank + 2 of another rank</li>
+                        <li>Choose rank for triple: 13 ways</li>
+                        <li>Choose 3 cards from 4 in that rank: $\binom{4}{3} = 4$ ways</li>
+                        <li>Choose rank for pair: 12 ways (from remaining ranks)</li>
+                        <li>Choose 2 cards from 4 in that rank: $\binom{4}{2} = 6$ ways</li>
+                        <li>Full houses: $13 \times 4 \times 12 \times 6 = 3,744$</li>
+                        <li>Probability: $\frac{3,744}{2,598,960} \approx 0.00144$</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 1.5 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 1.5 Practice</h3>
+                
+                <div class="practice-question" id="question-1-5">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion15()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-15-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-15">Your Answer:</label>
+                        <input type="text" id="answer-15" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer15()">
+                        <div class="input-hint" id="hint-15"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer15()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps15()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion15()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-15" style="display: none;"></div>
+                    <div class="question-steps" id="steps-15" style="display: none;"></div>
+                </div>
+            </div>
         </div>
 
         <div class="section fade-in" id="bayes">
             <h2 class="section-title">📈 1.6 Bayes' Theorem</h2>
-            <p>Coming soon...</p>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Bayes' Theorem</h4>
+                    <p><strong>Bayes' Theorem</strong> allows us to update probabilities when we receive new information. It relates conditional probabilities in both directions.</p>
+                    <div class="math-formula">
+                        $P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}$
+                    </div>
+                    <p><strong>Components:</strong></p>
+                    <ul>
+                        <li><strong>P(A|B):</strong> Posterior probability (probability of A given evidence B)</li>
+                        <li><strong>P(B|A):</strong> Likelihood (probability of evidence B given A)</li>
+                        <li><strong>P(A):</strong> Prior probability (initial probability of A)</li>
+                        <li><strong>P(B):</strong> Marginal probability (total probability of evidence B)</li>
+                    </ul>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Law of Total Probability</h4>
+                    <p>When events A₁, A₂, ..., Aₙ form a partition of the sample space:</p>
+                    <div class="math-formula">
+                        $P(B) = \sum_{i=1}^{n} P(B|A_i) \cdot P(A_i)$
+                    </div>
+                    <p>This is often used to compute the denominator in Bayes' theorem.</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 1.6: Medical Diagnosis</h4>
+                    <p><strong>Problem:</strong> A disease affects 1% of the population. A test is 95% accurate for diseased patients and 90% accurate for healthy patients. If someone tests positive, what's the probability they have the disease?</p>
+                    
+                    <p><strong>Given Information:</strong></p>
+                    <ul>
+                        <li>P(Disease) = 0.01</li>
+                        <li>P(Positive | Disease) = 0.95</li>
+                        <li>P(Negative | No Disease) = 0.90, so P(Positive | No Disease) = 0.10</li>
+                    </ul>
+                    
+                    <p><strong>Solution:</strong></p>
+                    <p><strong>Step 1:</strong> Find P(Positive) using law of total probability:</p>
+                    <div class="math-formula">
+                        $P(\text{Positive}) = P(\text{Positive}|\text{Disease}) \cdot P(\text{Disease}) + P(\text{Positive}|\text{No Disease}) \cdot P(\text{No Disease})$
+                        <br>
+                        $= 0.95 \times 0.01 + 0.10 \times 0.99 = 0.0095 + 0.099 = 0.1085$
+                    </div>
+                    
+                    <p><strong>Step 2:</strong> Apply Bayes' theorem:</p>
+                    <div class="math-formula">
+                        $P(\text{Disease}|\text{Positive}) = \frac{P(\text{Positive}|\text{Disease}) \cdot P(\text{Disease})}{P(\text{Positive})}$
+                        <br>
+                        $= \frac{0.95 \times 0.01}{0.1085} = \frac{0.0095}{0.1085} \approx 0.0876$
+                    </div>
+                    
+                    <p><strong>Result:</strong> Even with a positive test, there's only an 8.76% chance the person has the disease! This shows why base rates matter.</p>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Extended Form of Bayes' Theorem</h4>
+                    <p>For multiple hypotheses A₁, A₂, ..., Aₙ that partition the sample space:</p>
+                    <div class="math-formula">
+                        $P(A_k|B) = \frac{P(B|A_k) \cdot P(A_k)}{\sum_{i=1}^{n} P(B|A_i) \cdot P(A_i)}$
+                    </div>
+                    <p>This generalizes Bayes' theorem to multiple competing hypotheses.</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 1.7: Quality Control</h4>
+                    <p><strong>Problem:</strong> A factory has three machines producing items. Machine A produces 50% of items (2% defective), Machine B produces 30% (3% defective), and Machine C produces 20% (5% defective). A defective item is found. What's the probability it came from Machine A?</p>
+                    
+                    <p><strong>Solution:</strong></p>
+                    <p><strong>Prior probabilities:</strong> P(A) = 0.5, P(B) = 0.3, P(C) = 0.2</p>
+                    <p><strong>Likelihoods:</strong> P(Defective|A) = 0.02, P(Defective|B) = 0.03, P(Defective|C) = 0.05</p>
+                    
+                    <p><strong>Total probability of defective:</strong></p>
+                    <div class="math-formula">
+                        $P(\text{Defective}) = 0.02 \times 0.5 + 0.03 \times 0.3 + 0.05 \times 0.2 = 0.01 + 0.009 + 0.01 = 0.029$
+                    </div>
+                    
+                    <p><strong>Posterior probability:</strong></p>
+                    <div class="math-formula">
+                        $P(A|\text{Defective}) = \frac{0.02 \times 0.5}{0.029} = \frac{0.01}{0.029} \approx 0.345$
+                    </div>
+                    
+                    <p><strong>Result:</strong> There's a 34.5% chance the defective item came from Machine A.</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Key Applications of Bayes' Theorem</h4>
+                    <ul>
+                        <li><strong>Medical diagnosis:</strong> Update disease probability given test results</li>
+                        <li><strong>Spam filtering:</strong> Classify emails based on word patterns</li>
+                        <li><strong>Machine learning:</strong> Naive Bayes classifiers</li>
+                        <li><strong>Criminal justice:</strong> Evidence evaluation in court</li>
+                        <li><strong>Quality control:</strong> Identify sources of defective products</li>
+                        <li><strong>Finance:</strong> Update investment probabilities with new data</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Common Misconceptions</h4>
+                    <ul>
+                        <li><strong>Base Rate Neglect:</strong> Ignoring P(A) when computing P(A|B)</li>
+                        <li><strong>Confusion of Conditionals:</strong> P(A|B) ≠ P(B|A) in general</li>
+                        <li><strong>Prosecutor's Fallacy:</strong> P(Evidence|Innocent) ≠ P(Innocent|Evidence)</li>
+                        <li><strong>False Positive Paradox:</strong> High test accuracy doesn't guarantee high P(Disease|Positive)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 1.6 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 1.6 Practice</h3>
+                
+                <div class="practice-question" id="question-1-6">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion16()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-16-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-16">Your Answer:</label>
+                        <input type="text" id="answer-16" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer16()">
+                        <div class="input-hint" id="hint-16"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer16()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps16()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion16()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-16" style="display: none;"></div>
+                    <div class="question-steps" id="steps-16" style="display: none;"></div>
+                </div>
+            </div>
         </div>
 
         <div class="section fade-in" id="simulation">
-            <h2 class="section-title">🖥️ 1.7 Simulation</h2>
-            <p>Coming soon...</p>
+            <h2 class="section-title">🖥️ 1.7 Simulation and Monte Carlo Methods</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>What is Simulation?</h4>
+                    <p><strong>Simulation</strong> uses computational methods to model random experiments and estimate probabilities through repeated trials.</p>
+                    <p><strong>Key Ideas:</strong></p>
+                    <ul>
+                        <li><strong>Approximate probabilities</strong> by observing relative frequencies</li>
+                        <li><strong>Verify theoretical results</strong> computationally</li>
+                        <li><strong>Solve complex problems</strong> where analytical solutions are difficult</li>
+                        <li><strong>Generate random samples</strong> from known distributions</li>
+                    </ul>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Law of Large Numbers for Simulation</h4>
+                    <p>As the number of simulation runs increases, the relative frequency approaches the true probability:</p>
+                    <div class="math-formula">
+                        $\lim_{n \to \infty} \frac{\text{Number of successes}}{n} = P(\text{Success})$
+                    </div>
+                    <p>This is the theoretical foundation for simulation-based probability estimation.</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 1.8: Estimating π by Simulation</h4>
+                    <p><strong>Method:</strong> Generate random points in a 1×1 square and count how many fall inside a quarter circle.</p>
+                    
+                    <p><strong>Setup:</strong></p>
+                    <ul>
+                        <li>Quarter circle: x² + y² ≤ 1 (area = π/4)</li>
+                        <li>Square: 0 ≤ x ≤ 1, 0 ≤ y ≤ 1 (area = 1)</li>
+                        <li>Probability point is inside circle = (π/4)/1 = π/4</li>
+                    </ul>
+                    
+                    <p><strong>Algorithm:</strong></p>
+                    <ol>
+                        <li>Generate random (x,y) with x,y uniform on [0,1]</li>
+                        <li>Check if x² + y² ≤ 1</li>
+                        <li>Count successes and total trials</li>
+                        <li>Estimate: π ≈ 4 × (successes/total)</li>
+                    </ol>
+                    
+                    <p><strong>Results:</strong> With 10,000 trials, typical estimate is π ≈ 3.14 ± 0.02</p>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Random Number Generation</h4>
+                    <p><strong>Uniform Random Numbers:</strong> Foundation for all simulation</p>
+                    <ul>
+                        <li><strong>Uniform[0,1]:</strong> U ~ Uniform(0,1)</li>
+                        <li><strong>Uniform[a,b]:</strong> X = a + (b-a)U</li>
+                        <li><strong>Discrete uniform:</strong> X = ⌊nU⌋ + 1 for integers 1,2,...,n</li>
+                    </ul>
+                    
+                    <p><strong>Inverse Transform Method:</strong></p>
+                    <div class="math-formula">
+                        $X = F^{-1}(U)$ where $U \sim \text{Uniform}(0,1)$
+                    </div>
+                    <p>This generates X with cumulative distribution function F(x).</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 1.9: Birthday Problem Simulation</h4>
+                    <p><strong>Question:</strong> In a room of 23 people, what's the probability at least two share a birthday?</p>
+                    
+                    <p><strong>Simulation Algorithm:</strong></p>
+                    <ol>
+                        <li>Generate 23 random integers from 1 to 365 (birthdays)</li>
+                        <li>Check if any duplicates exist</li>
+                        <li>Record success if duplicates found</li>
+                        <li>Repeat many times and compute frequency</li>
+                    </ol>
+                    
+                    <p><strong>Theoretical:</strong> P(at least one match) ≈ 0.507</p>
+                    <p><strong>Simulation:</strong> With 10,000 trials → approximately 5,070 successes ≈ 0.507</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Applications of Simulation</h4>
+                    <ul>
+                        <li><strong>Finance:</strong> Portfolio risk assessment, option pricing</li>
+                        <li><strong>Engineering:</strong> Reliability analysis, system performance</li>
+                        <li><strong>Science:</strong> Climate modeling, particle physics</li>
+                        <li><strong>Operations:</strong> Queue analysis, inventory management</li>
+                        <li><strong>Statistics:</strong> Bootstrap methods, hypothesis testing</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 1.7 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 1.7 Practice</h3>
+                
+                <div class="practice-question" id="question-1-7">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion17()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-17-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-17">Your Answer:</label>
+                        <input type="text" id="answer-17" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer17()">
+                        <div class="input-hint" id="hint-17"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer17()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps17()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion17()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-17" style="display: none;"></div>
+                    <div class="question-steps" id="steps-17" style="display: none;"></div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -468,6 +963,11 @@
         // Question arrays
         let currentQuestion11 = null;
         let currentQuestion12 = null;
+        let currentQuestion13 = null;
+        let currentQuestion14 = null;
+        let currentQuestion15 = null;
+        let currentQuestion16 = null;
+        let currentQuestion17 = null;
 
         const sampleSpaceQuestions = [
             {
@@ -777,6 +1277,765 @@
             }
         ];
 
+        const bayesTheoremQuestions = [
+            {
+                question: "If P(A|B) = 0.8, P(B) = 0.3, and P(A) = 0.5, what is P(B|A)?",
+                correctAnswers: ["0.48", "0.480", ".48", ".480"],
+                hint: "Use Bayes' theorem: P(B|A) = P(A|B) × P(B) / P(A)",
+                explanation: "Using Bayes' theorem: P(B|A) = P(A|B) × P(B) / P(A) = 0.8 × 0.3 / 0.5 = 0.24 / 0.5 = 0.48",
+                steps: `<div class="step-title">Applying Bayes' Theorem:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Bayes' formula:</strong> P(B|A) = P(A|B) × P(B) / P(A)</li>
+                                <li><strong>Given values:</strong> P(A|B) = 0.8, P(B) = 0.3, P(A) = 0.5</li>
+                                <li><strong>Substitute:</strong> P(B|A) = 0.8 × 0.3 / 0.5</li>
+                                <li><strong>Calculate:</strong> P(B|A) = 0.24 / 0.5 = 0.48</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A test for a disease has 90% accuracy. The disease affects 2% of population. If someone tests positive, what's the probability they have the disease? (Give as decimal)",
+                correctAnswers: ["0.155", "0.15", ".155", ".15"],
+                hint: "Use Bayes' theorem with P(Disease) = 0.02 and 90% accuracy for both positive and negative results",
+                explanation: "P(Disease|Positive) = P(Positive|Disease) × P(Disease) / P(Positive) = 0.9 × 0.02 / (0.9 × 0.02 + 0.1 × 0.98) = 0.018 / 0.116 ≈ 0.155",
+                steps: `<div class="step-title">Medical Test Bayes:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Given:</strong> P(Disease) = 0.02, P(Positive|Disease) = 0.9, P(Positive|No Disease) = 0.1</li>
+                                <li><strong>Find total positive:</strong> P(Positive) = 0.9 × 0.02 + 0.1 × 0.98 = 0.018 + 0.098 = 0.116</li>
+                                <li><strong>Apply Bayes:</strong> P(Disease|Positive) = 0.018 / 0.116</li>
+                                <li><strong>Result:</strong> P(Disease|Positive) ≈ 0.155 or 15.5%</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Three machines produce items: A (40%, 1% defective), B (35%, 2% defective), C (25%, 4% defective). If a defective item is found, what's the probability it came from machine A?",
+                correctAnswers: ["0.19", "0.190", ".19", ".190"],
+                hint: "Use extended Bayes' theorem with multiple hypotheses",
+                explanation: "P(A|Defective) = (0.01 × 0.4) / (0.01 × 0.4 + 0.02 × 0.35 + 0.04 × 0.25) = 0.004 / 0.021 ≈ 0.19",
+                steps: `<div class="step-title">Multi-hypothesis Bayes:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Priors:</strong> P(A) = 0.4, P(B) = 0.35, P(C) = 0.25</li>
+                                <li><strong>Likelihoods:</strong> P(Defective|A) = 0.01, P(Defective|B) = 0.02, P(Defective|C) = 0.04</li>
+                                <li><strong>Total defective:</strong> P(Defective) = 0.004 + 0.007 + 0.010 = 0.021</li>
+                                <li><strong>Result:</strong> P(A|Defective) = 0.004 / 0.021 ≈ 0.19</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "P(Rain) = 0.3, P(Clouds|Rain) = 0.9, P(Clouds|No Rain) = 0.2. If it's cloudy, what's P(Rain|Clouds)?",
+                correctAnswers: ["0.66", "0.659", ".66", ".659"],
+                hint: "Find P(Clouds) first using law of total probability, then apply Bayes",
+                explanation: "P(Clouds) = 0.9 × 0.3 + 0.2 × 0.7 = 0.41. Then P(Rain|Clouds) = 0.27 / 0.41 ≈ 0.659",
+                steps: `<div class="step-title">Weather Prediction:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Find P(Clouds):</strong> P(Clouds) = P(Clouds|Rain) × P(Rain) + P(Clouds|No Rain) × P(No Rain)</li>
+                                <li><strong>Calculate:</strong> P(Clouds) = 0.9 × 0.3 + 0.2 × 0.7 = 0.27 + 0.14 = 0.41</li>
+                                <li><strong>Apply Bayes:</strong> P(Rain|Clouds) = P(Clouds|Rain) × P(Rain) / P(Clouds)</li>
+                                <li><strong>Result:</strong> P(Rain|Clouds) = 0.27 / 0.41 ≈ 0.659</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If P(B|A) = 0.7 and P(B|Aᶜ) = 0.3, and we observe B, what's the minimum possible value of P(A|B)?",
+                correctAnswers: ["0", "0.0", "0.00"],
+                hint: "Consider what happens when P(A) approaches 0",
+                explanation: "As P(A) → 0, P(A|B) = P(B|A) × P(A) / P(B) → 0, since the numerator goes to 0. The minimum is 0.",
+                steps: `<div class="step-title">Limiting Behavior:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Bayes formula:</strong> P(A|B) = P(B|A) × P(A) / [P(B|A) × P(A) + P(B|Aᶜ) × P(Aᶜ)]</li>
+                                <li><strong>As P(A) → 0:</strong> P(Aᶜ) → 1</li>
+                                <li><strong>Numerator:</strong> P(B|A) × P(A) → 0.7 × 0 = 0</li>
+                                <li><strong>Limit:</strong> P(A|B) → 0</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A spam filter catches 95% of spam and wrongly flags 3% of legitimate emails. If 60% of emails are spam and an email is flagged, what's P(Legitimate|Flagged)?",
+                correctAnswers: ["0.115", "0.11", ".115", ".11"],
+                hint: "Find P(Flagged) first, then use Bayes to find P(Legitimate|Flagged)",
+                explanation: "P(Flagged) = 0.95 × 0.6 + 0.03 × 0.4 = 0.582. P(Legitimate|Flagged) = (0.03 × 0.4) / 0.582 ≈ 0.115",
+                steps: `<div class="step-title">Spam Filter Analysis:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Given:</strong> P(Spam) = 0.6, P(Flagged|Spam) = 0.95, P(Flagged|Legitimate) = 0.03</li>
+                                <li><strong>Total flagged:</strong> P(Flagged) = 0.95 × 0.6 + 0.03 × 0.4 = 0.57 + 0.012 = 0.582</li>
+                                <li><strong>Legitimate & flagged:</strong> P(Legitimate ∩ Flagged) = 0.03 × 0.4 = 0.012</li>
+                                <li><strong>Result:</strong> P(Legitimate|Flagged) = 0.012 / 0.582 ≈ 0.115</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Two coins: fair coin (50% each outcome) and biased coin (70% heads). A coin is chosen randomly and shows heads. What's P(Fair coin|Heads)?",
+                correctAnswers: ["0.42", "0.417", ".42", ".417"],
+                hint: "Each coin has P = 0.5 of being chosen initially",
+                explanation: "P(Fair|Heads) = P(Heads|Fair) × P(Fair) / P(Heads) = 0.5 × 0.5 / (0.5 × 0.5 + 0.7 × 0.5) = 0.25 / 0.6 ≈ 0.417",
+                steps: `<div class="step-title">Coin Selection Problem:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Prior probabilities:</strong> P(Fair) = P(Biased) = 0.5</li>
+                                <li><strong>Likelihoods:</strong> P(Heads|Fair) = 0.5, P(Heads|Biased) = 0.7</li>
+                                <li><strong>Total P(Heads):</strong> P(Heads) = 0.5 × 0.5 + 0.7 × 0.5 = 0.6</li>
+                                <li><strong>Posterior:</strong> P(Fair|Heads) = 0.25 / 0.6 ≈ 0.417</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "What does Bayes' theorem allow us to do?",
+                correctAnswers: ["update probabilities", "reverse conditional probabilities", "find posterior probabilities"],
+                hint: "Think about going from P(B|A) to P(A|B)",
+                explanation: "Bayes' theorem allows us to update our beliefs about hypotheses when we receive new evidence, essentially 'reversing' conditional probabilities.",
+                steps: `<div class="step-title">Purpose of Bayes' Theorem:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Reverse conditionals:</strong> From P(Evidence|Hypothesis) to P(Hypothesis|Evidence)</li>
+                                <li><strong>Update beliefs:</strong> Combine prior knowledge with new evidence</li>
+                                <li><strong>Incorporate data:</strong> Use likelihood to modify prior probabilities</li>
+                                <li><strong>Applications:</strong> Diagnosis, classification, prediction</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "In Bayes' theorem P(A|B) = P(B|A)P(A)/P(B), what is P(A) called?",
+                correctAnswers: ["prior", "prior probability", "base rate"],
+                hint: "This is the probability of A before observing evidence B",
+                explanation: "P(A) is called the prior probability - it represents our initial belief about A before observing the evidence B.",
+                steps: `<div class="step-title">Components of Bayes' Theorem:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>P(A|B):</strong> Posterior probability (updated belief)</li>
+                                <li><strong>P(B|A):</strong> Likelihood (probability of evidence given hypothesis)</li>
+                                <li><strong>P(A):</strong> Prior probability (initial belief before evidence)</li>
+                                <li><strong>P(B):</strong> Marginal probability (total probability of evidence)</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "True or False: P(Disease|Positive Test) = P(Positive Test|Disease)",
+                correctAnswers: ["false", "False", "F", "No"],
+                hint: "This is a classic confusion - these are different conditional probabilities",
+                explanation: "False. These are different conditional probabilities. P(Disease|Test) depends on disease prevalence, while P(Test|Disease) is just test sensitivity.",
+                steps: `<div class="step-title">Prosecutor's Fallacy:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>P(Test|Disease):</strong> Test sensitivity, how often test is positive given disease</li>
+                                <li><strong>P(Disease|Test):</strong> Diagnostic value, depends on disease prevalence too</li>
+                                <li><strong>Example:</strong> Test might be 99% sensitive but if disease is rare, most positive tests are false positives</li>
+                                <li><strong>Key insight:</strong> Base rates (priors) matter tremendously</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const conditionalProbabilityQuestions = [
+            {
+                question: "If P(A ∩ B) = 0.15 and P(B) = 0.3, what is P(A|B)?",
+                correctAnswers: ["0.5", "0.50", ".5", ".50"],
+                hint: "Use the definition: P(A|B) = P(A ∩ B) / P(B)",
+                explanation: "P(A|B) = P(A ∩ B) / P(B) = 0.15 / 0.3 = 0.5",
+                steps: `<div class="step-title">Conditional Probability Formula:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Formula:</strong> P(A|B) = P(A ∩ B) / P(B)</li>
+                                <li><strong>Given:</strong> P(A ∩ B) = 0.15, P(B) = 0.3</li>
+                                <li><strong>Substitute:</strong> P(A|B) = 0.15 / 0.3</li>
+                                <li><strong>Calculate:</strong> P(A|B) = 0.5</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "From a deck of cards, what is P(King | Red card)?",
+                correctAnswers: ["2/26", "1/13", "0.077", ".077"],
+                hint: "There are 26 red cards total, and 2 red kings",
+                explanation: "Among 26 red cards, 2 are kings. So P(King|Red) = 2/26 = 1/13 ≈ 0.077",
+                steps: `<div class="step-title">Conditional Probability with Cards:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Given condition:</strong> Card is red (26 cards)</li>
+                                <li><strong>Favorable outcomes:</strong> Red kings (King of Hearts, King of Diamonds)</li>
+                                <li><strong>Count:</strong> 2 red kings out of 26 red cards</li>
+                                <li><strong>Result:</strong> P(King|Red) = 2/26 = 1/13</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If P(A|B) = 0.4 and P(B) = 0.6, what is P(A ∩ B)?",
+                correctAnswers: ["0.24", "0.240", ".24", ".240"],
+                hint: "Use the multiplication rule: P(A ∩ B) = P(A|B) × P(B)",
+                explanation: "Using multiplication rule: P(A ∩ B) = P(A|B) × P(B) = 0.4 × 0.6 = 0.24",
+                steps: `<div class="step-title">Multiplication Rule:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Multiplication rule:</strong> P(A ∩ B) = P(A|B) × P(B)</li>
+                                <li><strong>Given:</strong> P(A|B) = 0.4, P(B) = 0.6</li>
+                                <li><strong>Calculate:</strong> P(A ∩ B) = 0.4 × 0.6 = 0.24</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A box has 5 red and 3 blue balls. Two balls are drawn without replacement. What is P(2nd red | 1st red)?",
+                correctAnswers: ["4/7", "0.571", ".571"],
+                hint: "After drawing one red ball, what remains in the box?",
+                explanation: "After drawing 1 red ball: 4 red and 3 blue remain (7 total). P(2nd red | 1st red) = 4/7",
+                steps: `<div class="step-title">Without Replacement:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Initial:</strong> 5 red, 3 blue (8 total)</li>
+                                <li><strong>After 1st red:</strong> 4 red, 3 blue (7 total)</li>
+                                <li><strong>Condition satisfied:</strong> First ball was red</li>
+                                <li><strong>Calculate:</strong> P(2nd red | 1st red) = 4/7</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If P(A) = 0.5, P(B) = 0.3, and P(A ∪ B) = 0.7, what is P(A|B)?",
+                correctAnswers: ["0.367", "0.37", ".367", ".37"],
+                hint: "First find P(A ∩ B) using the addition rule, then use conditional probability",
+                explanation: "P(A ∩ B) = P(A) + P(B) - P(A ∪ B) = 0.5 + 0.3 - 0.7 = 0.1. Then P(A|B) = 0.1/0.3 ≈ 0.367",
+                steps: `<div class="step-title">Using Addition Rule First:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Find intersection:</strong> P(A ∩ B) = P(A) + P(B) - P(A ∪ B) = 0.1</li>
+                                <li><strong>Apply conditional:</strong> P(A|B) = P(A ∩ B) / P(B)</li>
+                                <li><strong>Calculate:</strong> P(A|B) = 0.1 / 0.3 = 1/3 ≈ 0.367</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "In a medical test: P(Disease) = 0.01, P(+|Disease) = 0.95, P(+|No Disease) = 0.05. What is P(+)?",
+                correctAnswers: ["0.059", "0.0595", ".059", ".0595"],
+                hint: "Use law of total probability",
+                explanation: "P(+) = P(+|Disease)×P(Disease) + P(+|No Disease)×P(No Disease) = 0.95×0.01 + 0.05×0.99 = 0.0595",
+                steps: `<div class="step-title">Law of Total Probability:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Formula:</strong> P(+) = P(+|Disease)×P(Disease) + P(+|Healthy)×P(Healthy)</li>
+                                <li><strong>Calculate:</strong> P(+) = 0.95×0.01 + 0.05×0.99</li>
+                                <li><strong>Result:</strong> P(+) = 0.0095 + 0.0495 = 0.0595</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "What is P(Aᶜ|B) if P(A|B) = 0.7?",
+                correctAnswers: ["0.3", "0.30", ".3", ".30"],
+                hint: "Use the complement rule for conditional probability",
+                explanation: "P(Aᶜ|B) = 1 - P(A|B) = 1 - 0.7 = 0.3",
+                steps: `<div class="step-title">Conditional Complement:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Complement rule:</strong> P(Aᶜ|B) = 1 - P(A|B)</li>
+                                <li><strong>Given:</strong> P(A|B) = 0.7</li>
+                                <li><strong>Calculate:</strong> P(Aᶜ|B) = 1 - 0.7 = 0.3</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Two dice are rolled. What is P(sum = 7 | at least one die shows 4)?",
+                correctAnswers: ["2/11", "0.182", ".182"],
+                hint: "Find outcomes with at least one 4, then count how many sum to 7",
+                explanation: "Outcomes with at least one 4: 11 total. Outcomes with sum=7 AND at least one 4: (4,3) and (3,4). P = 2/11",
+                steps: `<div class="step-title">Conditional with Dice:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Condition:</strong> At least one 4: (1,4),(2,4),(3,4),(4,1),(4,2),(4,3),(4,4),(4,5),(4,6),(5,4),(6,4) = 11 outcomes</li>
+                                <li><strong>Event AND condition:</strong> Sum=7 AND at least one 4: (4,3),(3,4) = 2 outcomes</li>
+                                <li><strong>Result:</strong> P(sum=7|at least one 4) = 2/11</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "True or False: If P(A|B) = P(A), then A and B are independent",
+                correctAnswers: ["true", "True", "T", "yes"],
+                hint: "This is one of the definitions of independence",
+                explanation: "True. If P(A|B) = P(A), then knowing B doesn't change the probability of A, which is the definition of independence.",
+                steps: `<div class="step-title">Independence Condition:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Definition:</strong> A and B independent if P(A|B) = P(A)</li>
+                                <li><strong>Intuition:</strong> Knowing B occurred doesn't change probability of A</li>
+                                <li><strong>Equivalent:</strong> P(A ∩ B) = P(A)×P(B)</li>
+                                <li><strong>Answer:</strong> True</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If P(A|B) = 0.8 and P(A|Bᶜ) = 0.2, and P(B) = 0.4, what is P(A)?",
+                correctAnswers: ["0.44", "0.440", ".44", ".440"],
+                hint: "Use law of total probability: P(A) = P(A|B)×P(B) + P(A|Bᶜ)×P(Bᶜ)",
+                explanation: "P(A) = P(A|B)×P(B) + P(A|Bᶜ)×P(Bᶜ) = 0.8×0.4 + 0.2×0.6 = 0.32 + 0.12 = 0.44",
+                steps: `<div class="step-title">Law of Total Probability:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Formula:</strong> P(A) = P(A|B)×P(B) + P(A|Bᶜ)×P(Bᶜ)</li>
+                                <li><strong>Given:</strong> P(A|B) = 0.8, P(A|Bᶜ) = 0.2, P(B) = 0.4</li>
+                                <li><strong>Note:</strong> P(Bᶜ) = 1 - 0.4 = 0.6</li>
+                                <li><strong>Calculate:</strong> P(A) = 0.8×0.4 + 0.2×0.6 = 0.44</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const independenceQuestions = [
+            {
+                question: "If events A and B are independent with P(A) = 0.3 and P(B) = 0.4, what is P(A ∩ B)?",
+                correctAnswers: ["0.12", "0.120", ".12", ".120"],
+                hint: "For independent events: P(A ∩ B) = P(A) × P(B)",
+                explanation: "Since A and B are independent: P(A ∩ B) = P(A) × P(B) = 0.3 × 0.4 = 0.12",
+                steps: `<div class="step-title">Independence Multiplication:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Independence condition:</strong> P(A ∩ B) = P(A) × P(B)</li>
+                                <li><strong>Given:</strong> P(A) = 0.3, P(B) = 0.4</li>
+                                <li><strong>Calculate:</strong> P(A ∩ B) = 0.3 × 0.4 = 0.12</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Two fair coins are tossed. Are the events 'first coin heads' and 'second coin heads' independent?",
+                correctAnswers: ["yes", "Yes", "true", "True", "independent"],
+                hint: "Think about whether the outcome of one coin affects the other",
+                explanation: "Yes, they are independent. The outcome of the first coin does not affect the outcome of the second coin.",
+                steps: `<div class="step-title">Coin Independence:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Physical intuition:</strong> Coin tosses don't affect each other</li>
+                                <li><strong>Check mathematically:</strong> P(H₁ ∩ H₂) = 1/4, P(H₁) × P(H₂) = 1/2 × 1/2 = 1/4</li>
+                                <li><strong>Since equal:</strong> Events are independent</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If A and B are independent events with P(A) = 0.5, and P(A ∪ B) = 0.8, what is P(B)?",
+                correctAnswers: ["0.6", "0.60", ".6", ".60"],
+                hint: "Use P(A ∪ B) = P(A) + P(B) - P(A ∩ B), and independence gives P(A ∩ B) = P(A)×P(B)",
+                explanation: "P(A ∪ B) = P(A) + P(B) - P(A)×P(B). So 0.8 = 0.5 + P(B) - 0.5×P(B) = 0.5 + 0.5×P(B). Therefore P(B) = 0.6",
+                steps: `<div class="step-title">Independence with Union:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Addition rule:</strong> P(A ∪ B) = P(A) + P(B) - P(A ∩ B)</li>
+                                <li><strong>Independence:</strong> P(A ∩ B) = P(A) × P(B) = 0.5 × P(B)</li>
+                                <li><strong>Substitute:</strong> 0.8 = 0.5 + P(B) - 0.5×P(B)</li>
+                                <li><strong>Solve:</strong> 0.8 = 0.5 + 0.5×P(B), so P(B) = 0.6</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If P(A) = 0.4, P(B) = 0.3, and P(A ∩ B) = 0.15, are A and B independent?",
+                correctAnswers: ["no", "No", "false", "False", "not independent"],
+                hint: "Check if P(A ∩ B) = P(A) × P(B)",
+                explanation: "No. For independence, need P(A ∩ B) = P(A) × P(B). But 0.15 ≠ 0.4 × 0.3 = 0.12, so not independent.",
+                steps: `<div class="step-title">Independence Test:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Test condition:</strong> P(A ∩ B) =? P(A) × P(B)</li>
+                                <li><strong>Given:</strong> P(A ∩ B) = 0.15</li>
+                                <li><strong>Calculate:</strong> P(A) × P(B) = 0.4 × 0.3 = 0.12</li>
+                                <li><strong>Compare:</strong> 0.15 ≠ 0.12, so NOT independent</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Three machines work independently, each with 90% reliability. What's P(at least one works)?",
+                correctAnswers: ["0.999", "0.9990", ".999", ".9990"],
+                hint: "Use complement: P(at least one works) = 1 - P(all fail)",
+                explanation: "P(all fail) = 0.1³ = 0.001. So P(at least one works) = 1 - 0.001 = 0.999",
+                steps: `<div class="step-title">Independent System Reliability:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Reliability:</strong> P(works) = 0.9 for each machine</li>
+                                <li><strong>Failure:</strong> P(fails) = 0.1 for each machine</li>
+                                <li><strong>All fail:</strong> P(all fail) = 0.1 × 0.1 × 0.1 = 0.001</li>
+                                <li><strong>At least one works:</strong> 1 - 0.001 = 0.999</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If A and B are independent, what is P(A|B)?",
+                correctAnswers: ["P(A)", "p(a)", "same as P(A)"],
+                hint: "Independence means conditioning on B doesn't change probability of A",
+                explanation: "If A and B are independent, then P(A|B) = P(A). Knowing B occurred doesn't change the probability of A.",
+                steps: `<div class="step-title">Independence Definition:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Independence means:</strong> P(A|B) = P(A)</li>
+                                <li><strong>Intuition:</strong> B provides no information about A</li>
+                                <li><strong>Alternative form:</strong> P(A ∩ B) = P(A) × P(B)</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A die is rolled twice. Are 'first roll is 6' and 'sum equals 8' independent?",
+                correctAnswers: ["no", "No", "false", "False", "not independent"],
+                hint: "Check if P(first=6 AND sum=8) = P(first=6) × P(sum=8)",
+                explanation: "P(first=6) = 1/6, P(sum=8) = 5/36, P(first=6 AND sum=8) = 1/36. Since 1/36 ≠ (1/6)(5/36) = 5/216, not independent.",
+                steps: `<div class="step-title">Dice Independence Check:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>P(first=6):</strong> 1/6</li>
+                                <li><strong>P(sum=8):</strong> (2,6),(3,5),(4,4),(5,3),(6,2) = 5/36</li>
+                                <li><strong>P(first=6 AND sum=8):</strong> Only (6,2) = 1/36</li>
+                                <li><strong>Test:</strong> 1/36 ≠ (1/6)(5/36), so NOT independent</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If A and B are independent with P(A ∪ B) = 0.7 and P(A) = 0.4, what is P(B)?",
+                correctAnswers: ["0.5", "0.50", ".5", ".50"],
+                hint: "Use addition rule with independence condition",
+                explanation: "P(A ∪ B) = P(A) + P(B) - P(A)P(B) = 0.4 + P(B) - 0.4P(B). So 0.7 = 0.4 + 0.6P(B), giving P(B) = 0.5",
+                steps: `<div class="step-title">Union with Independence:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Addition rule:</strong> P(A ∪ B) = P(A) + P(B) - P(A ∩ B)</li>
+                                <li><strong>Independence:</strong> P(A ∩ B) = P(A) × P(B) = 0.4P(B)</li>
+                                <li><strong>Equation:</strong> 0.7 = 0.4 + P(B) - 0.4P(B) = 0.4 + 0.6P(B)</li>
+                                <li><strong>Solve:</strong> 0.3 = 0.6P(B), so P(B) = 0.5</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "True or False: If A and B are mutually exclusive, they are independent",
+                correctAnswers: ["false", "False", "F", "no"],
+                hint: "Think about what mutual exclusivity means for the intersection",
+                explanation: "False. If A and B are mutually exclusive, P(A ∩ B) = 0. But if independent and both have positive probability, P(A ∩ B) = P(A)P(B) > 0.",
+                steps: `<div class="step-title">Mutual Exclusivity vs Independence:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Mutually exclusive:</strong> P(A ∩ B) = 0</li>
+                                <li><strong>Independent:</strong> P(A ∩ B) = P(A) × P(B)</li>
+                                <li><strong>If both P(A) > 0 and P(B) > 0:</strong> These cannot both be true</li>
+                                <li><strong>Conclusion:</strong> Mutual exclusivity and independence are incompatible</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If A, B, C are mutually independent with P(A) = P(B) = P(C) = 0.2, what is P(A ∩ B ∩ C)?",
+                correctAnswers: ["0.008", "0.0080", ".008", ".0080"],
+                hint: "For mutually independent events, P(A ∩ B ∩ C) = P(A) × P(B) × P(C)",
+                explanation: "Since A, B, C are mutually independent: P(A ∩ B ∩ C) = P(A) × P(B) × P(C) = 0.2 × 0.2 × 0.2 = 0.008",
+                steps: `<div class="step-title">Mutual Independence:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Mutual independence:</strong> P(A ∩ B ∩ C) = P(A) × P(B) × P(C)</li>
+                                <li><strong>Given:</strong> P(A) = P(B) = P(C) = 0.2</li>
+                                <li><strong>Calculate:</strong> P(A ∩ B ∩ C) = 0.2³ = 0.008</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const countingTechniquesQuestions = [
+            {
+                question: "How many ways can 5 books be arranged on a shelf?",
+                correctAnswers: ["120", "5!", "5 factorial"],
+                hint: "This is a permutation of all 5 objects",
+                explanation: "This is 5! = 5 × 4 × 3 × 2 × 1 = 120 ways to arrange 5 books.",
+                steps: `<div class="step-title">Permutation of All Objects:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>First position:</strong> 5 choices</li>
+                                <li><strong>Second position:</strong> 4 remaining choices</li>
+                                <li><strong>Third position:</strong> 3 remaining choices</li>
+                                <li><strong>Fourth position:</strong> 2 remaining choices</li>
+                                <li><strong>Fifth position:</strong> 1 remaining choice</li>
+                                <li><strong>Total:</strong> 5! = 120 arrangements</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "How many ways to choose 3 students from a class of 15?",
+                correctAnswers: ["455", "C(15,3)", "15C3"],
+                hint: "Order doesn't matter - this is a combination",
+                explanation: "C(15,3) = 15!/(3!×12!) = (15×14×13)/(3×2×1) = 2730/6 = 455",
+                steps: `<div class="step-title">Combination Formula:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Formula:</strong> C(n,r) = n!/(r!(n-r)!)</li>
+                                <li><strong>Apply:</strong> C(15,3) = 15!/(3!×12!)</li>
+                                <li><strong>Simplify:</strong> (15×14×13)/(3×2×1)</li>
+                                <li><strong>Calculate:</strong> 2730/6 = 455</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A password has 4 digits. How many passwords if repetition is allowed?",
+                correctAnswers: ["10000", "10,000", "10^4", "10⁴"],
+                hint: "Each digit has 10 choices (0-9), use multiplication principle",
+                explanation: "Each of 4 positions has 10 choices (0-9). Total = 10 × 10 × 10 × 10 = 10,000",
+                steps: `<div class="step-title">Multiplication Principle:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Position 1:</strong> 10 choices (0-9)</li>
+                                <li><strong>Position 2:</strong> 10 choices (repetition allowed)</li>
+                                <li><strong>Position 3:</strong> 10 choices</li>
+                                <li><strong>Position 4:</strong> 10 choices</li>
+                                <li><strong>Total:</strong> 10⁴ = 10,000</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "How many ways to select president, vice-president, and secretary from 10 people?",
+                correctAnswers: ["720", "P(10,3)", "10P3"],
+                hint: "Order matters since the roles are different - use permutations",
+                explanation: "P(10,3) = 10!/(10-3)! = 10!/7! = 10×9×8 = 720",
+                steps: `<div class="step-title">Permutation Formula:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Order matters:</strong> Different roles = different outcomes</li>
+                                <li><strong>Formula:</strong> P(n,r) = n!/(n-r)!</li>
+                                <li><strong>Apply:</strong> P(10,3) = 10!/7! = 10×9×8</li>
+                                <li><strong>Calculate:</strong> 720 ways</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "How many 3-letter words can be formed from COMPUTER if no repetition is allowed?",
+                correctAnswers: ["336", "P(8,3)", "8P3"],
+                hint: "8 distinct letters, arrange 3 of them, order matters",
+                explanation: "COMPUTER has 8 distinct letters. P(8,3) = 8×7×6 = 336 three-letter arrangements.",
+                steps: `<div class="step-title">Permutation from Set:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Available letters:</strong> C,O,M,P,U,T,E,R (8 distinct)</li>
+                                <li><strong>Arrange 3:</strong> Order matters for words</li>
+                                <li><strong>Formula:</strong> P(8,3) = 8!/(8-3)! = 8!/5!</li>
+                                <li><strong>Calculate:</strong> 8×7×6 = 336</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A committee of 4 people includes exactly 2 women. If there are 6 women and 8 men available, how many committees are possible?",
+                correctAnswers: ["420", "C(6,2)×C(8,2)"],
+                hint: "Choose 2 from 6 women AND choose 2 from 8 men",
+                explanation: "Choose 2 women from 6: C(6,2) = 15. Choose 2 men from 8: C(8,2) = 28. Total: 15×28 = 420",
+                steps: `<div class="step-title">Combined Combinations:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Women:</strong> Choose 2 from 6 = C(6,2) = 15</li>
+                                <li><strong>Men:</strong> Choose 2 from 8 = C(8,2) = 28</li>
+                                <li><strong>Committee:</strong> Must choose both groups</li>
+                                <li><strong>Total:</strong> 15 × 28 = 420 committees</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "How many ways can the letters of BANANA be arranged?",
+                correctAnswers: ["60", "6!/3!", "6!/(3!×1!×1!×1!)"],
+                hint: "6 letters total, but some are repeated: 3 A's, 2 N's, 1 B",
+                explanation: "6 letters with 3 A's, 2 N's, 1 B. Arrangements = 6!/(3!×2!×1!) = 720/(6×2×1) = 60",
+                steps: `<div class="step-title">Permutations with Repetition:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Total letters:</strong> 6</li>
+                                <li><strong>Repetitions:</strong> A appears 3 times, N appears 2 times, B appears 1 time</li>
+                                <li><strong>Formula:</strong> n!/(n₁!×n₂!×...×nₖ!)</li>
+                                <li><strong>Calculate:</strong> 6!/(3!×2!×1!) = 720/12 = 60</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "How many ways to distribute 5 identical balls into 3 distinct boxes?",
+                correctAnswers: ["21", "C(7,2)", "C(5+3-1,3-1)"],
+                hint: "This is stars and bars: C(n+k-1, k-1) where n=5 balls, k=3 boxes",
+                explanation: "Stars and bars formula: C(5+3-1, 3-1) = C(7,2) = 21 ways",
+                steps: `<div class="step-title">Stars and Bars Method:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Problem type:</strong> Distribute n identical objects into k distinct boxes</li>
+                                <li><strong>Formula:</strong> C(n+k-1, k-1)</li>
+                                <li><strong>Apply:</strong> C(5+3-1, 3-1) = C(7,2)</li>
+                                <li><strong>Calculate:</strong> C(7,2) = 21</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "In how many ways can 8 people sit around a circular table?",
+                correctAnswers: ["5040", "7!", "(8-1)!"],
+                hint: "For circular arrangements, fix one person and arrange the rest",
+                explanation: "For circular permutations: (n-1)! = (8-1)! = 7! = 5040 ways",
+                steps: `<div class="step-title">Circular Permutations:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Circular vs Linear:</strong> No fixed starting position in circle</li>
+                                <li><strong>Method:</strong> Fix one person, arrange the remaining (n-1)</li>
+                                <li><strong>Formula:</strong> (n-1)! for n people in circle</li>
+                                <li><strong>Calculate:</strong> (8-1)! = 7! = 5040</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "From 12 people, how many ways to form two teams of 6 each?",
+                correctAnswers: ["462", "C(12,6)/2", "924/2"],
+                hint: "Choose 6 for first team, but divide by 2 since teams are indistinguishable",
+                explanation: "C(12,6) = 924 ways to choose first team. But teams are indistinguishable, so divide by 2: 924/2 = 462",
+                steps: `<div class="step-title">Indistinguishable Groups:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Choose first team:</strong> C(12,6) = 924</li>
+                                <li><strong>Second team:</strong> Automatically determined (remaining 6)</li>
+                                <li><strong>Overcounting:</strong> Each division counted twice (Team A, Team B) vs (Team B, Team A)</li>
+                                <li><strong>Correct count:</strong> 924/2 = 462</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const simulationQuestions = [
+            {
+                question: "To estimate the probability of getting heads in a coin flip using simulation, what should happen as the number of trials increases?",
+                correctAnswers: ["approaches 0.5", "converges to 0.5", "gets closer to 0.5"],
+                hint: "Think about the Law of Large Numbers",
+                explanation: "By the Law of Large Numbers, as the number of trials increases, the relative frequency of heads approaches the true probability of 0.5.",
+                steps: `<div class="step-title">Law of Large Numbers:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Theory:</strong> lim(n→∞) (successes/n) = P(success)</li>
+                                <li><strong>For fair coin:</strong> P(heads) = 0.5</li>
+                                <li><strong>Simulation:</strong> As trials increase, frequency → 0.5</li>
+                                <li><strong>Convergence:</strong> More trials = better estimate</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "In estimating π using random points in a square, if 785 out of 1000 points fall inside the quarter circle, what is the estimate of π?",
+                correctAnswers: ["3.14", "3.140", "3.1400"],
+                hint: "π/4 = (points inside circle)/(total points), so π = 4 × ratio",
+                explanation: "π ≈ 4 × (785/1000) = 4 × 0.785 = 3.14",
+                steps: `<div class="step-title">Monte Carlo π Estimation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Setup:</strong> Quarter circle area = π/4, square area = 1</li>
+                                <li><strong>Probability:</strong> P(point in circle) = π/4</li>
+                                <li><strong>Estimate:</strong> π/4 ≈ 785/1000 = 0.785</li>
+                                <li><strong>Therefore:</strong> π ≈ 4 × 0.785 = 3.14</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "What is the foundation of all simulation methods?",
+                correctAnswers: ["uniform random numbers", "random number generation", "uniform[0,1] random numbers"],
+                hint: "What type of random numbers do computers typically generate first?",
+                explanation: "Uniform random numbers on [0,1] are the foundation. All other distributions can be generated from uniform random numbers using various transformation methods.",
+                steps: `<div class="step-title">Random Number Foundation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Base:</strong> Uniform[0,1] random numbers (U)</li>
+                                <li><strong>Transformations:</strong> Convert U to any other distribution</li>
+                                <li><strong>Methods:</strong> Inverse transform, acceptance-rejection, etc.</li>
+                                <li><strong>Universal:</strong> All simulations start with uniform random numbers</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "To simulate rolling a fair six-sided die using uniform[0,1] random number U, what formula would you use?",
+                correctAnswers: ["floor(6U) + 1", "⌊6U⌋ + 1", "int(6*U) + 1"],
+                hint: "Need integers 1,2,3,4,5,6 with equal probability",
+                explanation: "⌊6U⌋ + 1 gives integers 1,2,3,4,5,6 with equal probability 1/6 each when U ~ Uniform[0,1].",
+                steps: `<div class="step-title">Discrete Uniform Simulation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>U ~ Uniform[0,1]:</strong> 6U ~ Uniform[0,6]</li>
+                                <li><strong>Floor function:</strong> ⌊6U⌋ gives {0,1,2,3,4,5}</li>
+                                <li><strong>Add 1:</strong> ⌊6U⌋ + 1 gives {1,2,3,4,5,6}</li>
+                                <li><strong>Equal probability:</strong> Each outcome has probability 1/6</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "In the birthday problem simulation, for 23 people, approximately what percentage of simulations should show at least one shared birthday?",
+                correctAnswers: ["50%", "50.7%", "51%", "0.5", "0.507"],
+                hint: "This is the famous birthday paradox result",
+                explanation: "The theoretical probability is approximately 50.7%. Simulations should converge to this value with enough trials.",
+                steps: `<div class="step-title">Birthday Problem:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Theoretical:</strong> P(at least one match) ≈ 0.507</li>
+                                <li><strong>Simulation:</strong> Generate 23 random birthdays, check for duplicates</li>
+                                <li><strong>Repeat:</strong> Many trials to estimate probability</li>
+                                <li><strong>Expected result:</strong> ~50.7% of simulations show matches</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "What method can be used to generate random variables from any continuous distribution F(x)?",
+                correctAnswers: ["inverse transform method", "inverse transform", "quantile method"],
+                hint: "Uses the inverse of the cumulative distribution function",
+                explanation: "The inverse transform method: if U ~ Uniform[0,1], then X = F⁻¹(U) has distribution F(x).",
+                steps: `<div class="step-title">Inverse Transform Method:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Generate:</strong> U ~ Uniform[0,1]</li>
+                                <li><strong>Transform:</strong> X = F⁻¹(U)</li>
+                                <li><strong>Result:</strong> X has CDF F(x)</li>
+                                <li><strong>Requirement:</strong> Must be able to compute F⁻¹</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "In Monte Carlo integration, what happens to the error as the sample size n increases?",
+                correctAnswers: ["decreases as 1/√n", "proportional to 1/√n", "O(1/√n)"],
+                hint: "Think about the standard error of sample means",
+                explanation: "Monte Carlo error decreases as 1/√n, the same rate as the standard error of sample means due to the Central Limit Theorem.",
+                steps: `<div class="step-title">Monte Carlo Error:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Estimate:</strong> ∫f(x)dx ≈ (1/n)∑f(Xᵢ)</li>
+                                <li><strong>Standard error:</strong> σ/√n where σ is standard deviation</li>
+                                <li><strong>Error rate:</strong> Decreases as 1/√n</li>
+                                <li><strong>Implication:</strong> Need 4x samples to halve error</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "True or False: Simulation can only approximate probabilities, never give exact answers",
+                correctAnswers: ["true", "True", "T", "yes"],
+                hint: "Simulation is based on random sampling and finite trials",
+                explanation: "True. Simulation uses finite random samples to estimate probabilities, so results are approximations that get more accurate with more trials.",
+                steps: `<div class="step-title">Nature of Simulation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Random sampling:</strong> Uses finite random samples</li>
+                                <li><strong>Approximation:</strong> Estimates converge to true values</li>
+                                <li><strong>Never exact:</strong> Always some random error</li>
+                                <li><strong>Improvement:</strong> More trials = better approximation</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "What is the main advantage of simulation over analytical methods?",
+                correctAnswers: ["handles complex problems", "works when analysis is difficult", "no mathematical complexity"],
+                hint: "Think about when analytical solutions become impossible",
+                explanation: "Simulation can handle complex problems where analytical solutions are difficult or impossible, such as high-dimensional integrals or complex stochastic processes.",
+                steps: `<div class="step-title">Simulation Advantages:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Complex problems:</strong> No need for analytical solutions</li>
+                                <li><strong>High dimensions:</strong> Curse of dimensionality less severe</li>
+                                <li><strong>Flexibility:</strong> Easy to modify assumptions</li>
+                                <li><strong>Intuitive:</strong> Results are easy to interpret</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "In the Monty Hall simulation, what should be the approximate win rate for the 'switch' strategy?",
+                correctAnswers: ["67%", "2/3", "0.67", "66.7%"],
+                hint: "Think about the theoretical probability of the switch strategy",
+                explanation: "The switch strategy should win approximately 2/3 ≈ 67% of the time, as confirmed by both theory and simulation.",
+                steps: `<div class="step-title">Monty Hall Simulation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Stay strategy:</strong> Wins when initial choice correct (1/3)</li>
+                                <li><strong>Switch strategy:</strong> Wins when initial choice wrong (2/3)</li>
+                                <li><strong>Simulation:</strong> Repeat many games, track win rates</li>
+                                <li><strong>Expected result:</strong> Switch wins ~67% of trials</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
         // Question 1.1 Functions
         function generateQuestion11() {
             document.getElementById('feedback-11').style.display = 'none';
@@ -877,6 +2136,256 @@
             stepsDiv.innerHTML = currentQuestion12.steps;
         }
 
+        // Question 1.6 Functions
+        function generateQuestion16() {
+            document.getElementById('feedback-16').style.display = 'none';
+            document.getElementById('steps-16').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-16');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion16 = bayesTheoremQuestions[Math.floor(Math.random() * bayesTheoremQuestions.length)];
+            
+            document.getElementById('question-16-content').innerHTML = currentQuestion16.question;
+            document.getElementById('hint-16').innerHTML = currentQuestion16.hint;
+        }
+
+        function checkAnswer16() {
+            const userAnswer = document.getElementById('answer-16').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-16');
+            const feedbackDiv = document.getElementById('feedback-16');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion16.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion16.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps16() {
+            const stepsDiv = document.getElementById('steps-16');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion16.steps;
+        }
+
+        // Question 1.3 Functions
+        function generateQuestion13() {
+            document.getElementById('feedback-13').style.display = 'none';
+            document.getElementById('steps-13').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-13');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion13 = conditionalProbabilityQuestions[Math.floor(Math.random() * conditionalProbabilityQuestions.length)];
+            
+            document.getElementById('question-13-content').innerHTML = currentQuestion13.question;
+            document.getElementById('hint-13').innerHTML = currentQuestion13.hint;
+        }
+
+        function checkAnswer13() {
+            const userAnswer = document.getElementById('answer-13').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-13');
+            const feedbackDiv = document.getElementById('feedback-13');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion13.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion13.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps13() {
+            const stepsDiv = document.getElementById('steps-13');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion13.steps;
+        }
+
+        // Question 1.4 Functions
+        function generateQuestion14() {
+            document.getElementById('feedback-14').style.display = 'none';
+            document.getElementById('steps-14').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-14');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion14 = independenceQuestions[Math.floor(Math.random() * independenceQuestions.length)];
+            
+            document.getElementById('question-14-content').innerHTML = currentQuestion14.question;
+            document.getElementById('hint-14').innerHTML = currentQuestion14.hint;
+        }
+
+        function checkAnswer14() {
+            const userAnswer = document.getElementById('answer-14').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-14');
+            const feedbackDiv = document.getElementById('feedback-14');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion14.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion14.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps14() {
+            const stepsDiv = document.getElementById('steps-14');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion14.steps;
+        }
+
+        // Question 1.5 Functions
+        function generateQuestion15() {
+            document.getElementById('feedback-15').style.display = 'none';
+            document.getElementById('steps-15').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-15');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion15 = countingTechniquesQuestions[Math.floor(Math.random() * countingTechniquesQuestions.length)];
+            
+            document.getElementById('question-15-content').innerHTML = currentQuestion15.question;
+            document.getElementById('hint-15').innerHTML = currentQuestion15.hint;
+        }
+
+        function checkAnswer15() {
+            const userAnswer = document.getElementById('answer-15').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-15');
+            const feedbackDiv = document.getElementById('feedback-15');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion15.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion15.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps15() {
+            const stepsDiv = document.getElementById('steps-15');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion15.steps;
+        }
+
+        // Question 1.7 Functions
+        function generateQuestion17() {
+            document.getElementById('feedback-17').style.display = 'none';
+            document.getElementById('steps-17').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-17');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion17 = simulationQuestions[Math.floor(Math.random() * simulationQuestions.length)];
+            
+            document.getElementById('question-17-content').innerHTML = currentQuestion17.question;
+            document.getElementById('hint-17').innerHTML = currentQuestion17.hint;
+        }
+
+        function checkAnswer17() {
+            const userAnswer = document.getElementById('answer-17').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-17');
+            const feedbackDiv = document.getElementById('feedback-17');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion17.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion17.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps17() {
+            const stepsDiv = document.getElementById('steps-17');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion17.steps;
+        }
+
         // Page initialization
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Chapter 1: Probability loaded successfully! 🎲');
@@ -894,6 +2403,11 @@
             setTimeout(() => {
                 generateQuestion11();
                 generateQuestion12();
+                generateQuestion13();
+                generateQuestion14();
+                generateQuestion15();
+                generateQuestion16();
+                generateQuestion17();
             }, 1000);
         });
     </script>
