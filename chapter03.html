@@ -453,6 +453,7 @@
         <div class="chapter-nav fade-in">
             <div class="nav-links">
                 <a href="index.html" class="nav-link" style="background: var(--primary-color); color: white;">← Course Home</a>
+                <a href="#learning-objectives" class="nav-link">🎯 Objectives</a>
                 <a href="#definition" class="nav-link">3.1 Definition</a>
                 <a href="#pdf-cdf" class="nav-link">3.2 PDF & CDF</a>
                 <a href="#expectation" class="nav-link">3.3 Expected Value</a>
@@ -460,6 +461,103 @@
                 <a href="#exponential" class="nav-link">3.5 Exponential</a>
                 <a href="#normal" class="nav-link">3.6 Normal</a>
                 <a href="#transformations" class="nav-link">3.7 Transformations</a>
+            </div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="section fade-in" id="learning-objectives">
+            <h2 class="section-title" style="color: var(--primary-color); border-left: 5px solid var(--primary-color); padding-left: 1rem;">🎯 Learning Objectives</h2>
+            <div class="section-content">
+                <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">After completing Chapter 3, you will be able to:</p>
+                
+                <div class="math-definition" style="background: linear-gradient(135deg, #f8f9ff, #e8eaf6); border-left: 4px solid var(--primary-color);">
+                    <h4 style="color: var(--primary-color);">📈 Continuous Random Variable Fundamentals</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Distinguish</strong> continuous from discrete random variables and explain uncountable ranges</li>
+                        <li><strong>Understand</strong> why P(X = c) = 0 for any continuous variable and specific value c</li>
+                        <li><strong>Explain</strong> the difference between probability density functions (PDFs) and probability mass functions (PMFs)</li>
+                        <li><strong>Apply</strong> interval equivalence: P(a < X < b) = P(a ≤ X ≤ b) for continuous variables</li>
+                        <li><strong>Model</strong> real-world continuous phenomena (temperature, height, time, measurements)</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition" style="background: linear-gradient(135deg, #f0f8ff, #e3f2fd); border-left: 4px solid #2196f3;">
+                    <h4 style="color: #2196f3;">∫ Probability Density Functions & Cumulative Distributions</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Construct</strong> and validate probability density functions using normalization conditions</li>
+                        <li><strong>Calculate</strong> probabilities using integration: P(a < X < b) = ∫ᵃᵇ f(x) dx</li>
+                        <li><strong>Apply</strong> the fundamental relationship: f(x) = F'(x) and F(x) = ∫₋∞ˣ f(t) dt</li>
+                        <li><strong>Find</strong> percentiles and quantiles using inverse CDF methods</li>
+                        <li><strong>Determine</strong> modes by finding critical points where f'(x) = 0</li>
+                        <li><strong>Interpret</strong> PDFs geometrically as areas under curves</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition" style="background: linear-gradient(135deg, #f9fff9, #e8f5e8); border-left: 4px solid #4caf50;">
+                    <h4 style="color: #4caf50;">📊 Expected Values & Variance for Continuous Variables</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Calculate</strong> expected values using integration: E[X] = ∫ x·f(x) dx</li>
+                        <li><strong>Compute</strong> variance using Var(X) = E[X²] - (E[X])² with integration techniques</li>
+                        <li><strong>Apply</strong> linearity of expectation to linear combinations and transformations</li>
+                        <li><strong>Analyze</strong> higher moments and their applications to distribution shape</li>
+                        <li><strong>Use</strong> independence properties for sums: Var(X + Y) = Var(X) + Var(Y)</li>
+                        <li><strong>Interpret</strong> variance as a measure of spread and risk in practical contexts</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition" style="background: linear-gradient(135deg, #fffef0, #fff3e0); border-left: 4px solid #ff9800;">
+                    <h4 style="color: #ff9800;">📏 Major Continuous Distributions</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Model</strong> equally likely outcomes using the <strong>Uniform distribution</strong> on intervals [a,b]</li>
+                        <li><strong>Analyze</strong> waiting times and reliability using the <strong>Exponential distribution</strong> and memoryless property</li>
+                        <li><strong>Apply</strong> the <strong>Normal distribution</strong> to natural phenomena using standardization and empirical rules</li>
+                        <li><strong>Calculate</strong> parameters (mean, variance) for each distribution family</li>
+                        <li><strong>Select</strong> appropriate distributions based on problem context and characteristics</li>
+                        <li><strong>Use</strong> distribution properties for probability calculations and real-world modeling</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition" style="background: linear-gradient(135deg, #fff0f8, #fce4ec); border-left: 4px solid #e91e63;">
+                    <h4 style="color: #e91e63;">🔄 Random Variable Transformations</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Apply</strong> the Jacobian method for monotonic transformations: f_Y(y) = f_X(g⁻¹(y))|dg⁻¹/dy|</li>
+                        <li><strong>Use</strong> the CDF method for general transformations including non-monotonic functions</li>
+                        <li><strong>Analyze</strong> linear transformations Y = aX + b and their effects on mean and variance</li>
+                        <li><strong>Understand</strong> standardization Z = (X-μ)/σ and its universal properties</li>
+                        <li><strong>Work</strong> with derived distributions like log-normal from normal variables</li>
+                        <li><strong>Apply</strong> transformations to unit conversions, financial modeling, and quality control</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition" style="background: linear-gradient(135deg, #f0fff0, #e8f8e8); border-left: 4px solid #2e7d32;">
+                    <h4 style="color: #2e7d32;">🌍 Real-World Applications</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Model</strong> manufacturing processes and quality control with tolerance specifications</li>
+                        <li><strong>Analyze</strong> service systems with waiting times, customer arrivals, and system reliability</li>
+                        <li><strong>Apply</strong> to financial modeling: risk assessment, portfolio theory, and return distributions</li>
+                        <li><strong>Use</strong> in engineering applications: signal processing, reliability analysis, and system design</li>
+                        <li><strong>Model</strong> natural phenomena: heights, temperatures, measurement errors, and biological processes</li>
+                        <li><strong>Connect</strong> theoretical concepts to practical decision-making under uncertainty</li>
+                    </ul>
+                </div>
+
+                <div class="theorem-box" style="background: linear-gradient(135deg, #f0f4ff, #e8eaf6); border: 2px solid var(--primary-color);">
+                    <h4 style="color: var(--primary-color);">🎓 Advanced Skills Developed</h4>
+                    <p><strong>Upon completion, you will have the mathematical sophistication to:</strong></p>
+                    <ul style="line-height: 1.8;">
+                        <li>Progress confidently to <strong>sampling distributions</strong> and the Central Limit Theorem</li>
+                        <li>Master <strong>parameter estimation</strong> methods including maximum likelihood and method of moments</li>
+                        <li>Apply <strong>continuous probability models</strong> in research, engineering, and quantitative analysis</li>
+                        <li>Bridge <strong>theoretical foundations</strong> with advanced statistical inference and machine learning</li>
+                        <li>Communicate <strong>probabilistic reasoning</strong> with precision in professional and academic contexts</li>
+                    </ul>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, var(--accent-lighter), #f3e5f5); border-radius: 10px;">
+                    <p style="font-size: 1.1rem; font-weight: 600; color: var(--primary-color); margin: 0;">
+                        🚀 <strong>Ready to master continuous probability?</strong> Explore 70 comprehensive questions across 7 essential sections!
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -692,17 +790,96 @@
             <div class="section-content">
                 <div class="math-definition">
                     <h4>Uniform Distribution: $X \sim \text{Uniform}(a, b)$</h4>
+                    <p>The uniform distribution represents <strong>equal probability density</strong> over an interval [a,b].</p>
                     <div class="math-formula">
                         $f(x) = \begin{cases} \frac{1}{b-a} & \text{if } a \leq x \leq b \\ 0 & \text{otherwise} \end{cases}$
                     </div>
-                    <p><strong>Properties:</strong></p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Uniform Distribution Properties</h4>
                     <ul>
-                        <li><strong>Mean:</strong> $E[X] = \frac{a+b}{2}$</li>
+                        <li><strong>Mean:</strong> $E[X] = \frac{a+b}{2}$ (midpoint of interval)</li>
                         <li><strong>Variance:</strong> $\text{Var}(X) = \frac{(b-a)^2}{12}$</li>
+                        <li><strong>Standard Deviation:</strong> $\sigma = \frac{b-a}{2\sqrt{3}}$</li>
                         <li><strong>CDF:</strong> $F(x) = \frac{x-a}{b-a}$ for $a \leq x \leq b$</li>
                     </ul>
                 </div>
-                <p><em>More detailed content and practice questions coming soon...</em></p>
+
+                <div class="example-box">
+                    <h4>Example 3.4: Random Number Generator</h4>
+                    <p><strong>Problem:</strong> A computer generates random numbers uniformly on [0,1]. What's P(X > 0.7)?</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>X ~ Uniform(0,1), so f(x) = 1 for 0 ≤ x ≤ 1</li>
+                        <li>P(X > 0.7) = ∫₀.₇¹ 1 dx = 1 - 0.7 = 0.3</li>
+                        <li>Alternatively: P(X > 0.7) = (1-0.7)/(1-0) = 0.3</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Key Characteristics</h4>
+                    <p><strong>Shape:</strong> Rectangular (flat) PDF - constant density</p>
+                    <p><strong>Symmetry:</strong> Symmetric around the mean μ = (a+b)/2</p>
+                    <p><strong>Maximum entropy:</strong> Among all distributions on [a,b], uniform has maximum entropy</p>
+                    <p><strong>Memoryless property:</strong> No memoryless property (unlike exponential)</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 3.5: Bus Arrival Times</h4>
+                    <p><strong>Problem:</strong> Buses arrive every 10 minutes. If you arrive at a random time, your waiting time is Uniform(0,10). Find the probability you wait more than 7 minutes.</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>X ~ Uniform(0,10), so f(x) = 1/10 for 0 ≤ x ≤ 10</li>
+                        <li>P(X > 7) = ∫₇¹⁰ (1/10) dx = (1/10)(10-7) = 3/10 = 0.3</li>
+                        <li>Expected waiting time: E[X] = (0+10)/2 = 5 minutes</li>
+                    </ul>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Quantiles and Percentiles</h4>
+                    <p>For X ~ Uniform(a,b), the p-th percentile is:</p>
+                    <div class="math-formula">
+                        $x_p = a + p(b-a)$ where $0 \leq p \leq 1$
+                    </div>
+                    <p><strong>Examples:</strong> Median = (a+b)/2, 25th percentile = a + 0.25(b-a)</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 3.6: Quality Control</h4>
+                    <p><strong>Problem:</strong> A machine produces parts with diameters uniformly distributed between 9.8 and 10.2 mm. What fraction meet specifications of 9.9 to 10.1 mm?</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>X ~ Uniform(9.8, 10.2), so b-a = 0.4 mm</li>
+                        <li>P(9.9 ≤ X ≤ 10.1) = (10.1-9.9)/(10.2-9.8) = 0.2/0.4 = 0.5</li>
+                        <li>50% of parts meet specifications</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 3.4 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 3.4 Practice</h3>
+                
+                <div class="practice-question" id="question-3-4">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion34()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-34-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-34">Your Answer:</label>
+                        <input type="text" id="answer-34" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer34()">
+                        <div class="input-hint" id="hint-34"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer34()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps34()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion34()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-34" style="display: none;"></div>
+                    <div class="question-steps" id="steps-34" style="display: none;"></div>
+                </div>
             </div>
         </div>
 
@@ -711,18 +888,108 @@
             <div class="section-content">
                 <div class="math-definition">
                     <h4>Exponential Distribution: $X \sim \text{Exponential}(\lambda)$</h4>
+                    <p>The exponential distribution models <strong>waiting times</strong> between events in a Poisson process.</p>
                     <div class="math-formula">
                         $f(x) = \lambda e^{-\lambda x}$ for $x \geq 0$, $\lambda > 0$
                     </div>
-                    <p><strong>Properties:</strong></p>
+                    <p><strong>Parameter:</strong> λ is the rate parameter (events per unit time)</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Exponential Distribution Properties</h4>
                     <ul>
-                        <li><strong>Mean:</strong> $E[X] = \frac{1}{\lambda}$</li>
+                        <li><strong>Mean:</strong> $E[X] = \frac{1}{\lambda}$ (average waiting time)</li>
                         <li><strong>Variance:</strong> $\text{Var}(X) = \frac{1}{\lambda^2}$</li>
+                        <li><strong>Standard Deviation:</strong> $\sigma = \frac{1}{\lambda}$</li>
                         <li><strong>CDF:</strong> $F(x) = 1 - e^{-\lambda x}$ for $x \geq 0$</li>
                         <li><strong>Memoryless Property:</strong> $P(X > s + t | X > s) = P(X > t)$</li>
                     </ul>
                 </div>
-                <p><em>More detailed content and practice questions coming soon...</em></p>
+
+                <div class="example-box">
+                    <h4>Example 3.7: Customer Service Calls</h4>
+                    <p><strong>Problem:</strong> Calls arrive at rate λ = 2 per hour. What's the probability the next call takes more than 30 minutes?</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>X ~ Exponential(2), where X is waiting time in hours</li>
+                        <li>P(X > 0.5) = 1 - F(0.5) = 1 - (1 - e^(-2×0.5)) = e^(-1) ≈ 0.368</li>
+                        <li>About 36.8% chance of waiting more than 30 minutes</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Memoryless Property</h4>
+                    <p>The exponential distribution is the <strong>only continuous distribution</strong> with the memoryless property:</p>
+                    <div class="math-formula">
+                        $P(X > s + t | X > s) = P(X > t)$
+                    </div>
+                    <p><strong>Interpretation:</strong> Given you've waited s time units, the probability of waiting t more is the same as if starting fresh.</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 3.8: Electronic Component Lifetimes</h4>
+                    <p><strong>Problem:</strong> A component's lifetime follows Exponential(0.1) where time is in years. If it's survived 5 years, what's P(survives 3 more years)?</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>By memoryless property: P(X > 8 | X > 5) = P(X > 3)</li>
+                        <li>P(X > 3) = 1 - F(3) = e^(-0.1×3) = e^(-0.3) ≈ 0.741</li>
+                        <li>About 74.1% chance of surviving 3 more years</li>
+                    </ul>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Relationship to Poisson Process</h4>
+                    <p>If events occur according to Poisson(λt) in time interval [0,t], then:</p>
+                    <ul>
+                        <li><strong>Waiting time</strong> until first event ~ Exponential(λ)</li>
+                        <li><strong>Time between</strong> consecutive events ~ Exponential(λ)</li>
+                        <li><strong>Examples:</strong> Radioactive decay, phone calls, equipment failures</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 3.9: Website Traffic</h4>
+                    <p><strong>Problem:</strong> Visitors arrive at rate 5 per minute. Find the median time until the next visitor.</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>X ~ Exponential(5), where X is in minutes</li>
+                        <li>For median, solve F(m) = 0.5: 1 - e^(-5m) = 0.5</li>
+                        <li>e^(-5m) = 0.5, so -5m = ln(0.5) = -ln(2)</li>
+                        <li>m = ln(2)/5 ≈ 0.139 minutes ≈ 8.3 seconds</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Alternative Parameterization</h4>
+                    <p>Sometimes exponential is parameterized by scale β = 1/λ:</p>
+                    <p><strong>Scale form:</strong> $f(x) = \frac{1}{\beta} e^{-x/\beta}$ with E[X] = β</p>
+                    <p><strong>Relationship:</strong> Rate λ = 1/scale β</p>
+                </div>
+            </div>
+
+            <!-- Section 3.5 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 3.5 Practice</h3>
+                
+                <div class="practice-question" id="question-3-5">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion35()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-35-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-35">Your Answer:</label>
+                        <input type="text" id="answer-35" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer35()">
+                        <div class="input-hint" id="hint-35"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer35()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps35()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion35()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-35" style="display: none;"></div>
+                    <div class="question-steps" id="steps-35" style="display: none;"></div>
+                </div>
             </div>
         </div>
 
@@ -731,32 +998,265 @@
             <div class="section-content">
                 <div class="math-definition">
                     <h4>Normal Distribution: $X \sim N(\mu, \sigma^2)$</h4>
+                    <p>The normal (Gaussian) distribution is the most important continuous distribution, modeling many natural phenomena.</p>
                     <div class="math-formula">
-                        $f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$
+                        $f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$ for $-\infty < x < \infty$
                     </div>
-                    <p><strong>Properties:</strong></p>
+                    <p><strong>Parameters:</strong> μ (mean), σ² (variance)</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Normal Distribution Properties</h4>
                     <ul>
                         <li><strong>Mean:</strong> $E[X] = \mu$</li>
                         <li><strong>Variance:</strong> $\text{Var}(X) = \sigma^2$</li>
-                        <li><strong>Symmetric:</strong> Bell-shaped curve centered at $\mu$</li>
-                        <li><strong>68-95-99.7 Rule:</strong> Approximately 68%, 95%, 99.7% within 1, 2, 3 standard deviations</li>
+                        <li><strong>Standard Deviation:</strong> $\sigma$</li>
+                        <li><strong>Symmetric:</strong> Bell-shaped curve centered at μ</li>
+                        <li><strong>Inflection points:</strong> At μ ± σ</li>
+                        <li><strong>Asymptotic:</strong> Tails approach 0 but never reach it</li>
                     </ul>
                 </div>
-                <p><em>More detailed content and practice questions coming soon...</em></p>
+
+                <div class="example-box">
+                    <h4>Example 3.10: IQ Scores</h4>
+                    <p><strong>Problem:</strong> IQ scores are normally distributed with μ = 100, σ = 15. What percentage have IQ between 85 and 115?</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>Interval [85, 115] = [μ - σ, μ + σ]</li>
+                        <li>By 68-95-99.7 rule: ~68% within 1 standard deviation</li>
+                        <li>More precisely: P(85 < X < 115) = P(-1 < Z < 1) ≈ 0.6827</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Standard Normal Distribution: Z ~ N(0,1)</h4>
+                    <div class="math-formula">
+                        $\phi(z) = \frac{1}{\sqrt{2\pi}} e^{-z^2/2}$
+                    </div>
+                    <p><strong>Standardization:</strong> If X ~ N(μ,σ²), then $Z = \frac{X-\mu}{\sigma} \sim N(0,1)$</p>
+                    <p><strong>Key property:</strong> All normal probabilities can be computed using standard normal tables</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>68-95-99.7 Rule (Empirical Rule)</h4>
+                    <p>For any normal distribution X ~ N(μ,σ²):</p>
+                    <ul>
+                        <li><strong>~68%</strong> of values within μ ± σ</li>
+                        <li><strong>~95%</strong> of values within μ ± 2σ</li>
+                        <li><strong>~99.7%</strong> of values within μ ± 3σ</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 3.11: Quality Control</h4>
+                    <p><strong>Problem:</strong> Widget weights are N(50, 4) grams. What's the probability a widget weighs more than 54 grams?</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>Standardize: Z = (54-50)/2 = 2</li>
+                        <li>P(X > 54) = P(Z > 2) = 1 - Φ(2) ≈ 1 - 0.9772 = 0.0228</li>
+                        <li>About 2.28% of widgets exceed 54 grams</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Linear Combinations of Normal Variables</h4>
+                    <p>If X ~ N(μ₁,σ₁²) and Y ~ N(μ₂,σ₂²) are independent, then:</p>
+                    <div class="math-formula">
+                        $aX + bY + c \sim N(a\mu_1 + b\mu_2 + c, a^2\sigma_1^2 + b^2\sigma_2^2)$
+                    </div>
+                    <p><strong>Special case:</strong> Sum of normals is normal</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Central Limit Theorem Connection</h4>
+                    <p>The normal distribution arises naturally as the limit of:</p>
+                    <ul>
+                        <li><strong>Sample means:</strong> $\bar{X} \approx N(\mu, \sigma^2/n)$ for large n</li>
+                        <li><strong>Binomial approximation:</strong> Binomial(n,p) ≈ N(np, np(1-p)) when n large</li>
+                        <li><strong>Sum of variables:</strong> Many small independent effects → normal</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 3.12: Manufacturing Tolerance</h4>
+                    <p><strong>Problem:</strong> Two components have lengths X₁ ~ N(10, 0.04) and X₂ ~ N(5, 0.01). Find P(X₁ + X₂ > 15.1).</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>X₁ + X₂ ~ N(10+5, 0.04+0.01) = N(15, 0.05)</li>
+                        <li>Standardize: Z = (15.1-15)/√0.05 = 0.1/0.224 ≈ 0.447</li>
+                        <li>P(X₁ + X₂ > 15.1) = P(Z > 0.447) ≈ 1 - 0.673 = 0.327</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 3.6 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 3.6 Practice</h3>
+                
+                <div class="practice-question" id="question-3-6">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion36()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-36-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-36">Your Answer:</label>
+                        <input type="text" id="answer-36" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer36()">
+                        <div class="input-hint" id="hint-36"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer36()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps36()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion36()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-36" style="display: none;"></div>
+                    <div class="question-steps" id="steps-36" style="display: none;"></div>
+                </div>
             </div>
         </div>
 
         <div class="section fade-in" id="transformations">
             <h2 class="section-title">🔄 3.7 Transformations of Random Variables</h2>
             <div class="section-content">
+                <div class="math-definition">
+                    <h4>Random Variable Transformation</h4>
+                    <p>Given a random variable X with known distribution, find the distribution of Y = g(X) where g is some function.</p>
+                    <p><strong>Key question:</strong> If we know f_X(x), what is f_Y(y)?</p>
+                </div>
+
                 <div class="theorem-box">
-                    <h4>Transformation Technique</h4>
-                    <p>If $X$ has PDF $f_X(x)$ and $Y = g(X)$ where $g$ is strictly monotonic, then:</p>
+                    <h4>Transformation Technique (Monotonic Functions)</h4>
+                    <p>If Y = g(X) where g is strictly monotonic (increasing or decreasing) and differentiable:</p>
                     <div class="math-formula">
                         $f_Y(y) = f_X(g^{-1}(y)) \left| \frac{d}{dy} g^{-1}(y) \right|$
                     </div>
+                    <p><strong>Steps:</strong> (1) Find inverse g⁻¹, (2) Find derivative, (3) Apply formula</p>
                 </div>
-                <p><em>More detailed content and practice questions coming soon...</em></p>
+
+                <div class="example-box">
+                    <h4>Example 3.13: Linear Transformation</h4>
+                    <p><strong>Problem:</strong> If X ~ Uniform(0,1) and Y = 2X + 3, find f_Y(y).</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>Inverse function: x = g⁻¹(y) = (y-3)/2</li>
+                        <li>Derivative: dx/dy = 1/2</li>
+                        <li>Y ranges from 3 to 5 (when X goes from 0 to 1)</li>
+                        <li>f_Y(y) = f_X((y-3)/2) × (1/2) = 1 × (1/2) = 1/2 for 3 ≤ y ≤ 5</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition">
+                    <h4>CDF Method (General Approach)</h4>
+                    <p>For any transformation Y = g(X):</p>
+                    <ol>
+                        <li><strong>Find CDF:</strong> F_Y(y) = P(Y ≤ y) = P(g(X) ≤ y)</li>
+                        <li><strong>Express in terms of X:</strong> Find equivalent condition on X</li>
+                        <li><strong>Use F_X:</strong> Calculate probability using known distribution</li>
+                        <li><strong>Differentiate:</strong> f_Y(y) = F'_Y(y)</li>
+                    </ol>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 3.14: Quadratic Transformation</h4>
+                    <p><strong>Problem:</strong> If X ~ Uniform(-1,1) and Y = X², find f_Y(y).</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>Y ranges from 0 to 1</li>
+                        <li>F_Y(y) = P(Y ≤ y) = P(X² ≤ y) = P(-√y ≤ X ≤ √y)</li>
+                        <li>For 0 ≤ y ≤ 1: F_Y(y) = (√y - (-√y))/2 = √y</li>
+                        <li>f_Y(y) = d/dy(√y) = 1/(2√y) for 0 < y < 1</li>
+                    </ul>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Special Case: Linear Transformations</h4>
+                    <p>If Y = aX + b where a ≠ 0:</p>
+                    <div class="math-formula">
+                        $f_Y(y) = \frac{1}{|a|} f_X\left(\frac{y-b}{a}\right)$
+                    </div>
+                    <p><strong>Mean and Variance:</strong> E[Y] = aE[X] + b, Var(Y) = a²Var(X)</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 3.15: Temperature Conversion</h4>
+                    <p><strong>Problem:</strong> Temperature in Celsius: C ~ N(20, 25). Find distribution of Fahrenheit F = (9/5)C + 32.</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>Linear transformation with a = 9/5, b = 32</li>
+                        <li>E[F] = (9/5) × 20 + 32 = 36 + 32 = 68°F</li>
+                        <li>Var(F) = (9/5)² × 25 = 81/25 × 25 = 81</li>
+                        <li>Therefore: F ~ N(68, 81)</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Moment Generating Functions (MGF) Approach</h4>
+                    <p>For Y = aX + b, if X has MGF M_X(t):</p>
+                    <div class="math-formula">
+                        $M_Y(t) = e^{bt} M_X(at)$
+                    </div>
+                    <p><strong>Advantage:</strong> Preserves distribution families (e.g., normal stays normal)</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 3.16: Log-Normal Distribution</h4>
+                    <p><strong>Problem:</strong> If log(Y) ~ N(μ,σ²), find the mean of Y.</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>Let X = log(Y), so Y = e^X where X ~ N(μ,σ²)</li>
+                        <li>This defines the log-normal distribution</li>
+                        <li>E[Y] = E[e^X] = e^(μ + σ²/2) (using MGF properties)</li>
+                        <li>Var(Y) = e^(2μ + σ²)(e^σ² - 1)</li>
+                    </ul>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Transformation Applications</h4>
+                    <ul>
+                        <li><strong>Standardization:</strong> Z = (X-μ)/σ transforms any X to standard form</li>
+                        <li><strong>Unit conversion:</strong> Temperature, currency, measurement scales</li>
+                        <li><strong>Box-Cox:</strong> Y = (X^λ - 1)/λ for normalizing skewed data</li>
+                        <li><strong>Financial modeling:</strong> Log returns, option pricing</li>
+                        <li><strong>Reliability:</strong> Hazard rate transformations</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 3.17: Portfolio Returns</h4>
+                    <p><strong>Problem:</strong> Stock returns R ~ N(0.08, 0.0025). If initial investment is $1000, find the distribution of final value after one period.</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>Final value V = 1000(1 + R) = 1000 + 1000R</li>
+                        <li>E[V] = 1000 + 1000 × 0.08 = 1080</li>
+                        <li>Var(V) = 1000² × 0.0025 = 2,500</li>
+                        <li>Therefore: V ~ N(1080, 2500), or σ_V = 50</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 3.7 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 3.7 Practice</h3>
+                
+                <div class="practice-question" id="question-3-7">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion37()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-37-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-37">Your Answer:</label>
+                        <input type="text" id="answer-37" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer37()">
+                        <div class="input-hint" id="hint-37"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer37()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps37()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion37()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-37" style="display: none;"></div>
+                    <div class="question-steps" id="steps-37" style="display: none;"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -766,6 +1266,10 @@
         let currentQuestion31 = null;
         let currentQuestion32 = null;
         let currentQuestion33 = null;
+        let currentQuestion34 = null;
+        let currentQuestion35 = null;
+        let currentQuestion36 = null;
+        let currentQuestion37 = null;
 
         const continuousDefinitionQuestions = [
             {
@@ -816,6 +1320,118 @@
                                 <li><strong>Definition:</strong> Continuous variables have uncountable ranges</li>
                                 <li><strong>Examples:</strong> Height, weight, time, temperature</li>
                                 <li><strong>Classification:</strong> Since [a,b] is uncountable, X is continuous</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "What is the main difference between a probability mass function (PMF) and a probability density function (PDF)?",
+                correctAnswers: ["PMF gives probabilities, PDF gives densities", "PMF for discrete, PDF for continuous", "PDF needs integration"],
+                hint: "Think about what each function directly represents",
+                explanation: "A PMF gives actual probabilities P(X = k), while a PDF gives probability densities - f(x) values that must be integrated over intervals to get probabilities.",
+                steps: `<div class="step-title">PMF vs PDF:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>PMF (discrete):</strong> p(k) = P(X = k) gives exact probabilities</li>
+                                <li><strong>PDF (continuous):</strong> f(x) gives density, not probability</li>
+                                <li><strong>Key difference:</strong> PMF values are probabilities, PDF values are densities</li>
+                                <li><strong>For probabilities:</strong> Use PMF directly, integrate PDF over intervals</li>
+                                <li><strong>Example:</strong> PDF f(x) = 2 doesn't mean P = 2; it means high density</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Height is normally distributed. Which statement is meaningful: P(Height = 70 inches) or P(69.5 < Height < 70.5)?",
+                correctAnswers: ["P(69.5 < Height < 70.5)", "second one", "interval probability", "the interval"],
+                hint: "Heights are continuous, so what happens to point probabilities?",
+                explanation: "P(69.5 < Height < 70.5) is meaningful because it's an interval probability. P(Height = 70 inches) = 0 for continuous variables.",
+                steps: `<div class="step-title">Real-World Continuous Variables:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Height is continuous:</strong> Can take any value in an interval</li>
+                                <li><strong>Point probability:</strong> P(Height = 70) = 0 (not meaningful)</li>
+                                <li><strong>Interval probability:</strong> P(69.5 < Height < 70.5) > 0 (meaningful)</li>
+                                <li><strong>Practical interpretation:</strong> Interval represents measurement precision</li>
+                                <li><strong>General rule:</strong> For continuous variables, use intervals, not points</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If f(x) is a valid PDF, what must be true about ∫_{-∞}^{∞} f(x) dx?",
+                correctAnswers: ["1", "1.0", "equals 1", "= 1"],
+                hint: "Think about the total probability over all possible values",
+                explanation: "For any valid PDF, ∫_{-∞}^{∞} f(x) dx = 1, representing that the total probability over all possible outcomes is 1.",
+                steps: `<div class="step-title">PDF Normalization Property:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Total probability:</strong> All possible outcomes must sum to probability 1</li>
+                                <li><strong>For continuous variables:</strong> This means integrating over entire range</li>
+                                <li><strong>Mathematical requirement:</strong> ∫_{-∞}^{∞} f(x) dx = 1</li>
+                                <li><strong>Called:</strong> Normalization condition or unit area property</li>
+                                <li><strong>Verification:</strong> Any proposed PDF must satisfy this condition</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Temperature measured in degrees can be any real number. The measurement X = 'exact temperature' is what type of variable?",
+                correctAnswers: ["continuous", "Continuous"],
+                hint: "Can temperature take any value in an interval?",
+                explanation: "Temperature is continuous because it can take any real value within an interval - there are no gaps between possible temperature values.",
+                steps: `<div class="step-title">Temperature as Continuous Variable:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Physical nature:</strong> Temperature varies continuously</li>
+                                <li><strong>Mathematical range:</strong> Any real number (in theory)</li>
+                                <li><strong>No gaps:</strong> Between any two temperatures, infinitely many others exist</li>
+                                <li><strong>Measurement:</strong> Limited by instrument precision, but theoretically continuous</li>
+                                <li><strong>Classification:</strong> Continuous random variable</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For a PDF f(x), is it possible that f(5) = 2.5? Why or why not?",
+                correctAnswers: ["yes", "Yes", "possible", "allowed"],
+                hint: "Remember that PDF values represent density, not probability",
+                explanation: "Yes, f(5) = 2.5 is possible because PDF values represent density, not probability. Only the integral (area) must be ≤ 1, not the function values themselves.",
+                steps: `<div class="step-title">PDF Values vs Probabilities:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>PDF interpretation:</strong> f(x) = density, not probability</li>
+                                <li><strong>No upper limit:</strong> PDF values can exceed 1</li>
+                                <li><strong>Constraint:</strong> Only ∫ f(x) dx = 1 (total area)</li>
+                                <li><strong>Example:</strong> High density in small interval still gives small probability</li>
+                                <li><strong>Conclusion:</strong> f(5) = 2.5 is perfectly valid</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "What is the relationship between a PDF f(x) and CDF F(x) for a continuous random variable?",
+                correctAnswers: ["F'(x) = f(x)", "f(x) = F'(x)", "derivative", "PDF is derivative of CDF"],
+                hint: "Think about how integration and differentiation are related",
+                explanation: "The PDF is the derivative of the CDF: f(x) = F'(x). Equivalently, F(x) = ∫_{-∞}^x f(t) dt.",
+                steps: `<div class="step-title">PDF and CDF Relationship:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>CDF definition:</strong> F(x) = P(X ≤ x) = ∫_{-∞}^x f(t) dt</li>
+                                <li><strong>Fundamental theorem:</strong> Differentiation undoes integration</li>
+                                <li><strong>Take derivative:</strong> F'(x) = d/dx [∫_{-∞}^x f(t) dt] = f(x)</li>
+                                <li><strong>Therefore:</strong> PDF f(x) = F'(x)</li>
+                                <li><strong>Geometric meaning:</strong> PDF is the slope of the CDF</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A machine produces parts with diameters that follow a continuous distribution. What does P(9.99 < Diameter < 10.01) represent?",
+                correctAnswers: ["probability within tolerance", "area under PDF", "proportion of parts in range"],
+                hint: "Think about what the interval probability means in this manufacturing context",
+                explanation: "P(9.99 < Diameter < 10.01) represents the proportion of parts that will have diameters within this tolerance range - the area under the PDF between these values.",
+                steps: `<div class="step-title">Manufacturing Application:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Context:</strong> Continuous diameter measurements</li>
+                                <li><strong>Interval:</strong> 9.99 to 10.01 (tolerance range)</li>
+                                <li><strong>Mathematical meaning:</strong> P(9.99 < D < 10.01) = ∫_{9.99}^{10.01} f(d) dd</li>
+                                <li><strong>Practical meaning:</strong> Fraction of parts meeting specifications</li>
+                                <li><strong>Quality control:</strong> Higher probability = better process control</li>
                             </ol>
                         </div>`
             }
@@ -869,6 +1485,111 @@
                                 <li><strong>Solve for c:</strong> c × 8/3 = 1, so c = 3/8</li>
                             </ol>
                         </div>`
+            },
+            {
+                question: "If f(x) = 2x on [0,1], what is P(X > 0.5)?",
+                correctAnswers: ["0.75", "0.750", ".75", ".750", "3/4"],
+                hint: "Integrate from 0.5 to 1, or use P(X > 0.5) = 1 - F(0.5)",
+                explanation: "P(X > 0.5) = ∫₀.₅¹ 2x dx = [x²]₀.₅¹ = 1² - (0.5)² = 1 - 0.25 = 0.75",
+                steps: `<div class="step-title">Tail Probability Calculation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Setup integral:</strong> P(X > 0.5) = ∫₀.₅¹ 2x dx</li>
+                                <li><strong>Find antiderivative:</strong> ∫ 2x dx = x²</li>
+                                <li><strong>Apply fundamental theorem:</strong> = [x²]₀.₅¹</li>
+                                <li><strong>Evaluate:</strong> = 1² - (0.5)² = 1 - 0.25 = 0.75</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For the triangular PDF f(x) = x on [0,2], what is the CDF F(1)?",
+                correctAnswers: ["0.25", "0.250", ".25", ".250", "1/4"],
+                hint: "F(1) = P(X ≤ 1) = ∫₀¹ x dx",
+                explanation: "F(1) = ∫₀¹ x dx = [x²/2]₀¹ = 1²/2 - 0²/2 = 0.5 - 0 = 0.5. Wait, let me recalculate: this needs normalization first.",
+                steps: `<div class="step-title">CDF Calculation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>First normalize:</strong> ∫₀² x dx = [x²/2]₀² = 2, so f(x) = x/2</li>
+                                <li><strong>CDF formula:</strong> F(1) = ∫₀¹ (x/2) dx</li>
+                                <li><strong>Integrate:</strong> = (1/2) ∫₀¹ x dx = (1/2)[x²/2]₀¹</li>
+                                <li><strong>Evaluate:</strong> = (1/2)(1/2) = 1/4 = 0.25</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A valid PDF must satisfy which two conditions?",
+                correctAnswers: ["f(x) ≥ 0 and ∫f(x)dx = 1", "non-negative and integrates to 1", "≥0 and total area = 1"],
+                hint: "Think about what makes a function a valid probability density",
+                explanation: "A valid PDF must satisfy: (1) f(x) ≥ 0 for all x (non-negative), and (2) ∫_{-∞}^{∞} f(x) dx = 1 (total area equals 1).",
+                steps: `<div class="step-title">PDF Validity Conditions:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Condition 1:</strong> f(x) ≥ 0 for all x (densities cannot be negative)</li>
+                                <li><strong>Condition 2:</strong> ∫_{-∞}^{∞} f(x) dx = 1 (total probability = 1)</li>
+                                <li><strong>Physical meaning:</strong> Represents relative likelihood at each point</li>
+                                <li><strong>Note:</strong> f(x) can exceed 1 (unlike probabilities)</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If F(x) is a CDF, what are the values of F(-∞) and F(∞)?",
+                correctAnswers: ["F(-∞) = 0, F(∞) = 1", "0 and 1", "0, 1"],
+                hint: "Think about the cumulative probability at extreme values",
+                explanation: "F(-∞) = 0 (no probability below all values) and F(∞) = 1 (all probability below all values).",
+                steps: `<div class="step-title">CDF Boundary Conditions:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>At negative infinity:</strong> F(-∞) = P(X ≤ -∞) = 0</li>
+                                <li><strong>At positive infinity:</strong> F(∞) = P(X ≤ ∞) = 1</li>
+                                <li><strong>Intuition:</strong> CDF starts at 0, ends at 1</li>
+                                <li><strong>Monotonicity:</strong> F(x) is non-decreasing</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For f(x) = 3x² on [0,1], what is the 75th percentile (x such that F(x) = 0.75)?",
+                correctAnswers: ["0.909", ".909", "0.91", "∛(0.75)"],
+                hint: "Find x where ∫₀ˣ 3t² dt = 0.75",
+                explanation: "F(x) = ∫₀ˣ 3t² dt = [t³]₀ˣ = x³. For 75th percentile: x³ = 0.75, so x = ∛(0.75) ≈ 0.909",
+                steps: `<div class="step-title">Finding Percentiles:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Find CDF:</strong> F(x) = ∫₀ˣ 3t² dt = [t³]₀ˣ = x³</li>
+                                <li><strong>Set up equation:</strong> F(x) = 0.75</li>
+                                <li><strong>Solve:</strong> x³ = 0.75</li>
+                                <li><strong>Take cube root:</strong> x = ∛(0.75) ≈ 0.909</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If PDF f(x) = 6x(1-x) on [0,1], at what value of x is the density maximized?",
+                correctAnswers: ["0.5", "0.50", ".5", ".50", "1/2"],
+                hint: "Take the derivative f'(x) and set equal to 0",
+                explanation: "f'(x) = 6(1-2x) = 0 when x = 0.5. Since f''(0.5) = -12 < 0, this is a maximum.",
+                steps: `<div class="step-title">Finding Mode (Maximum Density):</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Take derivative:</strong> f'(x) = d/dx[6x(1-x)] = 6(1-2x)</li>
+                                <li><strong>Set equal to 0:</strong> 6(1-2x) = 0</li>
+                                <li><strong>Solve:</strong> 1-2x = 0, so x = 0.5</li>
+                                <li><strong>Verify maximum:</strong> f''(x) = -12 < 0, confirming maximum</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "What geometric interpretation does P(a < X < b) have for a continuous random variable?",
+                correctAnswers: ["area under PDF", "area under curve", "area between a and b"],
+                hint: "Think about what integration represents geometrically",
+                explanation: "P(a < X < b) represents the area under the PDF curve f(x) between x = a and x = b.",
+                steps: `<div class="step-title">Geometric Interpretation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Mathematical:</strong> P(a < X < b) = ∫ₐᵇ f(x) dx</li>
+                                <li><strong>Geometric:</strong> Definite integral = area under curve</li>
+                                <li><strong>Visualization:</strong> Shade region under f(x) from a to b</li>
+                                <li><strong>Total area:</strong> Entire PDF has area = 1</li>
+                            </ol>
+                        </div>`
             }
         ];
 
@@ -916,6 +1637,688 @@
                                 <li><strong>Apply to our expression:</strong> E[2X - Y + 1] = 2E[X] - E[Y] + 1</li>
                                 <li><strong>Substitute values:</strong> = 2(3) - 5 + 1</li>
                                 <li><strong>Calculate:</strong> = 6 - 5 + 1 = 2</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For X with PDF f(x) = 3x² on [0,1], what is Var(X)?",
+                correctAnswers: ["0.15", "0.150", ".15", ".150", "3/20"],
+                hint: "Use Var(X) = E[X²] - (E[X])². First find E[X] and E[X²]",
+                explanation: "E[X] = 3/4, E[X²] = 3/5, so Var(X) = 3/5 - (3/4)² = 3/5 - 9/16 = 48/80 - 45/80 = 3/80 = 0.15",
+                steps: `<div class="step-title">Computing Variance for Continuous Variables:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Find E[X]:</strong> E[X] = ∫₀¹ x·3x² dx = 3∫₀¹ x³ dx = 3[x⁴/4]₀¹ = 3/4</li>
+                                <li><strong>Find E[X²]:</strong> E[X²] = ∫₀¹ x²·3x² dx = 3∫₀¹ x⁴ dx = 3[x⁵/5]₀¹ = 3/5</li>
+                                <li><strong>Apply formula:</strong> Var(X) = E[X²] - (E[X])² = 3/5 - (3/4)²</li>
+                                <li><strong>Calculate:</strong> = 3/5 - 9/16 = 48/80 - 45/80 = 3/80 = 0.15</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For the exponential distribution with rate λ = 2, what is E[X]?",
+                correctAnswers: ["0.5", "0.50", ".5", ".50", "1/2"],
+                hint: "For exponential distribution, E[X] = 1/λ",
+                explanation: "For exponential with rate λ = 2, E[X] = 1/λ = 1/2 = 0.5",
+                steps: `<div class="step-title">Expected Value of Exponential Distribution:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Exponential formula:</strong> If X ~ Exp(λ), then E[X] = 1/λ</li>
+                                <li><strong>Given rate:</strong> λ = 2</li>
+                                <li><strong>Apply formula:</strong> E[X] = 1/2 = 0.5</li>
+                                <li><strong>Interpretation:</strong> Average waiting time between events</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If X has variance 9, what is Var(3X - 2)?",
+                correctAnswers: ["81", "81.0", "81.00"],
+                hint: "Use Var(aX + b) = a²Var(X). Constants don't affect variance",
+                explanation: "Var(3X - 2) = 3²Var(X) = 9 × 9 = 81. The constant -2 doesn't affect variance.",
+                steps: `<div class="step-title">Variance of Linear Transformation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Property:</strong> Var(aX + b) = a²Var(X)</li>
+                                <li><strong>Identify coefficients:</strong> a = 3, b = -2</li>
+                                <li><strong>Apply formula:</strong> Var(3X - 2) = 3²Var(X)</li>
+                                <li><strong>Calculate:</strong> = 9 × 9 = 81</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For X ~ Normal(μ = 10, σ² = 4), what is E[X] and Var(X)?",
+                correctAnswers: ["E[X] = 10, Var(X) = 4", "10, 4", "mean=10, variance=4"],
+                hint: "For normal distribution, the parameters directly give the mean and variance",
+                explanation: "For X ~ N(μ, σ²), we have E[X] = μ = 10 and Var(X) = σ² = 4.",
+                steps: `<div class="step-title">Normal Distribution Parameters:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Normal notation:</strong> X ~ N(μ, σ²)</li>
+                                <li><strong>Given parameters:</strong> μ = 10, σ² = 4</li>
+                                <li><strong>Expected value:</strong> E[X] = μ = 10</li>
+                                <li><strong>Variance:</strong> Var(X) = σ² = 4</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "What is E[X³] called, and what does it measure?",
+                correctAnswers: ["third moment", "third raw moment", "skewness related"],
+                hint: "Higher moments measure different aspects of distribution shape",
+                explanation: "E[X³] is the third (raw) moment about zero. It's related to skewness, which measures the asymmetry of the distribution.",
+                steps: `<div class="step-title">Higher Moments:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Definition:</strong> E[Xⁿ] is the nth raw moment</li>
+                                <li><strong>For n=3:</strong> E[X³] is the third raw moment</li>
+                                <li><strong>Relationship to skewness:</strong> Related to distribution asymmetry</li>
+                                <li><strong>Applications:</strong> Risk analysis, distribution shape analysis</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For independent X and Y with Var(X) = 5 and Var(Y) = 3, what is Var(X + Y)?",
+                correctAnswers: ["8", "8.0", "8.00"],
+                hint: "For independent variables, variances add: Var(X + Y) = Var(X) + Var(Y)",
+                explanation: "Since X and Y are independent, Var(X + Y) = Var(X) + Var(Y) = 5 + 3 = 8.",
+                steps: `<div class="step-title">Variance of Sum (Independent Variables):</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Independence condition:</strong> X and Y are independent</li>
+                                <li><strong>Property:</strong> Var(X + Y) = Var(X) + Var(Y)</li>
+                                <li><strong>Given variances:</strong> Var(X) = 5, Var(Y) = 3</li>
+                                <li><strong>Calculate:</strong> Var(X + Y) = 5 + 3 = 8</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A machine fills bottles where volume X ~ N(500, 25). What percentage of bottles have volume within 2 standard deviations of the mean?",
+                correctAnswers: ["95%", "95", "0.95", ".95", "approximately 95%"],
+                hint: "Use the 68-95-99.7 rule for normal distributions",
+                explanation: "For normal distributions, approximately 95% of values fall within 2 standard deviations of the mean (empirical rule).",
+                steps: `<div class="step-title">Normal Distribution Empirical Rule:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Given:</strong> X ~ N(500, 25), so μ = 500, σ² = 25, σ = 5</li>
+                                <li><strong>Interval:</strong> μ ± 2σ = 500 ± 2(5) = [490, 510]</li>
+                                <li><strong>Empirical rule:</strong> ~68% within 1σ, ~95% within 2σ, ~99.7% within 3σ</li>
+                                <li><strong>Answer:</strong> Approximately 95% within 2 standard deviations</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const uniformQuestions = [
+            {
+                question: "For X ~ Uniform(2, 8), what is E[X]?",
+                correctAnswers: ["5", "5.0", "5.00"],
+                hint: "For uniform distribution, E[X] = (a+b)/2",
+                explanation: "For Uniform(2, 8), E[X] = (2+8)/2 = 5",
+                steps: `<div class="step-title">Uniform Expected Value:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Formula:</strong> E[X] = (a+b)/2</li>
+                                <li><strong>Parameters:</strong> a = 2, b = 8</li>
+                                <li><strong>Calculate:</strong> E[X] = (2+8)/2 = 5</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For X ~ Uniform(0, 10), what is P(X > 7)?",
+                correctAnswers: ["0.3", "0.30", ".3", ".30", "3/10"],
+                hint: "For uniform, P(X > c) = (b-c)/(b-a)",
+                explanation: "P(X > 7) = (10-7)/(10-0) = 3/10 = 0.3",
+                steps: `<div class="step-title">Uniform Tail Probability:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Formula:</strong> P(X > c) = (b-c)/(b-a)</li>
+                                <li><strong>Given:</strong> a = 0, b = 10, c = 7</li>
+                                <li><strong>Calculate:</strong> P(X > 7) = (10-7)/(10-0) = 3/10 = 0.3</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For X ~ Uniform(1, 5), what is Var(X)?",
+                correctAnswers: ["4/3", "1.333", "1.33", ".333", ".3333"],
+                hint: "For uniform, Var(X) = (b-a)²/12",
+                explanation: "Var(X) = (5-1)²/12 = 16/12 = 4/3 ≈ 1.333",
+                steps: `<div class="step-title">Uniform Variance:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Formula:</strong> Var(X) = (b-a)²/12</li>
+                                <li><strong>Parameters:</strong> a = 1, b = 5</li>
+                                <li><strong>Calculate:</strong> Var(X) = (5-1)²/12 = 16/12 = 4/3</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A random number generator produces values uniformly on [0,1]. What's the 75th percentile?",
+                correctAnswers: ["0.75", "0.750", ".75", ".750", "3/4"],
+                hint: "For Uniform(0,1), the p-th percentile is just p",
+                explanation: "For Uniform(0,1), the 75th percentile is 0.75",
+                steps: `<div class="step-title">Uniform Percentiles:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>General formula:</strong> p-th percentile = a + p(b-a)</li>
+                                <li><strong>For Uniform(0,1):</strong> 75th percentile = 0 + 0.75(1-0) = 0.75</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Bus arrivals are Uniform(0,20) minutes apart. What's P(wait < 5 minutes)?",
+                correctAnswers: ["0.25", "0.250", ".25", ".250", "1/4"],
+                hint: "P(X < 5) for Uniform(0,20)",
+                explanation: "P(X < 5) = (5-0)/(20-0) = 5/20 = 1/4 = 0.25",
+                steps: `<div class="step-title">Bus Waiting Time:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Setup:</strong> X ~ Uniform(0,20)</li>
+                                <li><strong>Want:</strong> P(X < 5)</li>
+                                <li><strong>Formula:</strong> P(X < c) = (c-a)/(b-a)</li>
+                                <li><strong>Calculate:</strong> P(X < 5) = (5-0)/(20-0) = 1/4</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For X ~ Uniform(-2, 4), what is the PDF value f(1)?",
+                correctAnswers: ["1/6", "0.167", "0.1667", ".167", ".1667"],
+                hint: "For uniform, f(x) = 1/(b-a) for all x in [a,b]",
+                explanation: "f(1) = 1/(4-(-2)) = 1/6 ≈ 0.167",
+                steps: `<div class="step-title">Uniform PDF Value:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Formula:</strong> f(x) = 1/(b-a) for a ≤ x ≤ b</li>
+                                <li><strong>Parameters:</strong> a = -2, b = 4</li>
+                                <li><strong>Calculate:</strong> f(1) = 1/(4-(-2)) = 1/6</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Quality control: parts have thickness Uniform(9.95, 10.05) mm. What fraction meet spec [9.98, 10.02]?",
+                correctAnswers: ["0.4", "0.40", ".4", ".40", "2/5"],
+                hint: "P(9.98 ≤ X ≤ 10.02) for uniform distribution",
+                explanation: "P(9.98 ≤ X ≤ 10.02) = (10.02-9.98)/(10.05-9.95) = 0.04/0.10 = 0.4",
+                steps: `<div class="step-title">Quality Control Application:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Distribution:</strong> X ~ Uniform(9.95, 10.05)</li>
+                                <li><strong>Interval length:</strong> 10.02-9.98 = 0.04</li>
+                                <li><strong>Total length:</strong> 10.05-9.95 = 0.10</li>
+                                <li><strong>Probability:</strong> 0.04/0.10 = 0.4</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For X ~ Uniform(a,b), what is the median?",
+                correctAnswers: ["(a+b)/2", "midpoint", "mean", "average of a and b"],
+                hint: "For symmetric distributions, median equals mean",
+                explanation: "For uniform distribution, median = mean = (a+b)/2 (midpoint of interval)",
+                steps: `<div class="step-title">Uniform Median:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Symmetry:</strong> Uniform is symmetric around its center</li>
+                                <li><strong>Property:</strong> For symmetric distributions, median = mean</li>
+                                <li><strong>Result:</strong> Median = (a+b)/2</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If Y = 3X + 2 and X ~ Uniform(0,2), what is E[Y]?",
+                correctAnswers: ["5", "5.0", "5.00"],
+                hint: "Use linearity: E[Y] = E[3X + 2] = 3E[X] + 2",
+                explanation: "E[X] = (0+2)/2 = 1, so E[Y] = 3(1) + 2 = 5",
+                steps: `<div class="step-title">Linear Transformation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Find E[X]:</strong> E[X] = (0+2)/2 = 1</li>
+                                <li><strong>Apply linearity:</strong> E[Y] = E[3X + 2] = 3E[X] + 2</li>
+                                <li><strong>Calculate:</strong> E[Y] = 3(1) + 2 = 5</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For X ~ Uniform(0,1), what is P(X² < 0.25)?",
+                correctAnswers: ["0.5", "0.50", ".5", ".50", "1/2"],
+                hint: "X² < 0.25 means -0.5 < X < 0.5, but X ∈ [0,1]",
+                explanation: "X² < 0.25 ⟺ |X| < 0.5. Since X ∈ [0,1], this means 0 ≤ X < 0.5, so P = 0.5",
+                steps: `<div class="step-title">Quadratic Inequality:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Solve inequality:</strong> X² < 0.25 ⟺ |X| < 0.5</li>
+                                <li><strong>Apply domain:</strong> Since X ∈ [0,1], we need 0 ≤ X < 0.5</li>
+                                <li><strong>Calculate:</strong> P(0 ≤ X < 0.5) = (0.5-0)/(1-0) = 0.5</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const exponentialQuestions = [
+            {
+                question: "For X ~ Exponential(λ = 3), what is E[X]?",
+                correctAnswers: ["1/3", "0.333", "0.3333", ".333", ".3333"],
+                hint: "For exponential distribution, E[X] = 1/λ",
+                explanation: "E[X] = 1/λ = 1/3 ≈ 0.333",
+                steps: `<div class="step-title">Exponential Expected Value:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Formula:</strong> E[X] = 1/λ</li>
+                                <li><strong>Given:</strong> λ = 3</li>
+                                <li><strong>Calculate:</strong> E[X] = 1/3</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Calls arrive at rate 4 per hour. What's P(wait > 30 minutes for next call)?",
+                correctAnswers: ["e^(-2)", "0.135", ".135", "exp(-2)"],
+                hint: "Convert to same units: 30 min = 0.5 hours, use P(X > t) = e^(-λt)",
+                explanation: "X ~ Exponential(4), P(X > 0.5) = e^(-4×0.5) = e^(-2) ≈ 0.135",
+                steps: `<div class="step-title">Exponential Tail Probability:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Setup:</strong> λ = 4 calls/hour, t = 0.5 hours</li>
+                                <li><strong>Formula:</strong> P(X > t) = e^(-λt)</li>
+                                <li><strong>Calculate:</strong> P(X > 0.5) = e^(-4×0.5) = e^(-2)</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For X ~ Exponential(2), what is Var(X)?",
+                correctAnswers: ["1/4", "0.25", "0.250", ".25", ".250"],
+                hint: "For exponential, Var(X) = 1/λ²",
+                explanation: "Var(X) = 1/λ² = 1/2² = 1/4 = 0.25",
+                steps: `<div class="step-title">Exponential Variance:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Formula:</strong> Var(X) = 1/λ²</li>
+                                <li><strong>Given:</strong> λ = 2</li>
+                                <li><strong>Calculate:</strong> Var(X) = 1/4 = 0.25</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Component lifetime is Exp(0.1). If it's survived 5 years, P(survives 3 more)?",
+                correctAnswers: ["e^(-0.3)", "0.741", ".741", "exp(-0.3)"],
+                hint: "Use memoryless property: P(X > s+t | X > s) = P(X > t)",
+                explanation: "By memoryless property: P(X > 8 | X > 5) = P(X > 3) = e^(-0.1×3) = e^(-0.3) ≈ 0.741",
+                steps: `<div class="step-title">Memoryless Property:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Memoryless:</strong> P(X > s+t | X > s) = P(X > t)</li>
+                                <li><strong>Apply:</strong> P(X > 8 | X > 5) = P(X > 3)</li>
+                                <li><strong>Calculate:</strong> P(X > 3) = e^(-0.1×3) = e^(-0.3)</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For X ~ Exponential(λ), what is the median?",
+                correctAnswers: ["ln(2)/λ", "log(2)/λ", "0.693/λ"],
+                hint: "Solve F(m) = 0.5 where F(x) = 1 - e^(-λx)",
+                explanation: "F(m) = 0.5: 1 - e^(-λm) = 0.5, so e^(-λm) = 0.5, giving m = ln(2)/λ",
+                steps: `<div class="step-title">Exponential Median:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Set up equation:</strong> F(m) = 1 - e^(-λm) = 0.5</li>
+                                <li><strong>Solve:</strong> e^(-λm) = 0.5</li>
+                                <li><strong>Take log:</strong> -λm = ln(0.5) = -ln(2)</li>
+                                <li><strong>Result:</strong> m = ln(2)/λ</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Radioactive decay: events at rate 0.5/minute. Expected time for 1st decay?",
+                correctAnswers: ["2", "2.0", "2.00"],
+                hint: "Expected waiting time = 1/λ",
+                explanation: "E[X] = 1/λ = 1/0.5 = 2 minutes",
+                steps: `<div class="step-title">Radioactive Decay:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Rate:</strong> λ = 0.5 events/minute</li>
+                                <li><strong>Expected time:</strong> E[X] = 1/λ</li>
+                                <li><strong>Calculate:</strong> E[X] = 1/0.5 = 2 minutes</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For X ~ Exp(1), what is P(X ≤ 2)?",
+                correctAnswers: ["1-e^(-2)", "0.865", ".865", "1-exp(-2)"],
+                hint: "Use CDF: F(x) = 1 - e^(-λx)",
+                explanation: "F(2) = 1 - e^(-1×2) = 1 - e^(-2) ≈ 0.865",
+                steps: `<div class="step-title">Exponential CDF:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Formula:</strong> F(x) = 1 - e^(-λx)</li>
+                                <li><strong>Parameters:</strong> λ = 1, x = 2</li>
+                                <li><strong>Calculate:</strong> F(2) = 1 - e^(-2)</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Why is exponential called 'memoryless'?",
+                correctAnswers: ["past doesn't affect future", "no memory of past", "P(X>s+t|X>s)=P(X>t)"],
+                hint: "Think about what the memoryless property means",
+                explanation: "Memoryless means given survival to time s, additional survival time has same distribution as original - past doesn't affect future probabilities.",
+                steps: `<div class="step-title">Memoryless Interpretation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Property:</strong> P(X > s+t | X > s) = P(X > t)</li>
+                                <li><strong>Meaning:</strong> Given survival to s, future is independent of past</li>
+                                <li><strong>Example:</strong> Light bulb doesn't "age" - failure rate constant</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Server processes requests at rate 6/hour. What's P(next request within 5 minutes)?",
+                correctAnswers: ["1-e^(-0.5)", "0.393", ".393", "1-exp(-0.5)"],
+                hint: "Convert units: 5 min = 1/12 hour, λ = 6, find P(X ≤ 1/12)",
+                explanation: "P(X ≤ 1/12) = 1 - e^(-6×1/12) = 1 - e^(-0.5) ≈ 0.393",
+                steps: `<div class="step-title">Server Request Timing:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Convert time:</strong> 5 min = 5/60 = 1/12 hour</li>
+                                <li><strong>Setup:</strong> X ~ Exp(6), want P(X ≤ 1/12)</li>
+                                <li><strong>Calculate:</strong> P(X ≤ 1/12) = 1 - e^(-6×1/12) = 1 - e^(-0.5)</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If interarrival times are Exp(λ), what's the rate of the Poisson process?",
+                correctAnswers: ["λ", "lambda", "same as exponential parameter"],
+                hint: "In a Poisson process, the rate parameter is the same for both",
+                explanation: "If times between events are Exponential(λ), then events follow Poisson process with rate λ.",
+                steps: `<div class="step-title">Poisson-Exponential Connection:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Relationship:</strong> Poisson process ↔ Exponential waiting times</li>
+                                <li><strong>Same parameter:</strong> Both use rate λ</li>
+                                <li><strong>Answer:</strong> Poisson rate = λ</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const normalQuestions = [
+            {
+                question: "For X ~ N(50, 25), what percentage of values fall within 2 standard deviations?",
+                correctAnswers: ["95%", "95", "0.95", ".95", "approximately 95%"],
+                hint: "Use the 68-95-99.7 empirical rule",
+                explanation: "By the empirical rule, approximately 95% of values fall within μ ± 2σ for any normal distribution.",
+                steps: `<div class="step-title">Empirical Rule:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>68-95-99.7 Rule:</strong> ~68% within 1σ, ~95% within 2σ, ~99.7% within 3σ</li>
+                                <li><strong>For any normal:</strong> Rule applies regardless of μ and σ</li>
+                                <li><strong>Answer:</strong> ~95% within μ ± 2σ</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If Z ~ N(0,1), what is P(Z > 1.96)?",
+                correctAnswers: ["0.025", "0.0250", ".025", ".0250", "2.5%"],
+                hint: "Use standard normal table or recall that P(|Z| > 1.96) = 0.05",
+                explanation: "P(Z > 1.96) = 0.025 (this is the critical value for 95% confidence intervals)",
+                steps: `<div class="step-title">Standard Normal Critical Value:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Key fact:</strong> P(|Z| > 1.96) = 0.05</li>
+                                <li><strong>Symmetry:</strong> P(Z > 1.96) = P(Z < -1.96)</li>
+                                <li><strong>Therefore:</strong> P(Z > 1.96) = 0.05/2 = 0.025</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Height ~ N(170, 64). What's P(Height > 178)?",
+                correctAnswers: ["0.159", ".159", "15.9%"],
+                hint: "Standardize: Z = (178-170)/8, then find P(Z > 1)",
+                explanation: "Z = (178-170)/8 = 1, so P(Height > 178) = P(Z > 1) ≈ 0.159",
+                steps: `<div class="step-title">Normal Probability Calculation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Standardize:</strong> Z = (178-170)/√64 = 8/8 = 1</li>
+                                <li><strong>Standard normal:</strong> P(Height > 178) = P(Z > 1)</li>
+                                <li><strong>From table:</strong> P(Z > 1) ≈ 0.159</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If X ~ N(10, 4) and Y ~ N(15, 9) independently, what is Var(X + Y)?",
+                correctAnswers: ["13", "13.0", "13.00"],
+                hint: "For independent normals, Var(X + Y) = Var(X) + Var(Y)",
+                explanation: "Var(X + Y) = Var(X) + Var(Y) = 4 + 9 = 13",
+                steps: `<div class="step-title">Sum of Independent Normals:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Independence:</strong> X and Y are independent</li>
+                                <li><strong>Property:</strong> Var(X + Y) = Var(X) + Var(Y)</li>
+                                <li><strong>Calculate:</strong> Var(X + Y) = 4 + 9 = 13</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Test scores ~ N(75, 100). What score is the 90th percentile?",
+                correctAnswers: ["87.8", "88", "87.85"],
+                hint: "Find z₀.₉₀ ≈ 1.28, then x = μ + zσ",
+                explanation: "90th percentile: z = 1.28, so x = 75 + 1.28(10) = 87.8",
+                steps: `<div class="step-title">Normal Percentiles:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Find z-score:</strong> z₀.₉₀ ≈ 1.28</li>
+                                <li><strong>Transform back:</strong> x = μ + zσ = 75 + 1.28(10)</li>
+                                <li><strong>Calculate:</strong> x = 75 + 12.8 = 87.8</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For X ~ N(100, 225), what is P(85 < X < 115)?",
+                correctAnswers: ["0.683", ".683", "68.3%"],
+                hint: "This is μ ± σ since σ = 15. Use empirical rule",
+                explanation: "Interval [85, 115] = [100-15, 100+15] = μ ± σ, so P ≈ 0.683 by empirical rule",
+                steps: `<div class="step-title">One Standard Deviation Interval:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Parameters:</strong> μ = 100, σ² = 225, so σ = 15</li>
+                                <li><strong>Interval:</strong> [85, 115] = [μ-σ, μ+σ]</li>
+                                <li><strong>Empirical rule:</strong> P(μ-σ < X < μ+σ) ≈ 0.683</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If X ~ N(μ, σ²), what is the distribution of Z = (X-μ)/σ?",
+                correctAnswers: ["N(0,1)", "standard normal", "Z ~ N(0,1)"],
+                hint: "This is the standardization transformation",
+                explanation: "Z = (X-μ)/σ follows the standard normal distribution N(0,1)",
+                steps: `<div class="step-title">Standardization:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Transformation:</strong> Z = (X-μ)/σ</li>
+                                <li><strong>Effect:</strong> Centers at 0, scales to unit variance</li>
+                                <li><strong>Result:</strong> Z ~ N(0,1)</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Daily temperature ~ N(20, 16)°C. What's P(temp between 16 and 24°C)?",
+                correctAnswers: ["0.683", ".683", "68.3%"],
+                hint: "Check if this is μ ± σ. Here σ = 4",
+                explanation: "[16, 24] = [20-4, 20+4] = μ ± σ, so P ≈ 0.683 by empirical rule",
+                steps: `<div class="step-title">Temperature Range:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Parameters:</strong> μ = 20, σ² = 16, so σ = 4</li>
+                                <li><strong>Check interval:</strong> [16, 24] = [μ-σ, μ+σ]</li>
+                                <li><strong>Apply rule:</strong> P(μ-σ < X < μ+σ) ≈ 0.683</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If weights are N(60, 36) kg, what fraction are above 72 kg?",
+                correctAnswers: ["0.023", ".023", "2.3%"],
+                hint: "72 = 60 + 2(6) = μ + 2σ. Use empirical rule",
+                explanation: "72 = μ + 2σ. By empirical rule, 95% within μ ± 2σ, so 2.5% above μ + 2σ",
+                steps: `<div class="step-title">Two Standard Deviations Above:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Parameters:</strong> μ = 60, σ = 6</li>
+                                <li><strong>Position:</strong> 72 = 60 + 2(6) = μ + 2σ</li>
+                                <li><strong>Empirical rule:</strong> 95% within μ ± 2σ, so 2.5% above μ + 2σ</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "What happens to a normal distribution when you add a constant?",
+                correctAnswers: ["shifts the mean", "translates horizontally", "mean changes, variance same"],
+                hint: "Think about Y = X + c where X is normal",
+                explanation: "Adding a constant shifts the distribution horizontally - the mean increases by that constant, but variance stays the same.",
+                steps: `<div class="step-title">Adding a Constant:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Transformation:</strong> Y = X + c</li>
+                                <li><strong>Effect on mean:</strong> E[Y] = E[X] + c</li>
+                                <li><strong>Effect on variance:</strong> Var(Y) = Var(X) (unchanged)</li>
+                                <li><strong>Result:</strong> Horizontal translation</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const transformationQuestions = [
+            {
+                question: "If X ~ Uniform(0,1) and Y = 2X + 3, what is the range of Y?",
+                correctAnswers: ["[3,5]", "3 to 5", "(3,5)"],
+                hint: "Apply the transformation to the endpoints of X's range",
+                explanation: "When X ∈ [0,1], Y = 2X + 3 ranges from 2(0)+3 = 3 to 2(1)+3 = 5",
+                steps: `<div class="step-title">Linear Transformation Range:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>X range:</strong> [0, 1]</li>
+                                <li><strong>Lower bound:</strong> Y_min = 2(0) + 3 = 3</li>
+                                <li><strong>Upper bound:</strong> Y_max = 2(1) + 3 = 5</li>
+                                <li><strong>Y range:</strong> [3, 5]</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If X ~ N(10, 4) and Y = 3X - 2, what is E[Y]?",
+                correctAnswers: ["28", "28.0", "28.00"],
+                hint: "Use linearity: E[Y] = E[3X - 2] = 3E[X] - 2",
+                explanation: "E[Y] = 3E[X] - 2 = 3(10) - 2 = 28",
+                steps: `<div class="step-title">Expected Value of Linear Transformation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Given:</strong> X ~ N(10, 4), so E[X] = 10</li>
+                                <li><strong>Linearity:</strong> E[aX + b] = aE[X] + b</li>
+                                <li><strong>Apply:</strong> E[Y] = E[3X - 2] = 3(10) - 2 = 28</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If X ~ N(5, 9) and Y = -2X + 1, what is Var(Y)?",
+                correctAnswers: ["36", "36.0", "36.00"],
+                hint: "Use Var(aX + b) = a²Var(X)",
+                explanation: "Var(Y) = (-2)²Var(X) = 4 × 9 = 36",
+                steps: `<div class="step-title">Variance of Linear Transformation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Formula:</strong> Var(aX + b) = a²Var(X)</li>
+                                <li><strong>Given:</strong> a = -2, Var(X) = 9</li>
+                                <li><strong>Calculate:</strong> Var(Y) = (-2)² × 9 = 4 × 9 = 36</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If log(Y) ~ N(2, 1), what is the name of Y's distribution?",
+                correctAnswers: ["log-normal", "lognormal", "log normal"],
+                hint: "When the log of a variable is normal, the variable itself is...",
+                explanation: "When log(Y) follows a normal distribution, Y follows a log-normal distribution.",
+                steps: `<div class="step-title">Log-Normal Distribution:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Definition:</strong> Y is log-normal if log(Y) is normal</li>
+                                <li><strong>Given:</strong> log(Y) ~ N(2, 1)</li>
+                                <li><strong>Therefore:</strong> Y ~ Log-Normal(2, 1)</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For Y = X², what is the Jacobian |dy/dx| when x = 2?",
+                correctAnswers: ["4", "4.0", "4.00"],
+                hint: "Find dy/dx = 2x, then evaluate at x = 2",
+                explanation: "|dy/dx| = |2x| = |2(2)| = 4",
+                steps: `<div class="step-title">Jacobian Calculation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Function:</strong> y = x²</li>
+                                <li><strong>Derivative:</strong> dy/dx = 2x</li>
+                                <li><strong>At x = 2:</strong> |dy/dx| = |2(2)| = 4</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Temperature in Celsius C ~ N(20, 25). If F = (9/5)C + 32, what is E[F]?",
+                correctAnswers: ["68", "68.0", "68.00"],
+                hint: "Use linearity of expectation",
+                explanation: "E[F] = (9/5)E[C] + 32 = (9/5)(20) + 32 = 36 + 32 = 68",
+                steps: `<div class="step-title">Temperature Conversion:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Given:</strong> E[C] = 20</li>
+                                <li><strong>Transformation:</strong> F = (9/5)C + 32</li>
+                                <li><strong>Expected value:</strong> E[F] = (9/5)(20) + 32 = 68</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If X ~ Uniform(-1,1) and Y = |X|, what is the range of Y?",
+                correctAnswers: ["[0,1]", "0 to 1", "(0,1]"],
+                hint: "Apply absolute value to the range [-1,1]",
+                explanation: "When X ∈ [-1,1], Y = |X| takes values in [0,1]",
+                steps: `<div class="step-title">Absolute Value Transformation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>X range:</strong> [-1, 1]</li>
+                                <li><strong>Absolute value:</strong> |x| for x ∈ [-1, 1]</li>
+                                <li><strong>Y range:</strong> [0, 1]</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "What method is used when g(x) is not monotonic in transformations?",
+                correctAnswers: ["CDF method", "cumulative distribution method", "F_Y(y) method"],
+                hint: "When transformation isn't one-to-one, use the general approach",
+                explanation: "When g(x) isn't monotonic, use the CDF method: Find F_Y(y) = P(Y ≤ y) = P(g(X) ≤ y), then differentiate.",
+                steps: `<div class="step-title">Non-Monotonic Transformations:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Problem:</strong> g(x) not one-to-one</li>
+                                <li><strong>Solution:</strong> Use CDF method</li>
+                                <li><strong>Steps:</strong> F_Y(y) = P(g(X) ≤ y), then f_Y(y) = F'_Y(y)</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If X ~ Exp(2) and Y = 1/X, what happens to the distribution shape?",
+                correctAnswers: ["becomes heavy-tailed", "more skewed", "different shape"],
+                hint: "Think about what happens when you take reciprocals of small positive numbers",
+                explanation: "Taking reciprocals of exponential variables creates heavy-tailed distributions - small X values become large Y values.",
+                steps: `<div class="step-title">Reciprocal Transformation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Original:</strong> X ~ Exp(2) (right-skewed)</li>
+                                <li><strong>Transformation:</strong> Y = 1/X</li>
+                                <li><strong>Effect:</strong> Small x → large y, creates heavy tails</li>
+                                <li><strong>Result:</strong> Very different shape, heavy-tailed</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For standardization Z = (X-μ)/σ, what are E[Z] and Var(Z)?",
+                correctAnswers: ["E[Z]=0, Var(Z)=1", "0 and 1", "mean 0, variance 1"],
+                hint: "Standardization always produces these values",
+                explanation: "Standardization always gives E[Z] = 0 and Var(Z) = 1, regardless of the original distribution.",
+                steps: `<div class="step-title">Standardization Properties:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Mean:</strong> E[Z] = E[(X-μ)/σ] = (E[X]-μ)/σ = 0</li>
+                                <li><strong>Variance:</strong> Var(Z) = Var[(X-μ)/σ] = Var(X)/σ² = 1</li>
+                                <li><strong>Universal:</strong> True for any X with finite mean and variance</li>
                             </ol>
                         </div>`
             }
@@ -1069,6 +2472,206 @@
             stepsDiv.innerHTML = currentQuestion33.steps;
         }
 
+        // Question 3.4 Functions (Uniform Distribution)
+        function generateQuestion34() {
+            document.getElementById('feedback-34').style.display = 'none';
+            document.getElementById('steps-34').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-34');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion34 = uniformQuestions[Math.floor(Math.random() * uniformQuestions.length)];
+            
+            document.getElementById('question-34-content').innerHTML = currentQuestion34.question;
+            document.getElementById('hint-34').innerHTML = currentQuestion34.hint;
+        }
+
+        function checkAnswer34() {
+            const userAnswer = document.getElementById('answer-34').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-34');
+            const feedbackDiv = document.getElementById('feedback-34');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion34.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion34.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps34() {
+            const stepsDiv = document.getElementById('steps-34');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion34.steps;
+        }
+
+        // Question 3.5 Functions (Exponential Distribution)
+        function generateQuestion35() {
+            document.getElementById('feedback-35').style.display = 'none';
+            document.getElementById('steps-35').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-35');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion35 = exponentialQuestions[Math.floor(Math.random() * exponentialQuestions.length)];
+            
+            document.getElementById('question-35-content').innerHTML = currentQuestion35.question;
+            document.getElementById('hint-35').innerHTML = currentQuestion35.hint;
+        }
+
+        function checkAnswer35() {
+            const userAnswer = document.getElementById('answer-35').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-35');
+            const feedbackDiv = document.getElementById('feedback-35');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion35.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion35.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps35() {
+            const stepsDiv = document.getElementById('steps-35');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion35.steps;
+        }
+
+        // Question 3.6 Functions (Normal Distribution)
+        function generateQuestion36() {
+            document.getElementById('feedback-36').style.display = 'none';
+            document.getElementById('steps-36').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-36');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion36 = normalQuestions[Math.floor(Math.random() * normalQuestions.length)];
+            
+            document.getElementById('question-36-content').innerHTML = currentQuestion36.question;
+            document.getElementById('hint-36').innerHTML = currentQuestion36.hint;
+        }
+
+        function checkAnswer36() {
+            const userAnswer = document.getElementById('answer-36').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-36');
+            const feedbackDiv = document.getElementById('feedback-36');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion36.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion36.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps36() {
+            const stepsDiv = document.getElementById('steps-36');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion36.steps;
+        }
+
+        // Question 3.7 Functions (Transformations)
+        function generateQuestion37() {
+            document.getElementById('feedback-37').style.display = 'none';
+            document.getElementById('steps-37').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-37');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion37 = transformationQuestions[Math.floor(Math.random() * transformationQuestions.length)];
+            
+            document.getElementById('question-37-content').innerHTML = currentQuestion37.question;
+            document.getElementById('hint-37').innerHTML = currentQuestion37.hint;
+        }
+
+        function checkAnswer37() {
+            const userAnswer = document.getElementById('answer-37').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-37');
+            const feedbackDiv = document.getElementById('feedback-37');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion37.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion37.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps37() {
+            const stepsDiv = document.getElementById('steps-37');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion37.steps;
+        }
+
         // Page initialization
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Chapter 3: Continuous Random Variables loaded successfully! 📈');
@@ -1087,6 +2690,10 @@
                 generateQuestion31();
                 generateQuestion32();
                 generateQuestion33();
+                generateQuestion34();
+                generateQuestion35();
+                generateQuestion36();
+                generateQuestion37();
             }, 1000);
         });
     </script>
