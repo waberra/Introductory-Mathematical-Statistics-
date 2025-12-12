@@ -440,11 +440,109 @@
         <div class="chapter-nav fade-in">
             <div class="nav-links">
                 <a href="index.html" class="nav-link" style="background: var(--primary-color); color: white;">← Course Home</a>
+                <a href="#learning-objectives" class="nav-link">🎯 Objectives</a>
                 <a href="#random-samples" class="nav-link">4.1 Random Samples</a>
                 <a href="#sample-statistics" class="nav-link">4.2 Sample Statistics</a>
                 <a href="#sample-mean" class="nav-link">4.3 Sample Mean</a>
                 <a href="#clt" class="nav-link">4.4 Central Limit Theorem</a>
                 <a href="#distributions" class="nav-link">4.5 Key Distributions</a>
+            </div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="section fade-in" id="learning-objectives">
+            <h2 class="section-title" style="color: var(--primary-color); border-left: 5px solid var(--primary-color); padding-left: 1rem;">🎯 Learning Objectives</h2>
+            <div class="section-content">
+                <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">After completing Chapter 4, you will be able to:</p>
+                
+                <div class="math-definition" style="background: linear-gradient(135deg, #f8f9ff, #e8eaf6); border-left: 4px solid var(--primary-color);">
+                    <h4 style="color: var(--primary-color);">🎲 Random Sampling Foundations</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Define</strong> random samples and understand the i.i.d. (independent and identically distributed) assumption</li>
+                        <li><strong>Distinguish</strong> between population parameters and sample statistics using precise notation</li>
+                        <li><strong>Apply</strong> independence properties to joint distributions of sample observations</li>
+                        <li><strong>Model</strong> real-world sampling scenarios and identify when random sampling assumptions are valid</li>
+                        <li><strong>Calculate</strong> joint probability density functions for random samples from continuous populations</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition" style="background: linear-gradient(135deg, #f0f8ff, #e3f2fd); border-left: 4px solid #2196f3;">
+                    <h4 style="color: #2196f3;">📊 Sample Statistics & Their Properties</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Calculate</strong> sample means, variances, and standard deviations from data</li>
+                        <li><strong>Apply</strong> expectation and variance formulas to linear combinations of random variables</li>
+                        <li><strong>Understand</strong> why sample variance uses n-1 denominator (Bessel's correction for unbiasedness)</li>
+                        <li><strong>Work</strong> with order statistics: minimums, maximums, medians, and quantiles</li>
+                        <li><strong>Analyze</strong> the relationship between sample statistics and population parameters</li>
+                        <li><strong>Apply</strong> transformation techniques to derive distributions of sample statistics</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition" style="background: linear-gradient(135deg, #f9fff9, #e8f5e8); border-left: 4px solid #4caf50;">
+                    <h4 style="color: #4caf50;">📈 Distribution of the Sample Mean</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Calculate</strong> the exact distribution of sample means from normal populations</li>
+                        <li><strong>Apply</strong> the formulas: E[X̄] = μ and Var(X̄) = σ²/n for any population</li>
+                        <li><strong>Use</strong> standardization: Z = (X̄ - μ)/(σ/√n) ~ N(0,1) for normal populations</li>
+                        <li><strong>Understand</strong> how sample size affects the sampling distribution's spread</li>
+                        <li><strong>Calculate</strong> probabilities involving sample means using normal distribution theory</li>
+                        <li><strong>Apply</strong> to quality control, manufacturing processes, and statistical decision-making</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition" style="background: linear-gradient(135deg, #fffef0, #fff3e0); border-left: 4px solid #ff9800;">
+                    <h4 style="color: #ff9800;">🔔 Central Limit Theorem & Applications</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>State</strong> the Central Limit Theorem precisely and understand its conditions</li>
+                        <li><strong>Apply</strong> normal approximation: X̄ ≈ N(μ, σ²/n) for large samples from any distribution</li>
+                        <li><strong>Determine</strong> appropriate sample sizes for desired approximation accuracy</li>
+                        <li><strong>Use</strong> continuity corrections for discrete populations when appropriate</li>
+                        <li><strong>Apply</strong> CLT to real-world problems: polling, quality control, financial modeling</li>
+                        <li><strong>Understand</strong> the universality and limitations of the CLT</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition" style="background: linear-gradient(135deg, #fff0f8, #fce4ec); border-left: 4px solid #e91e63;">
+                    <h4 style="color: #e91e63;">📐 Key Sampling Distributions</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Work</strong> with chi-square distributions: (n-1)S²/σ² ~ χ²(n-1) for normal populations</li>
+                        <li><strong>Apply</strong> t-distributions: (X̄-μ)/(S/√n) ~ t(n-1) when σ is unknown</li>
+                        <li><strong>Use</strong> F-distributions for comparing variances and analysis of variance (ANOVA)</li>
+                        <li><strong>Calculate</strong> critical values and percentiles for hypothesis testing and confidence intervals</li>
+                        <li><strong>Understand</strong> the relationships between normal, chi-square, t, and F distributions</li>
+                        <li><strong>Apply</strong> these distributions to statistical inference problems</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition" style="background: linear-gradient(135deg, #f0fff0, #e8f8e8); border-left: 4px solid #2e7d32;">
+                    <h4 style="color: #2e7d32;">🌍 Real-World Applications & Statistical Inference</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Model</strong> quality control processes using sampling distributions</li>
+                        <li><strong>Apply</strong> to survey methodology and polling accuracy assessment</li>
+                        <li><strong>Use</strong> in experimental design for determining sample sizes and power</li>
+                        <li><strong>Apply</strong> to financial modeling: portfolio returns, risk assessment, and volatility</li>
+                        <li><strong>Model</strong> medical and clinical trial data with appropriate sampling distributions</li>
+                        <li><strong>Connect</strong> sampling theory to machine learning: bootstrap methods and cross-validation</li>
+                    </ul>
+                </div>
+
+                <div class="theorem-box" style="background: linear-gradient(135deg, #f0f4ff, #e8eaf6); border: 2px solid var(--primary-color);">
+                    <h4 style="color: var(--primary-color);">🎓 Advanced Statistical Reasoning</h4>
+                    <p><strong>Upon completion, you will have mastered:</strong></p>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Bridge concepts</strong> connecting probability theory with statistical inference</li>
+                        <li><strong>Foundation skills</strong> essential for parameter estimation and hypothesis testing</li>
+                        <li><strong>Sampling methodology</strong> for designing experiments and interpreting data</li>
+                        <li><strong>Distributional reasoning</strong> for making decisions under uncertainty</li>
+                        <li><strong>Approximation techniques</strong> for handling complex real-world scenarios</li>
+                    </ul>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, var(--accent-lighter), #f3e5f5); border-radius: 10px;">
+                    <p style="font-size: 1.1rem; font-weight: 600; color: var(--primary-color); margin: 0;">
+                        🚀 <strong>Ready to bridge probability and statistics?</strong> Master 50 comprehensive questions across 5 essential topics!
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -456,17 +554,63 @@
                     <h4>Definition: Random Sample</h4>
                     <p>Random variables $X_1, X_2, \ldots, X_n$ form a <strong>random sample of size $n$</strong> if:</p>
                     <ol>
-                        <li>Each $X_i$ has the same distribution as population $X$</li>
+                        <li>Each $X_i$ has the same distribution as population $X$ (identically distributed)</li>
                         <li>$X_1, X_2, \ldots, X_n$ are mutually independent</li>
                     </ol>
-                    <p>Notation: $X_1, X_2, \ldots, X_n \stackrel{\text{iid}}{\sim} X$</p>
+                    <p><strong>Notation:</strong> $X_1, X_2, \ldots, X_n \stackrel{\text{iid}}{\sim} X$</p>
+                    <p><strong>Joint PDF/PMF:</strong> $f(x_1, x_2, \ldots, x_n) = \prod_{i=1}^{n} f(x_i)$</p>
                 </div>
 
                 <div class="example-box">
-                    <h4>Example 4.1: Coin Flips</h4>
-                    <p><strong>Population:</strong> Single coin flip with $P(\text{Heads}) = 0.5$</p>
-                    <p><strong>Random Sample:</strong> 10 independent flips</p>
-                    <p><strong>Joint PDF:</strong> $f(x_1, x_2, \ldots, x_{10}) = \prod_{i=1}^{10} f(x_i)$</p>
+                    <h4>Example 4.1: Normal Population Sampling</h4>
+                    <p><strong>Population:</strong> $X \sim N(\mu, \sigma^2)$ with $\mu = 100$, $\sigma^2 = 225$</p>
+                    <p><strong>Random Sample:</strong> $X_1, X_2, X_3 \stackrel{\text{iid}}{\sim} N(100, 225)$</p>
+                    <p><strong>Joint PDF:</strong> 
+                    $$f(x_1, x_2, x_3) = \prod_{i=1}^{3} \frac{1}{15\sqrt{2\pi}} e^{-\frac{(x_i-100)^2}{450}}$$
+                    </p>
+                    <p><strong>Independence:</strong> Knowledge of $X_1$ provides no information about $X_2$ or $X_3$</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Key Properties of Random Samples</h4>
+                    <ul>
+                        <li><strong>Exchangeability:</strong> Joint distribution unchanged by permuting observations</li>
+                        <li><strong>Factorization:</strong> Joint likelihood equals product of individual likelihoods</li>
+                        <li><strong>Conditional Independence:</strong> Given parameters, observations are independent</li>
+                        <li><strong>Representativeness:</strong> Sample reflects population characteristics</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 4.2: Exponential Sampling</h4>
+                    <p><strong>Scenario:</strong> Customer service call duration follows Exponential(λ = 0.2)</p>
+                    <p><strong>Sample:</strong> Record n = 5 consecutive call durations</p>
+                    <p><strong>Joint PDF:</strong> $f(x_1, \ldots, x_5) = (0.2)^5 e^{-0.2\sum_{i=1}^5 x_i}$ for all $x_i > 0$</p>
+                    <p><strong>Log-likelihood:</strong> $\ell = 5\ln(0.2) - 0.2\sum_{i=1}^5 x_i$</p>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Violations of Random Sampling</h4>
+                    <p><strong>Common Issues in Practice:</strong></p>
+                    <ul>
+                        <li><strong>Dependence:</strong> Time series, clustered data, spatial correlation</li>
+                        <li><strong>Different Distributions:</strong> Measurement drift, seasonal effects, population changes</li>
+                        <li><strong>Selection Bias:</strong> Non-representative sampling, volunteer bias, survivorship bias</li>
+                        <li><strong>Measurement Error:</strong> Systematic bias, instrument calibration issues</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 4.3: Quality Control Application</h4>
+                    <p><strong>Manufacturing Process:</strong> Widget weights follow N(500g, 100g²)</p>
+                    <p><strong>Random Sample:</strong> Select 10 widgets from production line</p>
+                    <p><strong>Assumptions:</strong></p>
+                    <ul>
+                        <li>Process parameters constant during sampling period</li>
+                        <li>No systematic trends or shifts</li>
+                        <li>Independent selection (no clustering effects)</li>
+                    </ul>
+                    <p><strong>Joint Distribution:</strong> Each $X_i \sim N(500, 100)$ independently</p>
                 </div>
             </div>
 
@@ -493,6 +637,186 @@
                     <div class="question-feedback" id="feedback-41" style="display: none;"></div>
                     <div class="question-steps" id="steps-41" style="display: none;"></div>
                 </div>
+
+                <div class="practice-question" id="question-4-1-2">
+                    <div class="question-header">
+                        <span class="question-number">Question 2</span>
+                        <button class="regenerate-btn" onclick="generateQuestion41_2()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-41-2-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-41-2">Your Answer:</label>
+                        <input type="text" id="answer-41-2" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer41_2()">
+                        <div class="input-hint" id="hint-41-2"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer41_2()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps41_2()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion41_2()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-41-2" style="display: none;"></div>
+                    <div class="question-steps" id="steps-41-2" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-4-1-3">
+                    <div class="question-header">
+                        <span class="question-number">Question 3</span>
+                        <button class="regenerate-btn" onclick="generateQuestion41_3()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-41-3-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-41-3">Your Answer:</label>
+                        <input type="text" id="answer-41-3" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer41_3()">
+                        <div class="input-hint" id="hint-41-3"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer41_3()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps41_3()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion41_3()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-41-3" style="display: none;"></div>
+                    <div class="question-steps" id="steps-41-3" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-4-1-4">
+                    <div class="question-header">
+                        <span class="question-number">Question 4</span>
+                        <button class="regenerate-btn" onclick="generateQuestion41_4()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-41-4-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-41-4">Your Answer:</label>
+                        <input type="text" id="answer-41-4" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer41_4()">
+                        <div class="input-hint" id="hint-41-4"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer41_4()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps41_4()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion41_4()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-41-4" style="display: none;"></div>
+                    <div class="question-steps" id="steps-41-4" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-4-1-5">
+                    <div class="question-header">
+                        <span class="question-number">Question 5</span>
+                        <button class="regenerate-btn" onclick="generateQuestion41_5()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-41-5-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-41-5">Your Answer:</label>
+                        <input type="text" id="answer-41-5" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer41_5()">
+                        <div class="input-hint" id="hint-41-5"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer41_5()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps41_5()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion41_5()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-41-5" style="display: none;"></div>
+                    <div class="question-steps" id="steps-41-5" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-4-1-6">
+                    <div class="question-header">
+                        <span class="question-number">Question 6</span>
+                        <button class="regenerate-btn" onclick="generateQuestion41_6()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-41-6-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-41-6">Your Answer:</label>
+                        <input type="text" id="answer-41-6" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer41_6()">
+                        <div class="input-hint" id="hint-41-6"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer41_6()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps41_6()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion41_6()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-41-6" style="display: none;"></div>
+                    <div class="question-steps" id="steps-41-6" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-4-1-7">
+                    <div class="question-header">
+                        <span class="question-number">Question 7</span>
+                        <button class="regenerate-btn" onclick="generateQuestion41_7()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-41-7-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-41-7">Your Answer:</label>
+                        <input type="text" id="answer-41-7" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer41_7()">
+                        <div class="input-hint" id="hint-41-7"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer41_7()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps41_7()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion41_7()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-41-7" style="display: none;"></div>
+                    <div class="question-steps" id="steps-41-7" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-4-1-8">
+                    <div class="question-header">
+                        <span class="question-number">Question 8</span>
+                        <button class="regenerate-btn" onclick="generateQuestion41_8()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-41-8-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-41-8">Your Answer:</label>
+                        <input type="text" id="answer-41-8" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer41_8()">
+                        <div class="input-hint" id="hint-41-8"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer41_8()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps41_8()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion41_8()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-41-8" style="display: none;"></div>
+                    <div class="question-steps" id="steps-41-8" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-4-1-9">
+                    <div class="question-header">
+                        <span class="question-number">Question 9</span>
+                        <button class="regenerate-btn" onclick="generateQuestion41_9()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-41-9-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-41-9">Your Answer:</label>
+                        <input type="text" id="answer-41-9" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer41_9()">
+                        <div class="input-hint" id="hint-41-9"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer41_9()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps41_9()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion41_9()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-41-9" style="display: none;"></div>
+                    <div class="question-steps" id="steps-41-9" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-4-1-10">
+                    <div class="question-header">
+                        <span class="question-number">Question 10</span>
+                        <button class="regenerate-btn" onclick="generateQuestion41_10()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-41-10-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-41-10">Your Answer:</label>
+                        <input type="text" id="answer-41-10" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer41_10()">
+                        <div class="input-hint" id="hint-41-10"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer41_10()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps41_10()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion41_10()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-41-10" style="display: none;"></div>
+                    <div class="question-steps" id="steps-41-10" style="display: none;"></div>
+                </div>
             </div>
         </div>
 
@@ -501,19 +825,84 @@
             <h2 class="section-title">📊 4.2 Sample Statistics</h2>
             <div class="section-content">
                 <div class="math-definition">
-                    <h4>Common Sample Statistics</h4>
+                    <h4>Definition: Sample Statistics</h4>
+                    <p>A <strong>statistic</strong> is any function of the sample data that does not depend on unknown parameters.</p>
+                    <p><strong>Key Sample Statistics:</strong></p>
                     <ul>
                         <li><strong>Sample Mean:</strong> $\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i$</li>
                         <li><strong>Sample Variance:</strong> $S^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2$</li>
                         <li><strong>Sample Standard Deviation:</strong> $S = \sqrt{S^2}$</li>
+                        <li><strong>Sample Range:</strong> $R = X_{(n)} - X_{(1)}$ (max - min)</li>
+                        <li><strong>Sample Median:</strong> $\tilde{X}$ (middle value when ordered)</li>
+                    </ul>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Expected Values and Variances of Sample Statistics</h4>
+                    <p>For i.i.d. sample $X_1, \ldots, X_n$ from population with $E[X] = \mu$, $\text{Var}(X) = \sigma^2$:</p>
+                    <ul>
+                        <li>$E[\bar{X}] = \mu$ and $\text{Var}(\bar{X}) = \frac{\sigma^2}{n}$</li>
+                        <li>$E[S^2] = \sigma^2$ (unbiased estimator)</li>
+                        <li>$E[S] \neq \sigma$ (biased estimator, but consistent)</li>
                     </ul>
                 </div>
 
                 <div class="example-box">
-                    <h4>Example 4.2: Sample Statistics</h4>
-                    <p><strong>Sample:</strong> 2, 4, 6</p>
-                    <p><strong>Sample Mean:</strong> $\bar{X} = (2 + 4 + 6)/3 = 4$</p>
-                    <p><strong>Sample Variance:</strong> $S^2 = [(2-4)^2 + (4-4)^2 + (6-4)^2]/(3-1) = 4$</p>
+                    <h4>Example 4.4: Computing Sample Statistics</h4>
+                    <p><strong>Sample Data:</strong> $x_1 = 12, x_2 = 15, x_3 = 18, x_4 = 21, x_5 = 14$</p>
+                    <p><strong>Calculations:</strong></p>
+                    <ul>
+                        <li>Sample Mean: $\bar{x} = \frac{12 + 15 + 18 + 21 + 14}{5} = \frac{80}{5} = 16$</li>
+                        <li>Sample Variance: $s^2 = \frac{(12-16)^2 + (15-16)^2 + (18-16)^2 + (21-16)^2 + (14-16)^2}{4} = \frac{16 + 1 + 4 + 25 + 4}{4} = 12.5$</li>
+                        <li>Sample Standard Deviation: $s = \sqrt{12.5} = 3.54$</li>
+                        <li>Sample Range: $r = 21 - 12 = 9$</li>
+                        <li>Sample Median: $\tilde{x} = 15$ (middle value of ordered data: 12, 14, 15, 18, 21)</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Order Statistics</h4>
+                    <p>Given sample $X_1, \ldots, X_n$, the <strong>order statistics</strong> are:</p>
+                    <p>$X_{(1)} \leq X_{(2)} \leq \cdots \leq X_{(n)}$</p>
+                    <p><strong>Properties:</strong></p>
+                    <ul>
+                        <li>$X_{(1)} = \min\{X_1, \ldots, X_n\}$ (sample minimum)</li>
+                        <li>$X_{(n)} = \max\{X_1, \ldots, X_n\}$ (sample maximum)</li>
+                        <li>Sample median: $X_{((n+1)/2)}$ if $n$ odd, $\frac{X_{(n/2)} + X_{(n/2+1)}}{2}$ if $n$ even</li>
+                        <li>Sample quantiles: $X_{([np])}$ for $0 < p < 1$</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 4.5: Bessel's Correction</h4>
+                    <p><strong>Why n-1 in Sample Variance?</strong></p>
+                    <p>Using $n$ in denominator gives: $\hat{\sigma}^2 = \frac{1}{n}\sum(X_i - \bar{X})^2$</p>
+                    <p>But: $E[\hat{\sigma}^2] = \frac{n-1}{n}\sigma^2 \neq \sigma^2$ (biased!)</p>
+                    <p>Using $n-1$: $S^2 = \frac{1}{n-1}\sum(X_i - \bar{X})^2$</p>
+                    <p>Then: $E[S^2] = \sigma^2$ (unbiased estimator)</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Linear Combinations of Sample Statistics</h4>
+                    <p>For constants $a_1, \ldots, a_n$ and $b$:</p>
+                    <ul>
+                        <li>$\overline{aX + b} = a\bar{X} + b$</li>
+                        <li>$\text{Var}(a\bar{X} + b) = a^2 \text{Var}(\bar{X}) = a^2 \frac{\sigma^2}{n}$</li>
+                        <li>If $Y_i = aX_i + b$, then $S_Y^2 = a^2 S_X^2$</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 4.6: Quality Control Application</h4>
+                    <p><strong>Scenario:</strong> Manufacturing process produces items with target weight 500g, σ = 25g</p>
+                    <p><strong>Sample:</strong> n = 10 items selected randomly</p>
+                    <p><strong>Expected Values:</strong></p>
+                    <ul>
+                        <li>$E[\bar{X}] = 500$ grams</li>
+                        <li>$\text{Var}(\bar{X}) = \frac{25^2}{10} = 62.5$ grams²</li>
+                        <li>$\text{SD}(\bar{X}) = \sqrt{62.5} = 7.91$ grams</li>
+                    </ul>
+                    <p><strong>Interpretation:</strong> Sample mean typically within ±7.91g of true mean</p>
                 </div>
             </div>
 
@@ -548,17 +937,101 @@
             <h2 class="section-title">📈 4.3 Distribution of Sample Mean</h2>
             <div class="section-content">
                 <div class="theorem-box">
-                    <h4>Sample Mean Properties</h4>
+                    <h4>Exact Distribution of Sample Mean</h4>
                     <p>If $X_1, X_2, \ldots, X_n \stackrel{\text{iid}}{\sim} X$ with $E[X] = \mu$ and $\text{Var}(X) = \sigma^2$:</p>
                     <div class="math-formula">
                         $E[\bar{X}] = \mu$ and $\text{Var}(\bar{X}) = \frac{\sigma^2}{n}$
                     </div>
+                    <p><strong>Key Result:</strong> If $X \sim N(\mu, \sigma^2)$, then $\bar{X} \sim N(\mu, \sigma^2/n)$ for any $n$</p>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Standard Error of the Mean</h4>
+                    <p>The <strong>standard error</strong> of the sample mean is:</p>
+                    <div class="math-formula">
+                        $SE(\bar{X}) = \sqrt{\text{Var}(\bar{X})} = \frac{\sigma}{\sqrt{n}}$
+                    </div>
+                    <p><strong>Properties:</strong></p>
+                    <ul>
+                        <li>Decreases as $\sqrt{n}$ (not proportionally to $n$)</li>
+                        <li>To halve standard error, need 4 times the sample size</li>
+                        <li>Represents typical distance between $\bar{X}$ and $\mu$</li>
+                    </ul>
                 </div>
 
                 <div class="example-box">
-                    <h4>Example 4.3: Standard Error</h4>
-                    <p>For $\sigma = 10$ and $n = 25$:</p>
-                    <p>$SE(\bar{X}) = \frac{\sigma}{\sqrt{n}} = \frac{10}{\sqrt{25}} = \frac{10}{5} = 2$</p>
+                    <h4>Example 4.7: Normal Population</h4>
+                    <p><strong>Population:</strong> IQ scores $X \sim N(100, 15^2)$</p>
+                    <p><strong>Sample:</strong> $n = 25$ individuals</p>
+                    <p><strong>Sample Mean Distribution:</strong> $\bar{X} \sim N(100, 15^2/25) = N(100, 9)$</p>
+                    <p><strong>Standard Error:</strong> $SE(\bar{X}) = 15/\sqrt{25} = 3$</p>
+                    <p><strong>Probability Calculation:</strong> $P(\bar{X} > 103) = P\left(Z > \frac{103-100}{3}\right) = P(Z > 1) = 0.1587$</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Standardization of Sample Mean</h4>
+                    <p>For normal populations, the standardized sample mean follows a standard normal distribution:</p>
+                    <div class="math-formula">
+                        $Z = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0,1)$
+                    </div>
+                    <p>This allows probability calculations using standard normal tables.</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 4.8: Manufacturing Quality Control</h4>
+                    <p><strong>Process:</strong> Bolt diameters $X \sim N(10.0\text{mm}, 0.1^2\text{mm}^2)$</p>
+                    <p><strong>Sample:</strong> $n = 16$ bolts per hour</p>
+                    <p><strong>Question:</strong> What's P(sample mean diameter < 9.95mm)?</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>$\bar{X} \sim N(10.0, 0.1^2/16) = N(10.0, 0.025^2)$</li>
+                        <li>$Z = \frac{9.95 - 10.0}{0.025} = -2$</li>
+                        <li>$P(\bar{X} < 9.95) = P(Z < -2) = 0.0228$</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Sample Size Effects</h4>
+                    <p><strong>Effect of Increasing Sample Size:</strong></p>
+                    <ul>
+                        <li>$E[\bar{X}] = \mu$ (unchanged - unbiased for any $n$)</li>
+                        <li>$\text{Var}(\bar{X}) = \sigma^2/n$ (decreases linearly with $n$)</li>
+                        <li>$SE(\bar{X}) = \sigma/\sqrt{n}$ (decreases as $\sqrt{n}$)</li>
+                        <li>Distribution becomes more concentrated around $\mu$</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 4.9: Sample Size Comparison</h4>
+                    <p><strong>Population:</strong> $X \sim N(50, 10^2)$</p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                        <div>
+                            <strong>n = 4:</strong><br>
+                            $\bar{X} \sim N(50, 25)$<br>
+                            $SE = 5$
+                        </div>
+                        <div>
+                            <strong>n = 16:</strong><br>
+                            $\bar{X} \sim N(50, 6.25)$<br>
+                            $SE = 2.5$
+                        </div>
+                        <div>
+                            <strong>n = 100:</strong><br>
+                            $\bar{X} \sim N(50, 1)$<br>
+                            $SE = 1$
+                        </div>
+                    </div>
+                    <p><strong>Interpretation:</strong> Larger samples give more precise estimates of population mean</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Linear Combinations</h4>
+                    <p>If $\bar{X}$ and $\bar{Y}$ are independent sample means:</p>
+                    <ul>
+                        <li>$E[a\bar{X} + b\bar{Y}] = aE[\bar{X}] + bE[\bar{Y}] = a\mu_X + b\mu_Y$</li>
+                        <li>$\text{Var}(a\bar{X} + b\bar{Y}) = a^2\text{Var}(\bar{X}) + b^2\text{Var}(\bar{Y}) = a^2\frac{\sigma_X^2}{n_X} + b^2\frac{\sigma_Y^2}{n_Y}$</li>
+                        <li>If both populations are normal, then $a\bar{X} + b\bar{Y}$ is also normal</li>
+                    </ul>
                 </div>
             </div>
 
@@ -596,19 +1069,85 @@
                     <h4>Central Limit Theorem (CLT)</h4>
                     <p>For $X_1, X_2, \ldots, X_n \stackrel{\text{iid}}{\sim} X$ with $E[X] = \mu$ and $\text{Var}(X) = \sigma^2 < \infty$:</p>
                     <div class="math-formula">
-                        $\bar{X} \xrightarrow{d} N\left(\mu, \frac{\sigma^2}{n}\right)$ as $n \to \infty$
+                        $\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} N(0,1)$ as $n \to \infty$
                     </div>
-                    <p><strong>Key:</strong> Works for ANY population distribution!</p>
+                    <p><strong>Equivalently:</strong> $\bar{X} \xrightarrow{d} N\left(\mu, \frac{\sigma^2}{n}\right)$ as $n \to \infty$</p>
+                    <p><strong>Key:</strong> Works for ANY population distribution with finite variance!</p>
                 </div>
 
                 <div class="theorem-box">
-                    <h4>CLT Applications</h4>
+                    <h4>CLT Conditions and Applications</h4>
                     <ul>
-                        <li><strong>Universal:</strong> Population can be any shape</li>
-                        <li><strong>Sample size:</strong> Usually good for $n \geq 30$</li>
-                        <li><strong>Standardization:</strong> $Z = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0,1)$</li>
+                        <li><strong>Universal:</strong> Population can be any shape (uniform, exponential, binomial, etc.)</li>
+                        <li><strong>Sample size:</strong> Usually good approximation for $n \geq 30$</li>
+                        <li><strong>Symmetric populations:</strong> May need smaller $n$ (even n = 10-15)</li>
+                        <li><strong>Highly skewed populations:</strong> May need larger $n$ (n > 50)</li>
+                        <li><strong>Finite variance required:</strong> CLT fails for Cauchy distribution</li>
                     </ul>
                 </div>
+
+                <div class="example-box">
+                    <h4>Example 4.10: Exponential Population</h4>
+                    <p><strong>Population:</strong> Customer service times $X \sim \text{Exponential}(\lambda = 0.5)$</p>
+                    <p><strong>Parameters:</strong> $\mu = 1/\lambda = 2$ minutes, $\sigma^2 = 1/\lambda^2 = 4$ min²</p>
+                    <p><strong>Sample:</strong> $n = 40$ customers</p>
+                    <p><strong>CLT Application:</strong> $\bar{X} \approx N(2, 4/40) = N(2, 0.1)$</p>
+                    <p><strong>Probability:</strong> $P(\bar{X} > 2.2) = P\left(Z > \frac{2.2-2}{\sqrt{0.1}}\right) = P(Z > 0.63) = 0.264$</p>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Continuity Correction</h4>
+                    <p>When applying CLT to discrete distributions, use <strong>continuity correction</strong>:</p>
+                    <ul>
+                        <li>$P(\bar{X} = k) \approx P(k - 0.5 < \bar{X} < k + 0.5)$</li>
+                        <li>$P(\bar{X} \leq k) \approx P(\bar{X} < k + 0.5)$</li>
+                        <li>$P(\bar{X} > k) \approx P(\bar{X} > k + 0.5)$</li>
+                    </ul>
+                    <p><strong>When needed:</strong> Original population is discrete (binomial, Poisson, geometric)</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 4.11: Binomial Application with CLT</h4>
+                    <p><strong>Population:</strong> Coin flips, $X \sim \text{Binomial}(1, 0.6)$</p>
+                    <p><strong>Parameters:</strong> $\mu = 0.6$, $\sigma^2 = 0.6 \times 0.4 = 0.24$</p>
+                    <p><strong>Sample:</strong> $n = 100$ flips, sample proportion $\hat{p} = \bar{X}$</p>
+                    <p><strong>CLT:</strong> $\hat{p} \approx N(0.6, 0.24/100) = N(0.6, 0.0024)$</p>
+                    <p><strong>Standard error:</strong> $SE(\hat{p}) = \sqrt{0.0024} = 0.049$</p>
+                    <p><strong>Question:</strong> $P(\hat{p} > 0.65) = P\left(Z > \frac{0.65-0.6}{0.049}\right) = P(Z > 1.02) = 0.154$</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Rate of Convergence</h4>
+                    <p>The CLT convergence depends on population shape:</p>
+                    <ul>
+                        <li><strong>Normal population:</strong> Exact for any $n$ (not approximation)</li>
+                        <li><strong>Symmetric populations:</strong> Good approximation for $n \geq 15-20$</li>
+                        <li><strong>Moderate skewness:</strong> Usually $n \geq 30$ sufficient</li>
+                        <li><strong>Heavy skewness:</strong> May need $n \geq 50-100$</li>
+                        <li><strong>Rule of thumb:</strong> $n \geq 30$ works for most practical situations</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 4.12: Quality Control with CLT</h4>
+                    <p><strong>Process:</strong> Widget weights follow unknown distribution with μ = 100g, σ = 15g</p>
+                    <p><strong>Quality check:</strong> Sample n = 36 widgets hourly</p>
+                    <p><strong>Control limits:</strong> Process acceptable if 95 < X̄ < 105</p>
+                    <p><strong>CLT application:</strong> $\bar{X} \approx N(100, 15^2/36) = N(100, 6.25)$</p>
+                    <p><strong>Standard error:</strong> $SE = 15/6 = 2.5$</p>
+                    <p><strong>Control probability:</strong> $P(95 < \bar{X} < 105) = P(-2 < Z < 2) = 0.9544$</p>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Berry-Esseen Theorem</h4>
+                    <p>The <strong>Berry-Esseen theorem</strong> provides bounds on CLT approximation error:</p>
+                    <div class="math-formula">
+                        $\sup_x \left|P\left(\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \leq x\right) - \Phi(x)\right| \leq \frac{C \rho}{\sigma^3 \sqrt{n}}$
+                    </div>
+                    <p>where $\rho = E[|X - \mu|^3]$ and $C \leq 0.7975$</p>
+                    <p><strong>Implication:</strong> Error decreases as $1/\sqrt{n}$</p>
+                </div>
+            </div>
             </div>
 
             <!-- Section 4.4 Practice -->
@@ -643,20 +1182,129 @@
             <div class="section-content">
                 <div class="math-definition">
                     <h4>Chi-Square Distribution: $\chi^2_\nu$</h4>
-                    <p>If $Z_1, \ldots, Z_\nu \stackrel{\text{iid}}{\sim} N(0,1)$, then $Y = \sum Z_i^2 \sim \chi^2_\nu$</p>
+                    <p><strong>Definition:</strong> If $Z_1, \ldots, Z_\nu \stackrel{\text{iid}}{\sim} N(0,1)$, then $Y = \sum_{i=1}^{\nu} Z_i^2 \sim \chi^2_\nu$</p>
+                    <p><strong>Parameters:</strong> $\nu$ = degrees of freedom</p>
                     <p><strong>Properties:</strong> $E[Y] = \nu$, $\text{Var}(Y) = 2\nu$</p>
+                    <p><strong>Shape:</strong> Right-skewed, approaches normal as $\nu \to \infty$</p>
+                    <p><strong>Support:</strong> $Y > 0$ (always positive)</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Sample Variance and Chi-Square</h4>
+                    <p>For random sample from $N(\mu, \sigma^2)$:</p>
+                    <div class="math-formula">
+                        $\frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}$
+                    </div>
+                    <p><strong>Key insight:</strong> Sample variance (scaled) follows chi-square with $n-1$ degrees of freedom</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 4.13: Chi-Square Application</h4>
+                    <p><strong>Problem:</strong> Sample of n = 10 from N(μ, 4). Find P(S² > 6)</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>$\frac{9S^2}{4} \sim \chi^2_9$ (since σ² = 4, n-1 = 9)</li>
+                        <li>$P(S^2 > 6) = P\left(\frac{9S^2}{4} > \frac{9 \times 6}{4}\right) = P(\chi^2_9 > 13.5)$</li>
+                        <li>Using chi-square table: P(χ²₉ > 13.5) ≈ 0.14</li>
+                    </ul>
                 </div>
 
                 <div class="math-definition">
                     <h4>t-Distribution: $t_\nu$</h4>
-                    <p>If $Z \sim N(0,1)$ and $Y \sim \chi^2_\nu$ independent, then $T = \frac{Z}{\sqrt{Y/\nu}} \sim t_\nu$</p>
-                    <p><strong>Properties:</strong> Symmetric, heavier tails than normal</p>
+                    <p><strong>Definition:</strong> If $Z \sim N(0,1)$ and $Y \sim \chi^2_\nu$ independent, then:</p>
+                    <div class="math-formula">
+                        $T = \frac{Z}{\sqrt{Y/\nu}} \sim t_\nu$
+                    </div>
+                    <p><strong>Properties:</strong></p>
+                    <ul>
+                        <li>Symmetric around 0 (like standard normal)</li>
+                        <li>Heavier tails than normal (more spread)</li>
+                        <li>Approaches N(0,1) as $\nu \to \infty$</li>
+                        <li>$E[T] = 0$ (if $\nu > 1$), $\text{Var}(T) = \frac{\nu}{\nu-2}$ (if $\nu > 2$)</li>
+                    </ul>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Sample Mean with Unknown Variance</h4>
+                    <p>For random sample from $N(\mu, \sigma^2)$ with unknown $\sigma^2$:</p>
+                    <div class="math-formula">
+                        $T = \frac{\bar{X} - \mu}{S/\sqrt{n}} \sim t_{n-1}$
+                    </div>
+                    <p><strong>This is the foundation for t-tests and t-confidence intervals!</strong></p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 4.14: t-Distribution Application</h4>
+                    <p><strong>Sample:</strong> n = 16 measurements from normal population with unknown σ</p>
+                    <p><strong>Results:</strong> x̄ = 23.5, s = 4.2</p>
+                    <p><strong>Question:</strong> Test if μ = 25 (two-sided, α = 0.05)</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>Test statistic: $t = \frac{23.5 - 25}{4.2/\sqrt{16}} = \frac{-1.5}{1.05} = -1.43$</li>
+                        <li>Critical values: t₁₅,₀.₀₂₅ = ±2.131</li>
+                        <li>Since |−1.43| < 2.131, do not reject H₀: μ = 25</li>
+                    </ul>
                 </div>
 
                 <div class="math-definition">
                     <h4>F-Distribution: $F_{\nu_1,\nu_2}$</h4>
-                    <p>If $Y_1 \sim \chi^2_{\nu_1}$ and $Y_2 \sim \chi^2_{\nu_2}$ independent, then $F = \frac{Y_1/\nu_1}{Y_2/\nu_2} \sim F_{\nu_1,\nu_2}$</p>
-                    <p><strong>Used for:</strong> Comparing variances, ANOVA</p>
+                    <p><strong>Definition:</strong> If $Y_1 \sim \chi^2_{\nu_1}$ and $Y_2 \sim \chi^2_{\nu_2}$ independent:</p>
+                    <div class="math-formula">
+                        $F = \frac{Y_1/\nu_1}{Y_2/\nu_2} \sim F_{\nu_1,\nu_2}$
+                    </div>
+                    <p><strong>Parameters:</strong> $\nu_1$ = numerator df, $\nu_2$ = denominator df</p>
+                    <p><strong>Properties:</strong></p>
+                    <ul>
+                        <li>Always positive (F > 0)</li>
+                        <li>Right-skewed distribution</li>
+                        <li>$E[F] = \frac{\nu_2}{\nu_2-2}$ (if $\nu_2 > 2$)</li>
+                        <li>Used for comparing variances</li>
+                    </ul>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Ratio of Sample Variances</h4>
+                    <p>For independent samples from $N(\mu_1, \sigma_1^2)$ and $N(\mu_2, \sigma_2^2)$:</p>
+                    <div class="math-formula">
+                        $F = \frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2} \sim F_{n_1-1, n_2-1}$
+                    </div>
+                    <p><strong>Special case:</strong> If $\sigma_1^2 = \sigma_2^2$, then $\frac{S_1^2}{S_2^2} \sim F_{n_1-1, n_2-1}$</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 4.15: F-Distribution Application</h4>
+                    <p><strong>Two machines:</strong> Compare variability in product weights</p>
+                    <p><strong>Machine 1:</strong> n₁ = 10, s₁² = 12.5</p>
+                    <p><strong>Machine 2:</strong> n₂ = 15, s₂² = 8.3</p>
+                    <p><strong>Test:</strong> H₀: σ₁² = σ₂² vs H₁: σ₁² ≠ σ₂²</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>Test statistic: $F = \frac{s_1^2}{s_2^2} = \frac{12.5}{8.3} = 1.51$</li>
+                        <li>Critical value: F₉,₁₄,₀.₀₂₅ = 2.65</li>
+                        <li>Since 1.51 < 2.65, do not reject H₀</li>
+                    </ul>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Relationships Between Distributions</h4>
+                    <ul>
+                        <li><strong>t and F:</strong> $t_\nu^2 = F_{1,\nu}$</li>
+                        <li><strong>Normal and t:</strong> $t_\nu \to N(0,1)$ as $\nu \to \infty$</li>
+                        <li><strong>Chi-square and normal:</strong> $\chi^2_\nu \to N(\nu, 2\nu)$ as $\nu \to \infty$</li>
+                        <li><strong>Chi-square additivity:</strong> $\chi^2_{\nu_1} + \chi^2_{\nu_2} = \chi^2_{\nu_1+\nu_2}$ (independent)</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 4.16: ANOVA Application</h4>
+                    <p><strong>Context:</strong> Compare means of k = 3 groups</p>
+                    <p><strong>Test statistic:</strong> $F = \frac{\text{MST}}{\text{MSE}}$ where</p>
+                    <ul>
+                        <li>MST = Mean Square Treatment (between groups)</li>
+                        <li>MSE = Mean Square Error (within groups)</li>
+                    </ul>
+                    <p><strong>Under H₀:</strong> $F \sim F_{k-1, N-k} = F_{2, N-3}$</p>
+                    <p><strong>Large F values</strong> indicate significant differences between group means</p>
                 </div>
             </div>
         </div>
