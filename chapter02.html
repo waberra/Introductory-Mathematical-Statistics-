@@ -653,22 +653,368 @@
         <!-- Placeholder sections for remaining topics -->
         <div class="section fade-in" id="variance">
             <h2 class="section-title">📏 2.4 Variance and Standard Deviation</h2>
-            <p>Coming soon...</p>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Definition of Variance</h4>
+                    <p><strong>Variance</strong> measures the spread or dispersion of a random variable around its expected value.</p>
+                    <div class="math-formula">
+                        $\text{Var}(X) = E[(X - \mu)^2] = E[X^2] - (E[X])^2$
+                    </div>
+                    <p>where $\mu = E[X]$ is the mean.</p>
+                    <p><strong>Standard Deviation:</strong> $\sigma = \sqrt{\text{Var}(X)}$</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Properties of Variance</h4>
+                    <ul>
+                        <li><strong>Non-negative:</strong> $\text{Var}(X) \geq 0$</li>
+                        <li><strong>Constant:</strong> $\text{Var}(c) = 0$ for any constant $c$</li>
+                        <li><strong>Linear transformation:</strong> $\text{Var}(aX + b) = a^2\text{Var}(X)$</li>
+                        <li><strong>Independence:</strong> If $X$ and $Y$ independent, $\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y)$</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 2.4: Computing Variance</h4>
+                    <p><strong>Problem:</strong> Let X have PMF p(1) = 0.3, p(2) = 0.5, p(3) = 0.2. Find Var(X).</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>$E[X] = 1(0.3) + 2(0.5) + 3(0.2) = 1.9$</li>
+                        <li>$E[X^2] = 1^2(0.3) + 2^2(0.5) + 3^2(0.2) = 0.3 + 2.0 + 1.8 = 4.1$</li>
+                        <li>$\text{Var}(X) = E[X^2] - (E[X])^2 = 4.1 - (1.9)^2 = 4.1 - 3.61 = 0.49$</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Computational Methods</h4>
+                    <p><strong>Method 1 - Definition:</strong> $\text{Var}(X) = E[(X-\mu)^2] = \sum (x-\mu)^2 p(x)$</p>
+                    <p><strong>Method 2 - Shortcut:</strong> $\text{Var}(X) = E[X^2] - (E[X])^2$</p>
+                    <p><strong>Advantage of Method 2:</strong> Often easier computationally, especially for known distributions.</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 2.5: Variance of Indicator Variable</h4>
+                    <p><strong>Problem:</strong> Let I be an indicator variable with P(I = 1) = p. Find Var(I).</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>$E[I] = p$ (from previous section)</li>
+                        <li>$E[I^2] = 1^2 \cdot p + 0^2 \cdot (1-p) = p$</li>
+                        <li>$\text{Var}(I) = E[I^2] - (E[I])^2 = p - p^2 = p(1-p)$</li>
+                    </ul>
+                    <p><strong>Note:</strong> Variance is maximized when p = 1/2.</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Standardization</h4>
+                    <p>The <strong>standardized variable</strong> is:</p>
+                    <div class="math-formula">
+                        $Z = \frac{X - \mu}{\sigma} = \frac{X - E[X]}{\sqrt{\text{Var}(X)}}$
+                    </div>
+                    <p><strong>Properties:</strong> $E[Z] = 0$ and $\text{Var}(Z) = 1$</p>
+                </div>
+            </div>
+
+            <!-- Section 2.4 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 2.4 Practice</h3>
+                
+                <div class="practice-question" id="question-2-4">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion24()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-24-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-24">Your Answer:</label>
+                        <input type="text" id="answer-24" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer24()">
+                        <div class="input-hint" id="hint-24"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer24()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps24()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion24()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-24" style="display: none;"></div>
+                    <div class="question-steps" id="steps-24" style="display: none;"></div>
+                </div>
+            </div>
         </div>
 
         <div class="section fade-in" id="binomial">
             <h2 class="section-title">🪙 2.5 Binomial Distribution</h2>
-            <p>Coming soon...</p>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Binomial Distribution</h4>
+                    <p>A random variable X follows a <strong>binomial distribution</strong> with parameters n and p if:</p>
+                    <ul>
+                        <li>There are n independent trials</li>
+                        <li>Each trial has probability p of success</li>
+                        <li>X counts the number of successes</li>
+                    </ul>
+                    <p><strong>Notation:</strong> $X \sim \text{Binomial}(n, p)$ or $X \sim B(n, p)$</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Binomial PMF</h4>
+                    <div class="math-formula">
+                        $P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}$ for $k = 0, 1, 2, \ldots, n$
+                    </div>
+                    <p>where $\binom{n}{k} = \frac{n!}{k!(n-k)!}$ is the binomial coefficient.</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 2.6: Coin Flipping</h4>
+                    <p><strong>Problem:</strong> Flip a fair coin 5 times. What's P(exactly 3 heads)?</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>X = number of heads, X ~ Binomial(5, 0.5)</li>
+                        <li>$P(X = 3) = \binom{5}{3} (0.5)^3 (0.5)^2 = 10 \cdot (0.5)^5 = 10/32 = 5/16$</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Binomial Parameters</h4>
+                    <p><strong>Expected Value:</strong> $E[X] = np$</p>
+                    <p><strong>Variance:</strong> $\text{Var}(X) = np(1-p)$</p>
+                    <p><strong>Standard Deviation:</strong> $\sigma = \sqrt{np(1-p)}$</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 2.7: Quality Control</h4>
+                    <p><strong>Problem:</strong> A factory produces items with 2% defect rate. In a batch of 100, what's the expected number of defects and standard deviation?</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>X ~ Binomial(100, 0.02)</li>
+                        <li>$E[X] = np = 100 \times 0.02 = 2$</li>
+                        <li>$\text{Var}(X) = np(1-p) = 100 \times 0.02 \times 0.98 = 1.96$</li>
+                        <li>$\sigma = \sqrt{1.96} = 1.4$</li>
+                    </ul>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Binomial Properties</h4>
+                    <ul>
+                        <li><strong>Symmetry:</strong> When p = 0.5, distribution is symmetric around np</li>
+                        <li><strong>Skewness:</strong> Right-skewed when p < 0.5, left-skewed when p > 0.5</li>
+                        <li><strong>Normal approximation:</strong> When np ≥ 5 and n(1-p) ≥ 5, approximately normal</li>
+                        <li><strong>Sum property:</strong> If X ~ B(n₁,p) and Y ~ B(n₂,p), then X+Y ~ B(n₁+n₂,p)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 2.5 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 2.5 Practice</h3>
+                
+                <div class="practice-question" id="question-2-5">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion25()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-25-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-25">Your Answer:</label>
+                        <input type="text" id="answer-25" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer25()">
+                        <div class="input-hint" id="hint-25"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer25()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps25()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion25()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-25" style="display: none;"></div>
+                    <div class="question-steps" id="steps-25" style="display: none;"></div>
+                </div>
+            </div>
         </div>
 
         <div class="section fade-in" id="geometric">
             <h2 class="section-title">🎯 2.6 Geometric Distribution</h2>
-            <p>Coming soon...</p>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Geometric Distribution</h4>
+                    <p>A random variable X follows a <strong>geometric distribution</strong> if:</p>
+                    <ul>
+                        <li>Independent trials with constant success probability p</li>
+                        <li>X = number of trials until first success (including the success)</li>
+                        <li>Trials continue until success occurs</li>
+                    </ul>
+                    <p><strong>Notation:</strong> $X \sim \text{Geometric}(p)$ or $X \sim \text{Geom}(p)$</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Geometric PMF</h4>
+                    <div class="math-formula">
+                        $P(X = k) = (1-p)^{k-1} p$ for $k = 1, 2, 3, \ldots$
+                    </div>
+                    <p><strong>Interpretation:</strong> (k-1) failures followed by 1 success</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 2.8: Die Rolling</h4>
+                    <p><strong>Problem:</strong> Roll a die until you get a 6. What's P(first 6 on trial 3)?</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>X = trial number of first 6, X ~ Geometric(1/6)</li>
+                        <li>$P(X = 3) = (1 - 1/6)^{3-1} \cdot (1/6) = (5/6)^2 \cdot (1/6) = 25/216$</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Geometric Parameters</h4>
+                    <p><strong>Expected Value:</strong> $E[X] = \frac{1}{p}$</p>
+                    <p><strong>Variance:</strong> $\text{Var}(X) = \frac{1-p}{p^2}$</p>
+                    <p><strong>Standard Deviation:</strong> $\sigma = \frac{\sqrt{1-p}}{p}$</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Memoryless Property</h4>
+                    <p>The geometric distribution is <strong>memoryless</strong>:</p>
+                    <div class="math-formula">
+                        $P(X > s + t | X > s) = P(X > t)$
+                    </div>
+                    <p><strong>Interpretation:</strong> Given no success in first s trials, the probability of waiting t more trials is the same as starting fresh.</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 2.9: Expected Waiting Time</h4>
+                    <p><strong>Problem:</strong> A basketball player makes 40% of free throws. On average, how many attempts until first success?</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>X ~ Geometric(0.4)</li>
+                        <li>$E[X] = 1/p = 1/0.4 = 2.5$ attempts</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Alternative Formulation</h4>
+                    <p>Sometimes geometric is defined as <strong>number of failures</strong> before first success:</p>
+                    <p>If Y = number of failures, then $P(Y = k) = (1-p)^k p$ for k = 0, 1, 2, ...</p>
+                    <p>Relationship: If X = trials until success, then Y = X - 1</p>
+                    <p>$E[Y] = \frac{1-p}{p}$, $\text{Var}(Y) = \frac{1-p}{p^2}$</p>
+                </div>
+            </div>
+
+            <!-- Section 2.6 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 2.6 Practice</h3>
+                
+                <div class="practice-question" id="question-2-6">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion26()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-26-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-26">Your Answer:</label>
+                        <input type="text" id="answer-26" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer26()">
+                        <div class="input-hint" id="hint-26"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer26()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps26()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion26()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-26" style="display: none;"></div>
+                    <div class="question-steps" id="steps-26" style="display: none;"></div>
+                </div>
+            </div>
         </div>
 
         <div class="section fade-in" id="poisson">
             <h2 class="section-title">⚡ 2.7 Poisson Distribution</h2>
-            <p>Coming soon...</p>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Poisson Distribution</h4>
+                    <p>A random variable X follows a <strong>Poisson distribution</strong> if it counts the number of events occurring in a fixed time/space interval where:</p>
+                    <ul>
+                        <li>Events occur at a constant average rate λ</li>
+                        <li>Events are independent</li>
+                        <li>The probability of multiple events in a very small interval is negligible</li>
+                    </ul>
+                    <p><strong>Notation:</strong> $X \sim \text{Poisson}(\lambda)$ or $X \sim \text{Pois}(\lambda)$</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Poisson PMF</h4>
+                    <div class="math-formula">
+                        $P(X = k) = \frac{e^{-\lambda} \lambda^k}{k!}$ for $k = 0, 1, 2, \ldots$
+                    </div>
+                    <p>where λ > 0 is the rate parameter.</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 2.10: Customer Arrivals</h4>
+                    <p><strong>Problem:</strong> A store receives an average of 3 customers per hour. What's P(exactly 2 customers in the next hour)?</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>X = customers in next hour, X ~ Poisson(3)</li>
+                        <li>$P(X = 2) = \frac{e^{-3} \cdot 3^2}{2!} = \frac{e^{-3} \cdot 9}{2} = \frac{9e^{-3}}{2} \approx 0.224$</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Poisson Parameters</h4>
+                    <p><strong>Expected Value:</strong> $E[X] = \lambda$</p>
+                    <p><strong>Variance:</strong> $\text{Var}(X) = \lambda$</p>
+                    <p><strong>Standard Deviation:</strong> $\sigma = \sqrt{\lambda}$</p>
+                    <p><strong>Special Property:</strong> Mean equals variance!</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Poisson as Binomial Limit</h4>
+                    <p>Poisson arises as the limit of Binomial(n,p) as:</p>
+                    <ul>
+                        <li>n → ∞ (many trials)</li>
+                        <li>p → 0 (small success probability)</li>
+                        <li>np → λ (constant rate)</li>
+                    </ul>
+                    <p><strong>Poisson approximation rule:</strong> Use when n ≥ 50 and p ≤ 0.1</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 2.11: Rare Events</h4>
+                    <p><strong>Problem:</strong> In a city of 100,000 people, each person has a 0.0001 probability of being struck by lightning in a year. What's the expected number?</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>This is approximately Poisson with λ = np = 100,000 × 0.0001 = 10</li>
+                        <li>Expected number = λ = 10 people per year</li>
+                        <li>Standard deviation = √10 ≈ 3.16</li>
+                    </ul>
+                </div>
+
+                <div class="math-definition">
+                    <h4>Poisson Process Properties</h4>
+                    <p><strong>Additivity:</strong> If X ~ Pois(λ₁) and Y ~ Pois(λ₂) independently, then X + Y ~ Pois(λ₁ + λ₂)</p>
+                    <p><strong>Time scaling:</strong> If events occur at rate λ per hour, then in t hours: X ~ Pois(λt)</p>
+                    <p><strong>Common applications:</strong> Phone calls, website hits, radioactive decay, traffic accidents</p>
+                </div>
+            </div>
+
+            <!-- Section 2.7 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Section 2.7 Practice</h3>
+                
+                <div class="practice-question" id="question-2-7">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion27()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-27-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-27">Your Answer:</label>
+                        <input type="text" id="answer-27" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer27()">
+                        <div class="input-hint" id="hint-27"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer27()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps27()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion27()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-27" style="display: none;"></div>
+                    <div class="question-steps" id="steps-27" style="display: none;"></div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -677,6 +1023,10 @@
         let currentQuestion21 = null;
         let currentQuestion22 = null;
         let currentQuestion23 = null;
+        let currentQuestion24 = null;
+        let currentQuestion25 = null;
+        let currentQuestion26 = null;
+        let currentQuestion27 = null;
 
         const randomVariableQuestions = [
             {
@@ -739,6 +1089,144 @@
                                 <li><strong>Classification:</strong> Since the range is countable, Z is discrete</li>
                             </ol>
                         </div>`
+            },
+            {
+                question: "A dart is thrown at a circular target. Let W be the distance from the center to where the dart lands. Is W discrete or continuous?",
+                correctAnswers: ["continuous", "Continuous"],
+                hint: "Can distance take any value in an interval?",
+                explanation: "Distance can be any non-negative real number up to the target radius. Since W can take uncountably many values in an interval, W is continuous.",
+                steps: `<div class="step-title">Classifying W:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Variable:</strong> W = distance from center</li>
+                                <li><strong>Range:</strong> 0 ≤ W ≤ radius (continuous interval)</li>
+                                <li><strong>Examples:</strong> W could be 2.5, 2.51, 2.512..., etc.</li>
+                                <li><strong>Nature:</strong> Uncountably infinite possible values</li>
+                                <li><strong>Classification:</strong> Continuous random variable</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A fair die is rolled twice. Let U = X₁ + X₂ where X₁ and X₂ are the results. What is the range of U?",
+                correctAnswers: ["{2,3,4,5,6,7,8,9,10,11,12}", "{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}", "2 to 12", "2-12"],
+                hint: "Find the minimum and maximum possible sums",
+                explanation: "Minimum: 1+1=2, Maximum: 6+6=12. All integers between 2 and 12 are achievable, so U ∈ {2,3,4,5,6,7,8,9,10,11,12}.",
+                steps: `<div class="step-title">Finding Range of U = X₁ + X₂:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Individual ranges:</strong> X₁, X₂ ∈ {1,2,3,4,5,6}</li>
+                                <li><strong>Minimum sum:</strong> 1 + 1 = 2</li>
+                                <li><strong>Maximum sum:</strong> 6 + 6 = 12</li>
+                                <li><strong>Check if all integers achievable:</strong>
+                                    <ul>
+                                        <li>U = 2: (1,1)</li>
+                                        <li>U = 3: (1,2), (2,1)</li>
+                                        <li>U = 4: (1,3), (2,2), (3,1)</li>
+                                        <li>... and so on ...</li>
+                                        <li>U = 12: (6,6)</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Range:</strong> {2,3,4,5,6,7,8,9,10,11,12}</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Let V = max(X₁, X₂) where X₁ and X₂ are results of rolling two fair dice. What is P(V = 4)?",
+                correctAnswers: ["7/36", "0.194", ".194"],
+                hint: "Count outcomes where the maximum of two dice is 4",
+                explanation: "For max = 4, at least one die shows 4 and neither shows 5 or 6. Outcomes: (1,4),(2,4),(3,4),(4,1),(4,2),(4,3),(4,4). That's 7 outcomes out of 36, so P(V=4) = 7/36.",
+                steps: `<div class="step-title">Finding P(V = 4):</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Condition:</strong> max(X₁, X₂) = 4</li>
+                                <li><strong>Requirements:</strong> At least one die shows 4, and neither shows 5 or 6</li>
+                                <li><strong>Valid outcomes:</strong>
+                                    <ul>
+                                        <li>(1,4): max = 4 ✓</li>
+                                        <li>(2,4): max = 4 ✓</li>
+                                        <li>(3,4): max = 4 ✓</li>
+                                        <li>(4,1): max = 4 ✓</li>
+                                        <li>(4,2): max = 4 ✓</li>
+                                        <li>(4,3): max = 4 ✓</li>
+                                        <li>(4,4): max = 4 ✓</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Count:</strong> 7 favorable outcomes out of 36 total</li>
+                                <li><strong>Probability:</strong> P(V = 4) = 7/36</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A student takes 3 exams. Let I be the indicator variable that the student passes all 3 exams. What are the possible values of I?",
+                correctAnswers: ["{0,1}", "{0, 1}", "0,1", "0 1", "0 and 1"],
+                hint: "An indicator variable takes the value 1 if an event occurs, 0 otherwise",
+                explanation: "I is an indicator (Bernoulli) random variable. I = 1 if the student passes all 3 exams, I = 0 if the student fails at least one exam. So I ∈ {0, 1}.",
+                steps: `<div class="step-title">Indicator Variable:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Definition:</strong> I = indicator of 'student passes all 3 exams'</li>
+                                <li><strong>Event occurs (pass all 3):</strong> I = 1</li>
+                                <li><strong>Event doesn't occur (fail at least 1):</strong> I = 0</li>
+                                <li><strong>Range:</strong> I ∈ {0, 1}</li>
+                                <li><strong>Type:</strong> Bernoulli/indicator random variable</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Temperature is measured to the nearest degree. If actual temperature is continuous but recorded temperature T is discrete, what transformation creates T from the actual temperature A?",
+                correctAnswers: ["rounding", "round", "Round", "nearest integer"],
+                hint: "How do we convert continuous values to discrete measurements?",
+                explanation: "T is created by rounding the continuous actual temperature A to the nearest integer. This transforms a continuous variable into a discrete one.",
+                steps: `<div class="step-title">Continuous to Discrete Transformation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Actual temperature A:</strong> Continuous (can be 23.7°, 24.14°, etc.)</li>
+                                <li><strong>Recorded temperature T:</strong> Discrete (23°, 24°, 25°, etc.)</li>
+                                <li><strong>Transformation:</strong> T = round(A)</li>
+                                <li><strong>Example:</strong> If A = 23.7°, then T = round(23.7) = 24°</li>
+                                <li><strong>Result:</strong> Continuous variable → Discrete variable</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A manufacturing process produces items with weights that vary. The number of defective items in a batch of 100 is recorded. Is this count discrete or continuous?",
+                correctAnswers: ["discrete", "Discrete", "countable", "Countable"],
+                hint: "Can you have a fractional number of defective items?",
+                explanation: "The number of defective items must be a non-negative integer (0, 1, 2, ..., 100). You cannot have 2.5 defective items. Since the range is countable, this is discrete.",
+                steps: `<div class="step-title">Classification of Count Variable:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Variable:</strong> Number of defective items in batch of 100</li>
+                                <li><strong>Possible values:</strong> 0, 1, 2, 3, ..., 100</li>
+                                <li><strong>Nature:</strong> Must be whole numbers (cannot be fractional)</li>
+                                <li><strong>Range:</strong> Finite, countable set</li>
+                                <li><strong>Classification:</strong> Discrete random variable</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If X represents the number rolled on a die and Y = X², what is the range of Y?",
+                correctAnswers: ["{1,4,9,16,25,36}", "{1, 4, 9, 16, 25, 36}", "1,4,9,16,25,36"],
+                hint: "Square each possible value of X",
+                explanation: "X can be 1,2,3,4,5,6. Squaring these gives Y values of 1²=1, 2²=4, 3²=9, 4²=16, 5²=25, 6²=36. So Y ∈ {1,4,9,16,25,36}.",
+                steps: `<div class="step-title">Finding Range of Y = X²:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Range of X:</strong> {1, 2, 3, 4, 5, 6}</li>
+                                <li><strong>Transformation:</strong> Y = X²</li>
+                                <li><strong>Apply transformation:</strong>
+                                    <ul>
+                                        <li>X = 1 → Y = 1² = 1</li>
+                                        <li>X = 2 → Y = 2² = 4</li>
+                                        <li>X = 3 → Y = 3² = 9</li>
+                                        <li>X = 4 → Y = 4² = 16</li>
+                                        <li>X = 5 → Y = 5² = 25</li>
+                                        <li>X = 6 → Y = 6² = 36</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Range of Y:</strong> {1, 4, 9, 16, 25, 36}</li>
+                            </ol>
+                        </div>`
             }
         ];
 
@@ -784,6 +1272,121 @@
                                 <li><strong>Rearrange:</strong> P(X < 3) = P(X ≤ 3) - P(X = 3)</li>
                                 <li><strong>Substitute:</strong> P(X < 3) = 0.8 - 0.1</li>
                                 <li><strong>Calculate:</strong> P(X < 3) = 0.7</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A PMF is proposed: p(1)=0.3, p(2)=0.4, p(3)=0.2. Is this a valid PMF?",
+                correctAnswers: ["no", "No", "false", "False", "invalid", "not valid"],
+                hint: "Check if all probabilities are non-negative and sum to 1",
+                explanation: "This is not valid because p(1) + p(2) + p(3) = 0.3 + 0.4 + 0.2 = 0.9 ≠ 1. A valid PMF must sum to 1.",
+                steps: `<div class="step-title">Validating PMF:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Requirement 1:</strong> All p(x) ≥ 0 ✓ (0.3, 0.4, 0.2 are all non-negative)</li>
+                                <li><strong>Requirement 2:</strong> Σp(x) = 1 ?</li>
+                                <li><strong>Check sum:</strong> 0.3 + 0.4 + 0.2 = 0.9</li>
+                                <li><strong>Conclusion:</strong> 0.9 ≠ 1, so this is NOT a valid PMF</li>
+                                <li><strong>Fix:</strong> Need probabilities that sum to 1</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For discrete X with CDF F(x), if F(5) = 0.7 and F(4) = 0.4, what is P(X = 5)?",
+                correctAnswers: ["0.3", "0.30", ".3", ".30", "3/10"],
+                hint: "P(X = k) = F(k) - F(k-1) for discrete variables",
+                explanation: "For discrete variables, P(X = 5) = F(5) - F(4) = 0.7 - 0.4 = 0.3",
+                steps: `<div class="step-title">Finding P(X = 5) from CDF:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>CDF property:</strong> F(k) = P(X ≤ k)</li>
+                                <li><strong>Relationship:</strong> P(X = k) = F(k) - F(k-1)</li>
+                                <li><strong>Apply formula:</strong> P(X = 5) = F(5) - F(4)</li>
+                                <li><strong>Calculate:</strong> P(X = 5) = 0.7 - 0.4 = 0.3</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A fair coin is flipped 3 times. Let X be the number of heads. What is P(X = 2)?",
+                correctAnswers: ["3/8", "0.375", ".375"],
+                hint: "Count the outcomes with exactly 2 heads out of 8 total outcomes",
+                explanation: "With 3 flips, outcomes with 2 heads are: HHT, HTH, THH. That's 3 outcomes out of 8 total, so P(X = 2) = 3/8 = 0.375",
+                steps: `<div class="step-title">Finding P(X = 2) for Coin Flips:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Sample space:</strong> {HHH, HHT, HTH, HTT, THH, THT, TTH, TTT}</li>
+                                <li><strong>Count outcomes with X = 2:</strong>
+                                    <ul>
+                                        <li>HHT: 2 heads ✓</li>
+                                        <li>HTH: 2 heads ✓</li>
+                                        <li>THH: 2 heads ✓</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Total favorable:</strong> 3 outcomes</li>
+                                <li><strong>Total possible:</strong> 8 outcomes</li>
+                                <li><strong>Probability:</strong> P(X = 2) = 3/8 = 0.375</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If F(x) is a CDF and F(2) = 0.6, F(3) = 0.6, what can you conclude about P(X = 3)?",
+                correctAnswers: ["0", "0.0", ".0", "zero"],
+                hint: "What does it mean when CDF is constant over an interval?",
+                explanation: "Since F(3) = F(2) = 0.6, the CDF is constant between 2 and 3, which means P(X = 3) = F(3) - F(2) = 0.6 - 0.6 = 0.",
+                steps: `<div class="step-title">CDF Constant Implies Zero Probability:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Given:</strong> F(3) = F(2) = 0.6</li>
+                                <li><strong>CDF property:</strong> If F(a) = F(b) for a < b, then P(a < X ≤ b) = 0</li>
+                                <li><strong>Apply:</strong> P(X = 3) = F(3) - F(2⁻)</li>
+                                <li><strong>For discrete variables:</strong> P(X = 3) = F(3) - F(2) = 0.6 - 0.6 = 0</li>
+                                <li><strong>Conclusion:</strong> P(X = 3) = 0</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A discrete random variable Y has possible values {1, 2, 3, 4} with equal probabilities. What is P(Y ≤ 2.5)?",
+                correctAnswers: ["0.5", "0.50", ".5", ".50", "1/2", "50%"],
+                hint: "Y can only take integer values, so Y ≤ 2.5 is the same as Y ≤ 2",
+                explanation: "Since Y can only be 1, 2, 3, or 4, Y ≤ 2.5 means Y ∈ {1, 2}. With equal probabilities, P(Y = 1) = P(Y = 2) = 1/4 each, so P(Y ≤ 2.5) = 1/4 + 1/4 = 1/2.",
+                steps: `<div class="step-title">Discrete Variable with Non-Integer Bound:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Possible values:</strong> Y ∈ {1, 2, 3, 4}</li>
+                                <li><strong>Equal probabilities:</strong> P(Y = k) = 1/4 for k = 1, 2, 3, 4</li>
+                                <li><strong>Interpret Y ≤ 2.5:</strong> Since Y is discrete, this means Y ∈ {1, 2}</li>
+                                <li><strong>Calculate:</strong> P(Y ≤ 2.5) = P(Y = 1) + P(Y = 2) = 1/4 + 1/4 = 1/2</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For a PMF p(x), if p(0) = 0.1, p(1) = 0.4, and p(2) = ?, what must p(2) be if these are the only possible values?",
+                correctAnswers: ["0.5", "0.50", ".5", ".50", "1/2"],
+                hint: "All probabilities in a PMF must sum to 1",
+                explanation: "Since PMF probabilities must sum to 1: p(0) + p(1) + p(2) = 1, so 0.1 + 0.4 + p(2) = 1, which gives p(2) = 0.5.",
+                steps: `<div class="step-title">Completing the PMF:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>PMF requirement:</strong> Σp(x) = 1 for all possible values</li>
+                                <li><strong>Given values:</strong> p(0) = 0.1, p(1) = 0.4</li>
+                                <li><strong>Setup equation:</strong> p(0) + p(1) + p(2) = 1</li>
+                                <li><strong>Substitute:</strong> 0.1 + 0.4 + p(2) = 1</li>
+                                <li><strong>Solve:</strong> p(2) = 1 - 0.1 - 0.4 = 0.5</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If X has PMF p(1) = 0.25, p(2) = 0.5, p(3) = 0.25, what is P(1 < X ≤ 3)?",
+                correctAnswers: ["0.75", "0.750", ".75", ".750", "3/4", "75%"],
+                hint: "1 < X ≤ 3 means X can be 2 or 3",
+                explanation: "1 < X ≤ 3 means X ∈ {2, 3}. So P(1 < X ≤ 3) = p(2) + p(3) = 0.5 + 0.25 = 0.75",
+                steps: `<div class="step-title">Interval Probability:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Interpret inequality:</strong> 1 < X ≤ 3 means X > 1 AND X ≤ 3</li>
+                                <li><strong>Possible values:</strong> X ∈ {1, 2, 3}, so 1 < X ≤ 3 means X ∈ {2, 3}</li>
+                                <li><strong>Sum probabilities:</strong> P(1 < X ≤ 3) = P(X = 2) + P(X = 3)</li>
+                                <li><strong>Calculate:</strong> P(1 < X ≤ 3) = 0.5 + 0.25 = 0.75</li>
                             </ol>
                         </div>`
             }
@@ -837,6 +1440,733 @@
                                 <li><strong>Formula:</strong> For binomial, E[X] = np</li>
                                 <li><strong>Calculate:</strong> E[X] = 3 × 0.5 = 1.5</li>
                                 <li><strong>Interpretation:</strong> On average, we expect 1.5 heads in 3 tosses</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A discrete uniform random variable takes values 1, 2, 3, 4, 5 with equal probability. What is E[X]?",
+                correctAnswers: ["3", "3.0", "3.00"],
+                hint: "For uniform distribution on {1,2,...,n}, E[X] = (n+1)/2",
+                explanation: "Each value has probability 1/5. E[X] = (1+2+3+4+5)/5 = 15/5 = 3. Alternatively, for uniform on {1,...,n}, E[X] = (n+1)/2 = 6/2 = 3.",
+                steps: `<div class="step-title">Discrete Uniform Expected Value:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Values and probabilities:</strong> P(X = k) = 1/5 for k = 1,2,3,4,5</li>
+                                <li><strong>Direct calculation:</strong> E[X] = 1(1/5) + 2(1/5) + 3(1/5) + 4(1/5) + 5(1/5)</li>
+                                <li><strong>Simplify:</strong> E[X] = (1+2+3+4+5)/5 = 15/5 = 3</li>
+                                <li><strong>Formula:</strong> For uniform on {1,2,...,n}: E[X] = (n+1)/2 = 6/2 = 3</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If X has PMF p(0) = 0.3, p(1) = 0.7, what is E[X²]?",
+                correctAnswers: ["0.7", "0.70", ".7", ".70", "7/10"],
+                hint: "E[X²] = Σ x² · p(x). Note that we need x², not x",
+                explanation: "E[X²] = 0²·p(0) + 1²·p(1) = 0²(0.3) + 1²(0.7) = 0 + 0.7 = 0.7",
+                steps: `<div class="step-title">Expected Value of X²:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Formula:</strong> E[g(X)] = Σ g(x) · p(x), where g(x) = x²</li>
+                                <li><strong>Apply:</strong> E[X²] = Σ x² · p(x)</li>
+                                <li><strong>Terms:</strong>
+                                    <ul>
+                                        <li>x = 0: 0² × 0.3 = 0 × 0.3 = 0</li>
+                                        <li>x = 1: 1² × 0.7 = 1 × 0.7 = 0.7</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Sum:</strong> E[X²] = 0 + 0.7 = 0.7</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A die is rolled. Let Y = |X - 3.5| where X is the result. What is E[Y]?",
+                correctAnswers: ["1.5", "1.50", "3/2"],
+                hint: "Calculate |x - 3.5| for each possible value x = 1,2,3,4,5,6 and find the expected value",
+                explanation: "E[Y] = (1/6)[|1-3.5| + |2-3.5| + |3-3.5| + |4-3.5| + |5-3.5| + |6-3.5|] = (1/6)[2.5 + 1.5 + 0.5 + 0.5 + 1.5 + 2.5] = 9/6 = 1.5",
+                steps: `<div class="step-title">Expected Value of Function:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Function:</strong> Y = |X - 3.5|</li>
+                                <li><strong>Calculate Y for each X:</strong>
+                                    <ul>
+                                        <li>X = 1: Y = |1 - 3.5| = 2.5</li>
+                                        <li>X = 2: Y = |2 - 3.5| = 1.5</li>
+                                        <li>X = 3: Y = |3 - 3.5| = 0.5</li>
+                                        <li>X = 4: Y = |4 - 3.5| = 0.5</li>
+                                        <li>X = 5: Y = |5 - 3.5| = 1.5</li>
+                                        <li>X = 6: Y = |6 - 3.5| = 2.5</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Expected value:</strong> E[Y] = (1/6)(2.5+1.5+0.5+0.5+1.5+2.5) = 9/6 = 1.5</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "An indicator variable I equals 1 with probability p = 0.4. What is E[I]?",
+                correctAnswers: ["0.4", "0.40", ".4", ".40", "2/5"],
+                hint: "For indicator variables, E[I] = P(I = 1) = p",
+                explanation: "For indicator variables, E[I] = 1·P(I=1) + 0·P(I=0) = 1·p + 0·(1-p) = p = 0.4",
+                steps: `<div class="step-title">Expected Value of Indicator Variable:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Indicator variable:</strong> I ∈ {0, 1}</li>
+                                <li><strong>Probabilities:</strong> P(I = 1) = 0.4, P(I = 0) = 0.6</li>
+                                <li><strong>Expected value:</strong> E[I] = 1·P(I=1) + 0·P(I=0)</li>
+                                <li><strong>Calculate:</strong> E[I] = 1(0.4) + 0(0.6) = 0.4</li>
+                                <li><strong>General rule:</strong> For indicator variables, E[I] = P(I = 1)</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A lottery ticket pays $100 with probability 0.01 and $0 otherwise. If the ticket costs $2, what is the expected net gain?",
+                correctAnswers: ["-1", "-1.0", "-1.00", "-$1"],
+                hint: "Net gain = Prize - Cost. Find E[Prize] first, then subtract cost",
+                explanation: "Expected prize = $100(0.01) + $0(0.99) = $1. Net gain = Prize - $2, so E[net gain] = $1 - $2 = -$1",
+                steps: `<div class="step-title">Expected Net Gain:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Prize distribution:</strong>
+                                    <ul>
+                                        <li>Win $100 with probability 0.01</li>
+                                        <li>Win $0 with probability 0.99</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Expected prize:</strong> E[Prize] = $100(0.01) + $0(0.99) = $1</li>
+                                <li><strong>Net gain:</strong> Net = Prize - Cost = Prize - $2</li>
+                                <li><strong>Expected net gain:</strong> E[Net] = E[Prize] - $2 = $1 - $2 = -$1</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If E[X] = 5 and X takes only non-negative integer values, what is the minimum possible value of E[X²]?",
+                correctAnswers: ["25", "25.0", "25.00"],
+                hint: "By Jensen's inequality, E[X²] ≥ (E[X])² for convex functions. When is equality achieved?",
+                explanation: "By Jensen's inequality, E[X²] ≥ (E[X])² = 25. Equality holds when X is constant, i.e., P(X = 5) = 1. So minimum E[X²] = 25.",
+                steps: `<div class="step-title">Minimum E[X²] given E[X]:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Jensen's inequality:</strong> For convex function f(x) = x², E[X²] ≥ (E[X])²</li>
+                                <li><strong>Apply:</strong> E[X²] ≥ (E[X])² = 5² = 25</li>
+                                <li><strong>Equality condition:</strong> Jensen's equality holds when X is constant</li>
+                                <li><strong>Optimal distribution:</strong> P(X = 5) = 1</li>
+                                <li><strong>Minimum value:</strong> E[X²] = 25</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A game has payoffs of $10, $20, $30 with probabilities 0.5, 0.3, 0.2 respectively. What is the expected payoff?",
+                correctAnswers: ["17", "17.0", "17.00", "$17"],
+                hint: "E[Payoff] = $10(0.5) + $20(0.3) + $30(0.2)",
+                explanation: "E[Payoff] = $10(0.5) + $20(0.3) + $30(0.2) = $5 + $6 + $6 = $17",
+                steps: `<div class="step-title">Expected Payoff Calculation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Payoff distribution:</strong>
+                                    <ul>
+                                        <li>$10 with probability 0.5</li>
+                                        <li>$20 with probability 0.3</li>
+                                        <li>$30 with probability 0.2</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Apply formula:</strong> E[Payoff] = Σ(payoff × probability)</li>
+                                <li><strong>Calculate terms:</strong>
+                                    <ul>
+                                        <li>$10 × 0.5 = $5</li>
+                                        <li>$20 × 0.3 = $6</li>
+                                        <li>$30 × 0.2 = $6</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Sum:</strong> E[Payoff] = $5 + $6 + $6 = $17</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const varianceQuestions = [
+            {
+                question: "X has PMF p(1) = 0.3, p(2) = 0.5, p(3) = 0.2. What is Var(X)?",
+                correctAnswers: ["0.41", "0.410", ".41", ".410"],
+                hint: "Use Var(X) = E[X²] - (E[X])². First find E[X] and E[X²]",
+                explanation: "E[X] = 1.9, E[X²] = 4.1, so Var(X) = 4.1 - (1.9)² = 4.1 - 3.61 = 0.41",
+                steps: `<div class="step-title">Computing Variance:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Find E[X]:</strong> 1(0.3) + 2(0.5) + 3(0.2) = 0.3 + 1.0 + 0.6 = 1.9</li>
+                                <li><strong>Find E[X²]:</strong> 1²(0.3) + 2²(0.5) + 3²(0.2) = 0.3 + 2.0 + 1.8 = 4.1</li>
+                                <li><strong>Apply formula:</strong> Var(X) = E[X²] - (E[X])²</li>
+                                <li><strong>Calculate:</strong> Var(X) = 4.1 - (1.9)² = 4.1 - 3.61 = 0.41</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If Var(X) = 9, what is Var(2X + 3)?",
+                correctAnswers: ["36", "36.0", "36.00"],
+                hint: "Use Var(aX + b) = a²Var(X). Constants don't affect variance",
+                explanation: "Var(2X + 3) = 2²Var(X) = 4 × 9 = 36. The constant 3 doesn't affect variance.",
+                steps: `<div class="step-title">Variance of Linear Transformation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Property:</strong> Var(aX + b) = a²Var(X)</li>
+                                <li><strong>Apply:</strong> Var(2X + 3) = 2²Var(X)</li>
+                                <li><strong>Substitute:</strong> = 4 × 9 = 36</li>
+                                <li><strong>Note:</strong> Adding constant 3 doesn't change variance</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "An indicator variable I has P(I = 1) = 0.3. What is Var(I)?",
+                correctAnswers: ["0.21", "0.210", ".21", ".210"],
+                hint: "For indicator variables, Var(I) = p(1-p)",
+                explanation: "For indicator variables, Var(I) = p(1-p) = 0.3(1-0.3) = 0.3 × 0.7 = 0.21",
+                steps: `<div class="step-title">Variance of Indicator Variable:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Given:</strong> P(I = 1) = p = 0.3, P(I = 0) = 1-p = 0.7</li>
+                                <li><strong>Formula:</strong> For indicator variable, Var(I) = p(1-p)</li>
+                                <li><strong>Calculate:</strong> Var(I) = 0.3 × 0.7 = 0.21</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If E[X] = 5 and Var(X) = 4, what is the standard deviation of X?",
+                correctAnswers: ["2", "2.0", "2.00"],
+                hint: "Standard deviation σ = √Var(X)",
+                explanation: "Standard deviation σ = √Var(X) = √4 = 2",
+                steps: `<div class="step-title">Standard Deviation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Definition:</strong> σ = √Var(X)</li>
+                                <li><strong>Given:</strong> Var(X) = 4</li>
+                                <li><strong>Calculate:</strong> σ = √4 = 2</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "X and Y are independent with Var(X) = 3 and Var(Y) = 7. What is Var(X + Y)?",
+                correctAnswers: ["10", "10.0", "10.00"],
+                hint: "For independent variables, Var(X + Y) = Var(X) + Var(Y)",
+                explanation: "Since X and Y are independent, Var(X + Y) = Var(X) + Var(Y) = 3 + 7 = 10",
+                steps: `<div class="step-title">Variance of Sum (Independent):</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Independence property:</strong> Var(X + Y) = Var(X) + Var(Y)</li>
+                                <li><strong>Given:</strong> Var(X) = 3, Var(Y) = 7</li>
+                                <li><strong>Calculate:</strong> Var(X + Y) = 3 + 7 = 10</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A constant random variable X = c has what variance?",
+                correctAnswers: ["0", "0.0", "0.00", "zero"],
+                hint: "Constants have no variability",
+                explanation: "If X = c (constant), then Var(X) = 0 because there's no variability around the mean.",
+                steps: `<div class="step-title">Variance of Constant:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Constant variable:</strong> X = c always</li>
+                                <li><strong>No variability:</strong> X never deviates from its mean c</li>
+                                <li><strong>Therefore:</strong> Var(X) = 0</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If E[X] = 3, E[X²] = 12, what is the coefficient of variation of X?",
+                correctAnswers: ["0.577", ".577", "57.7%", "√3/3"],
+                hint: "Coefficient of variation = σ/μ. First find Var(X) = E[X²] - (E[X])²",
+                explanation: "Var(X) = 12 - 3² = 3, so σ = √3. Coefficient of variation = σ/μ = √3/3 ≈ 0.577",
+                steps: `<div class="step-title">Coefficient of Variation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Find variance:</strong> Var(X) = E[X²] - (E[X])² = 12 - 9 = 3</li>
+                                <li><strong>Find std dev:</strong> σ = √Var(X) = √3</li>
+                                <li><strong>Coefficient of variation:</strong> CV = σ/μ = √3/3 ≈ 0.577</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "The standardized version Z of a random variable X has E[Z] = ? and Var(Z) = ?",
+                correctAnswers: ["0, 1", "0 and 1", "E[Z]=0, Var(Z)=1"],
+                hint: "Z = (X - μ)/σ has mean 0 and variance 1",
+                explanation: "By definition, the standardized variable Z = (X - μ)/σ has E[Z] = 0 and Var(Z) = 1",
+                steps: `<div class="step-title">Standardized Variable:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Definition:</strong> Z = (X - μ)/σ</li>
+                                <li><strong>Expected value:</strong> E[Z] = E[(X-μ)/σ] = 0</li>
+                                <li><strong>Variance:</strong> Var(Z) = Var[(X-μ)/σ] = 1</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Which random variable has the largest variance: X with range {0,10} or Y with range {4,6}?",
+                correctAnswers: ["X", "x", "first one", "X has larger variance"],
+                hint: "Larger range suggests larger variance (though this isn't always true)",
+                explanation: "Generally, X with range {0,10} has more potential spread than Y with range {4,6}, so X likely has larger variance.",
+                steps: `<div class="step-title">Range and Variance:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>X range:</strong> {0, 10} - spread of 10</li>
+                                <li><strong>Y range:</strong> {4, 6} - spread of 2</li>
+                                <li><strong>General principle:</strong> Larger range often means larger variance</li>
+                                <li><strong>Conclusion:</strong> X likely has larger variance than Y</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If X has variance 16, what is Var(X/4)?",
+                correctAnswers: ["1", "1.0", "1.00"],
+                hint: "Use Var(aX) = a²Var(X) with a = 1/4",
+                explanation: "Var(X/4) = Var((1/4)X) = (1/4)²Var(X) = (1/16) × 16 = 1",
+                steps: `<div class="step-title">Variance of Scaled Variable:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Rewrite:</strong> X/4 = (1/4) × X</li>
+                                <li><strong>Property:</strong> Var(aX) = a²Var(X)</li>
+                                <li><strong>Apply:</strong> Var(X/4) = (1/4)²Var(X) = (1/16) × 16 = 1</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const binomialQuestions = [
+            {
+                question: "X ~ Binomial(10, 0.3). What is E[X]?",
+                correctAnswers: ["3", "3.0", "3.00"],
+                hint: "For binomial distribution, E[X] = np",
+                explanation: "For X ~ Binomial(10, 0.3), E[X] = np = 10 × 0.3 = 3",
+                steps: `<div class="step-title">Binomial Expected Value:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Given:</strong> X ~ Binomial(n=10, p=0.3)</li>
+                                <li><strong>Formula:</strong> E[X] = np</li>
+                                <li><strong>Calculate:</strong> E[X] = 10 × 0.3 = 3</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Flip a fair coin 6 times. What's P(exactly 4 heads)?",
+                correctAnswers: ["15/64", "0.234", ".234"],
+                hint: "Use binomial formula with n=6, p=0.5, k=4",
+                explanation: "P(X = 4) = C(6,4)(0.5)⁴(0.5)² = 15 × (0.5)⁶ = 15/64 ≈ 0.234",
+                steps: `<div class="step-title">Binomial Probability:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Setup:</strong> X ~ Binomial(n=6, p=0.5)</li>
+                                <li><strong>Formula:</strong> P(X = k) = C(n,k)p^k(1-p)^(n-k)</li>
+                                <li><strong>Calculate C(6,4):</strong> 6!/(4!2!) = 15</li>
+                                <li><strong>Result:</strong> P(X = 4) = 15(0.5)⁴(0.5)² = 15/64</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "X ~ Binomial(8, 0.2). What is Var(X)?",
+                correctAnswers: ["1.28", "1.280", "32/25"],
+                hint: "For binomial, Var(X) = np(1-p)",
+                explanation: "Var(X) = np(1-p) = 8 × 0.2 × 0.8 = 1.28",
+                steps: `<div class="step-title">Binomial Variance:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Given:</strong> X ~ Binomial(n=8, p=0.2)</li>
+                                <li><strong>Formula:</strong> Var(X) = np(1-p)</li>
+                                <li><strong>Calculate:</strong> Var(X) = 8 × 0.2 × 0.8 = 1.28</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "In 20 free throws with 60% success rate, what's the probability of making exactly 12?",
+                correctAnswers: ["0.179", ".179", "C(20,12)(0.6)^12(0.4)^8"],
+                hint: "X ~ Binomial(20, 0.6), find P(X = 12)",
+                explanation: "P(X = 12) = C(20,12)(0.6)¹²(0.4)⁸ ≈ 0.179",
+                steps: `<div class="step-title">Basketball Free Throws:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Setup:</strong> X ~ Binomial(n=20, p=0.6)</li>
+                                <li><strong>Formula:</strong> P(X = 12) = C(20,12)(0.6)¹²(0.4)⁸</li>
+                                <li><strong>Calculate:</strong> C(20,12) = 125,970</li>
+                                <li><strong>Result:</strong> P(X = 12) ≈ 0.179</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "X ~ Binomial(n, p) and Y ~ Binomial(m, p). If X and Y are independent, what is the distribution of X + Y?",
+                correctAnswers: ["Binomial(n+m, p)", "Binomial(n+m,p)", "B(n+m,p)"],
+                hint: "Independent binomials with same p add to give another binomial",
+                explanation: "X + Y ~ Binomial(n+m, p) when X and Y are independent binomials with the same parameter p.",
+                steps: `<div class="step-title">Sum of Independent Binomials:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Given:</strong> X ~ B(n,p), Y ~ B(m,p), independent</li>
+                                <li><strong>Property:</strong> Sum of independent binomials with same p</li>
+                                <li><strong>Result:</strong> X + Y ~ Binomial(n+m, p)</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "X ~ Binomial(100, 0.02). Use normal approximation to estimate P(X ≥ 5).",
+                correctAnswers: ["0.052", ".052", "5.2%"],
+                hint: "Check np ≥ 5 and n(1-p) ≥ 5, then use normal with continuity correction",
+                explanation: "μ = 2, σ² = 1.96. Using continuity correction: P(X ≥ 5) ≈ P(Z ≥ 2.14) ≈ 0.052",
+                steps: `<div class="step-title">Normal Approximation to Binomial:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Check conditions:</strong> np = 2 < 5, but n(1-p) = 98 ≥ 5</li>
+                                <li><strong>Parameters:</strong> μ = np = 2, σ = √(np(1-p)) = √1.96 = 1.4</li>
+                                <li><strong>Continuity correction:</strong> P(X ≥ 5) ≈ P(Y ≥ 4.5) where Y ~ N(2, 1.96)</li>
+                                <li><strong>Standardize:</strong> Z = (4.5-2)/1.4 = 1.79, P(Z ≥ 1.79) ≈ 0.037</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "What's the most likely outcome for X ~ Binomial(10, 0.3)?",
+                correctAnswers: ["3", "3.0"],
+                hint: "The mode is close to np",
+                explanation: "For Binomial(10, 0.3), the mode is the integer closest to np = 3, which is 3.",
+                steps: `<div class="step-title">Binomial Mode:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Mean:</strong> np = 10 × 0.3 = 3</li>
+                                <li><strong>Mode rule:</strong> Mode is usually ⌊np⌋ or ⌈np⌉</li>
+                                <li><strong>Since np = 3 exactly:</strong> Mode is 3</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A test has 20 multiple choice questions, each with 4 options. If you guess randomly, what's P(score ≥ 8)?",
+                correctAnswers: ["0.041", ".041", "4.1%"],
+                hint: "Each question has p = 1/4. Use binomial with n=20, p=0.25",
+                explanation: "X ~ Binomial(20, 0.25). P(X ≥ 8) needs calculation or normal approximation ≈ 0.041",
+                steps: `<div class="step-title">Multiple Choice Test:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Setup:</strong> 20 questions, p = 1/4 for each</li>
+                                <li><strong>Distribution:</strong> X ~ Binomial(20, 0.25)</li>
+                                <li><strong>Expected score:</strong> E[X] = 20 × 0.25 = 5</li>
+                                <li><strong>Result:</strong> P(X ≥ 8) ≈ 0.041 (needs calculation)</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "X ~ Binomial(n, p). For what value of p is Var(X) maximized?",
+                correctAnswers: ["0.5", "0.50", ".5", ".50", "1/2"],
+                hint: "Var(X) = np(1-p). Find p that maximizes p(1-p)",
+                explanation: "Var(X) = np(1-p). Since p(1-p) is maximized at p = 1/2, variance is maximized when p = 0.5.",
+                steps: `<div class="step-title">Maximum Variance:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Variance formula:</strong> Var(X) = np(1-p)</li>
+                                <li><strong>Maximize:</strong> f(p) = p(1-p) = p - p²</li>
+                                <li><strong>Take derivative:</strong> f'(p) = 1 - 2p = 0</li>
+                                <li><strong>Solve:</strong> p = 1/2 maximizes variance</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "If P(success) = 0.1 in each trial, how many trials needed so that E[successes] = 5?",
+                correctAnswers: ["50", "50.0"],
+                hint: "If X ~ Binomial(n, 0.1) and E[X] = 5, find n",
+                explanation: "E[X] = np = n(0.1) = 5, so n = 5/0.1 = 50 trials",
+                steps: `<div class="step-title">Finding Number of Trials:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Given:</strong> p = 0.1, E[X] = 5</li>
+                                <li><strong>Formula:</strong> E[X] = np</li>
+                                <li><strong>Setup equation:</strong> n × 0.1 = 5</li>
+                                <li><strong>Solve:</strong> n = 5/0.1 = 50</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const geometricQuestions = [
+            {
+                question: "X ~ Geometric(0.2). What is E[X]?",
+                correctAnswers: ["5", "5.0", "5.00"],
+                hint: "For geometric distribution, E[X] = 1/p",
+                explanation: "For X ~ Geometric(0.2), E[X] = 1/p = 1/0.2 = 5",
+                steps: `<div class="step-title">Geometric Expected Value:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Given:</strong> X ~ Geometric(p = 0.2)</li>
+                                <li><strong>Formula:</strong> E[X] = 1/p</li>
+                                <li><strong>Calculate:</strong> E[X] = 1/0.2 = 5</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Roll a die until first 6 appears. What's P(first 6 on trial 3)?",
+                correctAnswers: ["25/216", "0.116", ".116"],
+                hint: "Use geometric PMF with p = 1/6",
+                explanation: "P(X = 3) = (1-1/6)²(1/6) = (5/6)²(1/6) = 25/216 ≈ 0.116",
+                steps: `<div class="step-title">Geometric Probability:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Setup:</strong> X ~ Geometric(p = 1/6)</li>
+                                <li><strong>Formula:</strong> P(X = k) = (1-p)^(k-1) × p</li>
+                                <li><strong>Apply:</strong> P(X = 3) = (5/6)² × (1/6)</li>
+                                <li><strong>Calculate:</strong> = 25/36 × 1/6 = 25/216</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "X ~ Geometric(0.3). What is Var(X)?",
+                correctAnswers: ["7.78", "7.777", "70/9"],
+                hint: "For geometric, Var(X) = (1-p)/p²",
+                explanation: "Var(X) = (1-p)/p² = (1-0.3)/(0.3)² = 0.7/0.09 = 70/9 ≈ 7.78",
+                steps: `<div class="step-title">Geometric Variance:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Given:</strong> X ~ Geometric(p = 0.3)</li>
+                                <li><strong>Formula:</strong> Var(X) = (1-p)/p²</li>
+                                <li><strong>Calculate:</strong> Var(X) = 0.7/(0.3)² = 0.7/0.09 = 70/9</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Shoot free throws until first miss. If P(make) = 0.8, what's P(first miss on attempt 4)?",
+                correctAnswers: ["0.1024", ".1024", "1024/10000"],
+                hint: "First miss on attempt 4 means 3 makes then 1 miss",
+                explanation: "P(X = 4) = (0.8)³(0.2) = 0.512 × 0.2 = 0.1024",
+                steps: `<div class="step-title">First Miss Problem:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Setup:</strong> Success = make shot, Failure = miss</li>
+                                <li><strong>Parameters:</strong> p(miss) = 0.2, so X ~ Geometric(0.2)</li>
+                                <li><strong>Event:</strong> 3 makes followed by 1 miss</li>
+                                <li><strong>Calculate:</strong> P(X = 4) = (0.8)³(0.2) = 0.1024</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "X ~ Geometric(p) has the memoryless property. What does this mean?",
+                correctAnswers: ["P(X > s+t | X > s) = P(X > t)", "memoryless", "no memory"],
+                hint: "Past failures don't affect future probabilities",
+                explanation: "P(X > s+t | X > s) = P(X > t). Given no success in s trials, probability of waiting t more is same as starting fresh.",
+                steps: `<div class="step-title">Memoryless Property:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Mathematical form:</strong> P(X > s+t | X > s) = P(X > t)</li>
+                                <li><strong>Interpretation:</strong> Past failures don't affect future</li>
+                                <li><strong>Example:</strong> If no 6 in first 10 rolls, P(waiting 5 more) = P(waiting 5 from start)</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Software has bugs found at rate p = 0.05 per test. Expected number of tests to find first bug?",
+                correctAnswers: ["20", "20.0", "20.00"],
+                hint: "This is geometric with p = 0.05",
+                explanation: "Expected tests = 1/p = 1/0.05 = 20 tests",
+                steps: `<div class="step-title">Software Testing:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Setup:</strong> X ~ Geometric(p = 0.05)</li>
+                                <li><strong>Question:</strong> Expected value E[X]</li>
+                                <li><strong>Formula:</strong> E[X] = 1/p = 1/0.05 = 20</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "X counts failures before first success in geometric trials. If p = 0.4, what is E[X]?",
+                correctAnswers: ["1.5", "1.50", "3/2"],
+                hint: "This is the alternative geometric formulation. E[failures] = (1-p)/p",
+                explanation: "For failures before first success: E[X] = (1-p)/p = 0.6/0.4 = 1.5",
+                steps: `<div class="step-title">Failures Before Success:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Alternative form:</strong> X = number of failures before first success</li>
+                                <li><strong>Formula:</strong> E[X] = (1-p)/p</li>
+                                <li><strong>Calculate:</strong> E[X] = (1-0.4)/0.4 = 0.6/0.4 = 1.5</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Geometric(p) random variable X satisfies P(X > k) = ?",
+                correctAnswers: ["(1-p)^k", "(1-p)^k", "q^k where q=1-p"],
+                hint: "Probability of more than k trials = probability of k failures",
+                explanation: "P(X > k) = (1-p)^k, the probability of k consecutive failures",
+                steps: `<div class="step-title">Tail Probability:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Event X > k:</strong> First success after trial k</li>
+                                <li><strong>Equivalent:</strong> First k trials are all failures</li>
+                                <li><strong>Probability:</strong> P(X > k) = (1-p)^k</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A basketball player makes 70% of shots. What's P(first miss occurs after the 3rd shot)?",
+                correctAnswers: ["0.343", ".343", "34.3%"],
+                hint: "First miss after 3rd shot means first 3 are hits",
+                explanation: "P(first miss after 3rd) = P(first 3 are hits) = (0.7)³ = 0.343",
+                steps: `<div class="step-title">First Miss After k Shots:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Event:</strong> First 3 shots are hits (no miss yet)</li>
+                                <li><strong>Probability:</strong> (0.7)³</li>
+                                <li><strong>Calculate:</strong> 0.7³ = 0.343</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "X ~ Geometric(p). If E[X] = 8, what is p?",
+                correctAnswers: ["0.125", ".125", "1/8"],
+                hint: "Use E[X] = 1/p = 8 to solve for p",
+                explanation: "E[X] = 1/p = 8, so p = 1/8 = 0.125",
+                steps: `<div class="step-title">Finding p from Expected Value:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Given:</strong> E[X] = 8</li>
+                                <li><strong>Formula:</strong> E[X] = 1/p</li>
+                                <li><strong>Setup equation:</strong> 1/p = 8</li>
+                                <li><strong>Solve:</strong> p = 1/8 = 0.125</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        const poissonQuestions = [
+            {
+                question: "X ~ Poisson(4). What is E[X]?",
+                correctAnswers: ["4", "4.0", "4.00"],
+                hint: "For Poisson distribution, E[X] = λ",
+                explanation: "For X ~ Poisson(4), E[X] = λ = 4",
+                steps: `<div class="step-title">Poisson Expected Value:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Given:</strong> X ~ Poisson(λ = 4)</li>
+                                <li><strong>Property:</strong> E[X] = λ</li>
+                                <li><strong>Result:</strong> E[X] = 4</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Emails arrive at rate 3 per hour. What's P(exactly 2 emails in next hour)?",
+                correctAnswers: ["0.224", ".224", "9e^(-3)/2"],
+                hint: "Use Poisson PMF with λ = 3",
+                explanation: "P(X = 2) = (e^(-3) × 3²)/2! = 9e^(-3)/2 ≈ 0.224",
+                steps: `<div class="step-title">Poisson Probability:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Setup:</strong> X ~ Poisson(λ = 3)</li>
+                                <li><strong>Formula:</strong> P(X = k) = (e^(-λ) λ^k)/k!</li>
+                                <li><strong>Apply:</strong> P(X = 2) = (e^(-3) × 3²)/2!</li>
+                                <li><strong>Calculate:</strong> = (e^(-3) × 9)/2 ≈ 0.224</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "X ~ Poisson(5). What is Var(X)?",
+                correctAnswers: ["5", "5.0", "5.00"],
+                hint: "For Poisson distribution, Var(X) = λ",
+                explanation: "For Poisson distribution, Var(X) = λ = 5. Mean equals variance!",
+                steps: `<div class="step-title">Poisson Variance:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Given:</strong> X ~ Poisson(λ = 5)</li>
+                                <li><strong>Special property:</strong> Var(X) = λ for Poisson</li>
+                                <li><strong>Result:</strong> Var(X) = 5</li>
+                                <li><strong>Note:</strong> Mean = Variance = λ</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Binomial(1000, 0.002) is approximated by which Poisson distribution?",
+                correctAnswers: ["Poisson(2)", "Pois(2)", "Poisson with λ=2"],
+                hint: "When n large and p small, Poisson(λ) where λ = np",
+                explanation: "λ = np = 1000 × 0.002 = 2, so Poisson(2)",
+                steps: `<div class="step-title">Poisson Approximation:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Condition:</strong> n large (1000), p small (0.002)</li>
+                                <li><strong>Rule:</strong> Binomial(n,p) ≈ Poisson(np)</li>
+                                <li><strong>Calculate λ:</strong> λ = np = 1000 × 0.002 = 2</li>
+                                <li><strong>Approximation:</strong> Poisson(2)</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Traffic accidents occur at rate 0.5 per day. What's P(no accidents in 3 days)?",
+                correctAnswers: ["0.223", ".223", "e^(-1.5)"],
+                hint: "In 3 days, rate is 3 × 0.5 = 1.5. Find P(X = 0)",
+                explanation: "In 3 days, λ = 3 × 0.5 = 1.5. P(X = 0) = e^(-1.5) ≈ 0.223",
+                steps: `<div class="step-title">Poisson Time Scaling:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Rate:</strong> 0.5 accidents per day</li>
+                                <li><strong>Time period:</strong> 3 days</li>
+                                <li><strong>New rate:</strong> λ = 0.5 × 3 = 1.5</li>
+                                <li><strong>Calculate:</strong> P(X = 0) = e^(-1.5) ≈ 0.223</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "X ~ Poisson(λ₁) and Y ~ Poisson(λ₂) are independent. What is the distribution of X + Y?",
+                correctAnswers: ["Poisson(λ₁ + λ₂)", "Pois(λ₁ + λ₂)", "Poisson with λ₁+λ₂"],
+                hint: "Independent Poisson variables add to give another Poisson",
+                explanation: "X + Y ~ Poisson(λ₁ + λ₂) when X and Y are independent Poisson variables.",
+                steps: `<div class="step-title">Sum of Independent Poisson:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Given:</strong> X ~ Pois(λ₁), Y ~ Pois(λ₂), independent</li>
+                                <li><strong>Property:</strong> Sum of independent Poisson</li>
+                                <li><strong>Result:</strong> X + Y ~ Poisson(λ₁ + λ₂)</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "Calls arrive at rate 2 per minute. What's P(more than 5 calls in 2 minutes)?",
+                correctAnswers: ["0.238", ".238"],
+                hint: "In 2 minutes, λ = 2 × 2 = 4. Find P(X > 5) = 1 - P(X ≤ 5)",
+                explanation: "λ = 4 for 2 minutes. P(X > 5) = 1 - P(X ≤ 5) = 1 - 0.762 = 0.238",
+                steps: `<div class="step-title">Poisson Tail Probability:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Rate adjustment:</strong> λ = 2 calls/min × 2 min = 4</li>
+                                <li><strong>Want:</strong> P(X > 5) = 1 - P(X ≤ 5)</li>
+                                <li><strong>Calculate:</strong> P(X ≤ 5) ≈ 0.762 (from tables)</li>
+                                <li><strong>Result:</strong> P(X > 5) = 1 - 0.762 = 0.238</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "For Poisson(λ), what is P(X = 0)?",
+                correctAnswers: ["e^(-λ)", "e^(-lambda)", "exp(-λ)"],
+                hint: "Use Poisson PMF with k = 0",
+                explanation: "P(X = 0) = (e^(-λ) × λ⁰)/0! = e^(-λ) × 1 = e^(-λ)",
+                steps: `<div class="step-title">Poisson Zero Probability:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Formula:</strong> P(X = k) = (e^(-λ) λ^k)/k!</li>
+                                <li><strong>For k = 0:</strong> P(X = 0) = (e^(-λ) λ⁰)/0!</li>
+                                <li><strong>Simplify:</strong> = e^(-λ) × 1 / 1 = e^(-λ)</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "A rare disease affects 1 in 10,000 people. In a city of 50,000, what's the expected number of cases?",
+                correctAnswers: ["5", "5.0", "5.00"],
+                hint: "Use Poisson approximation with λ = np",
+                explanation: "Expected cases = np = 50,000 × (1/10,000) = 5",
+                steps: `<div class="step-title">Rare Disease Modeling:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Population:</strong> n = 50,000</li>
+                                <li><strong>Rate:</strong> p = 1/10,000 = 0.0001</li>
+                                <li><strong>Expected:</strong> λ = np = 50,000 × 0.0001 = 5</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "X ~ Poisson(3). What is the most likely value (mode) of X?",
+                correctAnswers: ["3", "3.0"],
+                hint: "For Poisson, if λ is integer, then both λ and λ-1 are modes",
+                explanation: "For Poisson(3), both 2 and 3 are modes, but 3 is most commonly stated as the mode.",
+                steps: `<div class="step-title">Poisson Mode:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Rule:</strong> If λ is integer, modes are λ-1 and λ</li>
+                                <li><strong>For λ = 3:</strong> Modes are 2 and 3</li>
+                                <li><strong>Both have equal probability:</strong> P(X=2) = P(X=3)</li>
+                                <li><strong>Commonly stated mode:</strong> 3</li>
                             </ol>
                         </div>`
             }
@@ -990,6 +2320,206 @@
             stepsDiv.innerHTML = currentQuestion23.steps;
         }
 
+        // Question 2.4 Functions (Variance)
+        function generateQuestion24() {
+            document.getElementById('feedback-24').style.display = 'none';
+            document.getElementById('steps-24').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-24');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion24 = varianceQuestions[Math.floor(Math.random() * varianceQuestions.length)];
+            
+            document.getElementById('question-24-content').innerHTML = currentQuestion24.question;
+            document.getElementById('hint-24').innerHTML = currentQuestion24.hint;
+        }
+
+        function checkAnswer24() {
+            const userAnswer = document.getElementById('answer-24').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-24');
+            const feedbackDiv = document.getElementById('feedback-24');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion24.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion24.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps24() {
+            const stepsDiv = document.getElementById('steps-24');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion24.steps;
+        }
+
+        // Question 2.5 Functions (Binomial)
+        function generateQuestion25() {
+            document.getElementById('feedback-25').style.display = 'none';
+            document.getElementById('steps-25').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-25');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion25 = binomialQuestions[Math.floor(Math.random() * binomialQuestions.length)];
+            
+            document.getElementById('question-25-content').innerHTML = currentQuestion25.question;
+            document.getElementById('hint-25').innerHTML = currentQuestion25.hint;
+        }
+
+        function checkAnswer25() {
+            const userAnswer = document.getElementById('answer-25').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-25');
+            const feedbackDiv = document.getElementById('feedback-25');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion25.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion25.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps25() {
+            const stepsDiv = document.getElementById('steps-25');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion25.steps;
+        }
+
+        // Question 2.6 Functions (Geometric)
+        function generateQuestion26() {
+            document.getElementById('feedback-26').style.display = 'none';
+            document.getElementById('steps-26').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-26');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion26 = geometricQuestions[Math.floor(Math.random() * geometricQuestions.length)];
+            
+            document.getElementById('question-26-content').innerHTML = currentQuestion26.question;
+            document.getElementById('hint-26').innerHTML = currentQuestion26.hint;
+        }
+
+        function checkAnswer26() {
+            const userAnswer = document.getElementById('answer-26').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-26');
+            const feedbackDiv = document.getElementById('feedback-26');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion26.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion26.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps26() {
+            const stepsDiv = document.getElementById('steps-26');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion26.steps;
+        }
+
+        // Question 2.7 Functions (Poisson)
+        function generateQuestion27() {
+            document.getElementById('feedback-27').style.display = 'none';
+            document.getElementById('steps-27').style.display = 'none';
+            
+            const answerInput = document.getElementById('answer-27');
+            answerInput.value = '';
+            answerInput.className = 'answer-input';
+            answerInput.disabled = false;
+            
+            currentQuestion27 = poissonQuestions[Math.floor(Math.random() * poissonQuestions.length)];
+            
+            document.getElementById('question-27-content').innerHTML = currentQuestion27.question;
+            document.getElementById('hint-27').innerHTML = currentQuestion27.hint;
+        }
+
+        function checkAnswer27() {
+            const userAnswer = document.getElementById('answer-27').value.trim().toLowerCase();
+            const answerInput = document.getElementById('answer-27');
+            const feedbackDiv = document.getElementById('feedback-27');
+            
+            if (!userAnswer) {
+                alert('Please enter an answer first!');
+                return;
+            }
+            
+            const isCorrect = currentQuestion27.correctAnswers.some(correct => 
+                correct.toLowerCase() === userAnswer
+            );
+            
+            answerInput.className = `answer-input ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = `question-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            feedbackDiv.innerHTML = `
+                ${isCorrect ? '✅ Correct!' : '❌ Incorrect.'} 
+                ${currentQuestion27.explanation}
+            `;
+            
+            if (isCorrect) {
+                answerInput.disabled = true;
+            }
+        }
+
+        function showSteps27() {
+            const stepsDiv = document.getElementById('steps-27');
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = currentQuestion27.steps;
+        }
+
         // Page initialization
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Chapter 2: Discrete Random Variables loaded successfully! 📊');
@@ -1008,6 +2538,10 @@
                 generateQuestion21();
                 generateQuestion22();
                 generateQuestion23();
+                generateQuestion24();
+                generateQuestion25();
+                generateQuestion26();
+                generateQuestion27();
             }, 1000);
         });
     </script>
