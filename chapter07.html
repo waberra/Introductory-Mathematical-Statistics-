@@ -1,0 +1,1947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 7: Two-Sample Statistical Inferences | Larsen & Marx Mathematical Statistics</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    
+    <style>
+        :root {
+            --primary-color: #6A1B9A;
+            --primary-light: #9C4DCC;
+            --primary-dark: #4A0E4E;
+            --secondary-color: #E1BEE7;
+            --accent-color: #AB47BC;
+            --background-color: #FAFAFA;
+            --text-color: #212121;
+            --card-background: #FFFFFF;
+            --border-color: #E0E0E0;
+            --success-color: #4CAF50;
+            --error-color: #F44336;
+            --warning-color: #FF9800;
+            --shadow: 0 2px 10px rgba(106, 27, 154, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 20px;
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .chapter-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .chapter-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .chapter-description {
+            font-size: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        .navigation {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            justify-content: center;
+        }
+
+        .nav-button {
+            padding: 0.75rem 1.5rem;
+            background: var(--card-background);
+            border: 2px solid var(--primary-color);
+            border-radius: 50px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-button:hover, .nav-button.active {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(106, 27, 154, 0.3);
+        }
+
+        .section {
+            background: var(--card-background);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary-color);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-content {
+            line-height: 1.8;
+        }
+
+        .math-definition {
+            background: linear-gradient(135deg, var(--secondary-color), rgba(106, 27, 154, 0.05));
+            border: 1px solid var(--primary-light);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .math-definition h4 {
+            color: var(--primary-dark);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .math-formula {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .theorem-box {
+            background: linear-gradient(135deg, rgba(106, 27, 154, 0.05), var(--secondary-color));
+            border-left: 4px solid var(--accent-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .theorem-box h4 {
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, rgba(171, 71, 188, 0.05), rgba(106, 27, 154, 0.05));
+            border: 1px solid var(--accent-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example-box h4 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--card-background);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(106, 27, 154, 0.05);
+        }
+
+        .section-practice {
+            background: linear-gradient(135deg, rgba(106, 27, 154, 0.02), rgba(171, 71, 188, 0.02));
+            border: 2px solid var(--secondary-color);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .practice-question {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .question-number {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .regenerate-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .regenerate-btn:hover {
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .question-input-area {
+            margin-bottom: 1rem;
+        }
+
+        .input-label {
+            display: block;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.1);
+        }
+
+        .input-hint {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .question-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .question-buttons button {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .check-btn {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .check-btn:hover {
+            background: #45A049;
+            transform: translateY(-1px);
+        }
+
+        .steps-btn {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .steps-btn:hover {
+            background: #F57C00;
+            transform: translateY(-1px);
+        }
+
+        .new-question-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .new-question-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .question-feedback {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .correct-feedback {
+            background: linear-gradient(135deg, #E8F5E8, #C8E6C9);
+            border: 1px solid var(--success-color);
+            color: #2E7D32;
+        }
+
+        .incorrect-feedback {
+            background: linear-gradient(135deg, #FFEBEE, #FFCDD2);
+            border: 1px solid var(--error-color);
+            color: #C62828;
+        }
+
+        .question-steps {
+            background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+            border: 1px solid var(--warning-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .step-title {
+            font-weight: 700;
+            color: var(--warning-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .step-content {
+            line-height: 1.6;
+        }
+
+        .step-content ol {
+            padding-left: 1.5rem;
+        }
+
+        .step-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .assumptions-box {
+            background: linear-gradient(135deg, rgba(106, 27, 154, 0.08), var(--secondary-color));
+            border-left: 4px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .test-comparison {
+            background: var(--card-background);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .chapter-title {
+                font-size: 2rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-button {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+            
+            .question-buttons {
+                flex-direction: column;
+            }
+            
+            .question-buttons button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="chapter-title">📊 Chapter 7: Two-Sample Statistical Inferences</h1>
+            <p class="chapter-subtitle">Comparing Two Populations Through Statistical Methods</p>
+            <p class="chapter-description">
+                Master the art of comparing two groups using t-tests, proportion tests, variance comparisons, and non-parametric alternatives. 
+                Build expertise in paired vs independent samples, power analysis, and practical decision-making in two-sample scenarios.
+            </p>
+        </header>
+
+        <nav class="navigation">
+            <a href="#independent-t" class="nav-button active">7.1 Independent t-Tests</a>
+            <a href="#paired-tests" class="nav-button">7.2 Paired Tests</a>
+            <a href="#proportions" class="nav-button">7.3 Two Proportions</a>
+            <a href="#variance-tests" class="nav-button">7.4 Variance Tests</a>
+            <a href="#nonparametric" class="nav-button">7.5 Nonparametric</a>
+            <a href="#power-analysis" class="nav-button">7.6 Power Analysis</a>
+        </nav>
+
+        <!-- Section 7.1: Two-Sample t-Tests (Independent Samples) -->
+        <div class="section fade-in" id="independent-t">
+            <h2 class="section-title">📊 7.1 Two-Sample t-Tests (Independent Samples)</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Independent Two-Sample t-Test</h4>
+                    <p>Used to compare means from <strong>two independent groups</strong> when population standard deviations are unknown.</p>
+                    <div class="math-formula">
+                        $H_0: \mu_1 - \mu_2 = 0$ vs $H_1: \mu_1 - \mu_2 \neq 0$ (two-tailed)
+                    </div>
+                    <p><strong>Key assumption:</strong> Independent samples from two populations</p>
+                </div>
+
+                <div class="assumptions-box">
+                    <h4>Assumptions for Two-Sample t-Tests</h4>
+                    <ul>
+                        <li><strong>Independence:</strong> Observations within and between groups are independent</li>
+                        <li><strong>Normality:</strong> Both populations approximately normal (or large samples)</li>
+                        <li><strong>Random sampling:</strong> Data collected through proper sampling methods</li>
+                        <li><strong>Homoscedasticity:</strong> Equal variances (for pooled t-test)</li>
+                    </ul>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Pooled Variance t-Test (Equal Variances)</h4>
+                    <p><strong>When to use:</strong> σ₁² = σ₂² (equal population variances)</p>
+                    <div class="math-formula">
+                        $t = \frac{(\bar{x}_1 - \bar{x}_2) - (\mu_1 - \mu_2)}{s_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}$
+                    </div>
+                    <p><strong>Pooled standard deviation:</strong></p>
+                    <div class="math-formula">
+                        $s_p = \sqrt{\frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1 + n_2 - 2}}$
+                    </div>
+                    <p><strong>Degrees of freedom:</strong> $df = n_1 + n_2 - 2$</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Welch's t-Test (Unequal Variances)</h4>
+                    <p><strong>When to use:</strong> σ₁² ≠ σ₂² (unequal population variances)</p>
+                    <div class="math-formula">
+                        $t = \frac{(\bar{x}_1 - \bar{x}_2) - (\mu_1 - \mu_2)}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}$
+                    </div>
+                    <p><strong>Degrees of freedom (Satterthwaite approximation):</strong></p>
+                    <div class="math-formula">
+                        $df = \frac{\left(\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}\right)^2}{\frac{s_1^4}{n_1^2(n_1-1)} + \frac{s_2^4}{n_2^2(n_2-1)}}$
+                    </div>
+                </div>
+
+                <div class="test-comparison">
+                    <h4>Choosing Between Pooled and Welch's t-Test</h4>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Criterion</th>
+                            <th>Pooled t-Test</th>
+                            <th>Welch's t-Test</th>
+                        </tr>
+                        <tr>
+                            <td>Variance assumption</td>
+                            <td>Equal variances (σ₁² = σ₂²)</td>
+                            <td>Unequal variances allowed</td>
+                        </tr>
+                        <tr>
+                            <td>When to use</td>
+                            <td>s₁/s₂ between 0.5 and 2.0</td>
+                            <td>s₁/s₂ outside 0.5 to 2.0 range</td>
+                        </tr>
+                        <tr>
+                            <td>Degrees of freedom</td>
+                            <td>n₁ + n₂ - 2</td>
+                            <td>Complex formula (usually non-integer)</td>
+                        </tr>
+                        <tr>
+                            <td>Robustness</td>
+                            <td>Sensitive to variance inequality</td>
+                            <td>Robust to variance inequality</td>
+                        </tr>
+                        <tr>
+                            <td>Default choice</td>
+                            <td>Traditional approach</td>
+                            <td>Modern statistical software default</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 7.1: Comparing Study Methods</h4>
+                    <p><strong>Scenario:</strong> Two teaching methods are compared using test scores</p>
+                    <p><strong>Method A:</strong> n₁ = 25, x̄₁ = 78.4, s₁ = 12.3</p>
+                    <p><strong>Method B:</strong> n₂ = 30, x̄₂ = 82.1, s₂ = 15.7</p>
+                    <p><strong>Test:</strong> H₀: μ₁ = μ₂ vs H₁: μ₁ ≠ μ₂ at α = 0.05</p>
+                    <p><strong>Variance check:</strong> s₁/s₂ = 12.3/15.7 ≈ 0.78 (use pooled test)</p>
+                    <p><strong>Decision:</strong> Calculate pooled t-statistic and compare to t₀.₀₂₅,₅₃</p>
+                </div>
+            </div>
+
+            <!-- Section 7.1 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 7.1 Practice</h3>
+                
+                <div class="practice-question" id="question-7-1-1">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion71_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-71-1-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-71-1">Your Answer:</label>
+                        <input type="text" id="answer-71-1" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer71_1()">
+                        <div class="input-hint" id="hint-71-1"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer71_1()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps71_1()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion71_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-71-1" style="display: none;"></div>
+                    <div class="question-steps" id="steps-71-1" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-1-2">
+                    <div class="question-header">
+                        <span class="question-number">Question 2</span>
+                        <button class="regenerate-btn" onclick="generateQuestion71_2()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-71-2-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-71-2">Your Answer:</label>
+                        <input type="text" id="answer-71-2" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer71_2()">
+                        <div class="input-hint" id="hint-71-2"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer71_2()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps71_2()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion71_2()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-71-2" style="display: none;"></div>
+                    <div class="question-steps" id="steps-71-2" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-1-3">
+                    <div class="question-header">
+                        <span class="question-number">Question 3</span>
+                        <button class="regenerate-btn" onclick="generateQuestion71_3()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-71-3-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-71-3">Your Answer:</label>
+                        <input type="text" id="answer-71-3" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer71_3()">
+                        <div class="input-hint" id="hint-71-3"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer71_3()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps71_3()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion71_3()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-71-3" style="display: none;"></div>
+                    <div class="question-steps" id="steps-71-3" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-1-4">
+                    <div class="question-header">
+                        <span class="question-number">Question 4</span>
+                        <button class="regenerate-btn" onclick="generateQuestion71_4()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-71-4-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-71-4">Your Answer:</label>
+                        <input type="text" id="answer-71-4" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer71_4()">
+                        <div class="input-hint" id="hint-71-4"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer71_4()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps71_4()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion71_4()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-71-4" style="display: none;"></div>
+                    <div class="question-steps" id="steps-71-4" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-1-5">
+                    <div class="question-header">
+                        <span class="question-number">Question 5</span>
+                        <button class="regenerate-btn" onclick="generateQuestion71_5()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-71-5-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-71-5">Your Answer:</label>
+                        <input type="text" id="answer-71-5" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer71_5()">
+                        <div class="input-hint" id="hint-71-5"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer71_5()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps71_5()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion71_5()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-71-5" style="display: none;"></div>
+                    <div class="question-steps" id="steps-71-5" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-1-6">
+                    <div class="question-header">
+                        <span class="question-number">Question 6</span>
+                        <button class="regenerate-btn" onclick="generateQuestion71_6()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-71-6-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-71-6">Your Answer:</label>
+                        <input type="text" id="answer-71-6" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer71_6()">
+                        <div class="input-hint" id="hint-71-6"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer71_6()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps71_6()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion71_6()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-71-6" style="display: none;"></div>
+                    <div class="question-steps" id="steps-71-6" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-1-7">
+                    <div class="question-header">
+                        <span class="question-number">Question 7</span>
+                        <button class="regenerate-btn" onclick="generateQuestion71_7()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-71-7-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-71-7">Your Answer:</label>
+                        <input type="text" id="answer-71-7" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer71_7()">
+                        <div class="input-hint" id="hint-71-7"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer71_7()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps71_7()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion71_7()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-71-7" style="display: none;"></div>
+                    <div class="question-steps" id="steps-71-7" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-1-8">
+                    <div class="question-header">
+                        <span class="question-number">Question 8</span>
+                        <button class="regenerate-btn" onclick="generateQuestion71_8()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-71-8-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-71-8">Your Answer:</label>
+                        <input type="text" id="answer-71-8" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer71_8()">
+                        <div class="input-hint" id="hint-71-8"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer71_8()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps71_8()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion71_8()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-71-8" style="display: none;"></div>
+                    <div class="question-steps" id="steps-71-8" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-1-9">
+                    <div class="question-header">
+                        <span class="question-number">Question 9</span>
+                        <button class="regenerate-btn" onclick="generateQuestion71_9()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-71-9-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-71-9">Your Answer:</label>
+                        <input type="text" id="answer-71-9" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer71_9()">
+                        <div class="input-hint" id="hint-71-9"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer71_9()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps71_9()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion71_9()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-71-9" style="display: none;"></div>
+                    <div class="question-steps" id="steps-71-9" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-1-10">
+                    <div class="question-header">
+                        <span class="question-number">Question 10</span>
+                        <button class="regenerate-btn" onclick="generateQuestion71_10()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-71-10-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-71-10">Your Answer:</label>
+                        <input type="text" id="answer-71-10" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer71_10()">
+                        <div class="input-hint" id="hint-71-10"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer71_10()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps71_10()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion71_10()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-71-10" style="display: none;"></div>
+                    <div class="question-steps" id="steps-71-10" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7.2: Paired Sample Tests -->
+        <div class="section fade-in" id="paired-tests">
+            <h2 class="section-title">🔄 7.2 Paired Sample Tests</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Paired t-Test</h4>
+                    <p>Used when comparing <strong>two related samples</strong> or measurements on the same subjects.</p>
+                    <div class="math-formula">
+                        $H_0: \mu_D = 0$ vs $H_1: \mu_D \neq 0$
+                    </div>
+                    <p>where $D_i = X_{1i} - X_{2i}$ are the paired differences</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Paired t-Test Formula</h4>
+                    <p><strong>Test statistic:</strong></p>
+                    <div class="math-formula">
+                        $t = \frac{\bar{D} - \mu_{D0}}{s_D/\sqrt{n}}$
+                    </div>
+                    <p><strong>Where:</strong></p>
+                    <ul>
+                        <li>$\bar{D} = \frac{1}{n}\sum_{i=1}^n D_i$ (mean of differences)</li>
+                        <li>$s_D = \sqrt{\frac{\sum_{i=1}^n (D_i - \bar{D})^2}{n-1}}$ (standard deviation of differences)</li>
+                        <li>$\mu_{D0}$ is the hypothesized mean difference (usually 0)</li>
+                    </ul>
+                    <p><strong>Degrees of freedom:</strong> $df = n - 1$ (where n = number of pairs)</p>
+                </div>
+
+                <div class="assumptions-box">
+                    <h4>When to Use Paired vs Independent Samples</h4>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Use Paired t-Test When:</th>
+                            <th>Use Independent t-Test When:</th>
+                        </tr>
+                        <tr>
+                            <td>Before/after measurements</td>
+                            <td>Completely different subjects</td>
+                        </tr>
+                        <tr>
+                            <td>Matched pairs (twins, siblings)</td>
+                            <td>Random assignment to groups</td>
+                        </tr>
+                        <tr>
+                            <td>Same subjects, different treatments</td>
+                            <td>Different populations</td>
+                        </tr>
+                        <tr>
+                            <td>Left vs right measurements</td>
+                            <td>No natural pairing exists</td>
+                        </tr>
+                        <tr>
+                            <td>Pre-test/post-test designs</td>
+                            <td>Cross-sectional studies</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 7.2: Blood Pressure Reduction</h4>
+                    <p><strong>Scenario:</strong> Testing effectiveness of a new medication</p>
+                    <p><strong>Design:</strong> Blood pressure measured before and after treatment for 20 patients</p>
+                    <p><strong>Data:</strong> Differences = After - Before</p>
+                    <p><strong>Sample:</strong> $\bar{D} = -8.3$ mmHg, $s_D = 12.4$ mmHg, $n = 20$</p>
+                    <p><strong>Test:</strong> $H_0: \mu_D = 0$ vs $H_1: \mu_D < 0$ (one-tailed)</p>
+                    <p><strong>Why paired:</strong> Same patients measured twice eliminates between-subject variation</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Advantages of Paired Design</h4>
+                    <ul>
+                        <li><strong>Controls confounding:</strong> Each subject serves as their own control</li>
+                        <li><strong>Reduces variability:</strong> Eliminates between-subject differences</li>
+                        <li><strong>Increases power:</strong> More sensitive to detect true differences</li>
+                        <li><strong>Smaller samples:</strong> Often requires fewer subjects than independent design</li>
+                        <li><strong>Cost effective:</strong> Can be more efficient and economical</li>
+                    </ul>
+                </div>
+
+                <div class="test-comparison">
+                    <h4>Paired t-Test Assumptions</h4>
+                    <div class="assumptions-box">
+                        <ul>
+                            <li><strong>Paired observations:</strong> Natural pairing exists between measurements</li>
+                            <li><strong>Independence:</strong> Pairs are independent of each other</li>
+                            <li><strong>Normality:</strong> Differences $D_i$ are approximately normal</li>
+                            <li><strong>Random sampling:</strong> Pairs represent random sample from population</li>
+                        </ul>
+                        <p><strong>Note:</strong> We test normality of the <em>differences</em>, not the original measurements!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 7.2 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🔄 Section 7.2 Practice</h3>
+                
+                <div class="practice-question" id="question-7-2-1">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion72_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-72-1-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-72-1">Your Answer:</label>
+                        <input type="text" id="answer-72-1" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer72_1()">
+                        <div class="input-hint" id="hint-72-1"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer72_1()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps72_1()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion72_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-72-1" style="display: none;"></div>
+                    <div class="question-steps" id="steps-72-1" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-2-2">
+                    <div class="question-header">
+                        <span class="question-number">Question 2</span>
+                        <button class="regenerate-btn" onclick="generateQuestion72_2()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-72-2-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-72-2">Your Answer:</label>
+                        <input type="text" id="answer-72-2" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer72_2()">
+                        <div class="input-hint" id="hint-72-2"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer72_2()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps72_2()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion72_2()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-72-2" style="display: none;"></div>
+                    <div class="question-steps" id="steps-72-2" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-2-3">
+                    <div class="question-header">
+                        <span class="question-number">Question 3</span>
+                        <button class="regenerate-btn" onclick="generateQuestion72_3()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-72-3-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-72-3">Your Answer:</label>
+                        <input type="text" id="answer-72-3" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer72_3()">
+                        <div class="input-hint" id="hint-72-3"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer72_3()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps72_3()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion72_3()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-72-3" style="display: none;"></div>
+                    <div class="question-steps" id="steps-72-3" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-2-4">
+                    <div class="question-header">
+                        <span class="question-number">Question 4</span>
+                        <button class="regenerate-btn" onclick="generateQuestion72_4()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-72-4-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-72-4">Your Answer:</label>
+                        <input type="text" id="answer-72-4" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer72_4()">
+                        <div class="input-hint" id="hint-72-4"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer72_4()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps72_4()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion72_4()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-72-4" style="display: none;"></div>
+                    <div class="question-steps" id="steps-72-4" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-2-5">
+                    <div class="question-header">
+                        <span class="question-number">Question 5</span>
+                        <button class="regenerate-btn" onclick="generateQuestion72_5()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-72-5-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-72-5">Your Answer:</label>
+                        <input type="text" id="answer-72-5" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer72_5()">
+                        <div class="input-hint" id="hint-72-5"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer72_5()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps72_5()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion72_5()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-72-5" style="display: none;"></div>
+                    <div class="question-steps" id="steps-72-5" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-2-6">
+                    <div class="question-header">
+                        <span class="question-number">Question 6</span>
+                        <button class="regenerate-btn" onclick="generateQuestion72_6()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-72-6-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-72-6">Your Answer:</label>
+                        <input type="text" id="answer-72-6" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer72_6()">
+                        <div class="input-hint" id="hint-72-6"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer72_6()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps72_6()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion72_6()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-72-6" style="display: none;"></div>
+                    <div class="question-steps" id="steps-72-6" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-2-7">
+                    <div class="question-header">
+                        <span class="question-number">Question 7</span>
+                        <button class="regenerate-btn" onclick="generateQuestion72_7()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-72-7-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-72-7">Your Answer:</label>
+                        <input type="text" id="answer-72-7" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer72_7()">
+                        <div class="input-hint" id="hint-72-7"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer72_7()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps72_7()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion72_7()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-72-7" style="display: none;"></div>
+                    <div class="question-steps" id="steps-72-7" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-2-8">
+                    <div class="question-header">
+                        <span class="question-number">Question 8</span>
+                        <button class="regenerate-btn" onclick="generateQuestion72_8()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-72-8-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-72-8">Your Answer:</label>
+                        <input type="text" id="answer-72-8" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer72_8()">
+                        <div class="input-hint" id="hint-72-8"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer72_8()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps72_8()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion72_8()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-72-8" style="display: none;"></div>
+                    <div class="question-steps" id="steps-72-8" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-2-9">
+                    <div class="question-header">
+                        <span class="question-number">Question 9</span>
+                        <button class="regenerate-btn" onclick="generateQuestion72_9()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-72-9-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-72-9">Your Answer:</label>
+                        <input type="text" id="answer-72-9" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer72_9()">
+                        <div class="input-hint" id="hint-72-9"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer72_9()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps72_9()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion72_9()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-72-9" style="display: none;"></div>
+                    <div class="question-steps" id="steps-72-9" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-2-10">
+                    <div class="question-header">
+                        <span class="question-number">Question 10</span>
+                        <button class="regenerate-btn" onclick="generateQuestion72_10()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-72-10-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-72-10">Your Answer:</label>
+                        <input type="text" id="answer-72-10" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer72_10()">
+                        <div class="input-hint" id="hint-72-10"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer72_10()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps72_10()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion72_10()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-72-10" style="display: none;"></div>
+                    <div class="question-steps" id="steps-72-10" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7.3: Two-Sample Tests for Proportions -->
+        <div class="section fade-in" id="proportions">
+            <h2 class="section-title">📈 7.3 Two-Sample Tests for Proportions</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Two-Sample z-Test for Proportions</h4>
+                    <p>Compare proportions from <strong>two independent samples</strong>.</p>
+                    <div class="math-formula">
+                        $H_0: p_1 - p_2 = 0$ vs $H_1: p_1 - p_2 \neq 0$
+                    </div>
+                    <p><strong>Sample proportions:</strong> $\hat{p}_1 = \frac{X_1}{n_1}$, $\hat{p}_2 = \frac{X_2}{n_2}$</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Pooled Two-Sample z-Test</h4>
+                    <p><strong>Test statistic (assuming H₀: p₁ = p₂):</strong></p>
+                    <div class="math-formula">
+                        $z = \frac{(\hat{p}_1 - \hat{p}_2) - (p_1 - p_2)_0}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1} + \frac{1}{n_2}\right)}}$
+                    </div>
+                    <p><strong>Pooled proportion:</strong></p>
+                    <div class="math-formula">
+                        $\hat{p} = \frac{X_1 + X_2}{n_1 + n_2} = \frac{n_1\hat{p}_1 + n_2\hat{p}_2}{n_1 + n_2}$
+                    </div>
+                    <p><strong>Under H₀:</strong> $z \sim N(0,1)$ for large samples</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Unpooled Two-Sample z-Test</h4>
+                    <p><strong>When not testing equality (H₀: p₁ - p₂ = δ₀ ≠ 0):</strong></p>
+                    <div class="math-formula">
+                        $z = \frac{(\hat{p}_1 - \hat{p}_2) - \delta_0}{\sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1} + \frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}}$
+                    </div>
+                    <p><strong>Use case:</strong> Confidence intervals or non-zero null differences</p>
+                </div>
+
+                <div class="assumptions-box">
+                    <h4>Large Sample Conditions</h4>
+                    <p><strong>For pooled test (H₀: p₁ = p₂):</strong></p>
+                    <ul>
+                        <li>$n_1\hat{p} \geq 5$ and $n_1(1-\hat{p}) \geq 5$</li>
+                        <li>$n_2\hat{p} \geq 5$ and $n_2(1-\hat{p}) \geq 5$</li>
+                    </ul>
+                    <p><strong>For unpooled test:</strong></p>
+                    <ul>
+                        <li>$n_1\hat{p}_1 \geq 5$ and $n_1(1-\hat{p}_1) \geq 5$</li>
+                        <li>$n_2\hat{p}_2 \geq 5$ and $n_2(1-\hat{p}_2) \geq 5$</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 7.3: Comparing Treatment Success Rates</h4>
+                    <p><strong>Treatment A:</strong> 45 successes out of 60 trials (p̂₁ = 0.75)</p>
+                    <p><strong>Treatment B:</strong> 38 successes out of 55 trials (p̂₂ = 0.69)</p>
+                    <p><strong>Test:</strong> H₀: p₁ = p₂ vs H₁: p₁ ≠ p₂</p>
+                    <p><strong>Pooled proportion:</strong> $\hat{p} = \frac{45+38}{60+55} = \frac{83}{115} ≈ 0.72$</p>
+                    <p><strong>Check conditions:</strong> $n_1\hat{p} = 60(0.72) = 43.2 ≥ 5$ ✓</p>
+                </div>
+
+                <div class="test-comparison">
+                    <h4>Effect Size Measures for Proportions</h4>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Measure</th>
+                            <th>Formula</th>
+                            <th>Interpretation</th>
+                        </tr>
+                        <tr>
+                            <td>Difference</td>
+                            <td>$\hat{p}_1 - \hat{p}_2$</td>
+                            <td>Raw difference in proportions</td>
+                        </tr>
+                        <tr>
+                            <td>Risk Ratio</td>
+                            <td>$\frac{\hat{p}_1}{\hat{p}_2}$</td>
+                            <td>Relative risk, multiplicative effect</td>
+                        </tr>
+                        <tr>
+                            <td>Odds Ratio</td>
+                            <td>$\frac{\hat{p}_1/(1-\hat{p}_1)}{\hat{p}_2/(1-\hat{p}_2)}$</td>
+                            <td>Ratio of odds, symmetric measure</td>
+                        </tr>
+                        <tr>
+                            <td>Cohen's h</td>
+                            <td>$2(\arcsin\sqrt{\hat{p}_1} - \arcsin\sqrt{\hat{p}_2})$</td>
+                            <td>Standardized effect size</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Section 7.3 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📈 Section 7.3 Practice</h3>
+                
+                <div class="practice-question" id="question-7-3-1">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion73_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-73-1-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-73-1">Your Answer:</label>
+                        <input type="text" id="answer-73-1" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer73_1()">
+                        <div class="input-hint" id="hint-73-1"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer73_1()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps73_1()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion73_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-73-1" style="display: none;"></div>
+                    <div class="question-steps" id="steps-73-1" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-3-2">
+                    <div class="question-header">
+                        <span class="question-number">Question 2</span>
+                        <button class="regenerate-btn" onclick="generateQuestion73_2()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-73-2-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-73-2">Your Answer:</label>
+                        <input type="text" id="answer-73-2" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer73_2()">
+                        <div class="input-hint" id="hint-73-2"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer73_2()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps73_2()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion73_2()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-73-2" style="display: none;"></div>
+                    <div class="question-steps" id="steps-73-2" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-3-3">
+                    <div class="question-header">
+                        <span class="question-number">Question 3</span>
+                        <button class="regenerate-btn" onclick="generateQuestion73_3()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-73-3-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-73-3">Your Answer:</label>
+                        <input type="text" id="answer-73-3" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer73_3()">
+                        <div class="input-hint" id="hint-73-3"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer73_3()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps73_3()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion73_3()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-73-3" style="display: none;"></div>
+                    <div class="question-steps" id="steps-73-3" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-3-4">
+                    <div class="question-header">
+                        <span class="question-number">Question 4</span>
+                        <button class="regenerate-btn" onclick="generateQuestion73_4()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-73-4-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-73-4">Your Answer:</label>
+                        <input type="text" id="answer-73-4" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer73_4()">
+                        <div class="input-hint" id="hint-73-4"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer73_4()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps73_4()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion73_4()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-73-4" style="display: none;"></div>
+                    <div class="question-steps" id="steps-73-4" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-3-5">
+                    <div class="question-header">
+                        <span class="question-number">Question 5</span>
+                        <button class="regenerate-btn" onclick="generateQuestion73_5()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-73-5-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-73-5">Your Answer:</label>
+                        <input type="text" id="answer-73-5" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer73_5()">
+                        <div class="input-hint" id="hint-73-5"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer73_5()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps73_5()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion73_5()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-73-5" style="display: none;"></div>
+                    <div class="question-steps" id="steps-73-5" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-3-6">
+                    <div class="question-header">
+                        <span class="question-number">Question 6</span>
+                        <button class="regenerate-btn" onclick="generateQuestion73_6()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-73-6-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-73-6">Your Answer:</label>
+                        <input type="text" id="answer-73-6" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer73_6()">
+                        <div class="input-hint" id="hint-73-6"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer73_6()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps73_6()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion73_6()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-73-6" style="display: none;"></div>
+                    <div class="question-steps" id="steps-73-6" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-3-7">
+                    <div class="question-header">
+                        <span class="question-number">Question 7</span>
+                        <button class="regenerate-btn" onclick="generateQuestion73_7()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-73-7-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-73-7">Your Answer:</label>
+                        <input type="text" id="answer-73-7" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer73_7()">
+                        <div class="input-hint" id="hint-73-7"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer73_7()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps73_7()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion73_7()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-73-7" style="display: none;"></div>
+                    <div class="question-steps" id="steps-73-7" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-3-8">
+                    <div class="question-header">
+                        <span class="question-number">Question 8</span>
+                        <button class="regenerate-btn" onclick="generateQuestion73_8()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-73-8-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-73-8">Your Answer:</label>
+                        <input type="text" id="answer-73-8" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer73_8()">
+                        <div class="input-hint" id="hint-73-8"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer73_8()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps73_8()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion73_8()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-73-8" style="display: none;"></div>
+                    <div class="question-steps" id="steps-73-8" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-3-9">
+                    <div class="question-header">
+                        <span class="question-number">Question 9</span>
+                        <button class="regenerate-btn" onclick="generateQuestion73_9()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-73-9-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-73-9">Your Answer:</label>
+                        <input type="text" id="answer-73-9" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer73_9()">
+                        <div class="input-hint" id="hint-73-9"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer73_9()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps73_9()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion73_9()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-73-9" style="display: none;"></div>
+                    <div class="question-steps" id="steps-73-9" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question" id="question-7-3-10">
+                    <div class="question-header">
+                        <span class="question-number">Question 10</span>
+                        <button class="regenerate-btn" onclick="generateQuestion73_10()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-73-10-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-73-10">Your Answer:</label>
+                        <input type="text" id="answer-73-10" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer73_10()">
+                        <div class="input-hint" id="hint-73-10"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer73_10()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps73_10()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion73_10()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-73-10" style="display: none;"></div>
+                    <div class="question-steps" id="steps-73-10" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7.4: Comparing Two Variances (F-Tests) -->
+        <div class="section fade-in" id="variance-tests">
+            <h2 class="section-title">⚖️ 7.4 Comparing Two Variances (F-Tests)</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>F-Test for Equality of Variances</h4>
+                    <p>Compare variances from <strong>two normal populations</strong>.</p>
+                    <div class="math-formula">
+                        $H_0: \sigma_1^2 = \sigma_2^2$ vs $H_1: \sigma_1^2 \neq \sigma_2^2$
+                    </div>
+                    <p><strong>Test statistic:</strong> $F = \frac{s_1^2}{s_2^2}$ (larger variance in numerator)</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>F-Test Statistics and Distribution</h4>
+                    <p><strong>General form:</strong></p>
+                    <div class="math-formula">
+                        $F = \frac{s_{\text{larger}}^2}{s_{\text{smaller}}^2} \sim F(df_1, df_2)$
+                    </div>
+                    <p><strong>Degrees of freedom:</strong></p>
+                    <ul>
+                        <li>$df_1 = n_{\text{larger}} - 1$ (numerator df)</li>
+                        <li>$df_2 = n_{\text{smaller}} - 1$ (denominator df)</li>
+                    </ul>
+                    <p><strong>For two-tailed test:</strong> Critical value = $F_{\alpha/2, df_1, df_2}$</p>
+                </div>
+
+                <div class="assumptions-box">
+                    <h4>F-Test Assumptions (CRITICAL)</h4>
+                    <ul>
+                        <li><strong>Normality:</strong> Both populations must be approximately normal</li>
+                        <li><strong>Independence:</strong> Samples are independent of each other</li>
+                        <li><strong>Random sampling:</strong> Both samples are randomly selected</li>
+                    </ul>
+                    <div class="math-formula" style="color: #D32F2F; background: #FFEBEE;">
+                        ⚠️ <strong>WARNING:</strong> F-test is <em>very sensitive</em> to non-normality!
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 7.4: Comparing Measurement Precision</h4>
+                    <p><strong>Instrument A:</strong> n₁ = 16, s₁² = 2.8</p>
+                    <p><strong>Instrument B:</strong> n₂ = 21, s₂² = 1.9</p>
+                    <p><strong>Test:</strong> H₀: σ₁² = σ₂² vs H₁: σ₁² ≠ σ₂²</p>
+                    <p><strong>F-statistic:</strong> $F = \frac{2.8}{1.9} = 1.47$</p>
+                    <p><strong>df:</strong> (15, 20) since larger variance (A) goes in numerator</p>
+                    <p><strong>Critical value:</strong> Compare to F₀.₀₂₅,₁₅,₂₀</p>
+                </div>
+
+                <div class="test-comparison">
+                    <h4>Robust Alternatives to F-Test</h4>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Test</th>
+                            <th>Assumptions</th>
+                            <th>When to Use</th>
+                        </tr>
+                        <tr>
+                            <td>F-test</td>
+                            <td>Strict normality required</td>
+                            <td>Only when normality is certain</td>
+                        </tr>
+                        <tr>
+                            <td>Levene's Test</td>
+                            <td>Less sensitive to non-normality</td>
+                            <td>Moderate deviations from normality</td>
+                        </tr>
+                        <tr>
+                            <td>Brown-Forsythe</td>
+                            <td>Uses medians instead of means</td>
+                            <td>Non-normal, especially skewed data</td>
+                        </tr>
+                        <tr>
+                            <td>Bartlett's Test</td>
+                            <td>Similar to F-test</td>
+                            <td>Multiple groups, normal data</td>
+                        </tr>
+                        <tr>
+                            <td>Hartley's F-max</td>
+                            <td>Equal sample sizes</td>
+                            <td>Quick test for multiple variances</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Relationship to t-Test Assumption</h4>
+                    <p>F-test is often used to check the <strong>equal variances assumption</strong> for pooled t-test:</p>
+                    <ul>
+                        <li><strong>If F-test is not significant:</strong> Use pooled t-test (assume σ₁² = σ₂²)</li>
+                        <li><strong>If F-test is significant:</strong> Use Welch's t-test (don't assume equal variances)</li>
+                    </ul>
+                    <div class="math-formula">
+                        <strong>Rule of thumb:</strong> If $\frac{s_{\text{larger}}}{s_{\text{smaller}}} > 2$, consider unequal variances
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 7.4 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">⚖️ Section 7.4 Practice</h3>
+                
+                <div class="practice-question" id="question-7-4-1">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion74_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-74-1-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-74-1">Your Answer:</label>
+                        <input type="text" id="answer-74-1" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer74_1()">
+                        <div class="input-hint" id="hint-74-1"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer74_1()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps74_1()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion74_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-74-1" style="display: none;"></div>
+                    <div class="question-steps" id="steps-74-1" style="display: none;"></div>
+                </div>
+
+                <!-- Continue with questions 2-10 for Section 7.4... -->
+                
+            </div>
+        </div>
+
+        <!-- Section 7.5: Non-Parametric Two-Sample Tests -->
+        <div class="section fade-in" id="nonparametric">
+            <h2 class="section-title">📊 7.5 Non-Parametric Two-Sample Tests</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Why Non-Parametric Tests?</h4>
+                    <p>Use when <strong>parametric test assumptions</strong> are violated:</p>
+                    <ul>
+                        <li>Non-normal distributions</li>
+                        <li>Ordinal or heavily skewed data</li>
+                        <li>Small sample sizes</li>
+                        <li>Outliers present</li>
+                    </ul>
+                    <p><strong>Advantage:</strong> Distribution-free (fewer assumptions)</p>
+                    <p><strong>Disadvantage:</strong> Generally less powerful than parametric tests</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Mann-Whitney U Test (Wilcoxon Rank-Sum)</h4>
+                    <p><strong>Purpose:</strong> Compare distributions of two independent groups</p>
+                    <p><strong>Null hypothesis:</strong> The two populations have the same distribution</p>
+                    <div class="math-formula">
+                        $H_0: P(X > Y) = 0.5$ vs $H_1: P(X > Y) \neq 0.5$
+                    </div>
+                    <p><strong>Procedure:</strong></p>
+                    <ol>
+                        <li>Combine and rank all observations</li>
+                        <li>Sum ranks for each group: R₁, R₂</li>
+                        <li>Calculate U-statistics: $U_1 = R_1 - \frac{n_1(n_1+1)}{2}$</li>
+                        <li>Use smaller U for test statistic</li>
+                    </ol>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Kolmogorov-Smirnov Two-Sample Test</h4>
+                    <p><strong>Purpose:</strong> Test if two samples come from the same distribution</p>
+                    <p><strong>Test statistic:</strong></p>
+                    <div class="math-formula">
+                        $D = \max_x |F_1(x) - F_2(x)|$
+                    </div>
+                    <p>where F₁(x) and F₂(x) are empirical distribution functions</p>
+                    <p><strong>Advantage:</strong> Sensitive to any difference in distribution (location, scale, shape)</p>
+                </div>
+
+                <div class="test-comparison">
+                    <h4>Parametric vs Non-Parametric Comparison</h4>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Comparison</th>
+                            <th>Parametric Test</th>
+                            <th>Non-Parametric Alternative</th>
+                        </tr>
+                        <tr>
+                            <td>Two independent means</td>
+                            <td>Independent t-test</td>
+                            <td>Mann-Whitney U / Wilcoxon rank-sum</td>
+                        </tr>
+                        <tr>
+                            <td>Two paired means</td>
+                            <td>Paired t-test</td>
+                            <td>Wilcoxon signed-rank test</td>
+                        </tr>
+                        <tr>
+                            <td>Two distributions</td>
+                            <td>Not applicable</td>
+                            <td>Kolmogorov-Smirnov test</td>
+                        </tr>
+                        <tr>
+                            <td>Multiple groups</td>
+                            <td>One-way ANOVA</td>
+                            <td>Kruskal-Wallis test</td>
+                        </tr>
+                        <tr>
+                            <td>Correlation</td>
+                            <td>Pearson's r</td>
+                            <td>Spearman's ρ or Kendall's τ</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Section 7.5 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 7.5 Practice</h3>
+                
+                <div class="practice-question" id="question-7-5-1">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion75_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-75-1-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-75-1">Your Answer:</label>
+                        <input type="text" id="answer-75-1" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer75_1()">
+                        <div class="input-hint" id="hint-75-1"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer75_1()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps75_1()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion75_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-75-1" style="display: none;"></div>
+                    <div class="question-steps" id="steps-75-1" style="display: none;"></div>
+                </div>
+
+                <!-- Continue with questions 2-10 for Section 7.5... -->
+                
+            </div>
+        </div>
+
+        <!-- Section 7.6: Power and Sample Size for Two-Sample Tests -->
+        <div class="section fade-in" id="power-analysis">
+            <h2 class="section-title">⚡ 7.6 Power and Sample Size for Two-Sample Tests</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Power Analysis Components</h4>
+                    <p>Four interconnected quantities in power analysis:</p>
+                    <ul>
+                        <li><strong>Effect size (δ):</strong> Magnitude of difference to detect</li>
+                        <li><strong>Sample size (n):</strong> Number of observations per group</li>
+                        <li><strong>Significance level (α):</strong> Type I error rate</li>
+                        <li><strong>Power (1-β):</strong> Probability of detecting true effect</li>
+                    </ul>
+                    <p><strong>Principle:</strong> Specify any three to solve for the fourth</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Effect Size for Two-Sample t-Test</h4>
+                    <p><strong>Cohen's d (standardized effect size):</strong></p>
+                    <div class="math-formula">
+                        $d = \frac{\mu_1 - \mu_2}{\sigma}$
+                    </div>
+                    <p><strong>Cohen's conventions:</strong></p>
+                    <ul>
+                        <li><strong>Small effect:</strong> d = 0.2</li>
+                        <li><strong>Medium effect:</strong> d = 0.5</li>
+                        <li><strong>Large effect:</strong> d = 0.8</li>
+                    </ul>
+                    <p><strong>Sample effect size:</strong> $\hat{d} = \frac{\bar{x}_1 - \bar{x}_2}{s_p}$</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Sample Size Formulas (Equal Group Sizes)</h4>
+                    <p><strong>Two-sample t-test (equal variances):</strong></p>
+                    <div class="math-formula">
+                        $n = \frac{2\sigma^2(z_{\alpha/2} + z_\beta)^2}{(\mu_1 - \mu_2)^2}$
+                    </div>
+                    <p><strong>In terms of effect size:</strong></p>
+                    <div class="math-formula">
+                        $n = \frac{2(z_{\alpha/2} + z_\beta)^2}{d^2}$
+                    </div>
+                    <p><strong>For α = 0.05, power = 0.80:</strong> $n ≈ \frac{16}{d^2}$ per group</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example 7.6: Planning a Clinical Trial</h4>
+                    <p><strong>Goal:</strong> Detect 5-point difference in blood pressure</p>
+                    <p><strong>Known:</strong> σ ≈ 12 mmHg from pilot studies</p>
+                    <p><strong>Requirements:</strong> α = 0.05, power = 0.90</p>
+                    <p><strong>Effect size:</strong> d = 5/12 ≈ 0.42</p>
+                    <p><strong>Calculation:</strong> z₀.₀₂₅ = 1.96, z₀.₁₀ = 1.28</p>
+                    <p><strong>Sample size:</strong> $n = \frac{2(1.96 + 1.28)^2}{(0.42)^2} ≈ 119$ per group</p>
+                </div>
+            </div>
+
+            <!-- Section 7.6 Practice -->
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">⚡ Section 7.6 Practice</h3>
+                
+                <div class="practice-question" id="question-7-6-1">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion76_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-76-1-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-76-1">Your Answer:</label>
+                        <input type="text" id="answer-76-1" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer76_1()">
+                        <div class="input-hint" id="hint-76-1"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer76_1()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps76_1()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion76_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-76-1" style="display: none;"></div>
+                    <div class="question-steps" id="steps-76-1" style="display: none;"></div>
+                </div>
+
+                <!-- Continue with questions 2-10 for Section 7.6... -->
+                
+            </div>
+        </div>
+    </div>
+        
+    </div>
+
+    <script>
+        // Current question tracking for all sections (10 questions each)
+        let currentQuestion71_1 = null, currentQuestion71_2 = null, currentQuestion71_3 = null, currentQuestion71_4 = null, currentQuestion71_5 = null;
+        let currentQuestion71_6 = null, currentQuestion71_7 = null, currentQuestion71_8 = null, currentQuestion71_9 = null, currentQuestion71_10 = null;
+        
+        let currentQuestion72_1 = null, currentQuestion72_2 = null, currentQuestion72_3 = null, currentQuestion72_4 = null, currentQuestion72_5 = null;
+        let currentQuestion72_6 = null, currentQuestion72_7 = null, currentQuestion72_8 = null, currentQuestion72_9 = null, currentQuestion72_10 = null;
+        
+        let currentQuestion73_1 = null, currentQuestion73_2 = null, currentQuestion73_3 = null, currentQuestion73_4 = null, currentQuestion73_5 = null;
+        let currentQuestion73_6 = null, currentQuestion73_7 = null, currentQuestion73_8 = null, currentQuestion73_9 = null, currentQuestion73_10 = null;
+        
+        let currentQuestion74_1 = null, currentQuestion74_2 = null, currentQuestion74_3 = null, currentQuestion74_4 = null, currentQuestion74_5 = null;
+        let currentQuestion74_6 = null, currentQuestion74_7 = null, currentQuestion74_8 = null, currentQuestion74_9 = null, currentQuestion74_10 = null;
+        
+        let currentQuestion75_1 = null, currentQuestion75_2 = null, currentQuestion75_3 = null, currentQuestion75_4 = null, currentQuestion75_5 = null;
+        let currentQuestion75_6 = null, currentQuestion75_7 = null, currentQuestion75_8 = null, currentQuestion75_9 = null, currentQuestion75_10 = null;
+        
+        let currentQuestion76_1 = null, currentQuestion76_2 = null, currentQuestion76_3 = null, currentQuestion76_4 = null, currentQuestion76_5 = null;
+        let currentQuestion76_6 = null, currentQuestion76_7 = null, currentQuestion76_8 = null, currentQuestion76_9 = null, currentQuestion76_10 = null;
+
+        // Section 7.1: Independent Two-Sample t-Tests Questions
+        const independentTTestQuestions = [
+            {
+                question: "When should you use an independent two-sample t-test?",
+                correctAnswers: ["comparing means from two independent groups", "different subjects in each group", "independent samples"],
+                hint: "Think about when groups are completely separate with different subjects",
+                explanation: "Use independent two-sample t-test when comparing means from two separate groups with different subjects (not paired or matched).",
+                steps: `<div class="step-title">Independent Two-Sample t-Test:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Purpose:</strong> Compare μ₁ vs μ₂ from independent groups</li>
+                                <li><strong>Key assumption:</strong> Different subjects in each group</li>
+                                <li><strong>Examples:</strong> Treatment A vs Treatment B, Male vs Female</li>
+                                <li><strong>Not for:</strong> Before/after, matched pairs, same subjects</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "What is the pooled variance t-test used for?",
+                correctAnswers: ["equal variances", "homoscedasticity", "σ₁² = σ₂²"],
+                hint: "Think about when population variances can be assumed equal",
+                explanation: "Pooled variance t-test is used when population variances are equal (σ₁² = σ₂²), allowing us to pool sample variances for a common estimate.",
+                steps: `<div class="step-title">Pooled Variance t-Test:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Assumption:</strong> σ₁² = σ₂² (equal population variances)</li>
+                                <li><strong>Pooled variance:</strong> sp² = [(n₁-1)s₁² + (n₂-1)s₂²]/(n₁+n₂-2)</li>
+                                <li><strong>Standard error:</strong> SE = sp√(1/n₁ + 1/n₂)</li>
+                                <li><strong>df:</strong> n₁ + n₂ - 2</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "What is Welch's t-test (unequal variances t-test)?",
+                correctAnswers: ["unequal variances", "σ₁² ≠ σ₂²", "Satterthwaite approximation"],
+                hint: "Think about when variances cannot be assumed equal",
+                explanation: "Welch's t-test is used when population variances are unequal (σ₁² ≠ σ₂²), using separate variance estimates and adjusted degrees of freedom.",
+                steps: `<div class="step-title">Welch's t-Test:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Use when:</strong> σ₁² ≠ σ₂² (unequal variances)</li>
+                                <li><strong>Standard error:</strong> SE = √(s₁²/n₁ + s₂²/n₂)</li>
+                                <li><strong>Degrees of freedom:</strong> Satterthwaite approximation (complex formula)</li>
+                                <li><strong>Robust:</strong> Less sensitive to variance inequality</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "How do you decide between pooled and Welch's t-test?",
+                correctAnswers: ["compare sample variances", "ratio of variances", "F-test"],
+                hint: "Think about checking the equal variances assumption",
+                explanation: "Compare sample variances: if s₁/s₂ is between 0.5 and 2.0, use pooled; otherwise use Welch's t-test.",
+                steps: `<div class="step-title">Choosing Between Tests:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Rule of thumb:</strong> Check s₁/s₂ ratio</li>
+                                <li><strong>If 0.5 ≤ s₁/s₂ ≤ 2.0:</strong> Use pooled t-test</li>
+                                <li><strong>If outside this range:</strong> Use Welch's t-test</li>
+                                <li><strong>Formal test:</strong> F-test for variance equality</li>
+                            </ol>
+                        </div>`
+            },
+            {
+                question: "What are the assumptions for independent two-sample t-tests?",
+                correctAnswers: ["independence", "normality", "random sampling"],
+                hint: "Think about the conditions needed for valid inference",
+                explanation: "Independent t-tests assume: independence within and between groups, approximate normality (or large samples), and random sampling.",
+                steps: `<div class="step-title">t-Test Assumptions:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Independence:</strong> Observations independent within and between groups</li>
+                                <li><strong>Normality:</strong> Populations approximately normal (CLT for large n)</li>
+                                <li><strong>Random sampling:</strong> Representative samples from populations</li>
+                                <li><strong>Additional for pooled:</strong> Equal population variances</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        // Section 7.2: Paired Sample Tests Questions
+        const pairedTestQuestions = [
+            {
+                question: "When should you use a paired t-test?",
+                correctAnswers: ["paired observations", "same subjects", "before and after", "matched pairs"],
+                hint: "Think about when observations are naturally linked or matched",
+                explanation: "Use paired t-test when observations are naturally paired: same subjects measured twice, matched pairs, or before/after measurements.",
+                steps: `<div class="step-title">When to Use Paired t-Test:</div>
+                        <div class="step-content">
+                            <ol>
+                                <li><strong>Before/after:</strong> Same subjects, different times</li>
+                                <li><strong>Matched pairs:</strong> Twins, siblings, matched controls</li>
+                                <li><strong>Same subject:</strong> Left vs right, different conditions</li>
+                                <li><strong>Key:</strong> Natural pairing reduces variability</li>
+                            </ol>
+                        </div>`
+            }
+        ];
+
+        // General question generation function
+        function generateQuestionGeneral(questionArray, currentQuestionVar, contentId, hintId) {
+            const randomIndex = Math.floor(Math.random() * questionArray.length);
+            window[currentQuestionVar] = questionArray[randomIndex];
+            
+            document.getElementById(contentId).innerHTML = window[currentQuestionVar].question;
+            document.getElementById(hintId).innerHTML = `💡 ${window[currentQuestionVar].hint}`;
+        }
+
+        // General answer checking function
+        function checkAnswerGeneral(answerId, feedbackId, currentQuestionVar) {
+            const userAnswer = document.getElementById(answerId).value.toLowerCase().trim();
+            const currentQuestion = window[currentQuestionVar];
+            
+            if (!currentQuestion) return;
+            
+            const isCorrect = currentQuestion.correctAnswers.some(answer => 
+                userAnswer === answer.toLowerCase()
+            );
+            
+            const feedbackElement = document.getElementById(feedbackId);
+            if (isCorrect) {
+                feedbackElement.innerHTML = `<div class="correct">✅ Correct! ${currentQuestion.explanation}</div>`;
+                feedbackElement.className = 'question-feedback correct-feedback';
+            } else {
+                feedbackElement.innerHTML = `<div class="incorrect">❌ Incorrect. ${currentQuestion.explanation}</div>`;
+                feedbackElement.className = 'question-feedback incorrect-feedback';
+            }
+            feedbackElement.style.display = 'block';
+        }
+
+        // General show steps function
+        function showStepsGeneral(stepsId, currentQuestionVar) {
+            const currentQuestion = window[currentQuestionVar];
+            if (!currentQuestion) return;
+            
+            const stepsElement = document.getElementById(stepsId);
+            stepsElement.innerHTML = currentQuestion.steps;
+            stepsElement.style.display = 'block';
+        }
+
+        // Generate question functions for Section 7.1
+        function generateQuestion71_1() { generateQuestionGeneral(independentTTestQuestions, 'currentQuestion71_1', 'question-71-1-content', 'hint-71-1'); }
+        function generateQuestion71_2() { generateQuestionGeneral(independentTTestQuestions, 'currentQuestion71_2', 'question-71-2-content', 'hint-71-2'); }
+        function generateQuestion71_3() { generateQuestionGeneral(independentTTestQuestions, 'currentQuestion71_3', 'question-71-3-content', 'hint-71-3'); }
+        function generateQuestion71_4() { generateQuestionGeneral(independentTTestQuestions, 'currentQuestion71_4', 'question-71-4-content', 'hint-71-4'); }
+        function generateQuestion71_5() { generateQuestionGeneral(independentTTestQuestions, 'currentQuestion71_5', 'question-71-5-content', 'hint-71-5'); }
+        function generateQuestion71_6() { generateQuestionGeneral(independentTTestQuestions, 'currentQuestion71_6', 'question-71-6-content', 'hint-71-6'); }
+        function generateQuestion71_7() { generateQuestionGeneral(independentTTestQuestions, 'currentQuestion71_7', 'question-71-7-content', 'hint-71-7'); }
+        function generateQuestion71_8() { generateQuestionGeneral(independentTTestQuestions, 'currentQuestion71_8', 'question-71-8-content', 'hint-71-8'); }
+        function generateQuestion71_9() { generateQuestionGeneral(independentTTestQuestions, 'currentQuestion71_9', 'question-71-9-content', 'hint-71-9'); }
+        function generateQuestion71_10() { generateQuestionGeneral(independentTTestQuestions, 'currentQuestion71_10', 'question-71-10-content', 'hint-71-10'); }
+
+        // Generate question functions for Section 7.2
+        function generateQuestion72_1() { generateQuestionGeneral(pairedTestQuestions, 'currentQuestion72_1', 'question-72-1-content', 'hint-72-1'); }
+        function generateQuestion72_2() { generateQuestionGeneral(pairedTestQuestions, 'currentQuestion72_2', 'question-72-2-content', 'hint-72-2'); }
+        function generateQuestion72_3() { generateQuestionGeneral(pairedTestQuestions, 'currentQuestion72_3', 'question-72-3-content', 'hint-72-3'); }
+        function generateQuestion72_4() { generateQuestionGeneral(pairedTestQuestions, 'currentQuestion72_4', 'question-72-4-content', 'hint-72-4'); }
+        function generateQuestion72_5() { generateQuestionGeneral(pairedTestQuestions, 'currentQuestion72_5', 'question-72-5-content', 'hint-72-5'); }
+        function generateQuestion72_6() { generateQuestionGeneral(pairedTestQuestions, 'currentQuestion72_6', 'question-72-6-content', 'hint-72-6'); }
+        function generateQuestion72_7() { generateQuestionGeneral(pairedTestQuestions, 'currentQuestion72_7', 'question-72-7-content', 'hint-72-7'); }
+        function generateQuestion72_8() { generateQuestionGeneral(pairedTestQuestions, 'currentQuestion72_8', 'question-72-8-content', 'hint-72-8'); }
+        function generateQuestion72_9() { generateQuestionGeneral(pairedTestQuestions, 'currentQuestion72_9', 'question-72-9-content', 'hint-72-9'); }
+        function generateQuestion72_10() { generateQuestionGeneral(pairedTestQuestions, 'currentQuestion72_10', 'question-72-10-content', 'hint-72-10'); }
+
+        // Check answer functions for Section 7.1
+        function checkAnswer71_1() { checkAnswerGeneral('answer-71-1', 'feedback-71-1', 'currentQuestion71_1'); }
+        function checkAnswer71_2() { checkAnswerGeneral('answer-71-2', 'feedback-71-2', 'currentQuestion71_2'); }
+        function checkAnswer71_3() { checkAnswerGeneral('answer-71-3', 'feedback-71-3', 'currentQuestion71_3'); }
+        function checkAnswer71_4() { checkAnswerGeneral('answer-71-4', 'feedback-71-4', 'currentQuestion71_4'); }
+        function checkAnswer71_5() { checkAnswerGeneral('answer-71-5', 'feedback-71-5', 'currentQuestion71_5'); }
+        function checkAnswer71_6() { checkAnswerGeneral('answer-71-6', 'feedback-71-6', 'currentQuestion71_6'); }
+        function checkAnswer71_7() { checkAnswerGeneral('answer-71-7', 'feedback-71-7', 'currentQuestion71_7'); }
+        function checkAnswer71_8() { checkAnswerGeneral('answer-71-8', 'feedback-71-8', 'currentQuestion71_8'); }
+        function checkAnswer71_9() { checkAnswerGeneral('answer-71-9', 'feedback-71-9', 'currentQuestion71_9'); }
+        function checkAnswer71_10() { checkAnswerGeneral('answer-71-10', 'feedback-71-10', 'currentQuestion71_10'); }
+
+        // Check answer functions for Section 7.2
+        function checkAnswer72_1() { checkAnswerGeneral('answer-72-1', 'feedback-72-1', 'currentQuestion72_1'); }
+        function checkAnswer72_2() { checkAnswerGeneral('answer-72-2', 'feedback-72-2', 'currentQuestion72_2'); }
+        function checkAnswer72_3() { checkAnswerGeneral('answer-72-3', 'feedback-72-3', 'currentQuestion72_3'); }
+        function checkAnswer72_4() { checkAnswerGeneral('answer-72-4', 'feedback-72-4', 'currentQuestion72_4'); }
+        function checkAnswer72_5() { checkAnswerGeneral('answer-72-5', 'feedback-72-5', 'currentQuestion72_5'); }
+        function checkAnswer72_6() { checkAnswerGeneral('answer-72-6', 'feedback-72-6', 'currentQuestion72_6'); }
+        function checkAnswer72_7() { checkAnswerGeneral('answer-72-7', 'feedback-72-7', 'currentQuestion72_7'); }
+        function checkAnswer72_8() { checkAnswerGeneral('answer-72-8', 'feedback-72-8', 'currentQuestion72_8'); }
+        function checkAnswer72_9() { checkAnswerGeneral('answer-72-9', 'feedback-72-9', 'currentQuestion72_9'); }
+        function checkAnswer72_10() { checkAnswerGeneral('answer-72-10', 'feedback-72-10', 'currentQuestion72_10'); }
+
+        // Show steps functions for Section 7.1
+        function showSteps71_1() { showStepsGeneral('steps-71-1', 'currentQuestion71_1'); }
+        function showSteps71_2() { showStepsGeneral('steps-71-2', 'currentQuestion71_2'); }
+        function showSteps71_3() { showStepsGeneral('steps-71-3', 'currentQuestion71_3'); }
+        function showSteps71_4() { showStepsGeneral('steps-71-4', 'currentQuestion71_4'); }
+        function showSteps71_5() { showStepsGeneral('steps-71-5', 'currentQuestion71_5'); }
+        function showSteps71_6() { showStepsGeneral('steps-71-6', 'currentQuestion71_6'); }
+        function showSteps71_7() { showStepsGeneral('steps-71-7', 'currentQuestion71_7'); }
+        function showSteps71_8() { showStepsGeneral('steps-71-8', 'currentQuestion71_8'); }
+        function showSteps71_9() { showStepsGeneral('steps-71-9', 'currentQuestion71_9'); }
+        function showSteps71_10() { showStepsGeneral('steps-71-10', 'currentQuestion71_10'); }
+
+        // Show steps functions for Section 7.2
+        function showSteps72_1() { showStepsGeneral('steps-72-1', 'currentQuestion72_1'); }
+        function showSteps72_2() { showStepsGeneral('steps-72-2', 'currentQuestion72_2'); }
+        function showSteps72_3() { showStepsGeneral('steps-72-3', 'currentQuestion72_3'); }
+        function showSteps72_4() { showStepsGeneral('steps-72-4', 'currentQuestion72_4'); }
+        function showSteps72_5() { showStepsGeneral('steps-72-5', 'currentQuestion72_5'); }
+        function showSteps72_6() { showStepsGeneral('steps-72-6', 'currentQuestion72_6'); }
+        function showSteps72_7() { showStepsGeneral('steps-72-7', 'currentQuestion72_7'); }
+        function showSteps72_8() { showStepsGeneral('steps-72-8', 'currentQuestion72_8'); }
+        function showSteps72_9() { showStepsGeneral('steps-72-9', 'currentQuestion72_9'); }
+        function showSteps72_10() { showStepsGeneral('steps-72-10', 'currentQuestion72_10'); }
+
+        // Initialize page with sample questions
+        window.onload = function() {
+            console.log('Chapter 7: Two-Sample Statistical Inferences - Starting Implementation! 📊');
+            
+            // Generate initial questions for available sections
+            generateQuestion71_1(); generateQuestion71_2(); generateQuestion71_3(); generateQuestion71_4(); generateQuestion71_5();
+            generateQuestion71_6(); generateQuestion71_7(); generateQuestion71_8(); generateQuestion71_9(); generateQuestion71_10();
+            
+            generateQuestion72_1(); generateQuestion72_2(); generateQuestion72_3(); generateQuestion72_4(); generateQuestion72_5();
+            generateQuestion72_6(); generateQuestion72_7(); generateQuestion72_8(); generateQuestion72_9(); generateQuestion72_10();
+        }
+    </script>
+</body>
+</html>
