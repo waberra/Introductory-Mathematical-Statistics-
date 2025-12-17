@@ -1,0 +1,2479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 8: Analysis of Variance (ANOVA) | Larsen & Marx Mathematical Statistics</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    
+    <style>
+        :root {
+            --primary-color: #6A1B9A;
+            --primary-light: #9C4DCC;
+            --primary-dark: #4A0E4E;
+            --secondary-color: #E1BEE7;
+            --accent-color: #AB47BC;
+            --background-color: #FAFAFA;
+            --text-color: #212121;
+            --card-background: #FFFFFF;
+            --border-color: #E0E0E0;
+            --success-color: #4CAF50;
+            --error-color: #F44336;
+            --warning-color: #FF9800;
+            --shadow: 0 2px 10px rgba(106, 27, 154, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 20px;
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .chapter-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .chapter-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .chapter-description {
+            font-size: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        .navigation {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            justify-content: center;
+        }
+
+        .nav-button {
+            padding: 0.75rem 1.5rem;
+            background: var(--card-background);
+            border: 2px solid var(--primary-color);
+            border-radius: 50px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-button:hover, .nav-button.active {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(106, 27, 154, 0.3);
+        }
+
+        .section {
+            background: var(--card-background);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-content {
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .math-definition {
+            background: linear-gradient(135deg, var(--secondary-color), rgba(106, 27, 154, 0.05));
+            border: 1px solid var(--primary-light);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .math-definition h4 {
+            color: var(--primary-dark);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .math-formula {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .section-practice {
+            background: linear-gradient(135deg, rgba(106, 27, 154, 0.02), rgba(171, 71, 188, 0.02));
+            border: 2px solid var(--secondary-color);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .practice-question {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .question-number {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .regenerate-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .regenerate-btn:hover {
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .question-input-area {
+            margin-bottom: 1rem;
+        }
+
+        .input-label {
+            display: block;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.1);
+        }
+
+        .input-hint {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .question-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .question-buttons button {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .check-btn {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .check-btn:hover {
+            background: #45A049;
+            transform: translateY(-1px);
+        }
+
+        .steps-btn {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .steps-btn:hover {
+            background: #F57C00;
+            transform: translateY(-1px);
+        }
+
+        .new-question-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .new-question-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .question-feedback {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .correct-feedback {
+            background: linear-gradient(135deg, #E8F5E8, #C8E6C9);
+            border: 1px solid var(--success-color);
+            color: #2E7D32;
+        }
+
+        .incorrect-feedback {
+            background: linear-gradient(135deg, #FFEBEE, #FFCDD2);
+            border: 1px solid var(--error-color);
+            color: #C62828;
+        }
+
+        .question-steps {
+            background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+            border: 1px solid var(--warning-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .step-title {
+            font-weight: 700;
+            color: var(--warning-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .step-content {
+            line-height: 1.6;
+        }
+
+        .step-content ol {
+            padding-left: 1.5rem;
+        }
+
+        .step-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .chapter-title {
+                font-size: 2rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-button {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+            
+            .question-buttons {
+                flex-direction: column;
+            }
+            
+            .question-buttons button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="chapter-title">📊 Chapter 8: Analysis of Variance (ANOVA)</h1>
+            <p class="chapter-subtitle">Comparing Multiple Groups Through Variance Analysis</p>
+            <p class="chapter-description">
+                Master the analysis of variance to compare means across multiple groups. Learn one-way and two-way ANOVA, 
+                assumption checking, multiple comparisons, repeated measures, and effect size calculations for comprehensive statistical analysis.
+            </p>
+        </header>
+
+        <nav class="navigation">
+            <a href="#one-way-anova" class="nav-button active">8.1 One-Way ANOVA</a>
+            <a href="#assumptions" class="nav-button">8.2 Assumptions</a>
+            <a href="#multiple-comparisons" class="nav-button">8.3 Multiple Comparisons</a>
+            <a href="#two-way-anova" class="nav-button">8.4 Two-Way ANOVA</a>
+            <a href="#repeated-measures" class="nav-button">8.5 Repeated Measures</a>
+            <a href="#effect-sizes" class="nav-button">8.6 Effect Sizes</a>
+        </nav>
+
+        <!-- Section 8.1: One-Way ANOVA (10 Questions) -->
+        <div class="section" id="one-way-anova">
+            <h2 class="section-title">📊 8.1 One-Way ANOVA</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>One-Way Analysis of Variance</h4>
+                    <p>Used to compare means of <strong>three or more independent groups</strong> on a single factor.</p>
+                    <div class="math-formula">
+                        $H_0: \mu_1 = \mu_2 = \mu_3 = \ldots = \mu_k$ vs $H_1: \text{At least one } \mu_i \neq \mu_j$
+                    </div>
+                    <p><strong>Key principle:</strong> Compare between-group variance to within-group variance</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 8.1 Practice (10 Questions)</h3>
+                
+                <!-- Question 8-1-1 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion81_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-81-1-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-81-1">Your Answer:</label>
+                        <input type="text" id="answer-81-1" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer81_1()">
+                        <div class="input-hint" id="hint-81-1"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer81_1()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps81_1()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion81_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-81-1" style="display: none;"></div>
+                    <div class="question-steps" id="steps-81-1" style="display: none;"></div>
+                </div>
+
+                <!-- Question 8-1-2 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 2</span>
+                        <button class="regenerate-btn" onclick="generateQuestion81_2()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-81-2-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-81-2">Your Answer:</label>
+                        <input type="text" id="answer-81-2" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer81_2()">
+                        <div class="input-hint" id="hint-81-2"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer81_2()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps81_2()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion81_2()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-81-2" style="display: none;"></div>
+                    <div class="question-steps" id="steps-81-2" style="display: none;"></div>
+                </div>
+
+                <!-- Question 8-1-3 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 3</span>
+                        <button class="regenerate-btn" onclick="generateQuestion81_3()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-81-3-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-81-3">Your Answer:</label>
+                        <input type="text" id="answer-81-3" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer81_3()">
+                        <div class="input-hint" id="hint-81-3"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer81_3()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps81_3()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion81_3()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-81-3" style="display: none;"></div>
+                    <div class="question-steps" id="steps-81-3" style="display: none;"></div>
+                </div>
+
+                <!-- Question 8-1-4 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 4</span>
+                        <button class="regenerate-btn" onclick="generateQuestion81_4()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-81-4-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-81-4">Your Answer:</label>
+                        <input type="text" id="answer-81-4" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer81_4()">
+                        <div class="input-hint" id="hint-81-4"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer81_4()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps81_4()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion81_4()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-81-4" style="display: none;"></div>
+                    <div class="question-steps" id="steps-81-4" style="display: none;"></div>
+                </div>
+
+                <!-- Question 8-1-5 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 5</span>
+                        <button class="regenerate-btn" onclick="generateQuestion81_5()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-81-5-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-81-5">Your Answer:</label>
+                        <input type="text" id="answer-81-5" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer81_5()">
+                        <div class="input-hint" id="hint-81-5"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer81_5()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps81_5()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion81_5()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-81-5" style="display: none;"></div>
+                    <div class="question-steps" id="steps-81-5" style="display: none;"></div>
+                </div>
+
+                <!-- Question 8-1-6 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 6</span>
+                        <button class="regenerate-btn" onclick="generateQuestion81_6()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-81-6-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-81-6">Your Answer:</label>
+                        <input type="text" id="answer-81-6" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer81_6()">
+                        <div class="input-hint" id="hint-81-6"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer81_6()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps81_6()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion81_6()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-81-6" style="display: none;"></div>
+                    <div class="question-steps" id="steps-81-6" style="display: none;"></div>
+                </div>
+
+                <!-- Question 8-1-7 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 7</span>
+                        <button class="regenerate-btn" onclick="generateQuestion81_7()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-81-7-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-81-7">Your Answer:</label>
+                        <input type="text" id="answer-81-7" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer81_7()">
+                        <div class="input-hint" id="hint-81-7"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer81_7()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps81_7()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion81_7()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-81-7" style="display: none;"></div>
+                    <div class="question-steps" id="steps-81-7" style="display: none;"></div>
+                </div>
+
+                <!-- Question 8-1-8 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 8</span>
+                        <button class="regenerate-btn" onclick="generateQuestion81_8()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-81-8-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-81-8">Your Answer:</label>
+                        <input type="text" id="answer-81-8" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer81_8()">
+                        <div class="input-hint" id="hint-81-8"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer81_8()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps81_8()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion81_8()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-81-8" style="display: none;"></div>
+                    <div class="question-steps" id="steps-81-8" style="display: none;"></div>
+                </div>
+
+                <!-- Question 8-1-9 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 9</span>
+                        <button class="regenerate-btn" onclick="generateQuestion81_9()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-81-9-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-81-9">Your Answer:</label>
+                        <input type="text" id="answer-81-9" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer81_9()">
+                        <div class="input-hint" id="hint-81-9"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer81_9()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps81_9()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion81_9()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-81-9" style="display: none;"></div>
+                    <div class="question-steps" id="steps-81-9" style="display: none;"></div>
+                </div>
+
+                <!-- Question 8-1-10 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 10</span>
+                        <button class="regenerate-btn" onclick="generateQuestion81_10()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-81-10-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-81-10">Your Answer:</label>
+                        <input type="text" id="answer-81-10" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer81_10()">
+                        <div class="input-hint" id="hint-81-10"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer81_10()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps81_10()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion81_10()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-81-10" style="display: none;"></div>
+                    <div class="question-steps" id="steps-81-10" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8.2: ANOVA Assumptions (10 Questions) -->
+        <div class="section" id="assumptions">
+            <h2 class="section-title">⚖️ 8.2 ANOVA Assumptions and Diagnostics</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Critical ANOVA Assumptions</h4>
+                    <ul>
+                        <li><strong>Independence:</strong> Observations within and between groups are independent</li>
+                        <li><strong>Normality:</strong> Residuals are approximately normally distributed</li>
+                        <li><strong>Homoscedasticity:</strong> Equal variances across all groups</li>
+                        <li><strong>Random sampling:</strong> Data collected through proper sampling methods</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">⚖️ Section 8.2 Practice (10 Questions)</h3>
+                
+                <!-- Questions 8-2-1 through 8-2-10 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion82_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-82-1-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-82-1">Your Answer:</label>
+                        <input type="text" id="answer-82-1" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer82_1()">
+                        <div class="input-hint" id="hint-82-1"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer82_1()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps82_1()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion82_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-82-1" style="display: none;"></div>
+                    <div class="question-steps" id="steps-82-1" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 2</span>
+                        <button class="regenerate-btn" onclick="generateQuestion82_2()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-82-2-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-82-2">Your Answer:</label>
+                        <input type="text" id="answer-82-2" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer82_2()">
+                        <div class="input-hint" id="hint-82-2"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer82_2()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps82_2()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion82_2()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-82-2" style="display: none;"></div>
+                    <div class="question-steps" id="steps-82-2" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 3</span>
+                        <button class="regenerate-btn" onclick="generateQuestion82_3()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-82-3-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-82-3">Your Answer:</label>
+                        <input type="text" id="answer-82-3" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer82_3()">
+                        <div class="input-hint" id="hint-82-3"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer82_3()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps82_3()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion82_3()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-82-3" style="display: none;"></div>
+                    <div class="question-steps" id="steps-82-3" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 4</span>
+                        <button class="regenerate-btn" onclick="generateQuestion82_4()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-82-4-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-82-4">Your Answer:</label>
+                        <input type="text" id="answer-82-4" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer82_4()">
+                        <div class="input-hint" id="hint-82-4"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer82_4()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps82_4()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion82_4()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-82-4" style="display: none;"></div>
+                    <div class="question-steps" id="steps-82-4" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 5</span>
+                        <button class="regenerate-btn" onclick="generateQuestion82_5()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-82-5-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-82-5">Your Answer:</label>
+                        <input type="text" id="answer-82-5" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer82_5()">
+                        <div class="input-hint" id="hint-82-5"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer82_5()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps82_5()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion82_5()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-82-5" style="display: none;"></div>
+                    <div class="question-steps" id="steps-82-5" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 6</span>
+                        <button class="regenerate-btn" onclick="generateQuestion82_6()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-82-6-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-82-6">Your Answer:</label>
+                        <input type="text" id="answer-82-6" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer82_6()">
+                        <div class="input-hint" id="hint-82-6"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer82_6()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps82_6()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion82_6()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-82-6" style="display: none;"></div>
+                    <div class="question-steps" id="steps-82-6" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 7</span>
+                        <button class="regenerate-btn" onclick="generateQuestion82_7()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-82-7-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-82-7">Your Answer:</label>
+                        <input type="text" id="answer-82-7" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer82_7()">
+                        <div class="input-hint" id="hint-82-7"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer82_7()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps82_7()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion82_7()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-82-7" style="display: none;"></div>
+                    <div class="question-steps" id="steps-82-7" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 8</span>
+                        <button class="regenerate-btn" onclick="generateQuestion82_8()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-82-8-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-82-8">Your Answer:</label>
+                        <input type="text" id="answer-82-8" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer82_8()">
+                        <div class="input-hint" id="hint-82-8"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer82_8()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps82_8()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion82_8()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-82-8" style="display: none;"></div>
+                    <div class="question-steps" id="steps-82-8" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 9</span>
+                        <button class="regenerate-btn" onclick="generateQuestion82_9()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-82-9-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-82-9">Your Answer:</label>
+                        <input type="text" id="answer-82-9" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer82_9()">
+                        <div class="input-hint" id="hint-82-9"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer82_9()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps82_9()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion82_9()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-82-9" style="display: none;"></div>
+                    <div class="question-steps" id="steps-82-9" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 10</span>
+                        <button class="regenerate-btn" onclick="generateQuestion82_10()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-82-10-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-82-10">Your Answer:</label>
+                        <input type="text" id="answer-82-10" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer82_10()">
+                        <div class="input-hint" id="hint-82-10"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer82_10()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps82_10()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion82_10()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-82-10" style="display: none;"></div>
+                    <div class="question-steps" id="steps-82-10" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- I'll continue with all remaining sections... For now, showing structure -->
+        <!-- Section 8.3: Multiple Comparisons (10 Questions) -->
+        <div class="section" id="multiple-comparisons">
+            <h2 class="section-title">🔍 8.3 Multiple Comparisons</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>The Multiple Comparisons Problem</h4>
+                    <p>When comparing multiple pairs of means, the <strong>family-wise error rate</strong> increases.</p>
+                    <div class="math-formula">
+                        $\alpha_{family} = 1 - (1 - \alpha)^c$
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🔍 Section 8.3 Practice (10 Questions)</h3>
+                
+                <!-- Question 8-3-1 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion83_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-83-1-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-83-1">Your Answer:</label>
+                        <input type="text" id="answer-83-1" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer83_1()">
+                        <div class="input-hint" id="hint-83-1"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer83_1()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps83_1()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion83_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-83-1" style="display: none;"></div>
+                    <div class="question-steps" id="steps-83-1" style="display: none;"></div>
+                </div>
+
+                <!-- Question 8-3-2 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 2</span>
+                        <button class="regenerate-btn" onclick="generateQuestion83_2()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-83-2-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-83-2">Your Answer:</label>
+                        <input type="text" id="answer-83-2" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer83_2()">
+                        <div class="input-hint" id="hint-83-2"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer83_2()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps83_2()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion83_2()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-83-2" style="display: none;"></div>
+                    <div class="question-steps" id="steps-83-2" style="display: none;"></div>
+                </div>
+
+                <!-- Question 8-3-3 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 3</span>
+                        <button class="regenerate-btn" onclick="generateQuestion83_3()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-83-3-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-83-3">Your Answer:</label>
+                        <input type="text" id="answer-83-3" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer83_3()">
+                        <div class="input-hint" id="hint-83-3"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer83_3()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps83_3()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion83_3()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-83-3" style="display: none;"></div>
+                    <div class="question-steps" id="steps-83-3" style="display: none;"></div>
+                </div>
+
+                <!-- Question 8-3-4 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 4</span>
+                        <button class="regenerate-btn" onclick="generateQuestion83_4()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-83-4-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-83-4">Your Answer:</label>
+                        <input type="text" id="answer-83-4" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer83_4()">
+                        <div class="input-hint" id="hint-83-4"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer83_4()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps83_4()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion83_4()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-83-4" style="display: none;"></div>
+                    <div class="question-steps" id="steps-83-4" style="display: none;"></div>
+                </div>
+
+                <!-- Question 8-3-5 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 5</span>
+                        <button class="regenerate-btn" onclick="generateQuestion83_5()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-83-5-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-83-5">Your Answer:</label>
+                        <input type="text" id="answer-83-5" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer83_5()">
+                        <div class="input-hint" id="hint-83-5"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer83_5()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps83_5()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion83_5()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-83-5" style="display: none;"></div>
+                    <div class="question-steps" id="steps-83-5" style="display: none;"></div>
+                </div>
+
+                <!-- Question 8-3-6 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 6</span>
+                        <button class="regenerate-btn" onclick="generateQuestion83_6()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-83-6-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-83-6">Your Answer:</label>
+                        <input type="text" id="answer-83-6" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer83_6()">
+                        <div class="input-hint" id="hint-83-6"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer83_6()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps83_6()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion83_6()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-83-6" style="display: none;"></div>
+                    <div class="question-steps" id="steps-83-6" style="display: none;"></div>
+                </div>
+
+                <!-- Question 8-3-7 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 7</span>
+                        <button class="regenerate-btn" onclick="generateQuestion83_7()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-83-7-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-83-7">Your Answer:</label>
+                        <input type="text" id="answer-83-7" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer83_7()">
+                        <div class="input-hint" id="hint-83-7"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer83_7()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps83_7()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion83_7()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-83-7" style="display: none;"></div>
+                    <div class="question-steps" id="steps-83-7" style="display: none;"></div>
+                </div>
+
+                <!-- Question 8-3-8 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 8</span>
+                        <button class="regenerate-btn" onclick="generateQuestion83_8()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-83-8-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-83-8">Your Answer:</label>
+                        <input type="text" id="answer-83-8" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer83_8()">
+                        <div class="input-hint" id="hint-83-8"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer83_8()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps83_8()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion83_8()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-83-8" style="display: none;"></div>
+                    <div class="question-steps" id="steps-83-8" style="display: none;"></div>
+                </div>
+
+                <!-- Question 8-3-9 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 9</span>
+                        <button class="regenerate-btn" onclick="generateQuestion83_9()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-83-9-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-83-9">Your Answer:</label>
+                        <input type="text" id="answer-83-9" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer83_9()">
+                        <div class="input-hint" id="hint-83-9"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer83_9()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps83_9()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion83_9()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-83-9" style="display: none;"></div>
+                    <div class="question-steps" id="steps-83-9" style="display: none;"></div>
+                </div>
+
+                <!-- Question 8-3-10 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 10</span>
+                        <button class="regenerate-btn" onclick="generateQuestion83_10()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-83-10-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-83-10">Your Answer:</label>
+                        <input type="text" id="answer-83-10" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer83_10()">
+                        <div class="input-hint" id="hint-83-10"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer83_10()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps83_10()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion83_10()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-83-10" style="display: none;"></div>
+                    <div class="question-steps" id="steps-83-10" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8.4: Two-Way ANOVA (10 Questions) -->
+        <div class="section" id="two-way-anova">
+            <h2 class="section-title">📊 8.4 Two-Way ANOVA</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Two-Way (Factorial) ANOVA</h4>
+                    <p>Analyze the effects of <strong>two factors simultaneously</strong> and their interaction.</p>
+                    <div class="math-formula">
+                        $X_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \epsilon_{ijk}$
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 8.4 Practice (10 Questions)</h3>
+                
+                <!-- ALL 10 Questions for Section 8.4 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion84_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-84-1-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-84-1">Your Answer:</label>
+                        <input type="text" id="answer-84-1" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer84_1()">
+                        <div class="input-hint" id="hint-84-1"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer84_1()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps84_1()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion84_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-84-1" style="display: none;"></div>
+                    <div class="question-steps" id="steps-84-1" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 2</span>
+                        <button class="regenerate-btn" onclick="generateQuestion84_2()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-84-2-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-84-2">Your Answer:</label>
+                        <input type="text" id="answer-84-2" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer84_2()">
+                        <div class="input-hint" id="hint-84-2"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer84_2()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps84_2()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion84_2()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-84-2" style="display: none;"></div>
+                    <div class="question-steps" id="steps-84-2" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 3</span>
+                        <button class="regenerate-btn" onclick="generateQuestion84_3()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-84-3-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-84-3">Your Answer:</label>
+                        <input type="text" id="answer-84-3" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer84_3()">
+                        <div class="input-hint" id="hint-84-3"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer84_3()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps84_3()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion84_3()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-84-3" style="display: none;"></div>
+                    <div class="question-steps" id="steps-84-3" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 4</span>
+                        <button class="regenerate-btn" onclick="generateQuestion84_4()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-84-4-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-84-4">Your Answer:</label>
+                        <input type="text" id="answer-84-4" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer84_4()">
+                        <div class="input-hint" id="hint-84-4"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer84_4()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps84_4()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion84_4()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-84-4" style="display: none;"></div>
+                    <div class="question-steps" id="steps-84-4" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 5</span>
+                        <button class="regenerate-btn" onclick="generateQuestion84_5()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-84-5-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-84-5">Your Answer:</label>
+                        <input type="text" id="answer-84-5" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer84_5()">
+                        <div class="input-hint" id="hint-84-5"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer84_5()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps84_5()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion84_5()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-84-5" style="display: none;"></div>
+                    <div class="question-steps" id="steps-84-5" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 6</span>
+                        <button class="regenerate-btn" onclick="generateQuestion84_6()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-84-6-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-84-6">Your Answer:</label>
+                        <input type="text" id="answer-84-6" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer84_6()">
+                        <div class="input-hint" id="hint-84-6"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer84_6()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps84_6()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion84_6()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-84-6" style="display: none;"></div>
+                    <div class="question-steps" id="steps-84-6" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 7</span>
+                        <button class="regenerate-btn" onclick="generateQuestion84_7()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-84-7-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-84-7">Your Answer:</label>
+                        <input type="text" id="answer-84-7" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer84_7()">
+                        <div class="input-hint" id="hint-84-7"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer84_7()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps84_7()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion84_7()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-84-7" style="display: none;"></div>
+                    <div class="question-steps" id="steps-84-7" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 8</span>
+                        <button class="regenerate-btn" onclick="generateQuestion84_8()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-84-8-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-84-8">Your Answer:</label>
+                        <input type="text" id="answer-84-8" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer84_8()">
+                        <div class="input-hint" id="hint-84-8"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer84_8()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps84_8()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion84_8()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-84-8" style="display: none;"></div>
+                    <div class="question-steps" id="steps-84-8" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 9</span>
+                        <button class="regenerate-btn" onclick="generateQuestion84_9()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-84-9-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-84-9">Your Answer:</label>
+                        <input type="text" id="answer-84-9" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer84_9()">
+                        <div class="input-hint" id="hint-84-9"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer84_9()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps84_9()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion84_9()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-84-9" style="display: none;"></div>
+                    <div class="question-steps" id="steps-84-9" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 10</span>
+                        <button class="regenerate-btn" onclick="generateQuestion84_10()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-84-10-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-84-10">Your Answer:</label>
+                        <input type="text" id="answer-84-10" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer84_10()">
+                        <div class="input-hint" id="hint-84-10"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer84_10()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps84_10()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion84_10()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-84-10" style="display: none;"></div>
+                    <div class="question-steps" id="steps-84-10" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8.5: Repeated Measures ANOVA (10 Questions) -->
+        <div class="section" id="repeated-measures">
+            <h2 class="section-title">🔄 8.5 Repeated Measures ANOVA</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Repeated Measures (Within-Subjects) ANOVA</h4>
+                    <p>Used when the <strong>same subjects</strong> are measured under different conditions.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🔄 Section 8.5 Practice (10 Questions)</h3>
+                
+                <!-- ALL 10 Questions for Section 8.5 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion85_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-85-1-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-85-1">Your Answer:</label>
+                        <input type="text" id="answer-85-1" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer85_1()">
+                        <div class="input-hint" id="hint-85-1"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer85_1()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps85_1()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion85_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-85-1" style="display: none;"></div>
+                    <div class="question-steps" id="steps-85-1" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 2</span>
+                        <button class="regenerate-btn" onclick="generateQuestion85_2()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-85-2-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-85-2">Your Answer:</label>
+                        <input type="text" id="answer-85-2" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer85_2()">
+                        <div class="input-hint" id="hint-85-2"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer85_2()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps85_2()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion85_2()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-85-2" style="display: none;"></div>
+                    <div class="question-steps" id="steps-85-2" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 3</span>
+                        <button class="regenerate-btn" onclick="generateQuestion85_3()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-85-3-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-85-3">Your Answer:</label>
+                        <input type="text" id="answer-85-3" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer85_3()">
+                        <div class="input-hint" id="hint-85-3"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer85_3()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps85_3()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion85_3()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-85-3" style="display: none;"></div>
+                    <div class="question-steps" id="steps-85-3" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 4</span>
+                        <button class="regenerate-btn" onclick="generateQuestion85_4()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-85-4-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-85-4">Your Answer:</label>
+                        <input type="text" id="answer-85-4" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer85_4()">
+                        <div class="input-hint" id="hint-85-4"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer85_4()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps85_4()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion85_4()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-85-4" style="display: none;"></div>
+                    <div class="question-steps" id="steps-85-4" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 5</span>
+                        <button class="regenerate-btn" onclick="generateQuestion85_5()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-85-5-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-85-5">Your Answer:</label>
+                        <input type="text" id="answer-85-5" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer85_5()">
+                        <div class="input-hint" id="hint-85-5"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer85_5()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps85_5()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion85_5()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-85-5" style="display: none;"></div>
+                    <div class="question-steps" id="steps-85-5" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 6</span>
+                        <button class="regenerate-btn" onclick="generateQuestion85_6()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-85-6-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-85-6">Your Answer:</label>
+                        <input type="text" id="answer-85-6" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer85_6()">
+                        <div class="input-hint" id="hint-85-6"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer85_6()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps85_6()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion85_6()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-85-6" style="display: none;"></div>
+                    <div class="question-steps" id="steps-85-6" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 7</span>
+                        <button class="regenerate-btn" onclick="generateQuestion85_7()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-85-7-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-85-7">Your Answer:</label>
+                        <input type="text" id="answer-85-7" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer85_7()">
+                        <div class="input-hint" id="hint-85-7"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer85_7()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps85_7()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion85_7()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-85-7" style="display: none;"></div>
+                    <div class="question-steps" id="steps-85-7" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 8</span>
+                        <button class="regenerate-btn" onclick="generateQuestion85_8()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-85-8-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-85-8">Your Answer:</label>
+                        <input type="text" id="answer-85-8" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer85_8()">
+                        <div class="input-hint" id="hint-85-8"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer85_8()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps85_8()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion85_8()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-85-8" style="display: none;"></div>
+                    <div class="question-steps" id="steps-85-8" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 9</span>
+                        <button class="regenerate-btn" onclick="generateQuestion85_9()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-85-9-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-85-9">Your Answer:</label>
+                        <input type="text" id="answer-85-9" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer85_9()">
+                        <div class="input-hint" id="hint-85-9"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer85_9()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps85_9()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion85_9()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-85-9" style="display: none;"></div>
+                    <div class="question-steps" id="steps-85-9" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 10</span>
+                        <button class="regenerate-btn" onclick="generateQuestion85_10()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-85-10-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-85-10">Your Answer:</label>
+                        <input type="text" id="answer-85-10" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer85_10()">
+                        <div class="input-hint" id="hint-85-10"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer85_10()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps85_10()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion85_10()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-85-10" style="display: none;"></div>
+                    <div class="question-steps" id="steps-85-10" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8.6: ANOVA Effect Sizes and Power (10 Questions) -->
+        <div class="section" id="effect-sizes">
+            <h2 class="section-title">⚡ 8.6 ANOVA Effect Sizes and Power</h2>
+            <div class="section-content">
+                <div class="math-definition">
+                    <h4>Effect Size Measures for ANOVA</h4>
+                    <p><strong>Eta-squared (η²):</strong> Proportion of total variance explained by the factor</p>
+                    <div class="math-formula">
+                        $\eta^2 = \frac{SS_{between}}{SS_{total}}$
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">⚡ Section 8.6 Practice (10 Questions)</h3>
+                
+                <!-- ALL 10 Questions for Section 8.6 -->
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <button class="regenerate-btn" onclick="generateQuestion86_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-86-1-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-86-1">Your Answer:</label>
+                        <input type="text" id="answer-86-1" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer86_1()">
+                        <div class="input-hint" id="hint-86-1"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer86_1()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps86_1()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion86_1()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-86-1" style="display: none;"></div>
+                    <div class="question-steps" id="steps-86-1" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 2</span>
+                        <button class="regenerate-btn" onclick="generateQuestion86_2()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-86-2-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-86-2">Your Answer:</label>
+                        <input type="text" id="answer-86-2" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer86_2()">
+                        <div class="input-hint" id="hint-86-2"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer86_2()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps86_2()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion86_2()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-86-2" style="display: none;"></div>
+                    <div class="question-steps" id="steps-86-2" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 3</span>
+                        <button class="regenerate-btn" onclick="generateQuestion86_3()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-86-3-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-86-3">Your Answer:</label>
+                        <input type="text" id="answer-86-3" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer86_3()">
+                        <div class="input-hint" id="hint-86-3"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer86_3()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps86_3()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion86_3()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-86-3" style="display: none;"></div>
+                    <div class="question-steps" id="steps-86-3" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 4</span>
+                        <button class="regenerate-btn" onclick="generateQuestion86_4()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-86-4-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-86-4">Your Answer:</label>
+                        <input type="text" id="answer-86-4" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer86_4()">
+                        <div class="input-hint" id="hint-86-4"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer86_4()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps86_4()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion86_4()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-86-4" style="display: none;"></div>
+                    <div class="question-steps" id="steps-86-4" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 5</span>
+                        <button class="regenerate-btn" onclick="generateQuestion86_5()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-86-5-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-86-5">Your Answer:</label>
+                        <input type="text" id="answer-86-5" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer86_5()">
+                        <div class="input-hint" id="hint-86-5"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer86_5()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps86_5()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion86_5()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-86-5" style="display: none;"></div>
+                    <div class="question-steps" id="steps-86-5" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 6</span>
+                        <button class="regenerate-btn" onclick="generateQuestion86_6()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-86-6-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-86-6">Your Answer:</label>
+                        <input type="text" id="answer-86-6" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer86_6()">
+                        <div class="input-hint" id="hint-86-6"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer86_6()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps86_6()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion86_6()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-86-6" style="display: none;"></div>
+                    <div class="question-steps" id="steps-86-6" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 7</span>
+                        <button class="regenerate-btn" onclick="generateQuestion86_7()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-86-7-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-86-7">Your Answer:</label>
+                        <input type="text" id="answer-86-7" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer86_7()">
+                        <div class="input-hint" id="hint-86-7"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer86_7()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps86_7()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion86_7()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-86-7" style="display: none;"></div>
+                    <div class="question-steps" id="steps-86-7" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 8</span>
+                        <button class="regenerate-btn" onclick="generateQuestion86_8()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-86-8-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-86-8">Your Answer:</label>
+                        <input type="text" id="answer-86-8" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer86_8()">
+                        <div class="input-hint" id="hint-86-8"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer86_8()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps86_8()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion86_8()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-86-8" style="display: none;"></div>
+                    <div class="question-steps" id="steps-86-8" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 9</span>
+                        <button class="regenerate-btn" onclick="generateQuestion86_9()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-86-9-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-86-9">Your Answer:</label>
+                        <input type="text" id="answer-86-9" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer86_9()">
+                        <div class="input-hint" id="hint-86-9"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer86_9()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps86_9()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion86_9()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-86-9" style="display: none;"></div>
+                    <div class="question-steps" id="steps-86-9" style="display: none;"></div>
+                </div>
+
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Question 10</span>
+                        <button class="regenerate-btn" onclick="generateQuestion86_10()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-86-10-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-86-10">Your Answer:</label>
+                        <input type="text" id="answer-86-10" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer86_10()">
+                        <div class="input-hint" id="hint-86-10"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer86_10()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps86_10()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion86_10()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-86-10" style="display: none;"></div>
+                    <div class="question-steps" id="steps-86-10" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+        
+    </div>
+
+    <script>
+        // Current question tracking variables for all 60 questions
+        let currentQuestion81_1 = null, currentQuestion81_2 = null, currentQuestion81_3 = null, currentQuestion81_4 = null, currentQuestion81_5 = null;
+        let currentQuestion81_6 = null, currentQuestion81_7 = null, currentQuestion81_8 = null, currentQuestion81_9 = null, currentQuestion81_10 = null;
+        
+        let currentQuestion82_1 = null, currentQuestion82_2 = null, currentQuestion82_3 = null, currentQuestion82_4 = null, currentQuestion82_5 = null;
+        let currentQuestion82_6 = null, currentQuestion82_7 = null, currentQuestion82_8 = null, currentQuestion82_9 = null, currentQuestion82_10 = null;
+
+        let currentQuestion83_1 = null, currentQuestion83_2 = null, currentQuestion83_3 = null, currentQuestion83_4 = null, currentQuestion83_5 = null;
+        let currentQuestion83_6 = null, currentQuestion83_7 = null, currentQuestion83_8 = null, currentQuestion83_9 = null, currentQuestion83_10 = null;
+
+        let currentQuestion84_1 = null, currentQuestion84_2 = null, currentQuestion84_3 = null, currentQuestion84_4 = null, currentQuestion84_5 = null;
+        let currentQuestion84_6 = null, currentQuestion84_7 = null, currentQuestion84_8 = null, currentQuestion84_9 = null, currentQuestion84_10 = null;
+
+        let currentQuestion85_1 = null, currentQuestion85_2 = null, currentQuestion85_3 = null, currentQuestion85_4 = null, currentQuestion85_5 = null;
+        let currentQuestion85_6 = null, currentQuestion85_7 = null, currentQuestion85_8 = null, currentQuestion85_9 = null, currentQuestion85_10 = null;
+
+        let currentQuestion86_1 = null, currentQuestion86_2 = null, currentQuestion86_3 = null, currentQuestion86_4 = null, currentQuestion86_5 = null;
+        let currentQuestion86_6 = null, currentQuestion86_7 = null, currentQuestion86_8 = null, currentQuestion86_9 = null, currentQuestion86_10 = null;
+
+        // Question arrays for all sections - EXACTLY 10 questions each for perfect variety
+        const oneWayAnovaQuestions = [
+            {
+                question: "What is the null hypothesis for a one-way ANOVA?",
+                correctAnswers: ["all means are equal", "μ₁ = μ₂ = μ₃ = ... = μₖ", "no group differences"],
+                hint: "Think about what ANOVA tests regarding population means",
+                explanation: "H₀: μ₁ = μ₂ = μ₃ = ... = μₖ (all population means are equal). ANOVA tests whether there are any differences among group means.",
+                steps: `<div class="step-title">One-Way ANOVA Hypotheses:</div><div class="step-content"><ol><li><strong>Null:</strong> H₀: μ₁ = μ₂ = μ₃ = ... = μₖ</li><li><strong>Alternative:</strong> H₁: At least one μᵢ ≠ μⱼ</li><li><strong>Note:</strong> Alternative doesn't specify which means differ</li></ol></div>`
+            },
+            {
+                question: "What does the F-statistic in ANOVA compare?",
+                correctAnswers: ["between-group to within-group variance", "systematic to random variation", "MSbetween to MSwithin"],
+                hint: "Think about the ratio that F represents",
+                explanation: "F = MS_between/MS_within compares systematic variation (between groups) to random variation (within groups).",
+                steps: `<div class="step-title">ANOVA F-Statistic:</div><div class="step-content"><ol><li><strong>Formula:</strong> F = MS_between/MS_within</li><li><strong>Numerator:</strong> Between-group variance</li><li><strong>Denominator:</strong> Within-group variance (error)</li></ol></div>`
+            },
+            {
+                question: "How do you calculate degrees of freedom for between-groups?",
+                correctAnswers: ["k - 1", "number of groups minus 1"],
+                hint: "Think about how many independent group means you can estimate",
+                explanation: "df_between = k - 1, where k is the number of groups.",
+                steps: `<div class="step-title">Between-Groups df:</div><div class="step-content"><ol><li><strong>Formula:</strong> df_between = k - 1</li><li><strong>Example:</strong> 4 groups → df = 3</li></ol></div>`
+            },
+            {
+                question: "How do you calculate degrees of freedom for within-groups?",
+                correctAnswers: ["N - k", "total sample size minus number of groups"],
+                hint: "Think about total observations minus group means estimated",
+                explanation: "df_within = N - k, where N is total sample size and k is number of groups.",
+                steps: `<div class="step-title">Within-Groups df:</div><div class="step-content"><ol><li><strong>Formula:</strong> df_within = N - k</li><li><strong>Example:</strong> 50 subjects, 5 groups → df = 45</li></ol></div>`
+            },
+            {
+                question: "What is the sum of squares decomposition?",
+                correctAnswers: ["SStotal = SSbetween + SSwithin", "total = between + within"],
+                hint: "Think about how total variation is partitioned",
+                explanation: "Total variation is decomposed into between-group and within-group components.",
+                steps: `<div class="step-title">Sum of Squares:</div><div class="step-content"><ol><li><strong>SS_total:</strong> Total variation</li><li><strong>SS_between:</strong> Group differences</li><li><strong>SS_within:</strong> Error variation</li></ol></div>`
+            },
+            {
+                question: "When should you use ANOVA instead of multiple t-tests?",
+                correctAnswers: ["comparing 3 or more groups", "avoid inflated Type I error", "control family-wise error"],
+                hint: "Think about the multiple comparisons problem",
+                explanation: "ANOVA controls Type I error when comparing multiple groups, while multiple t-tests inflate family-wise error.",
+                steps: `<div class="step-title">Why ANOVA:</div><div class="step-content"><ol><li><strong>Problem:</strong> Multiple t-tests inflate α</li><li><strong>Solution:</strong> ANOVA controls overall error rate</li></ol></div>`
+            },
+            {
+                question: "What does a large F-statistic indicate?",
+                correctAnswers: ["group differences are large", "between-group variance exceeds within", "reject null"],
+                hint: "Think about when numerator is much larger than denominator",
+                explanation: "Large F indicates between-group differences exceed within-group variation.",
+                steps: `<div class="step-title">Large F-statistic:</div><div class="step-content"><ol><li><strong>Meaning:</strong> Group differences > random variation</li><li><strong>Decision:</strong> Likely to reject H₀</li></ol></div>`
+            },
+            {
+                question: "What does MS_within estimate?",
+                correctAnswers: ["error variance", "population variance", "within-group variability"],
+                hint: "Think about what remains after group effects",
+                explanation: "MS_within estimates the population variance σ² (pure error).",
+                steps: `<div class="step-title">MS_within:</div><div class="step-content"><ol><li><strong>Estimates:</strong> σ² (population variance)</li><li><strong>Use:</strong> Denominator in F-test</li></ol></div>`
+            },
+            {
+                question: "What happens if all group means are equal?",
+                correctAnswers: ["F approaches 1", "SSbetween = 0", "fail to reject H0"],
+                hint: "Think about what occurs with no group differences",
+                explanation: "If group means are equal, SS_between = 0 and F ≈ 1.",
+                steps: `<div class="step-title">Equal Means:</div><div class="step-content"><ol><li><strong>SS_between:</strong> Approaches 0</li><li><strong>F-ratio:</strong> Approaches 1</li></ol></div>`
+            },
+            {
+                question: "What is the grand mean in ANOVA?",
+                correctAnswers: ["overall mean", "weighted average of group means", "population mean estimate"],
+                hint: "Think about the mean of all observations combined",
+                explanation: "Grand mean is the overall mean across all observations and groups.",
+                steps: `<div class="step-title">Grand Mean:</div><div class="step-content"><ol><li><strong>Formula:</strong> x̄.. = Σx_ij/N</li><li><strong>Use:</strong> Reference for calculating variation</li></ol></div>`
+            }
+        ];
+
+        const anovaAssumptionsQuestions = [
+            {
+                question: "What are the main assumptions of ANOVA?",
+                correctAnswers: ["independence, normality, homoscedasticity", "independence, normal residuals, equal variances"],
+                hint: "Think about the three critical assumptions",
+                explanation: "ANOVA assumes: (1) Independence, (2) Normality of residuals, (3) Equal variances.",
+                steps: `<div class="step-title">ANOVA Assumptions:</div><div class="step-content"><ol><li><strong>Independence:</strong> Observations independent</li><li><strong>Normality:</strong> Residuals normal</li><li><strong>Homoscedasticity:</strong> Equal variances</li></ol></div>`
+            },
+            {
+                question: "What test checks the equal variances assumption?",
+                correctAnswers: ["Levene's test", "Bartlett's test", "Brown-Forsythe test"],
+                hint: "Think about tests for homoscedasticity",
+                explanation: "Levene's test is commonly used to test equal variances.",
+                steps: `<div class="step-title">Testing Equal Variances:</div><div class="step-content"><ol><li><strong>Levene's test:</strong> Most robust</li><li><strong>Bartlett's test:</strong> Sensitive to non-normality</li></ol></div>`
+            },
+            {
+                question: "How do you check the normality assumption?",
+                correctAnswers: ["Q-Q plot", "Shapiro-Wilk test", "histogram of residuals"],
+                hint: "Think about diagnostic plots and tests",
+                explanation: "Check normality using Q-Q plots, histograms, or Shapiro-Wilk test.",
+                steps: `<div class="step-title">Checking Normality:</div><div class="step-content"><ol><li><strong>Q-Q plot:</strong> Should follow straight line</li><li><strong>Histogram:</strong> Should be bell-shaped</li></ol></div>`
+            },
+            {
+                question: "What happens if independence is violated?",
+                correctAnswers: ["inflated Type I error", "invalid F-test", "correlated observations"],
+                hint: "Think about the most serious violation",
+                explanation: "Independence violation inflates Type I error and invalidates F-test.",
+                steps: `<div class="step-title">Independence Violation:</div><div class="step-content"><ol><li><strong>Effect:</strong> Inflated Type I error</li><li><strong>Severity:</strong> Most serious violation</li></ol></div>`
+            },
+            {
+                question: "What is homoscedasticity?",
+                correctAnswers: ["equal variances", "constant variance", "homogeneity of variance"],
+                hint: "Think about variance being constant",
+                explanation: "Homoscedasticity means equal variances across groups.",
+                steps: `<div class="step-title">Homoscedasticity:</div><div class="step-content"><ol><li><strong>Definition:</strong> σ₁² = σ₂² = ... = σₖ²</li><li><strong>Required:</strong> For valid F-test</li></ol></div>`
+            },
+            {
+                question: "How robust is ANOVA to violations?",
+                correctAnswers: ["robust to normality", "sensitive to independence", "moderately robust to equal variances"],
+                hint: "Think about which assumptions matter most",
+                explanation: "ANOVA is robust to normality but sensitive to independence violations.",
+                steps: `<div class="step-title">ANOVA Robustness:</div><div class="step-content"><ol><li><strong>Normality:</strong> Very robust</li><li><strong>Independence:</strong> Not robust</li></ol></div>`
+            },
+            {
+                question: "What to do if variances are unequal?",
+                correctAnswers: ["use Welch's ANOVA", "transform data", "non-parametric test"],
+                hint: "Think about alternatives for unequal variances",
+                explanation: "Use Welch's ANOVA, transformations, or non-parametric tests.",
+                steps: `<div class="step-title">Unequal Variances:</div><div class="step-content"><ol><li><strong>Welch's ANOVA:</strong> Doesn't assume equal variances</li><li><strong>Transformations:</strong> May stabilize variance</li></ol></div>`
+            },
+            {
+                question: "Which plot shows homoscedasticity?",
+                correctAnswers: ["residuals vs fitted", "residuals vs predicted", "spread-location plot"],
+                hint: "Think about plotting residuals",
+                explanation: "Plot residuals vs fitted values to check constant variance.",
+                steps: `<div class="step-title">Diagnostic Plot:</div><div class="step-content"><ol><li><strong>Plot:</strong> Residuals vs fitted</li><li><strong>Good:</strong> Random scatter</li></ol></div>`
+            },
+            {
+                question: "Why check residuals for normality?",
+                correctAnswers: ["model assumes normal errors", "residuals estimate errors", "theory requires it"],
+                hint: "Think about what the model assumes",
+                explanation: "The ANOVA model assumes normally distributed error terms (residuals).",
+                steps: `<div class="step-title">Normal Residuals:</div><div class="step-content"><ol><li><strong>Model:</strong> ε_ij ~ N(0, σ²)</li><li><strong>Residuals:</strong> Estimate error terms</li></ol></div>`
+            },
+            {
+                question: "What are fixed vs random effects?",
+                correctAnswers: ["fixed are specific levels", "random are sampled", "inference differs"],
+                hint: "Think about how factor levels are chosen",
+                explanation: "Fixed effects are specific levels; random effects are sampled from population.",
+                steps: `<div class="step-title">Effect Types:</div><div class="step-content"><ol><li><strong>Fixed:</strong> Specific chosen levels</li><li><strong>Random:</strong> Sampled levels</li></ol></div>`
+            }
+        ];
+
+        const multipleComparisonsQuestions = [
+            {
+                question: "What is the family-wise error rate?",
+                correctAnswers: ["probability of at least one Type I error", "overall alpha level"],
+                hint: "Think about multiple comparisons problem",
+                explanation: "Family-wise error rate is P(at least one Type I error) across all tests.",
+                steps: `<div class="step-title">Family-Wise Error:</div><div class="step-content"><ol><li><strong>Definition:</strong> P(≥1 Type I error)</li><li><strong>Increases:</strong> With more comparisons</li></ol></div>`
+            },
+            {
+                question: "What is Tukey's HSD test?",
+                correctAnswers: ["all pairwise comparisons", "honest significant difference", "controls family-wise error"],
+                hint: "Think about post-hoc comparisons",
+                explanation: "Tukey's HSD controls family-wise error for all pairwise comparisons.",
+                steps: `<div class="step-title">Tukey's HSD:</div><div class="step-content"><ol><li><strong>Use:</strong> All pairwise comparisons</li><li><strong>Controls:</strong> Family-wise error rate</li></ol></div>`
+            },
+            {
+                question: "What is Bonferroni correction?",
+                correctAnswers: ["divide alpha by comparisons", "α/c method", "conservative approach"],
+                hint: "Think about adjusting significance level",
+                explanation: "Bonferroni uses α/c where c is number of comparisons.",
+                steps: `<div class="step-title">Bonferroni:</div><div class="step-content"><ol><li><strong>Method:</strong> α/c per test</li><li><strong>Conservative:</strong> Controls error strongly</li></ol></div>`
+            },
+            {
+                question: "When use planned vs post-hoc comparisons?",
+                correctAnswers: ["planned before data", "post-hoc after ANOVA", "planned more powerful"],
+                hint: "Think about timing relative to data collection",
+                explanation: "Planned comparisons specified before data; post-hoc after significant ANOVA.",
+                steps: `<div class="step-title">Comparison Types:</div><div class="step-content"><ol><li><strong>Planned:</strong> Before seeing data</li><li><strong>Post-hoc:</strong> After significant F</li></ol></div>`
+            },
+            {
+                question: "What is Dunnett's test for?",
+                correctAnswers: ["compare treatments to control", "many-to-one comparisons"],
+                hint: "Think about control vs treatment design",
+                explanation: "Dunnett's test compares multiple treatments to single control.",
+                steps: `<div class="step-title">Dunnett's Test:</div><div class="step-content"><ol><li><strong>Design:</strong> Multiple treatments vs control</li><li><strong>Efficient:</strong> More powerful than Tukey</li></ol></div>`
+            },
+            {
+                question: "Why does family-wise error increase?",
+                correctAnswers: ["more chances for Type I error", "multiple testing", "probability accumulates"],
+                hint: "Think about repeated testing",
+                explanation: "Each additional test provides another chance for Type I error.",
+                steps: `<div class="step-title">Error Accumulation:</div><div class="step-content"><ol><li><strong>Logic:</strong> More tests = more chances</li><li><strong>Formula:</strong> 1 - (1-α)^c</li></ol></div>`
+            },
+            {
+                question: "What is Scheffé's method?",
+                correctAnswers: ["most conservative", "any contrast", "all possible comparisons"],
+                hint: "Think about the most conservative approach",
+                explanation: "Scheffé's method controls family-wise error for any possible contrast.",
+                steps: `<div class="step-title">Scheffé's Method:</div><div class="step-content"><ol><li><strong>Scope:</strong> Any contrast or comparison</li><li><strong>Conservative:</strong> Strictest control</li></ol></div>`
+            },
+            {
+                question: "How many pairwise comparisons with k groups?",
+                correctAnswers: ["k(k-1)/2", "combinations of 2 from k"],
+                hint: "Think about choosing 2 groups from k",
+                explanation: "Number of pairwise comparisons = C(k,2) = k(k-1)/2.",
+                steps: `<div class="step-title">Pairwise Comparisons:</div><div class="step-content"><ol><li><strong>Formula:</strong> C(k,2) = k(k-1)/2</li><li><strong>Example:</strong> 4 groups = 6 comparisons</li></ol></div>`
+            },
+            {
+                question: "What is experimentwise error rate?",
+                correctAnswers: ["same as family-wise", "overall Type I error", "across all comparisons"],
+                hint: "Think about error across entire experiment",
+                explanation: "Experimentwise error rate is the overall Type I error across all tests.",
+                steps: `<div class="step-title">Experimentwise Error:</div><div class="step-content"><ol><li><strong>Same as:</strong> Family-wise error rate</li><li><strong>Scope:</strong> Entire experiment</li></ol></div>`
+            },
+            {
+                question: "Should you do post-hoc if F is not significant?",
+                correctAnswers: ["no", "not recommended", "violates logic"],
+                hint: "Think about the logic of hypothesis testing",
+                explanation: "Post-hoc tests should only follow significant omnibus F-test.",
+                steps: `<div class="step-title">Post-hoc Logic:</div><div class="step-content"><ol><li><strong>Rule:</strong> Only after significant F</li><li><strong>Reason:</strong> No evidence of any differences</li></ol></div>`
+            }
+        ];
+
+        const twoWayAnovaQuestions = [
+            {
+                question: "What does interaction mean in two-way ANOVA?",
+                correctAnswers: ["effect of A depends on B", "non-additive effects", "combined effect"],
+                hint: "Think about factors working together",
+                explanation: "Interaction occurs when effect of one factor depends on other factor.",
+                steps: `<div class="step-title">Interaction:</div><div class="step-content"><ol><li><strong>Definition:</strong> Effect of A depends on B</li><li><strong>Visual:</strong> Non-parallel lines</li></ol></div>`
+            },
+            {
+                question: "How many F-tests in two-way ANOVA?",
+                correctAnswers: ["three", "main A, main B, interaction"],
+                hint: "Think about what effects you test",
+                explanation: "Three F-tests: main effect A, main effect B, A×B interaction.",
+                steps: `<div class="step-title">Three F-tests:</div><div class="step-content"><ol><li><strong>Main A:</strong> Factor A effect</li><li><strong>Main B:</strong> Factor B effect</li><li><strong>A×B:</strong> Interaction</li></ol></div>`
+            },
+            {
+                question: "What is a main effect?",
+                correctAnswers: ["average effect of one factor", "effect ignoring other factor", "marginal means"],
+                hint: "Think about effect averaged over other factor",
+                explanation: "Main effect is the average effect of one factor, ignoring the other.",
+                steps: `<div class="step-title">Main Effect:</div><div class="step-content"><ol><li><strong>Definition:</strong> Average across other factor</li><li><strong>Calculation:</strong> Marginal means</li></ol></div>`
+            },
+            {
+                question: "How do you interpret significant interaction?",
+                correctAnswers: ["main effects qualified", "simple effects analysis", "conditional interpretation"],
+                hint: "Think about what interaction changes",
+                explanation: "Significant interaction qualifies interpretation of main effects.",
+                steps: `<div class="step-title">Interaction Interpretation:</div><div class="step-content"><ol><li><strong>Caution:</strong> Main effects qualified</li><li><strong>Analysis:</strong> Simple effects</li></ol></div>`
+            },
+            {
+                question: "What are simple effects?",
+                correctAnswers: ["effect of A at one level of B", "conditional effects", "follow-up to interaction"],
+                hint: "Think about effects at specific levels",
+                explanation: "Simple effects examine one factor at specific levels of another.",
+                steps: `<div class="step-title">Simple Effects:</div><div class="step-content"><ol><li><strong>Definition:</strong> A at specific B level</li><li><strong>Use:</strong> After significant interaction</li></ol></div>`
+            },
+            {
+                question: "What is a factorial design?",
+                correctAnswers: ["all combinations of factors", "crossed factors", "complete design"],
+                hint: "Think about factor combinations",
+                explanation: "Factorial design includes all combinations of factor levels.",
+                steps: `<div class="step-title">Factorial Design:</div><div class="step-content"><ol><li><strong>Structure:</strong> All factor combinations</li><li><strong>Advantage:</strong> Tests interactions</li></ol></div>`
+            },
+            {
+                question: "How do you calculate interaction df?",
+                correctAnswers: ["(a-1)(b-1)", "product of main effect dfs"],
+                hint: "Think about degrees of freedom for interaction",
+                explanation: "Interaction df = (a-1)(b-1) where a, b are number of levels.",
+                steps: `<div class="step-title">Interaction df:</div><div class="step-content"><ol><li><strong>Formula:</strong> (a-1)(b-1)</li><li><strong>Example:</strong> 3×4 design → 2×3 = 6 df</li></ol></div>`
+            },
+            {
+                question: "What does parallel lines indicate?",
+                correctAnswers: ["no interaction", "additive effects", "constant differences"],
+                hint: "Think about interaction plots",
+                explanation: "Parallel lines in interaction plot suggest no interaction.",
+                steps: `<div class="step-title">Parallel Lines:</div><div class="step-content"><ol><li><strong>Meaning:</strong> No interaction</li><li><strong>Implication:</strong> Effects are additive</li></ol></div>`
+            },
+            {
+                question: "What is a cell mean?",
+                correctAnswers: ["mean for specific combination", "individual condition mean", "A₁B₁ mean"],
+                hint: "Think about specific factor combinations",
+                explanation: "Cell mean is the mean for a specific combination of factor levels.",
+                steps: `<div class="step-title">Cell Mean:</div><div class="step-content"><ol><li><strong>Definition:</strong> Mean for AᵢBⱼ combination</li><li><strong>Use:</strong> Building blocks for effects</li></ol></div>`
+            },
+            {
+                question: "When is two-way ANOVA balanced?",
+                correctAnswers: ["equal cell sizes", "same n in each cell", "balanced design"],
+                hint: "Think about sample sizes across cells",
+                explanation: "Balanced design has equal sample sizes in all cells.",
+                steps: `<div class="step-title">Balanced Design:</div><div class="step-content"><ol><li><strong>Definition:</strong> Equal n in each cell</li><li><strong>Advantage:</strong> Easier analysis, more power</li></ol></div>`
+            }
+        ];
+
+        const repeatedMeasuresQuestions = [
+            {
+                question: "What is the sphericity assumption?",
+                correctAnswers: ["equal variances of differences", "compound symmetry", "circularity"],
+                hint: "Think about repeated measures assumption",
+                explanation: "Sphericity assumes equal variances of differences between conditions.",
+                steps: `<div class="step-title">Sphericity:</div><div class="step-content"><ol><li><strong>Definition:</strong> Var(Xᵢ-Xⱼ) = constant</li><li><strong>Test:</strong> Mauchly's test</li></ol></div>`
+            },
+            {
+                question: "What is an advantage of repeated measures?",
+                correctAnswers: ["increased power", "controls individual differences", "fewer subjects"],
+                hint: "Think about using same subjects",
+                explanation: "Repeated measures increases power by controlling individual differences.",
+                steps: `<div class="step-title">RM Advantages:</div><div class="step-content"><ol><li><strong>Power:</strong> Removes individual differences</li><li><strong>Efficiency:</strong> Fewer subjects needed</li></ol></div>`
+            },
+            {
+                question: "What is Mauchly's test?",
+                correctAnswers: ["tests sphericity", "tests assumption", "circularity test"],
+                hint: "Think about testing assumptions",
+                explanation: "Mauchly's test checks the sphericity assumption.",
+                steps: `<div class="step-title">Mauchly's Test:</div><div class="step-content"><ol><li><strong>Purpose:</strong> Test sphericity</li><li><strong>H₀:</strong> Sphericity holds</li></ol></div>`
+            },
+            {
+                question: "What is Greenhouse-Geisser correction?",
+                correctAnswers: ["adjusts for sphericity violation", "corrects degrees of freedom", "epsilon correction"],
+                hint: "Think about correcting violations",
+                explanation: "Greenhouse-Geisser adjusts df when sphericity is violated.",
+                steps: `<div class="step-title">G-G Correction:</div><div class="step-content"><ol><li><strong>Use:</strong> When sphericity violated</li><li><strong>Method:</strong> Multiply df by ε</li></ol></div>`
+            },
+            {
+                question: "What is compound symmetry?",
+                correctAnswers: ["equal variances and covariances", "stronger than sphericity", "special case"],
+                hint: "Think about variance-covariance matrix",
+                explanation: "Compound symmetry requires equal variances and equal covariances.",
+                steps: `<div class="step-title">Compound Symmetry:</div><div class="step-content"><ol><li><strong>Structure:</strong> Equal σ² and equal σᵢⱼ</li><li><strong>Stronger:</strong> Implies sphericity</li></ol></div>`
+            },
+            {
+                question: "What is a disadvantage of repeated measures?",
+                correctAnswers: ["carryover effects", "practice effects", "order effects"],
+                hint: "Think about problems with repeated testing",
+                explanation: "Repeated measures can have carryover, practice, or order effects.",
+                steps: `<div class="step-title">RM Disadvantages:</div><div class="step-content"><ol><li><strong>Carryover:</strong> Previous treatment affects current</li><li><strong>Practice:</strong> Learning effects</li></ol></div>`
+            },
+            {
+                question: "How do you control order effects?",
+                correctAnswers: ["counterbalancing", "randomize order", "latin square"],
+                hint: "Think about experimental design solutions",
+                explanation: "Control order effects through counterbalancing or randomization.",
+                steps: `<div class="step-title">Order Control:</div><div class="step-content"><ol><li><strong>Counterbalancing:</strong> Systematic order variation</li><li><strong>Randomization:</strong> Random order per subject</li></ol></div>`
+            },
+            {
+                question: "What is the error term in repeated measures?",
+                correctAnswers: ["subject by condition interaction", "residual after removing subject effects"],
+                hint: "Think about what represents error",
+                explanation: "Error term is subject×condition interaction (residual variation).",
+                steps: `<div class="step-title">RM Error Term:</div><div class="step-content"><ol><li><strong>Error:</strong> Subject × Condition</li><li><strong>Logic:</strong> Variation not explained by main effects</li></ol></div>`
+            },
+            {
+                question: "When use repeated measures design?",
+                correctAnswers: ["when subjects can receive all treatments", "longitudinal studies", "within-subject comparisons"],
+                hint: "Think about when it's appropriate",
+                explanation: "Use when subjects can receive all conditions without contamination.",
+                steps: `<div class="step-title">When to Use RM:</div><div class="step-content"><ol><li><strong>Feasible:</strong> Subjects can do all conditions</li><li><strong>Longitudinal:</strong> Tracking over time</li></ol></div>`
+            },
+            {
+                question: "What is the mixed model approach?",
+                correctAnswers: ["alternative to repeated measures ANOVA", "handles missing data", "flexible covariance"],
+                hint: "Think about modern alternatives",
+                explanation: "Mixed models provide flexible alternative to traditional repeated measures ANOVA.",
+                steps: `<div class="step-title">Mixed Models:</div><div class="step-content"><ol><li><strong>Advantages:</strong> Handles missing data</li><li><strong>Flexibility:</strong> Various covariance structures</li></ol></div>`
+            }
+        ];
+
+        const effectSizesQuestions = [
+            {
+                question: "What does eta-squared measure?",
+                correctAnswers: ["proportion of variance explained", "effect size", "η²"],
+                hint: "Think about variance explanation",
+                explanation: "Eta-squared measures proportion of total variance explained by factor.",
+                steps: `<div class="step-title">Eta-Squared:</div><div class="step-content"><ol><li><strong>Formula:</strong> η² = SS_between/SS_total</li><li><strong>Range:</strong> 0 to 1</li></ol></div>`
+            },
+            {
+                question: "What is Cohen's f?",
+                correctAnswers: ["standardized effect size", "f = √(η²/(1-η²))", "ANOVA effect size"],
+                hint: "Think about standardized measures",
+                explanation: "Cohen's f is standardized effect size for ANOVA.",
+                steps: `<div class="step-title">Cohen's f:</div><div class="step-content"><ol><li><strong>Formula:</strong> f = √(η²/(1-η²))</li><li><strong>Small:</strong> 0.10, Medium: 0.25, Large: 0.40</li></ol></div>`
+            },
+            {
+                question: "What is partial eta-squared?",
+                correctAnswers: ["effect size excluding other factors", "ηₚ²", "proportion of non-error variance"],
+                hint: "Think about multifactor designs",
+                explanation: "Partial eta-squared excludes variance from other factors.",
+                steps: `<div class="step-title">Partial Eta-Squared:</div><div class="step-content"><ol><li><strong>Formula:</strong> ηₚ² = SS_effect/(SS_effect + SS_error)</li><li><strong>Use:</strong> Multifactor designs</li></ol></div>`
+            },
+            {
+                question: "Why report effect sizes?",
+                correctAnswers: ["practical significance", "magnitude of difference", "standardized measure"],
+                hint: "Think about beyond significance testing",
+                explanation: "Effect sizes indicate practical significance and magnitude.",
+                steps: `<div class="step-title">Why Effect Sizes:</div><div class="step-content"><ol><li><strong>Practical:</strong> Real-world importance</li><li><strong>Magnitude:</strong> Size of difference</li></ol></div>`
+            },
+            {
+                question: "What is omega-squared?",
+                correctAnswers: ["less biased than eta-squared", "ω²", "population estimate"],
+                hint: "Think about bias correction",
+                explanation: "Omega-squared provides less biased estimate than eta-squared.",
+                steps: `<div class="step-title">Omega-Squared:</div><div class="step-content"><ol><li><strong>Less biased:</strong> Better population estimate</li><li><strong>Formula:</strong> ω² = (SS_between - (k-1)MS_within)/SS_total</li></ol></div>`
+            },
+            {
+                question: "How do you interpret eta-squared values?",
+                correctAnswers: ["small: 0.01, medium: 0.06, large: 0.14", "Cohen's conventions"],
+                hint: "Think about Cohen's guidelines",
+                explanation: "Cohen's conventions: small (0.01), medium (0.06), large (0.14).",
+                steps: `<div class="step-title">Effect Size Interpretation:</div><div class="step-content"><ol><li><strong>Small:</strong> η² = 0.01 (1%)</li><li><strong>Medium:</strong> η² = 0.06 (6%)</li><li><strong>Large:</strong> η² = 0.14 (14%)</li></ol></div>`
+            },
+            {
+                question: "What is statistical power?",
+                correctAnswers: ["probability of detecting effect", "1 - β", "avoiding Type II error"],
+                hint: "Think about ability to detect effects",
+                explanation: "Power is probability of correctly rejecting false null hypothesis.",
+                steps: `<div class="step-title">Statistical Power:</div><div class="step-content"><ol><li><strong>Definition:</strong> P(reject H₀ | H₀ false)</li><li><strong>Formula:</strong> 1 - β (Type II error)</li></ol></div>`
+            },
+            {
+                question: "What affects statistical power?",
+                correctAnswers: ["effect size", "sample size", "alpha level"],
+                hint: "Think about factors influencing power",
+                explanation: "Power increases with larger effect size, sample size, and alpha.",
+                steps: `<div class="step-title">Power Factors:</div><div class="step-content"><ol><li><strong>Effect size:</strong> Larger effects easier to detect</li><li><strong>Sample size:</strong> More data increases power</li></ol></div>`
+            },
+            {
+                question: "What is adequate statistical power?",
+                correctAnswers: ["0.80 or 80%", "conventional standard"],
+                hint: "Think about accepted conventions",
+                explanation: "Conventional adequate power is 0.80 (80%).",
+                steps: `<div class="step-title">Adequate Power:</div><div class="step-content"><ol><li><strong>Convention:</strong> 0.80 (80%)</li><li><strong>Meaning:</strong> 80% chance of detecting real effect</li></ol></div>`
+            },
+            {
+                question: "How do you increase power?",
+                correctAnswers: ["increase sample size", "increase alpha", "reduce error variance"],
+                hint: "Think about design modifications",
+                explanation: "Increase power through larger n, higher α, or reduced error.",
+                steps: `<div class="step-title">Increasing Power:</div><div class="step-content"><ol><li><strong>Sample size:</strong> Most practical approach</li><li><strong>Design:</strong> Reduce error variance</li></ol></div>`
+            }
+        ];
+
+        // General helper functions
+        function generateQuestionGeneral(questionArray, currentQuestionVar, contentId, hintId) {
+            const randomIndex = Math.floor(Math.random() * questionArray.length);
+            window[currentQuestionVar] = questionArray[randomIndex];
+            
+            document.getElementById(contentId).innerHTML = window[currentQuestionVar].question;
+            document.getElementById(hintId).innerHTML = `💡 ${window[currentQuestionVar].hint}`;
+        }
+
+        function checkAnswerGeneral(answerId, feedbackId, currentQuestionVar) {
+            const userAnswer = document.getElementById(answerId).value.toLowerCase().trim();
+            const currentQuestion = window[currentQuestionVar];
+            
+            if (!currentQuestion) return;
+            
+            const isCorrect = currentQuestion.correctAnswers.some(answer => 
+                userAnswer.includes(answer.toLowerCase()) || answer.toLowerCase().includes(userAnswer)
+            );
+            
+            const feedbackElement = document.getElementById(feedbackId);
+            if (isCorrect) {
+                feedbackElement.innerHTML = `<div class="correct">✅ Correct! ${currentQuestion.explanation}</div>`;
+                feedbackElement.className = 'question-feedback correct-feedback';
+            } else {
+                feedbackElement.innerHTML = `<div class="incorrect">❌ Incorrect. ${currentQuestion.explanation}</div>`;
+                feedbackElement.className = 'question-feedback incorrect-feedback';
+            }
+            feedbackElement.style.display = 'block';
+        }
+
+        function showStepsGeneral(stepsId, currentQuestionVar) {
+            const currentQuestion = window[currentQuestionVar];
+            if (!currentQuestion) return;
+            
+            const stepsElement = document.getElementById(stepsId);
+            stepsElement.innerHTML = currentQuestion.steps;
+            stepsElement.style.display = 'block';
+        }
+
+        // ALL 180 JavaScript Functions (Generate, Check, ShowSteps for each question)
+        
+        // Section 8.1 Functions (Questions 1-10)
+        function generateQuestion81_1() { generateQuestionGeneral(oneWayAnovaQuestions, 'currentQuestion81_1', 'question-81-1-content', 'hint-81-1'); }
+        function generateQuestion81_2() { generateQuestionGeneral(oneWayAnovaQuestions, 'currentQuestion81_2', 'question-81-2-content', 'hint-81-2'); }
+        function generateQuestion81_3() { generateQuestionGeneral(oneWayAnovaQuestions, 'currentQuestion81_3', 'question-81-3-content', 'hint-81-3'); }
+        function generateQuestion81_4() { generateQuestionGeneral(oneWayAnovaQuestions, 'currentQuestion81_4', 'question-81-4-content', 'hint-81-4'); }
+        function generateQuestion81_5() { generateQuestionGeneral(oneWayAnovaQuestions, 'currentQuestion81_5', 'question-81-5-content', 'hint-81-5'); }
+        function generateQuestion81_6() { generateQuestionGeneral(oneWayAnovaQuestions, 'currentQuestion81_6', 'question-81-6-content', 'hint-81-6'); }
+        function generateQuestion81_7() { generateQuestionGeneral(oneWayAnovaQuestions, 'currentQuestion81_7', 'question-81-7-content', 'hint-81-7'); }
+        function generateQuestion81_8() { generateQuestionGeneral(oneWayAnovaQuestions, 'currentQuestion81_8', 'question-81-8-content', 'hint-81-8'); }
+        function generateQuestion81_9() { generateQuestionGeneral(oneWayAnovaQuestions, 'currentQuestion81_9', 'question-81-9-content', 'hint-81-9'); }
+        function generateQuestion81_10() { generateQuestionGeneral(oneWayAnovaQuestions, 'currentQuestion81_10', 'question-81-10-content', 'hint-81-10'); }
+
+        function checkAnswer81_1() { checkAnswerGeneral('answer-81-1', 'feedback-81-1', 'currentQuestion81_1'); }
+        function checkAnswer81_2() { checkAnswerGeneral('answer-81-2', 'feedback-81-2', 'currentQuestion81_2'); }
+        function checkAnswer81_3() { checkAnswerGeneral('answer-81-3', 'feedback-81-3', 'currentQuestion81_3'); }
+        function checkAnswer81_4() { checkAnswerGeneral('answer-81-4', 'feedback-81-4', 'currentQuestion81_4'); }
+        function checkAnswer81_5() { checkAnswerGeneral('answer-81-5', 'feedback-81-5', 'currentQuestion81_5'); }
+        function checkAnswer81_6() { checkAnswerGeneral('answer-81-6', 'feedback-81-6', 'currentQuestion81_6'); }
+        function checkAnswer81_7() { checkAnswerGeneral('answer-81-7', 'feedback-81-7', 'currentQuestion81_7'); }
+        function checkAnswer81_8() { checkAnswerGeneral('answer-81-8', 'feedback-81-8', 'currentQuestion81_8'); }
+        function checkAnswer81_9() { checkAnswerGeneral('answer-81-9', 'feedback-81-9', 'currentQuestion81_9'); }
+        function checkAnswer81_10() { checkAnswerGeneral('answer-81-10', 'feedback-81-10', 'currentQuestion81_10'); }
+
+        function showSteps81_1() { showStepsGeneral('steps-81-1', 'currentQuestion81_1'); }
+        function showSteps81_2() { showStepsGeneral('steps-81-2', 'currentQuestion81_2'); }
+        function showSteps81_3() { showStepsGeneral('steps-81-3', 'currentQuestion81_3'); }
+        function showSteps81_4() { showStepsGeneral('steps-81-4', 'currentQuestion81_4'); }
+        function showSteps81_5() { showStepsGeneral('steps-81-5', 'currentQuestion81_5'); }
+        function showSteps81_6() { showStepsGeneral('steps-81-6', 'currentQuestion81_6'); }
+        function showSteps81_7() { showStepsGeneral('steps-81-7', 'currentQuestion81_7'); }
+        function showSteps81_8() { showStepsGeneral('steps-81-8', 'currentQuestion81_8'); }
+        function showSteps81_9() { showStepsGeneral('steps-81-9', 'currentQuestion81_9'); }
+        function showSteps81_10() { showStepsGeneral('steps-81-10', 'currentQuestion81_10'); }
+
+        // Section 8.2 Functions (Questions 1-10)
+        function generateQuestion82_1() { generateQuestionGeneral(anovaAssumptionsQuestions, 'currentQuestion82_1', 'question-82-1-content', 'hint-82-1'); }
+        function generateQuestion82_2() { generateQuestionGeneral(anovaAssumptionsQuestions, 'currentQuestion82_2', 'question-82-2-content', 'hint-82-2'); }
+        function generateQuestion82_3() { generateQuestionGeneral(anovaAssumptionsQuestions, 'currentQuestion82_3', 'question-82-3-content', 'hint-82-3'); }
+        function generateQuestion82_4() { generateQuestionGeneral(anovaAssumptionsQuestions, 'currentQuestion82_4', 'question-82-4-content', 'hint-82-4'); }
+        function generateQuestion82_5() { generateQuestionGeneral(anovaAssumptionsQuestions, 'currentQuestion82_5', 'question-82-5-content', 'hint-82-5'); }
+        function generateQuestion82_6() { generateQuestionGeneral(anovaAssumptionsQuestions, 'currentQuestion82_6', 'question-82-6-content', 'hint-82-6'); }
+        function generateQuestion82_7() { generateQuestionGeneral(anovaAssumptionsQuestions, 'currentQuestion82_7', 'question-82-7-content', 'hint-82-7'); }
+        function generateQuestion82_8() { generateQuestionGeneral(anovaAssumptionsQuestions, 'currentQuestion82_8', 'question-82-8-content', 'hint-82-8'); }
+        function generateQuestion82_9() { generateQuestionGeneral(anovaAssumptionsQuestions, 'currentQuestion82_9', 'question-82-9-content', 'hint-82-9'); }
+        function generateQuestion82_10() { generateQuestionGeneral(anovaAssumptionsQuestions, 'currentQuestion82_10', 'question-82-10-content', 'hint-82-10'); }
+
+        function checkAnswer82_1() { checkAnswerGeneral('answer-82-1', 'feedback-82-1', 'currentQuestion82_1'); }
+        function checkAnswer82_2() { checkAnswerGeneral('answer-82-2', 'feedback-82-2', 'currentQuestion82_2'); }
+        function checkAnswer82_3() { checkAnswerGeneral('answer-82-3', 'feedback-82-3', 'currentQuestion82_3'); }
+        function checkAnswer82_4() { checkAnswerGeneral('answer-82-4', 'feedback-82-4', 'currentQuestion82_4'); }
+        function checkAnswer82_5() { checkAnswerGeneral('answer-82-5', 'feedback-82-5', 'currentQuestion82_5'); }
+        function checkAnswer82_6() { checkAnswerGeneral('answer-82-6', 'feedback-82-6', 'currentQuestion82_6'); }
+        function checkAnswer82_7() { checkAnswerGeneral('answer-82-7', 'feedback-82-7', 'currentQuestion82_7'); }
+        function checkAnswer82_8() { checkAnswerGeneral('answer-82-8', 'feedback-82-8', 'currentQuestion82_8'); }
+        function checkAnswer82_9() { checkAnswerGeneral('answer-82-9', 'feedback-82-9', 'currentQuestion82_9'); }
+        function checkAnswer82_10() { checkAnswerGeneral('answer-82-10', 'feedback-82-10', 'currentQuestion82_10'); }
+
+        function showSteps82_1() { showStepsGeneral('steps-82-1', 'currentQuestion82_1'); }
+        function showSteps82_2() { showStepsGeneral('steps-82-2', 'currentQuestion82_2'); }
+        function showSteps82_3() { showStepsGeneral('steps-82-3', 'currentQuestion82_3'); }
+        function showSteps82_4() { showStepsGeneral('steps-82-4', 'currentQuestion82_4'); }
+        function showSteps82_5() { showStepsGeneral('steps-82-5', 'currentQuestion82_5'); }
+        function showSteps82_6() { showStepsGeneral('steps-82-6', 'currentQuestion82_6'); }
+        function showSteps82_7() { showStepsGeneral('steps-82-7', 'currentQuestion82_7'); }
+        function showSteps82_8() { showStepsGeneral('steps-82-8', 'currentQuestion82_8'); }
+        function showSteps82_9() { showStepsGeneral('steps-82-9', 'currentQuestion82_9'); }
+        function showSteps82_10() { showStepsGeneral('steps-82-10', 'currentQuestion82_10'); }
+
+        // Sections 8.3-8.6 functions would continue in the same pattern
+        // For brevity, I'm showing the structure but all 180 functions exist
+
+        // Section 8.3 Functions (Questions 1-10) - Multiple Comparisons
+        function generateQuestion83_1() { generateQuestionGeneral(multipleComparisonsQuestions, 'currentQuestion83_1', 'question-83-1-content', 'hint-83-1'); }
+        function generateQuestion83_2() { generateQuestionGeneral(multipleComparisonsQuestions, 'currentQuestion83_2', 'question-83-2-content', 'hint-83-2'); }
+        function generateQuestion83_3() { generateQuestionGeneral(multipleComparisonsQuestions, 'currentQuestion83_3', 'question-83-3-content', 'hint-83-3'); }
+        function generateQuestion83_4() { generateQuestionGeneral(multipleComparisonsQuestions, 'currentQuestion83_4', 'question-83-4-content', 'hint-83-4'); }
+        function generateQuestion83_5() { generateQuestionGeneral(multipleComparisonsQuestions, 'currentQuestion83_5', 'question-83-5-content', 'hint-83-5'); }
+        function generateQuestion83_6() { generateQuestionGeneral(multipleComparisonsQuestions, 'currentQuestion83_6', 'question-83-6-content', 'hint-83-6'); }
+        function generateQuestion83_7() { generateQuestionGeneral(multipleComparisonsQuestions, 'currentQuestion83_7', 'question-83-7-content', 'hint-83-7'); }
+        function generateQuestion83_8() { generateQuestionGeneral(multipleComparisonsQuestions, 'currentQuestion83_8', 'question-83-8-content', 'hint-83-8'); }
+        function generateQuestion83_9() { generateQuestionGeneral(multipleComparisonsQuestions, 'currentQuestion83_9', 'question-83-9-content', 'hint-83-9'); }
+        function generateQuestion83_10() { generateQuestionGeneral(multipleComparisonsQuestions, 'currentQuestion83_10', 'question-83-10-content', 'hint-83-10'); }
+
+        function checkAnswer83_1() { checkAnswerGeneral('answer-83-1', 'feedback-83-1', 'currentQuestion83_1'); }
+        function checkAnswer83_2() { checkAnswerGeneral('answer-83-2', 'feedback-83-2', 'currentQuestion83_2'); }
+        function checkAnswer83_3() { checkAnswerGeneral('answer-83-3', 'feedback-83-3', 'currentQuestion83_3'); }
+        function checkAnswer83_4() { checkAnswerGeneral('answer-83-4', 'feedback-83-4', 'currentQuestion83_4'); }
+        function checkAnswer83_5() { checkAnswerGeneral('answer-83-5', 'feedback-83-5', 'currentQuestion83_5'); }
+        function checkAnswer83_6() { checkAnswerGeneral('answer-83-6', 'feedback-83-6', 'currentQuestion83_6'); }
+        function checkAnswer83_7() { checkAnswerGeneral('answer-83-7', 'feedback-83-7', 'currentQuestion83_7'); }
+        function checkAnswer83_8() { checkAnswerGeneral('answer-83-8', 'feedback-83-8', 'currentQuestion83_8'); }
+        function checkAnswer83_9() { checkAnswerGeneral('answer-83-9', 'feedback-83-9', 'currentQuestion83_9'); }
+        function checkAnswer83_10() { checkAnswerGeneral('answer-83-10', 'feedback-83-10', 'currentQuestion83_10'); }
+
+        function showSteps83_1() { showStepsGeneral('steps-83-1', 'currentQuestion83_1'); }
+        function showSteps83_2() { showStepsGeneral('steps-83-2', 'currentQuestion83_2'); }
+        function showSteps83_3() { showStepsGeneral('steps-83-3', 'currentQuestion83_3'); }
+        function showSteps83_4() { showStepsGeneral('steps-83-4', 'currentQuestion83_4'); }
+        function showSteps83_5() { showStepsGeneral('steps-83-5', 'currentQuestion83_5'); }
+        function showSteps83_6() { showStepsGeneral('steps-83-6', 'currentQuestion83_6'); }
+        function showSteps83_7() { showStepsGeneral('steps-83-7', 'currentQuestion83_7'); }
+        function showSteps83_8() { showStepsGeneral('steps-83-8', 'currentQuestion83_8'); }
+        function showSteps83_9() { showStepsGeneral('steps-83-9', 'currentQuestion83_9'); }
+        function showSteps83_10() { showStepsGeneral('steps-83-10', 'currentQuestion83_10'); }
+
+        // Section 8.4 Functions (Questions 1-10) - Two-Way ANOVA
+        function generateQuestion84_1() { generateQuestionGeneral(twoWayAnovaQuestions, 'currentQuestion84_1', 'question-84-1-content', 'hint-84-1'); }
+        function generateQuestion84_2() { generateQuestionGeneral(twoWayAnovaQuestions, 'currentQuestion84_2', 'question-84-2-content', 'hint-84-2'); }
+        function generateQuestion84_3() { generateQuestionGeneral(twoWayAnovaQuestions, 'currentQuestion84_3', 'question-84-3-content', 'hint-84-3'); }
+        function generateQuestion84_4() { generateQuestionGeneral(twoWayAnovaQuestions, 'currentQuestion84_4', 'question-84-4-content', 'hint-84-4'); }
+        function generateQuestion84_5() { generateQuestionGeneral(twoWayAnovaQuestions, 'currentQuestion84_5', 'question-84-5-content', 'hint-84-5'); }
+        function generateQuestion84_6() { generateQuestionGeneral(twoWayAnovaQuestions, 'currentQuestion84_6', 'question-84-6-content', 'hint-84-6'); }
+        function generateQuestion84_7() { generateQuestionGeneral(twoWayAnovaQuestions, 'currentQuestion84_7', 'question-84-7-content', 'hint-84-7'); }
+        function generateQuestion84_8() { generateQuestionGeneral(twoWayAnovaQuestions, 'currentQuestion84_8', 'question-84-8-content', 'hint-84-8'); }
+        function generateQuestion84_9() { generateQuestionGeneral(twoWayAnovaQuestions, 'currentQuestion84_9', 'question-84-9-content', 'hint-84-9'); }
+        function generateQuestion84_10() { generateQuestionGeneral(twoWayAnovaQuestions, 'currentQuestion84_10', 'question-84-10-content', 'hint-84-10'); }
+
+        function checkAnswer84_1() { checkAnswerGeneral('answer-84-1', 'feedback-84-1', 'currentQuestion84_1'); }
+        function checkAnswer84_2() { checkAnswerGeneral('answer-84-2', 'feedback-84-2', 'currentQuestion84_2'); }
+        function checkAnswer84_3() { checkAnswerGeneral('answer-84-3', 'feedback-84-3', 'currentQuestion84_3'); }
+        function checkAnswer84_4() { checkAnswerGeneral('answer-84-4', 'feedback-84-4', 'currentQuestion84_4'); }
+        function checkAnswer84_5() { checkAnswerGeneral('answer-84-5', 'feedback-84-5', 'currentQuestion84_5'); }
+        function checkAnswer84_6() { checkAnswerGeneral('answer-84-6', 'feedback-84-6', 'currentQuestion84_6'); }
+        function checkAnswer84_7() { checkAnswerGeneral('answer-84-7', 'feedback-84-7', 'currentQuestion84_7'); }
+        function checkAnswer84_8() { checkAnswerGeneral('answer-84-8', 'feedback-84-8', 'currentQuestion84_8'); }
+        function checkAnswer84_9() { checkAnswerGeneral('answer-84-9', 'feedback-84-9', 'currentQuestion84_9'); }
+        function checkAnswer84_10() { checkAnswerGeneral('answer-84-10', 'feedback-84-10', 'currentQuestion84_10'); }
+
+        function showSteps84_1() { showStepsGeneral('steps-84-1', 'currentQuestion84_1'); }
+        function showSteps84_2() { showStepsGeneral('steps-84-2', 'currentQuestion84_2'); }
+        function showSteps84_3() { showStepsGeneral('steps-84-3', 'currentQuestion84_3'); }
+        function showSteps84_4() { showStepsGeneral('steps-84-4', 'currentQuestion84_4'); }
+        function showSteps84_5() { showStepsGeneral('steps-84-5', 'currentQuestion84_5'); }
+        function showSteps84_6() { showStepsGeneral('steps-84-6', 'currentQuestion84_6'); }
+        function showSteps84_7() { showStepsGeneral('steps-84-7', 'currentQuestion84_7'); }
+        function showSteps84_8() { showStepsGeneral('steps-84-8', 'currentQuestion84_8'); }
+        function showSteps84_9() { showStepsGeneral('steps-84-9', 'currentQuestion84_9'); }
+        function showSteps84_10() { showStepsGeneral('steps-84-10', 'currentQuestion84_10'); }
+
+        // Section 8.5 Functions (Questions 1-10) - Repeated Measures ANOVA
+        function generateQuestion85_1() { generateQuestionGeneral(repeatedMeasuresQuestions, 'currentQuestion85_1', 'question-85-1-content', 'hint-85-1'); }
+        function generateQuestion85_2() { generateQuestionGeneral(repeatedMeasuresQuestions, 'currentQuestion85_2', 'question-85-2-content', 'hint-85-2'); }
+        function generateQuestion85_3() { generateQuestionGeneral(repeatedMeasuresQuestions, 'currentQuestion85_3', 'question-85-3-content', 'hint-85-3'); }
+        function generateQuestion85_4() { generateQuestionGeneral(repeatedMeasuresQuestions, 'currentQuestion85_4', 'question-85-4-content', 'hint-85-4'); }
+        function generateQuestion85_5() { generateQuestionGeneral(repeatedMeasuresQuestions, 'currentQuestion85_5', 'question-85-5-content', 'hint-85-5'); }
+        function generateQuestion85_6() { generateQuestionGeneral(repeatedMeasuresQuestions, 'currentQuestion85_6', 'question-85-6-content', 'hint-85-6'); }
+        function generateQuestion85_7() { generateQuestionGeneral(repeatedMeasuresQuestions, 'currentQuestion85_7', 'question-85-7-content', 'hint-85-7'); }
+        function generateQuestion85_8() { generateQuestionGeneral(repeatedMeasuresQuestions, 'currentQuestion85_8', 'question-85-8-content', 'hint-85-8'); }
+        function generateQuestion85_9() { generateQuestionGeneral(repeatedMeasuresQuestions, 'currentQuestion85_9', 'question-85-9-content', 'hint-85-9'); }
+        function generateQuestion85_10() { generateQuestionGeneral(repeatedMeasuresQuestions, 'currentQuestion85_10', 'question-85-10-content', 'hint-85-10'); }
+
+        function checkAnswer85_1() { checkAnswerGeneral('answer-85-1', 'feedback-85-1', 'currentQuestion85_1'); }
+        function checkAnswer85_2() { checkAnswerGeneral('answer-85-2', 'feedback-85-2', 'currentQuestion85_2'); }
+        function checkAnswer85_3() { checkAnswerGeneral('answer-85-3', 'feedback-85-3', 'currentQuestion85_3'); }
+        function checkAnswer85_4() { checkAnswerGeneral('answer-85-4', 'feedback-85-4', 'currentQuestion85_4'); }
+        function checkAnswer85_5() { checkAnswerGeneral('answer-85-5', 'feedback-85-5', 'currentQuestion85_5'); }
+        function checkAnswer85_6() { checkAnswerGeneral('answer-85-6', 'feedback-85-6', 'currentQuestion85_6'); }
+        function checkAnswer85_7() { checkAnswerGeneral('answer-85-7', 'feedback-85-7', 'currentQuestion85_7'); }
+        function checkAnswer85_8() { checkAnswerGeneral('answer-85-8', 'feedback-85-8', 'currentQuestion85_8'); }
+        function checkAnswer85_9() { checkAnswerGeneral('answer-85-9', 'feedback-85-9', 'currentQuestion85_9'); }
+        function checkAnswer85_10() { checkAnswerGeneral('answer-85-10', 'feedback-85-10', 'currentQuestion85_10'); }
+
+        function showSteps85_1() { showStepsGeneral('steps-85-1', 'currentQuestion85_1'); }
+        function showSteps85_2() { showStepsGeneral('steps-85-2', 'currentQuestion85_2'); }
+        function showSteps85_3() { showStepsGeneral('steps-85-3', 'currentQuestion85_3'); }
+        function showSteps85_4() { showStepsGeneral('steps-85-4', 'currentQuestion85_4'); }
+        function showSteps85_5() { showStepsGeneral('steps-85-5', 'currentQuestion85_5'); }
+        function showSteps85_6() { showStepsGeneral('steps-85-6', 'currentQuestion85_6'); }
+        function showSteps85_7() { showStepsGeneral('steps-85-7', 'currentQuestion85_7'); }
+        function showSteps85_8() { showStepsGeneral('steps-85-8', 'currentQuestion85_8'); }
+        function showSteps85_9() { showStepsGeneral('steps-85-9', 'currentQuestion85_9'); }
+        function showSteps85_10() { showStepsGeneral('steps-85-10', 'currentQuestion85_10'); }
+
+        // Section 8.6 Functions (Questions 1-10) - Effect Sizes and Power
+        function generateQuestion86_1() { generateQuestionGeneral(effectSizesQuestions, 'currentQuestion86_1', 'question-86-1-content', 'hint-86-1'); }
+        function generateQuestion86_2() { generateQuestionGeneral(effectSizesQuestions, 'currentQuestion86_2', 'question-86-2-content', 'hint-86-2'); }
+        function generateQuestion86_3() { generateQuestionGeneral(effectSizesQuestions, 'currentQuestion86_3', 'question-86-3-content', 'hint-86-3'); }
+        function generateQuestion86_4() { generateQuestionGeneral(effectSizesQuestions, 'currentQuestion86_4', 'question-86-4-content', 'hint-86-4'); }
+        function generateQuestion86_5() { generateQuestionGeneral(effectSizesQuestions, 'currentQuestion86_5', 'question-86-5-content', 'hint-86-5'); }
+        function generateQuestion86_6() { generateQuestionGeneral(effectSizesQuestions, 'currentQuestion86_6', 'question-86-6-content', 'hint-86-6'); }
+        function generateQuestion86_7() { generateQuestionGeneral(effectSizesQuestions, 'currentQuestion86_7', 'question-86-7-content', 'hint-86-7'); }
+        function generateQuestion86_8() { generateQuestionGeneral(effectSizesQuestions, 'currentQuestion86_8', 'question-86-8-content', 'hint-86-8'); }
+        function generateQuestion86_9() { generateQuestionGeneral(effectSizesQuestions, 'currentQuestion86_9', 'question-86-9-content', 'hint-86-9'); }
+        function generateQuestion86_10() { generateQuestionGeneral(effectSizesQuestions, 'currentQuestion86_10', 'question-86-10-content', 'hint-86-10'); }
+
+        function checkAnswer86_1() { checkAnswerGeneral('answer-86-1', 'feedback-86-1', 'currentQuestion86_1'); }
+        function checkAnswer86_2() { checkAnswerGeneral('answer-86-2', 'feedback-86-2', 'currentQuestion86_2'); }
+        function checkAnswer86_3() { checkAnswerGeneral('answer-86-3', 'feedback-86-3', 'currentQuestion86_3'); }
+        function checkAnswer86_4() { checkAnswerGeneral('answer-86-4', 'feedback-86-4', 'currentQuestion86_4'); }
+        function checkAnswer86_5() { checkAnswerGeneral('answer-86-5', 'feedback-86-5', 'currentQuestion86_5'); }
+        function checkAnswer86_6() { checkAnswerGeneral('answer-86-6', 'feedback-86-6', 'currentQuestion86_6'); }
+        function checkAnswer86_7() { checkAnswerGeneral('answer-86-7', 'feedback-86-7', 'currentQuestion86_7'); }
+        function checkAnswer86_8() { checkAnswerGeneral('answer-86-8', 'feedback-86-8', 'currentQuestion86_8'); }
+        function checkAnswer86_9() { checkAnswerGeneral('answer-86-9', 'feedback-86-9', 'currentQuestion86_9'); }
+        function checkAnswer86_10() { checkAnswerGeneral('answer-86-10', 'feedback-86-10', 'currentQuestion86_10'); }
+
+        function showSteps86_1() { showStepsGeneral('steps-86-1', 'currentQuestion86_1'); }
+        function showSteps86_2() { showStepsGeneral('steps-86-2', 'currentQuestion86_2'); }
+        function showSteps86_3() { showStepsGeneral('steps-86-3', 'currentQuestion86_3'); }
+        function showSteps86_4() { showStepsGeneral('steps-86-4', 'currentQuestion86_4'); }
+        function showSteps86_5() { showStepsGeneral('steps-86-5', 'currentQuestion86_5'); }
+        function showSteps86_6() { showStepsGeneral('steps-86-6', 'currentQuestion86_6'); }
+        function showSteps86_7() { showStepsGeneral('steps-86-7', 'currentQuestion86_7'); }
+        function showSteps86_8() { showStepsGeneral('steps-86-8', 'currentQuestion86_8'); }
+        function showSteps86_9() { showStepsGeneral('steps-86-9', 'currentQuestion86_9'); }
+        function showSteps86_10() { showStepsGeneral('steps-86-10', 'currentQuestion86_10'); }
+
+        // Initialize ALL questions on page load
+        window.onload = function() {
+            console.log('🎉 Chapter 8: ANOVA - Loading ALL 60 Questions! 📊');
+            
+            // Section 8.1: One-Way ANOVA (10 questions)
+            generateQuestion81_1(); generateQuestion81_2(); generateQuestion81_3(); generateQuestion81_4(); generateQuestion81_5();
+            generateQuestion81_6(); generateQuestion81_7(); generateQuestion81_8(); generateQuestion81_9(); generateQuestion81_10();
+            
+            // Section 8.2: ANOVA Assumptions (10 questions)  
+            generateQuestion82_1(); generateQuestion82_2(); generateQuestion82_3(); generateQuestion82_4(); generateQuestion82_5();
+            generateQuestion82_6(); generateQuestion82_7(); generateQuestion82_8(); generateQuestion82_9(); generateQuestion82_10();
+            
+            // Section 8.3: Multiple Comparisons (10 questions)
+            generateQuestion83_1(); generateQuestion83_2(); generateQuestion83_3(); generateQuestion83_4(); generateQuestion83_5();
+            generateQuestion83_6(); generateQuestion83_7(); generateQuestion83_8(); generateQuestion83_9(); generateQuestion83_10();
+            
+            // Section 8.4: Two-Way ANOVA (10 questions)
+            generateQuestion84_1(); generateQuestion84_2(); generateQuestion84_3(); generateQuestion84_4(); generateQuestion84_5();
+            generateQuestion84_6(); generateQuestion84_7(); generateQuestion84_8(); generateQuestion84_9(); generateQuestion84_10();
+            
+            // Section 8.5: Repeated Measures ANOVA (10 questions)
+            generateQuestion85_1(); generateQuestion85_2(); generateQuestion85_3(); generateQuestion85_4(); generateQuestion85_5();
+            generateQuestion85_6(); generateQuestion85_7(); generateQuestion85_8(); generateQuestion85_9(); generateQuestion85_10();
+            
+            // Section 8.6: Effect Sizes and Power (10 questions)
+            generateQuestion86_1(); generateQuestion86_2(); generateQuestion86_3(); generateQuestion86_4(); generateQuestion86_5();
+            generateQuestion86_6(); generateQuestion86_7(); generateQuestion86_8(); generateQuestion86_9(); generateQuestion86_10();
+            
+            console.log('✅ Chapter 8 Complete: ALL 60 questions loaded successfully!');
+            console.log('📊 Section 8.1: One-Way ANOVA (10 questions)');
+            console.log('⚖️ Section 8.2: ANOVA Assumptions (10 questions)');
+            console.log('🔍 Section 8.3: Multiple Comparisons (10 questions)');
+            console.log('📊 Section 8.4: Two-Way ANOVA (10 questions)');
+            console.log('🔄 Section 8.5: Repeated Measures ANOVA (10 questions)');
+            console.log('⚡ Section 8.6: Effect Sizes and Power (10 questions)');
+        }
+    </script>
+</body>
+</html>
