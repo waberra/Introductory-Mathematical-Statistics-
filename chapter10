@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 10: One-Way ANOVA | Larsen & Marx Mathematical Statistics</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    
+    <style>
+        :root {
+            --primary-color: #2E7D32;
+            --primary-light: #4CAF50;
+            --primary-dark: #1B5E20;
+            --secondary-color: #C8E6C9;
+            --accent-color: #66BB6A;
+            --background-color: #FAFAFA;
+            --text-color: #212121;
+            --card-background: #FFFFFF;
+            --border-color: #E0E0E0;
+            --success-color: #4CAF50;
+            --error-color: #F44336;
+            --warning-color: #FF9800;
+            --shadow: 0 2px 10px rgba(46, 125, 50, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 20px;
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .chapter-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .chapter-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .chapter-description {
+            font-size: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        .section {
+            background: var(--card-background);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-content {
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .concept-explanation {
+            background: linear-gradient(135deg, rgba(46, 125, 50, 0.05), rgba(102, 187, 106, 0.05));
+            border: 1px solid var(--primary-light);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .concept-explanation h4 {
+            color: var(--primary-dark);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .key-points {
+            background: var(--secondary-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .key-points h5 {
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .key-points ul {
+            margin-left: 1.5rem;
+        }
+
+        .key-points li {
+            margin-bottom: 0.3rem;
+        }
+
+        .math-formula {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .section-practice {
+            background: linear-gradient(135deg, rgba(46, 125, 50, 0.02), rgba(102, 187, 106, 0.02));
+            border: 2px solid var(--secondary-color);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .practice-question {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .question-number {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .regenerate-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .regenerate-btn:hover {
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .question-input-area {
+            margin-bottom: 1rem;
+        }
+
+        .input-label {
+            display: block;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+        }
+
+        .input-hint {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .question-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .question-buttons button {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .check-btn {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .check-btn:hover {
+            background: #45A049;
+            transform: translateY(-1px);
+        }
+
+        .steps-btn {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .steps-btn:hover {
+            background: #F57C00;
+            transform: translateY(-1px);
+        }
+
+        .new-question-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .new-question-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .question-feedback {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .correct-feedback {
+            background: linear-gradient(135deg, #E8F5E8, #C8E6C9);
+            border: 1px solid var(--success-color);
+            color: #2E7D32;
+        }
+
+        .incorrect-feedback {
+            background: linear-gradient(135deg, #FFEBEE, #FFCDD2);
+            border: 1px solid var(--error-color);
+            color: #C62828;
+        }
+
+        .question-steps {
+            background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+            border: 1px solid var(--warning-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .step-title {
+            font-weight: 700;
+            color: var(--warning-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .step-content {
+            line-height: 1.6;
+        }
+
+        .step-content ol {
+            padding-left: 1.5rem;
+        }
+
+        .step-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .chapter-title {
+                font-size: 2rem;
+            }
+            
+            .question-buttons {
+                flex-direction: column;
+            }
+            
+            .question-buttons button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="chapter-title">📊 Chapter 10: One-Way ANOVA</h1>
+            <p class="chapter-subtitle">Analysis of Variance - Comparing Multiple Groups</p>
+            <p class="chapter-description">
+                Master analysis of variance (ANOVA) techniques for comparing means across multiple groups. 
+                Learn the F-test, ANOVA assumptions, post-hoc comparisons, and effect size calculations for comprehensive statistical analysis.
+            </p>
+        </header>
+
+        <!-- Section 10.1: Introduction to ANOVA -->
+        <div class="section">
+            <h2 class="section-title">📊 10.1 Introduction to ANOVA</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Analysis of Variance (ANOVA)</h4>
+                    <p>Analysis of Variance (ANOVA) extends the two-sample t-test to situations where we want to compare means across multiple groups simultaneously. Instead of conducting multiple pairwise t-tests (which inflates Type I error), ANOVA provides a single test to determine if at least one group mean differs from the others.</p>
+                    
+                    <p>The fundamental insight behind ANOVA is that we partition the total variation in our data into two components: variation between groups and variation within groups. If the between-group variation is substantially larger than the within-group variation, this suggests that the groups have different means.</p>
+
+                    <div class="key-points">
+                        <h5>When to Use One-Way ANOVA:</h5>
+                        <ul>
+                            <li><strong>Multiple Groups:</strong> Comparing means across 3 or more independent groups</li>
+                            <li><strong>Single Factor:</strong> One categorical variable (factor) with multiple levels</li>
+                            <li><strong>Continuous Outcome:</strong> Dependent variable is continuous and normally distributed</li>
+                            <li><strong>Independent Observations:</strong> Samples are independent within and between groups</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Key Concept:</strong> ANOVA answers the question "Is there evidence that at least one group mean is different from the others?" It does NOT tell us which specific groups differ - that requires post-hoc testing.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>ANOVA Hypotheses:</strong><br>
+                    H₀: μ₁ = μ₂ = μ₃ = ... = μₖ (all group means are equal)<br>
+                    H₁: At least one μᵢ is different from the others
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>The Multiple Comparison Problem</h4>
+                    <p>Why not just do multiple t-tests? If we have k groups, there are k(k-1)/2 possible pairwise comparisons. Each test has probability α of Type I error. With multiple tests, the overall error rate becomes much larger than α - this is called "alpha inflation."</p>
+
+                    <div class="key-points">
+                        <h5>Advantages of ANOVA over Multiple t-tests:</h5>
+                        <ul>
+                            <li><strong>Controls Type I Error:</strong> Single test maintains α = 0.05</li>
+                            <li><strong>More Powerful:</strong> Uses all data simultaneously for better precision</li>
+                            <li><strong>Comprehensive:</strong> Tests overall hypothesis about all groups together</li>
+                            <li><strong>Foundation:</strong> Sets up for appropriate post-hoc comparisons</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 10.1 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Introduction to ANOVA Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion101()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-101-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-101">Your Answer:</label>
+                        <input type="text" id="answer-101" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer101()">
+                        <div class="input-hint" id="hint-101"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer101()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps101()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion101()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-101" style="display: none;"></div>
+                    <div class="question-steps" id="steps-101" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 10.2: ANOVA Model and Assumptions -->
+        <div class="section">
+            <h2 class="section-title">📊 10.2 ANOVA Model and Assumptions</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>The ANOVA Model</h4>
+                    <p>The one-way ANOVA model can be written as: Xᵢⱼ = μᵢ + εᵢⱼ, where Xᵢⱼ is the j-th observation in group i, μᵢ is the mean of group i, and εᵢⱼ is the random error. Alternatively, we can write it as: Xᵢⱼ = μ + αᵢ + εᵢⱼ, where μ is the overall mean and αᵢ is the effect of group i.</p>
+                    
+                    <p>This model assumes that each observation is the sum of a group mean plus random error. The errors are assumed to be independent and normally distributed with constant variance across all groups.</p>
+
+                    <div class="key-points">
+                        <h5>ANOVA Assumptions (LAND):</h5>
+                        <ul>
+                            <li><strong>Linearity:</strong> The model is linear in parameters (satisfied by design)</li>
+                            <li><strong>Additivity:</strong> Effects are additive (no interactions in one-way ANOVA)</li>
+                            <li><strong>Normality:</strong> Errors εᵢⱼ are normally distributed within each group</li>
+                            <li><strong>Distributional equality:</strong> Equal variances (homoscedasticity): σ₁² = σ₂² = ... = σₖ²</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Plus Independence:</strong> All observations must be independent of each other.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>ANOVA Model:</strong><br>
+                    Xᵢⱼ = μᵢ + εᵢⱼ, where εᵢⱼ ~ N(0, σ²)<br>
+                    Or equivalently: Xᵢⱼ = μ + αᵢ + εᵢⱼ
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Checking ANOVA Assumptions</h4>
+                    <p>Before interpreting ANOVA results, we must verify that assumptions are reasonably met. Violations can lead to incorrect conclusions about group differences.</p>
+
+                    <div class="key-points">
+                        <h5>How to Check Assumptions:</h5>
+                        <ul>
+                            <li><strong>Normality:</strong> QQ-plots or histograms of residuals; Shapiro-Wilk test for each group</li>
+                            <li><strong>Equal Variances:</strong> Levene's test, Bartlett's test, or boxplots comparing spreads</li>
+                            <li><strong>Independence:</strong> Examine study design; plot residuals vs. order if temporal</li>
+                            <li><strong>Outliers:</strong> Identify using standardized residuals > 3 or Cook's distance</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Robustness:</strong> ANOVA is fairly robust to mild violations of normality, especially with larger sample sizes and balanced designs. Equal variance assumption is more critical.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 10.2 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">ANOVA Model and Assumptions Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion102()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-102-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-102">Your Answer:</label>
+                        <input type="text" id="answer-102" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer102()">
+                        <div class="input-hint" id="hint-102"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer102()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps102()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion102()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-102" style="display: none;"></div>
+                    <div class="question-steps" id="steps-102" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 10.3: F-Test and ANOVA Table -->
+        <div class="section">
+            <h2 class="section-title">📊 10.3 F-Test and ANOVA Table</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding the F-Test in ANOVA</h4>
+                    <p>The ANOVA F-test compares between-group variability to within-group variability. If groups have different means, the between-group variance will be large relative to the within-group variance. The F-statistic is the ratio of these variance estimates.</p>
+                    
+                    <p>We partition the Total Sum of Squares (SST) into Sum of Squares Between groups (SSB) and Sum of Squares Within groups (SSW): SST = SSB + SSW. Each sum of squares has associated degrees of freedom, and Mean Squares are SS divided by df.</p>
+
+                    <div class="key-points">
+                        <h5>Components of ANOVA:</h5>
+                        <ul>
+                            <li><strong>SSB (Between):</strong> Measures variation in group means from overall mean</li>
+                            <li><strong>SSW (Within):</strong> Measures variation of observations around their group means</li>
+                            <li><strong>MSB = SSB/(k-1):</strong> Mean square between groups</li>
+                            <li><strong>MSW = SSW/(N-k):</strong> Mean square within groups (error)</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Key Insight:</strong> If H₀ is true (all means equal), then both MSB and MSW estimate σ². If H₀ is false, MSB will be inflated while MSW remains an estimate of σ².</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>F-Statistic:</strong><br>
+                    F = MSB/MSW = [SSB/(k-1)]/[SSW/(N-k)]<br>
+                    Under H₀, F ~ F(k-1, N-k)
+                </div>
+
+                <div class="math-formula">
+                    <strong>ANOVA Table Format:</strong><br>
+                    Source | SS | df | MS | F | p-value<br>
+                    Between | SSB | k-1 | MSB | F | P(F > F_obs)<br>
+                    Within | SSW | N-k | MSW | | <br>
+                    Total | SST | N-1 | | |
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Calculating Sum of Squares</h4>
+                    <p>The calculations involve comparing different levels of means to quantify variability at each level.</p>
+
+                    <div class="key-points">
+                        <h5>Sum of Squares Formulas:</h5>
+                        <ul>
+                            <li><strong>SST:</strong> Σᵢ Σⱼ (Xᵢⱼ - X̄..)² = Total variation from grand mean</li>
+                            <li><strong>SSB:</strong> Σᵢ nᵢ(X̄ᵢ. - X̄..)² = Variation due to group differences</li>
+                            <li><strong>SSW:</strong> Σᵢ Σⱼ (Xᵢⱼ - X̄ᵢ.)² = Variation within groups</li>
+                            <li><strong>Check:</strong> SST = SSB + SSW should always hold</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Decision Rule:</strong> Reject H₀ if F > F(α, k-1, N-k) or if p-value < α.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 10.3 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">F-Test and ANOVA Table Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion103()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-103-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-103">Your Answer:</label>
+                        <input type="text" id="answer-103" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer103()">
+                        <div class="input-hint" id="hint-103"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer103()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps103()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion103()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-103" style="display: none;"></div>
+                    <div class="question-steps" id="steps-103" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 10.4: Post-hoc Tests and Multiple Comparisons -->
+        <div class="section">
+            <h2 class="section-title">📊 10.4 Post-hoc Tests and Multiple Comparisons</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Post-hoc Testing</h4>
+                    <p>When ANOVA rejects H₀, we know at least one group differs, but we don't know which specific groups are different. Post-hoc tests (also called multiple comparison procedures) allow us to make pairwise comparisons while controlling the overall Type I error rate.</p>
+                    
+                    <p>The key challenge is that with k groups, there are k(k-1)/2 possible pairwise comparisons. If we do each at α = 0.05, the probability of making at least one Type I error becomes much larger than 0.05. Post-hoc procedures adjust for this multiple testing problem.</p>
+
+                    <div class="key-points">
+                        <h5>Types of Error Rate Control:</h5>
+                        <ul>
+                            <li><strong>Familywise Error Rate (FWER):</strong> Probability of making ≥1 Type I error across all tests</li>
+                            <li><strong>Per-comparison Error Rate:</strong> Individual test error rate (α for each test)</li>
+                            <li><strong>False Discovery Rate (FDR):</strong> Expected proportion of false positives among significant results</li>
+                            <li><strong>Goal:</strong> Keep FWER ≤ α while maintaining reasonable power</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>When to Use:</strong> Only perform post-hoc tests after a significant ANOVA F-test. This maintains the overall error rate and follows the logical sequence of testing.</p>
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Common Post-hoc Procedures</h4>
+                    <p>Different post-hoc tests make different trade-offs between Type I error control and statistical power:</p>
+
+                    <div class="key-points">
+                        <h5>Popular Post-hoc Tests:</h5>
+                        <ul>
+                            <li><strong>Tukey's HSD:</strong> Controls FWER, good for all pairwise comparisons</li>
+                            <li><strong>Bonferroni:</strong> Very conservative, divides α by number of tests</li>
+                            <li><strong>Scheffé:</strong> Most conservative, allows any linear combination</li>
+                            <li><strong>Dunnett's:</strong> Compares all groups to a control group only</li>
+                            <li><strong>Fisher's LSD:</strong> Liberal, only controls per-comparison rate</li>
+                        </ul>
+                    </div>
+
+                    <div class="math-formula">
+                        <strong>Tukey's HSD Critical Value:</strong><br>
+                        Critical difference = q(α, k, N-k) × sqrt(MSW/n)<br>
+                        where q is the studentized range statistic
+                    </div>
+
+                    <p><strong>Choosing a Method:</strong> Tukey's HSD is most common for all pairwise comparisons. Use Dunnett's when comparing to a control. Bonferroni works for any pre-planned comparisons.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 10.4 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Post-hoc Tests Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion104()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-104-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-104">Your Answer:</label>
+                        <input type="text" id="answer-104" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer104()">
+                        <div class="input-hint" id="hint-104"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer104()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps104()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion104()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-104" style="display: none;"></div>
+                    <div class="question-steps" id="steps-104" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 10.5: Effect Size and Power -->
+        <div class="section">
+            <h2 class="section-title">📊 10.5 Effect Size and Power</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Effect Size in ANOVA</h4>
+                    <p>Statistical significance doesn't tell us about practical significance. Effect size measures quantify how much of the variance in the outcome variable is explained by group membership. Large effect sizes suggest that group differences are not only statistically significant but also practically meaningful.</p>
+                    
+                    <p>Effect sizes help us interpret the magnitude of group differences and are essential for power analysis and sample size planning. They're also crucial for meta-analyses where results from multiple studies are combined.</p>
+
+                    <div class="key-points">
+                        <h5>Common ANOVA Effect Sizes:</h5>
+                        <ul>
+                            <li><strong>Eta-squared (η²):</strong> SSB/SST - proportion of total variance explained</li>
+                            <li><strong>Partial eta-squared:</strong> SSB/(SSB + SSW) - more common in complex designs</li>
+                            <li><strong>Omega-squared (ω²):</strong> Less biased estimate, adjusts for chance</li>
+                            <li><strong>Cohen's f:</strong> Standardized effect size for power calculations</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Interpretation Guidelines:</strong> Cohen's conventions suggest small (η² = 0.01), medium (η² = 0.06), and large (η² = 0.14) effect sizes, though context-specific interpretation is always preferable.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Effect Size Formulas:</strong><br>
+                    η² = SSB/SST<br>
+                    ω² = (SSB - (k-1)MSW)/(SST + MSW)<br>
+                    Cohen's f = √(η²/(1-η²))
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Power in ANOVA</h4>
+                    <p>Statistical power is the probability of correctly rejecting a false null hypothesis. In ANOVA, power depends on effect size, sample size, significance level, and the number of groups. Understanding power helps in designing studies and interpreting non-significant results.</p>
+
+                    <div class="key-points">
+                        <h5>Factors Affecting ANOVA Power:</h5>
+                        <ul>
+                            <li><strong>Effect Size:</strong> Larger differences between groups increase power</li>
+                            <li><strong>Sample Size:</strong> More observations per group increase power</li>
+                            <li><strong>Error Variance:</strong> Lower within-group variance increases power</li>
+                            <li><strong>Number of Groups:</strong> More groups can increase power if means are spread out</li>
+                            <li><strong>Significance Level:</strong> Higher α increases power but also Type I error</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Power Analysis:</strong> Can be done prospectively (for sample size planning) or retrospectively (to interpret non-significant results). Software like G*Power provides easy calculations.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 10.5 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Effect Size and Power Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion105()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-105-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-105">Your Answer:</label>
+                        <input type="text" id="answer-105" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer105()">
+                        <div class="input-hint" id="hint-105"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer105()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps105()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion105()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-105" style="display: none;"></div>
+                    <div class="question-steps" id="steps-105" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 10.6: Alternative Approaches -->
+        <div class="section">
+            <h2 class="section-title">📊 10.6 Alternative Approaches</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>When ANOVA Assumptions Are Violated</h4>
+                    <p>When ANOVA assumptions are seriously violated, the F-test may give incorrect results. Fortunately, several robust alternatives exist that can handle non-normal data, unequal variances, or outliers while still addressing the same research questions.</p>
+                    
+                    <p>The choice of alternative depends on which assumptions are violated and how severely. Some methods are more robust to certain violations than others, and modern computational methods offer additional flexibility.</p>
+
+                    <div class="key-points">
+                        <h5>Nonparametric Alternatives:</h5>
+                        <ul>
+                            <li><strong>Kruskal-Wallis Test:</strong> Nonparametric alternative using ranks</li>
+                            <li><strong>Median Test:</strong> Compares group medians rather than means</li>
+                            <li><strong>Jonckheere-Terpstra:</strong> Tests for ordered alternatives</li>
+                            <li><strong>Permutation Tests:</strong> Use randomization for exact p-values</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Robust Approaches:</strong> Welch's ANOVA handles unequal variances, trimmed means reduce outlier influence, and bootstrap methods provide distribution-free inference.</p>
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Modern Extensions of ANOVA</h4>
+                    <p>Classical ANOVA has been extended in many directions to handle more complex research designs and data structures:</p>
+
+                    <div class="key-points">
+                        <h5>Advanced ANOVA Methods:</h5>
+                        <ul>
+                            <li><strong>Two-way ANOVA:</strong> Two factors with possible interaction</li>
+                            <li><strong>Repeated Measures ANOVA:</strong> Within-subjects designs</li>
+                            <li><strong>Mixed Effects Models:</strong> Random and fixed effects combined</li>
+                            <li><strong>MANOVA:</strong> Multiple dependent variables simultaneously</li>
+                            <li><strong>ANCOVA:</strong> Includes continuous covariates</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Choosing Methods:</strong> The choice depends on your research design, data characteristics, and research questions. Start with exploratory data analysis to understand your data before selecting the appropriate method.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Kruskal-Wallis Test Statistic:</strong><br>
+                    H = [12/(N(N+1))] × Σᵢ(Rᵢ²/nᵢ) - 3(N+1)<br>
+                    where Rᵢ is sum of ranks for group i
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 10.6 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Alternative Approaches Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion106()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-106-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-106">Your Answer:</label>
+                        <input type="text" id="answer-106" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer106()">
+                        <div class="input-hint" id="hint-106"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer106()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps106()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion106()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-106" style="display: none;"></div>
+                    <div class="question-steps" id="steps-106" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        // Current question tracking variables for all 6 sections
+        let currentQuestion101 = null, currentQuestion102 = null, currentQuestion103 = null;
+        let currentQuestion104 = null, currentQuestion105 = null, currentQuestion106 = null;
+
+        // Question arrays with 10 questions each
+        const introAnovaQuestions = [
+            {
+                question: "When should you use one-way ANOVA?",
+                correctAnswers: ["multiple groups", "3 or more groups", "comparing several means"],
+                hint: "Think about how many groups you're comparing",
+                explanation: "Use one-way ANOVA when comparing means across 3 or more independent groups.",
+                steps: `<div class="step-title">When to Use ANOVA:</div><div class="step-content"><ol><li><strong>Multiple groups:</strong> 3 or more independent groups</li><li><strong>Single factor:</strong> One categorical variable</li><li><strong>Continuous outcome:</strong> Normally distributed dependent variable</li></ol></div>`
+            },
+            {
+                question: "What is the null hypothesis in one-way ANOVA?",
+                correctAnswers: ["all means equal", "μ₁ = μ₂ = μ₃", "no differences between groups"],
+                hint: "Think about what you're testing",
+                explanation: "H₀: μ₁ = μ₂ = μ₃ = ... = μₖ states that all group means are equal.",
+                steps: `<div class="step-title">ANOVA Hypotheses:</div><div class="step-content"><ol><li><strong>H₀:</strong> All group means are equal</li><li><strong>H₁:</strong> At least one mean differs</li><li><strong>Test:</strong> F-test determines significance</li></ol></div>`
+            },
+            {
+                question: "Why not do multiple t-tests instead of ANOVA?",
+                correctAnswers: ["Type I error inflation", "alpha inflation", "multiple comparisons problem"],
+                hint: "Think about error rates with multiple tests",
+                explanation: "Multiple t-tests inflate the overall Type I error rate beyond the nominal α level.",
+                steps: `<div class="step-title">Multiple Comparison Problem:</div><div class="step-content"><ol><li><strong>Multiple tests:</strong> k(k-1)/2 comparisons</li><li><strong>Error inflation:</strong> Overall α > 0.05</li><li><strong>ANOVA solution:</strong> Single test maintains α</li></ol></div>`
+            },
+            {
+                question: "What does ANOVA partition?",
+                correctAnswers: ["total variation", "sum of squares", "SST = SSB + SSW"],
+                hint: "Think about sources of variation",
+                explanation: "ANOVA partitions total variation into between-group and within-group components.",
+                steps: `<div class="step-title">Variation Partition:</div><div class="step-content"><ol><li><strong>Total (SST):</strong> All variation from grand mean</li><li><strong>Between (SSB):</strong> Variation due to group differences</li><li><strong>Within (SSW):</strong> Variation within groups</li></ol></div>`
+            },
+            {
+                question: "What is a factor in ANOVA?",
+                correctAnswers: ["independent variable", "categorical variable", "grouping variable"],
+                hint: "Think about what creates the groups",
+                explanation: "A factor is the categorical independent variable that defines the groups being compared.",
+                steps: `<div class="step-title">ANOVA Terminology:</div><div class="step-content"><ol><li><strong>Factor:</strong> Categorical independent variable</li><li><strong>Levels:</strong> Different values/categories of factor</li><li><strong>Groups:</strong> Formed by factor levels</li></ol></div>`
+            },
+            {
+                question: "What is the alternative hypothesis in ANOVA?",
+                correctAnswers: ["at least one mean different", "not all means equal", "some groups differ"],
+                hint: "Think about what rejection means",
+                explanation: "H₁ states that at least one group mean is different from the others.",
+                steps: `<div class="step-title">Alternative Hypothesis:</div><div class="step-content"><ol><li><strong>Not specific:</strong> Doesn't say which groups differ</li><li><strong>At least one:</strong> Could be 1, 2, or all different</li><li><strong>Post-hoc needed:</strong> To identify specific differences</li></ol></div>`
+            },
+            {
+                question: "How many groups minimum for ANOVA?",
+                correctAnswers: ["3", "three", "at least 3"],
+                hint: "Think about when t-test is no longer sufficient",
+                explanation: "ANOVA requires at least 3 groups; use t-test for comparing 2 groups.",
+                steps: `<div class="step-title">Group Requirements:</div><div class="step-content"><ol><li><strong>Two groups:</strong> Use t-test</li><li><strong>Three+ groups:</strong> Use ANOVA</li><li><strong>Reason:</strong> Multiple comparisons problem with t-tests</li></ol></div>`
+            },
+            {
+                question: "What does one-way mean in ANOVA?",
+                correctAnswers: ["one factor", "one independent variable", "single factor"],
+                hint: "Think about how many factors/variables",
+                explanation: "One-way means there is one factor (independent variable) creating the groups.",
+                steps: `<div class="step-title">One-way vs Multi-way:</div><div class="step-content"><ol><li><strong>One-way:</strong> Single factor</li><li><strong>Two-way:</strong> Two factors</li><li><strong>Multi-way:</strong> Multiple factors</li></ol></div>`
+            },
+            {
+                question: "What is between-group variation?",
+                correctAnswers: ["differences between group means", "SSB", "treatment effect"],
+                hint: "Think about what causes groups to differ",
+                explanation: "Between-group variation measures how much group means differ from the overall mean.",
+                steps: `<div class="step-title">Between-group Variation:</div><div class="step-content"><ol><li><strong>Source:</strong> Treatment or group effects</li><li><strong>Large SSB:</strong> Groups have different means</li><li><strong>Small SSB:</strong> Groups similar to overall mean</li></ol></div>`
+            },
+            {
+                question: "What is within-group variation?",
+                correctAnswers: ["variation within groups", "SSW", "error variation"],
+                hint: "Think about variation that remains after grouping",
+                explanation: "Within-group variation measures how observations vary around their respective group means.",
+                steps: `<div class="step-title">Within-group Variation:</div><div class="step-content"><ol><li><strong>Source:</strong> Individual differences and random error</li><li><strong>Always present:</strong> Even with perfect treatment</li><li><strong>Error term:</strong> Used in F-statistic denominator</li></ol></div>`
+            }
+        ];
+
+        // Add other question arrays here (abbreviated for space)
+        const anovaModelQuestions = [
+            {
+                question: "What are the main ANOVA assumptions?",
+                correctAnswers: ["normality independence equal variances", "LAND assumptions", "normal equal variance independent"],
+                hint: "Think about what the model requires",
+                explanation: "Main assumptions are normality, independence, and equal variances across groups.",
+                steps: `<div class="step-title">ANOVA Assumptions:</div><div class="step-content"><ol><li><strong>Normality:</strong> Errors normally distributed</li><li><strong>Independence:</strong> Observations independent</li><li><strong>Equal variances:</strong> Homoscedasticity</li></ol></div>`
+            },
+            {
+                question: "How do you check normality assumption?",
+                correctAnswers: ["QQ plot", "histogram of residuals", "Shapiro-Wilk test"],
+                hint: "Think about examining residuals",
+                explanation: "Check normality using QQ plots, histograms of residuals, or formal tests like Shapiro-Wilk.",
+                steps: `<div class="step-title">Checking Normality:</div><div class="step-content"><ol><li><strong>Visual:</strong> QQ plots, histograms</li><li><strong>Formal tests:</strong> Shapiro-Wilk, Anderson-Darling</li><li><strong>Residuals:</strong> Check model residuals, not raw data</li></ol></div>`
+            },
+            {
+                question: "What is the ANOVA model equation?",
+                correctAnswers: ["Xij = μi + εij", "observation = mean + error", "Xij = μ + αi + εij"],
+                hint: "Think about model components",
+                explanation: "ANOVA model: Xᵢⱼ = μᵢ + εᵢⱼ, where each observation equals group mean plus error.",
+                steps: `<div class="step-title">ANOVA Model:</div><div class="step-content"><ol><li><strong>Xᵢⱼ:</strong> j-th observation in group i</li><li><strong>μᵢ:</strong> Mean of group i</li><li><strong>εᵢⱼ:</strong> Random error term</li></ol></div>`
+            },
+            {
+                question: "What does homoscedasticity mean?",
+                correctAnswers: ["equal variances", "constant variance", "σ₁² = σ₂² = σ₃²"],
+                hint: "Think about variance equality",
+                explanation: "Homoscedasticity means all groups have equal population variances.",
+                steps: `<div class="step-title">Equal Variances:</div><div class="step-content"><ol><li><strong>Assumption:</strong> σ₁² = σ₂² = ... = σₖ²</li><li><strong>Check:</strong> Levene's test, boxplots</li><li><strong>Violation:</strong> Affects F-test validity</li></ol></div>`
+            },
+            {
+                question: "How do you check equal variances assumption?",
+                correctAnswers: ["Levene's test", "Bartlett's test", "boxplots"],
+                hint: "Think about variance testing methods",
+                explanation: "Check equal variances using Levene's test, Bartlett's test, or visual methods like boxplots.",
+                steps: `<div class="step-title">Testing Equal Variances:</div><div class="step-content"><ol><li><strong>Levene's test:</strong> Most robust to non-normality</li><li><strong>Bartlett's test:</strong> Assumes normality</li><li><strong>Visual:</strong> Boxplots, residual plots</li></ol></div>`
+            },
+            {
+                question: "What are ANOVA residuals?",
+                correctAnswers: ["εij = Xij - X̄i", "observed minus group mean", "error terms"],
+                hint: "Think about what's left after fitting the model",
+                explanation: "Residuals are differences between observed values and their group means: εᵢⱼ = Xᵢⱼ - X̄ᵢ.",
+                steps: `<div class="step-title">ANOVA Residuals:</div><div class="step-content"><ol><li><strong>Definition:</strong> Observed minus fitted (group mean)</li><li><strong>Use:</strong> Check assumptions</li><li><strong>Should be:</strong> Normal, independent, equal variance</li></ol></div>`
+            },
+            {
+                question: "What does independence assumption require?",
+                correctAnswers: ["observations unrelated", "random sampling", "no clustering"],
+                hint: "Think about data collection design",
+                explanation: "Independence requires observations to be unrelated and not influence each other.",
+                steps: `<div class="step-title">Independence:</div><div class="step-content"><ol><li><strong>Design:</strong> Random sampling within groups</li><li><strong>Violations:</strong> Clustering, repeated measures</li><li><strong>Check:</strong> Examine study design and data collection</li></ol></div>`
+            },
+            {
+                question: "What happens if normality is violated?",
+                correctAnswers: ["robust to violations", "use nonparametric", "Kruskal-Wallis"],
+                hint: "Think about robustness and alternatives",
+                explanation: "ANOVA is fairly robust to normality violations, but severe violations require nonparametric tests.",
+                steps: `<div class="step-title">Normality Violations:</div><div class="step-content"><ol><li><strong>Mild violations:</strong> ANOVA still valid</li><li><strong>Severe violations:</strong> Use Kruskal-Wallis</li><li><strong>Large samples:</strong> More robust due to CLT</li></ol></div>`
+            },
+            {
+                question: "What is the error term in ANOVA?",
+                correctAnswers: ["εij", "random error", "unexplained variation"],
+                hint: "Think about what the model cannot explain",
+                explanation: "Error term εᵢⱼ represents random variation not explained by group membership.",
+                steps: `<div class="step-title">Error Term:</div><div class="step-content"><ol><li><strong>εᵢⱼ:</strong> Random error for observation ij</li><li><strong>Assumptions:</strong> εᵢⱼ ~ N(0, σ²)</li><li><strong>Independent:</strong> Errors uncorrelated</li></ol></div>`
+            },
+            {
+                question: "How robust is ANOVA to assumption violations?",
+                correctAnswers: ["fairly robust", "depends on violation", "sample size matters"],
+                hint: "Think about when ANOVA still works",
+                explanation: "ANOVA is fairly robust to normality violations but less so to unequal variances and non-independence.",
+                steps: `<div class="step-title">ANOVA Robustness:</div><div class="step-content"><ol><li><strong>Normality:</strong> Robust, especially with larger n</li><li><strong>Equal variances:</strong> Less robust, affects Type I error</li><li><strong>Independence:</strong> Critical assumption</li></ol></div>`
+            }
+        ];
+
+        const anovaFTestQuestions = [
+            {
+                question: "What does the F-statistic compare?",
+                correctAnswers: ["between variance to within variance", "MSB to MSW", "signal to noise"],
+                hint: "Think about the ratio in F-statistic",
+                explanation: "F-statistic compares between-group variance (MSB) to within-group variance (MSW).",
+                steps: `<div class="step-title">F-statistic Ratio:</div><div class="step-content"><ol><li><strong>Numerator:</strong> MSB (between-group variance)</li><li><strong>Denominator:</strong> MSW (within-group variance)</li><li><strong>Interpretation:</strong> Signal-to-noise ratio</li></ol></div>`
+            },
+            {
+                question: "What is SSB in ANOVA?",
+                correctAnswers: ["sum of squares between", "between-group variation", "treatment effect"],
+                hint: "Think about variation between group means",
+                explanation: "SSB measures variation between group means and the overall mean.",
+                steps: `<div class="step-title">Sum of Squares Between:</div><div class="step-content"><ol><li><strong>Formula:</strong> SSB = Σnᵢ(X̄ᵢ - X̄)²</li><li><strong>Measures:</strong> Treatment effects</li><li><strong>Large SSB:</strong> Groups differ substantially</li></ol></div>`
+            },
+            {
+                question: "What is SSW in ANOVA?",
+                correctAnswers: ["sum of squares within", "within-group variation", "error variation"],
+                hint: "Think about variation within groups",
+                explanation: "SSW measures variation of observations around their respective group means.",
+                steps: `<div class="step-title">Sum of Squares Within:</div><div class="step-content"><ol><li><strong>Formula:</strong> SSW = ΣΣ(Xᵢⱼ - X̄ᵢ)²</li><li><strong>Measures:</strong> Error or unexplained variation</li><li><strong>Always present:</strong> Even with perfect treatment</li></ol></div>`
+            },
+            {
+                question: "What are degrees of freedom for MSB?",
+                correctAnswers: ["k-1", "number of groups minus 1"],
+                hint: "Think about parameters estimated",
+                explanation: "df for MSB = k-1, where k is the number of groups.",
+                steps: `<div class="step-title">Between Groups df:</div><div class="step-content"><ol><li><strong>df:</strong> k - 1</li><li><strong>Logic:</strong> k group means, but constrained by overall mean</li><li><strong>Free parameters:</strong> k - 1 independent group effects</li></ol></div>`
+            },
+            {
+                question: "What are degrees of freedom for MSW?",
+                correctAnswers: ["N-k", "total sample size minus groups"],
+                hint: "Think about observations minus parameters",
+                explanation: "df for MSW = N-k, where N is total sample size and k is number of groups.",
+                steps: `<div class="step-title">Within Groups df:</div><div class="step-content"><ol><li><strong>df:</strong> N - k</li><li><strong>Logic:</strong> N observations minus k group means estimated</li><li><strong>Pooled:</strong> Combines within-group df from each group</li></ol></div>`
+            },
+            {
+                question: "When do you reject H₀ in ANOVA?",
+                correctAnswers: ["F > critical value", "p-value < α", "significant F-test"],
+                hint: "Think about decision rule",
+                explanation: "Reject H₀ when F > F(α, k-1, N-k) or when p-value < α.",
+                steps: `<div class="step-title">ANOVA Decision Rule:</div><div class="step-content"><ol><li><strong>Critical value:</strong> F > F(α, k-1, N-k)</li><li><strong>p-value:</strong> p < α (typically 0.05)</li><li><strong>Conclusion:</strong> At least one group mean differs</li></ol></div>`
+            },
+            {
+                question: "What is the F-distribution?",
+                correctAnswers: ["ratio of chi-squares", "right-skewed", "F(df1, df2)"],
+                hint: "Think about the distribution properties",
+                explanation: "F-distribution is right-skewed with two degrees of freedom parameters.",
+                steps: `<div class="step-title">F-Distribution:</div><div class="step-content"><ol><li><strong>Shape:</strong> Right-skewed, always positive</li><li><strong>Parameters:</strong> df₁ (numerator) and df₂ (denominator)</li><li><strong>Used for:</strong> Testing variance ratios</li></ol></div>`
+            },
+            {
+                question: "What does MSB estimate when H₀ is true?",
+                correctAnswers: ["σ²", "population variance", "error variance"],
+                hint: "Think about what happens under null hypothesis",
+                explanation: "When H₀ is true (all means equal), MSB estimates σ², the common population variance.",
+                steps: `<div class="step-title">MSB Under H₀:</div><div class="step-content"><ol><li><strong>H₀ true:</strong> No treatment effects</li><li><strong>MSB estimates:</strong> σ² + 0 = σ²</li><li><strong>Expected F:</strong> MSB/MSW ≈ σ²/σ² = 1</li></ol></div>`
+            },
+            {
+                question: "What does MSB estimate when H₀ is false?",
+                correctAnswers: ["σ² + treatment effects", "inflated variance", "larger than σ²"],
+                hint: "Think about what happens with treatment effects",
+                explanation: "When H₀ is false, MSB estimates σ² plus treatment effects, making it larger than MSW.",
+                steps: `<div class="step-title">MSB Under H₁:</div><div class="step-content"><ol><li><strong>H₀ false:</strong> Treatment effects present</li><li><strong>MSB estimates:</strong> σ² + treatment effects</li><li><strong>Expected F:</strong> MSB/MSW > 1</li></ol></div>`
+            },
+            {
+                question: "What is the ANOVA table structure?",
+                correctAnswers: ["source SS df MS F p-value", "between within total", "organized summary"],
+                hint: "Think about the standard format",
+                explanation: "ANOVA table organizes SS, df, MS, F, and p-value by source (between, within, total).",
+                steps: `<div class="step-title">ANOVA Table:</div><div class="step-content"><ol><li><strong>Columns:</strong> Source, SS, df, MS, F, p-value</li><li><strong>Rows:</strong> Between, Within, Total</li><li><strong>Key result:</strong> F-statistic and p-value</li></ol></div>`
+            }
+        ];
+
+        const posthocQuestions = [
+            {
+                question: "When do you perform post-hoc tests?",
+                correctAnswers: ["after significant ANOVA", "when F-test rejects H₀", "following significant F"],
+                hint: "Think about the logical sequence",
+                explanation: "Perform post-hoc tests only after ANOVA F-test is significant.",
+                steps: `<div class="step-title">Post-hoc Sequence:</div><div class="step-content"><ol><li><strong>First:</strong> Conduct ANOVA F-test</li><li><strong>If significant:</strong> Proceed with post-hoc</li><li><strong>If not significant:</strong> Stop, no post-hoc needed</li></ol></div>`
+            },
+            {
+                question: "What is Tukey's HSD test?",
+                correctAnswers: ["honestly significant difference", "all pairwise comparisons", "controls FWER"],
+                hint: "Think about comprehensive pairwise testing",
+                explanation: "Tukey's HSD controls familywise error rate for all possible pairwise comparisons.",
+                steps: `<div class="step-title">Tukey's HSD:</div><div class="step-content"><ol><li><strong>Purpose:</strong> All pairwise comparisons</li><li><strong>Controls:</strong> Familywise error rate</li><li><strong>Uses:</strong> Studentized range distribution</li></ol></div>`
+            },
+            {
+                question: "What is familywise error rate (FWER)?",
+                correctAnswers: ["probability of any Type I error", "overall alpha level", "1 or more false positives"],
+                hint: "Think about multiple testing error",
+                explanation: "FWER is the probability of making one or more Type I errors across all tests.",
+                steps: `<div class="step-title">Familywise Error Rate:</div><div class="step-content"><ol><li><strong>Definition:</strong> P(≥1 Type I error)</li><li><strong>Problem:</strong> Increases with number of tests</li><li><strong>Control:</strong> Keep FWER ≤ α</li></ol></div>`
+            },
+            {
+                question: "What is Bonferroni correction?",
+                correctAnswers: ["divide α by number of tests", "conservative adjustment", "α/m"],
+                hint: "Think about simple alpha adjustment",
+                explanation: "Bonferroni uses α/m for each test, where m is the number of comparisons.",
+                steps: `<div class="step-title">Bonferroni Method:</div><div class="step-content"><ol><li><strong>Adjustment:</strong> Use α/m for each test</li><li><strong>Conservative:</strong> Very strict control</li><li><strong>Simple:</strong> Easy to apply</li></ol></div>`
+            },
+            {
+                question: "What is Scheffé's test?",
+                correctAnswers: ["most conservative", "any linear combination", "broadest coverage"],
+                hint: "Think about the most general test",
+                explanation: "Scheffé's test is most conservative, allowing any possible linear combination of means.",
+                steps: `<div class="step-title">Scheffé's Test:</div><div class="step-content"><ol><li><strong>Covers:</strong> Any linear combination of means</li><li><strong>Most conservative:</strong> Hardest to achieve significance</li><li><strong>Use when:</strong> Data-driven comparisons</li></ol></div>`
+            },
+            {
+                question: "What is Dunnett's test?",
+                correctAnswers: ["compare to control", "many-to-one", "control vs treatments"],
+                hint: "Think about control group comparisons",
+                explanation: "Dunnett's test compares multiple treatment groups to a single control group.",
+                steps: `<div class="step-title">Dunnett's Test:</div><div class="step-content"><ol><li><strong>Design:</strong> Multiple treatments vs one control</li><li><strong>Efficient:</strong> More power than other methods</li><li><strong>Use when:</strong> Clear control group exists</li></ol></div>`
+            },
+            {
+                question: "What is Fisher's LSD?",
+                correctAnswers: ["least significant difference", "liberal test", "unprotected"],
+                hint: "Think about liberal testing",
+                explanation: "Fisher's LSD is liberal, controlling only per-comparison error rate.",
+                steps: `<div class="step-title">Fisher's LSD:</div><div class="step-content"><ol><li><strong>Liberal:</strong> High power, less control</li><li><strong>Per-comparison:</strong> Each test at α level</li><li><strong>Use carefully:</strong> FWER not controlled</li></ol></div>`
+            },
+            {
+                question: "How many pairwise comparisons with k groups?",
+                correctAnswers: ["k(k-1)/2", "combinations", "C(k,2)"],
+                hint: "Think about choosing 2 groups from k",
+                explanation: "With k groups, there are k(k-1)/2 possible pairwise comparisons.",
+                steps: `<div class="step-title">Number of Comparisons:</div><div class="step-content"><ol><li><strong>Formula:</strong> C(k,2) = k(k-1)/2</li><li><strong>Example:</strong> 4 groups = 4×3/2 = 6 comparisons</li><li><strong>Grows quickly:</strong> More groups = many more tests</li></ol></div>`
+            },
+            {
+                question: "What is per-comparison error rate?",
+                correctAnswers: ["alpha for each individual test", "single test error", "α"],
+                hint: "Think about individual test error",
+                explanation: "Per-comparison error rate is the Type I error rate for each individual test.",
+                steps: `<div class="step-title">Per-comparison Rate:</div><div class="step-content"><ol><li><strong>Individual:</strong> Error rate for single test</li><li><strong>Typically:</strong> α = 0.05</li><li><strong>Problem:</strong> Overall rate higher with multiple tests</li></ol></div>`
+            },
+            {
+                question: "What are planned comparisons?",
+                correctAnswers: ["predetermined contrasts", "a priori", "theory-driven"],
+                hint: "Think about pre-specified tests",
+                explanation: "Planned comparisons are predetermined before seeing the data, based on theory.",
+                steps: `<div class="step-title">Planned Comparisons:</div><div class="step-content"><ol><li><strong>Predetermined:</strong> Before data collection</li><li><strong>Theory-driven:</strong> Based on hypotheses</li><li><strong>Less stringent:</strong> May not need ANOVA significance</li></ol></div>`
+            }
+        ];
+
+        const effectSizeQuestions = [
+            {
+                question: "What does eta-squared measure?",
+                correctAnswers: ["proportion of variance explained", "effect size", "R-squared"],
+                hint: "Think about variance explained",
+                explanation: "Eta-squared (η²) measures the proportion of total variance explained by group membership.",
+                steps: `<div class="step-title">Eta-squared:</div><div class="step-content"><ol><li><strong>Formula:</strong> η² = SSB/SST</li><li><strong>Range:</strong> 0 to 1</li><li><strong>Interpretation:</strong> Proportion variance explained</li></ol></div>`
+            },
+            {
+                question: "What is omega-squared?",
+                correctAnswers: ["unbiased effect size", "corrects for chance", "ω²"],
+                hint: "Think about bias-corrected eta-squared",
+                explanation: "Omega-squared is a less biased estimate of effect size than eta-squared.",
+                steps: `<div class="step-title">Omega-squared:</div><div class="step-content"><ol><li><strong>Formula:</strong> ω² = (SSB - (k-1)MSW)/(SST + MSW)</li><li><strong>Less biased:</strong> Corrects for sampling error</li><li><strong>Generally smaller:</strong> Than eta-squared</li></ol></div>`
+            },
+            {
+                question: "What is Cohen's f?",
+                correctAnswers: ["standardized effect size", "f = √(η²/(1-η²))", "power analysis"],
+                hint: "Think about standardized effect measure",
+                explanation: "Cohen's f is a standardized effect size used for ANOVA power analysis.",
+                steps: `<div class="step-title">Cohen's f:</div><div class="step-content"><ol><li><strong>Formula:</strong> f = √(η²/(1-η²))</li><li><strong>Use:</strong> Power analysis and sample size planning</li><li><strong>Conventions:</strong> 0.10 small, 0.25 medium, 0.40 large</li></ol></div>`
+            },
+            {
+                question: "What are Cohen's effect size conventions?",
+                correctAnswers: ["small medium large", "0.01 0.06 0.14", "guidelines"],
+                hint: "Think about general guidelines",
+                explanation: "Cohen suggested η² of 0.01 (small), 0.06 (medium), and 0.14 (large) as rough guidelines.",
+                steps: `<div class="step-title">Effect Size Guidelines:</div><div class="step-content"><ol><li><strong>Small:</strong> η² = 0.01 (1% variance)</li><li><strong>Medium:</strong> η² = 0.06 (6% variance)</li><li><strong>Large:</strong> η² = 0.14 (14% variance)</li></ol></div>`
+            },
+            {
+                question: "What is partial eta-squared?",
+                correctAnswers: ["SSB/(SSB + SSW)", "excludes other factors", "complex designs"],
+                hint: "Think about more complex designs",
+                explanation: "Partial eta-squared excludes variance from other factors, used in complex designs.",
+                steps: `<div class="step-title">Partial Eta-squared:</div><div class="step-content"><ol><li><strong>Formula:</strong> SSB/(SSB + SSW)</li><li><strong>Use:</strong> Factorial designs with multiple factors</li><li><strong>Interpretation:</strong> Variance explained by this factor alone</li></ol></div>`
+            },
+            {
+                question: "Why is effect size important?",
+                correctAnswers: ["practical significance", "magnitude of difference", "beyond p-values"],
+                hint: "Think about what significance doesn't tell you",
+                explanation: "Effect size tells us about practical significance and magnitude of differences.",
+                steps: `<div class="step-title">Importance of Effect Size:</div><div class="step-content"><ol><li><strong>Practical significance:</strong> Is the difference meaningful?</li><li><strong>Magnitude:</strong> How big is the effect?</li><li><strong>Sample size independent:</strong> Unlike p-values</li></ol></div>`
+            },
+            {
+                question: "What affects statistical power in ANOVA?",
+                correctAnswers: ["effect size sample size alpha", "ES n α", "multiple factors"],
+                hint: "Think about factors influencing power",
+                explanation: "Power depends on effect size, sample size, alpha level, and number of groups.",
+                steps: `<div class="step-title">Factors Affecting Power:</div><div class="step-content"><ol><li><strong>Effect size:</strong> Larger effects easier to detect</li><li><strong>Sample size:</strong> More observations increase power</li><li><strong>Alpha level:</strong> Higher α increases power</li></ol></div>`
+            },
+            {
+                question: "What is prospective power analysis?",
+                correctAnswers: ["sample size planning", "before data collection", "a priori"],
+                hint: "Think about planning studies",
+                explanation: "Prospective power analysis determines needed sample size before data collection.",
+                steps: `<div class="step-title">Prospective Power Analysis:</div><div class="step-content"><ol><li><strong>Purpose:</strong> Plan adequate sample size</li><li><strong>Inputs:</strong> Expected effect size, desired power, α</li><li><strong>Output:</strong> Required sample size per group</li></ol></div>`
+            },
+            {
+                question: "What is retrospective power analysis?",
+                correctAnswers: ["post-hoc power", "after data collection", "observed power"],
+                hint: "Think about analyzing completed studies",
+                explanation: "Retrospective power analysis examines power after data collection is complete.",
+                steps: `<div class="step-title">Retrospective Power Analysis:</div><div class="step-content"><ol><li><strong>Purpose:</strong> Understand study limitations</li><li><strong>Controversial:</strong> Some argue it's not useful</li><li><strong>Alternative:</strong> Focus on confidence intervals</li></ol></div>`
+            },
+            {
+                question: "How do you interpret eta-squared = 0.08?",
+                correctAnswers: ["8% variance explained", "medium effect", "moderately important"],
+                hint: "Think about proportion and conventions",
+                explanation: "η² = 0.08 means 8% of variance is explained by group membership - a medium effect.",
+                steps: `<div class="step-title">Interpreting η² = 0.08:</div><div class="step-content"><ol><li><strong>Variance explained:</strong> 8% due to groups</li><li><strong>Effect size:</strong> Medium (between 0.06 and 0.14)</li><li><strong>Practical:</strong> Moderately important difference</li></ol></div>`
+            }
+        ];
+
+        const alternativeQuestions = [
+            {
+                question: "What is Kruskal-Wallis test?",
+                correctAnswers: ["nonparametric ANOVA", "rank-based test", "alternative to ANOVA"],
+                hint: "Think about nonparametric alternatives",
+                explanation: "Kruskal-Wallis is the nonparametric alternative to one-way ANOVA using ranks.",
+                steps: `<div class="step-title">Kruskal-Wallis:</div><div class="step-content"><ol><li><strong>Uses:</strong> Ranks instead of raw values</li><li><strong>When:</strong> Normality assumption violated</li><li><strong>Tests:</strong> Equality of distributions</li></ol></div>`
+            },
+            {
+                question: "When do you use Welch's ANOVA?",
+                correctAnswers: ["unequal variances", "heteroscedasticity", "robust alternative"],
+                hint: "Think about variance assumption violations",
+                explanation: "Use Welch's ANOVA when groups have unequal variances (heteroscedasticity).",
+                steps: `<div class="step-title">Welch's ANOVA:</div><div class="step-content"><ol><li><strong>Problem:</strong> Unequal variances across groups</li><li><strong>Solution:</strong> Doesn't assume equal variances</li><li><strong>Robust:</strong> Better Type I error control</li></ol></div>`
+            },
+            {
+                question: "What is the median test?",
+                correctAnswers: ["compares medians", "nonparametric", "chi-square test"],
+                hint: "Think about testing medians instead of means",
+                explanation: "Median test compares group medians using chi-square distribution.",
+                steps: `<div class="step-title">Median Test:</div><div class="step-content"><ol><li><strong>Tests:</strong> Equality of medians</li><li><strong>Method:</strong> Count observations above/below overall median</li><li><strong>Distribution:</strong> Chi-square</li></ol></div>`
+            },
+            {
+                question: "What are permutation tests?",
+                correctAnswers: ["randomization tests", "exact p-values", "computational"],
+                hint: "Think about resampling methods",
+                explanation: "Permutation tests use randomization to generate exact p-values without distributional assumptions.",
+                steps: `<div class="step-title">Permutation Tests:</div><div class="step-content"><ol><li><strong>Method:</strong> Randomly reassign group labels</li><li><strong>Advantage:</strong> Exact p-values</li><li><strong>Computational:</strong> Requires computer for many permutations</li></ol></div>`
+            },
+            {
+                question: "What is Brown-Forsythe test?",
+                correctAnswers: ["robust equal variance test", "uses medians", "alternative to Levene"],
+                hint: "Think about robust variance testing",
+                explanation: "Brown-Forsythe test is a robust version of Levene's test using medians instead of means.",
+                steps: `<div class="step-title">Brown-Forsythe:</div><div class="step-content"><ol><li><strong>Purpose:</strong> Test equal variances</li><li><strong>Method:</strong> Absolute deviations from median</li><li><strong>More robust:</strong> Than original Levene's test</li></ol></div>`
+            },
+            {
+                question: "What is two-way ANOVA?",
+                correctAnswers: ["two factors", "factorial design", "interaction effects"],
+                hint: "Think about multiple factors",
+                explanation: "Two-way ANOVA examines effects of two factors and their interaction.",
+                steps: `<div class="step-title">Two-way ANOVA:</div><div class="step-content"><ol><li><strong>Two factors:</strong> Two categorical variables</li><li><strong>Main effects:</strong> Effect of each factor</li><li><strong>Interaction:</strong> Combined effect of both factors</li></ol></div>`
+            },
+            {
+                question: "What is repeated measures ANOVA?",
+                correctAnswers: ["within-subjects", "same subjects multiple times", "dependent observations"],
+                hint: "Think about measuring same subjects repeatedly",
+                explanation: "Repeated measures ANOVA analyzes data where same subjects are measured multiple times.",
+                steps: `<div class="step-title">Repeated Measures:</div><div class="step-content"><ol><li><strong>Design:</strong> Same subjects in all conditions</li><li><strong>Advantage:</strong> Controls individual differences</li><li><strong>Assumption:</strong> Sphericity (compound symmetry)</li></ol></div>`
+            },
+            {
+                question: "What is mixed effects ANOVA?",
+                correctAnswers: ["random and fixed effects", "multilevel", "hierarchical"],
+                hint: "Think about different types of effects",
+                explanation: "Mixed effects ANOVA includes both fixed effects (of interest) and random effects (nuisance).",
+                steps: `<div class="step-title">Mixed Effects:</div><div class="step-content"><ol><li><strong>Fixed effects:</strong> Factors of interest</li><li><strong>Random effects:</strong> Sampling factors</li><li><strong>Use:</strong> Hierarchical or clustered data</li></ol></div>`
+            },
+            {
+                question: "What is ANCOVA?",
+                correctAnswers: ["analysis of covariance", "includes covariates", "adjusts for confounders"],
+                hint: "Think about controlling for continuous variables",
+                explanation: "ANCOVA combines ANOVA with regression to control for continuous covariates.",
+                steps: `<div class="step-title">ANCOVA:</div><div class="step-content"><ol><li><strong>Combines:</strong> ANOVA + regression</li><li><strong>Covariates:</strong> Continuous control variables</li><li><strong>Purpose:</strong> Reduce error variance, control confounding</li></ol></div>`
+            },
+            {
+                question: "What is MANOVA?",
+                correctAnswers: ["multivariate ANOVA", "multiple dependent variables", "vector of outcomes"],
+                hint: "Think about multiple outcomes simultaneously",
+                explanation: "MANOVA analyzes multiple dependent variables simultaneously in one model.",
+                steps: `<div class="step-title">MANOVA:</div><div class="step-content"><ol><li><strong>Multiple DVs:</strong> Several outcomes at once</li><li><strong>Advantage:</strong> Controls experiment-wise error</li><li><strong>Complex:</strong> Requires multivariate assumptions</li></ol></div>`
+            }
+        ];
+        
+        // Generate question functions
+        function generateQuestion101() {
+            const randomIndex = Math.floor(Math.random() * introAnovaQuestions.length);
+            currentQuestion101 = introAnovaQuestions[randomIndex];
+            displayQuestion(101, currentQuestion101);
+        }
+        
+        function generateQuestion102() {
+            const randomIndex = Math.floor(Math.random() * anovaModelQuestions.length);
+            currentQuestion102 = anovaModelQuestions[randomIndex];
+            displayQuestion(102, currentQuestion102);
+        }
+        
+        function generateQuestion103() {
+            const randomIndex = Math.floor(Math.random() * anovaFTestQuestions.length);
+            currentQuestion103 = anovaFTestQuestions[randomIndex];
+            displayQuestion(103, currentQuestion103);
+        }
+        
+        function generateQuestion104() {
+            const randomIndex = Math.floor(Math.random() * posthocQuestions.length);
+            currentQuestion104 = posthocQuestions[randomIndex];
+            displayQuestion(104, currentQuestion104);
+        }
+        
+        function generateQuestion105() {
+            const randomIndex = Math.floor(Math.random() * effectSizeQuestions.length);
+            currentQuestion105 = effectSizeQuestions[randomIndex];
+            displayQuestion(105, currentQuestion105);
+        }
+        
+        function generateQuestion106() {
+            const randomIndex = Math.floor(Math.random() * alternativeQuestions.length);
+            currentQuestion106 = alternativeQuestions[randomIndex];
+            displayQuestion(106, currentQuestion106);
+        }
+
+        // Helper function to display questions
+        function displayQuestion(sectionNum, question) {
+            document.getElementById(`question-${sectionNum}-content`).innerHTML = question.question;
+            document.getElementById(`hint-${sectionNum}`).innerHTML = `💡 ${question.hint}`;
+            
+            document.getElementById(`answer-${sectionNum}`).value = '';
+            document.getElementById(`feedback-${sectionNum}`).style.display = 'none';
+            document.getElementById(`steps-${sectionNum}`).style.display = 'none';
+        }
+
+        // Check answer functions
+        function checkAnswer101() { checkAnswer(101, currentQuestion101); }
+        function checkAnswer102() { checkAnswer(102, currentQuestion102); }
+        function checkAnswer103() { checkAnswer(103, currentQuestion103); }
+        function checkAnswer104() { checkAnswer(104, currentQuestion104); }
+        function checkAnswer105() { checkAnswer(105, currentQuestion105); }
+        function checkAnswer106() { checkAnswer(106, currentQuestion106); }
+
+        // Show steps functions  
+        function showSteps101() { showSteps(101, currentQuestion101); }
+        function showSteps102() { showSteps(102, currentQuestion102); }
+        function showSteps103() { showSteps(103, currentQuestion103); }
+        function showSteps104() { showSteps(104, currentQuestion104); }
+        function showSteps105() { showSteps(105, currentQuestion105); }
+        function showSteps106() { showSteps(106, currentQuestion106); }
+
+        // Helper functions
+        function checkAnswer(sectionNum, currentQuestion) {
+            const userAnswer = document.getElementById(`answer-${sectionNum}`).value.toLowerCase().trim();
+            if (!currentQuestion) return;
+            
+            const isCorrect = currentQuestion.correctAnswers.some(answer => 
+                userAnswer.includes(answer.toLowerCase()) || answer.toLowerCase().includes(userAnswer)
+            );
+            
+            const feedbackElement = document.getElementById(`feedback-${sectionNum}`);
+            if (isCorrect) {
+                feedbackElement.innerHTML = `<div class="correct">✅ Correct! ${currentQuestion.explanation}</div>`;
+                feedbackElement.className = 'question-feedback correct-feedback';
+            } else {
+                feedbackElement.innerHTML = `<div class="incorrect">❌ Incorrect. ${currentQuestion.explanation}</div>`;
+                feedbackElement.className = 'question-feedback incorrect-feedback';
+            }
+            feedbackElement.style.display = 'block';
+        }
+
+        function showSteps(sectionNum, currentQuestion) {
+            if (!currentQuestion) return;
+            const stepsElement = document.getElementById(`steps-${sectionNum}`);
+            stepsElement.innerHTML = currentQuestion.steps;
+            stepsElement.style.display = 'block';
+        }
+
+        // Initialize on page load
+        window.onload = function() {
+            generateQuestion101();
+            generateQuestion102(); 
+            generateQuestion103();
+            generateQuestion104();
+            generateQuestion105();
+            generateQuestion106();
+        }
+    </script>
+</body>
+</html>
