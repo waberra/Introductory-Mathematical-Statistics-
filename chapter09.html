@@ -864,6 +864,62 @@
                 hint: "Think about the standardization formula",
                 explanation: "z = (X̄₁ - X̄₂)/sqrt(σ₁²/n₁ + σ₂²/n₂) standardizes the difference.",
                 steps: `<div class="step-title">z-Statistic Formula:</div><div class="step-content"><ol><li><strong>Numerator:</strong> Difference in sample means</li><li><strong>Denominator:</strong> Standard error of difference</li><li><strong>SE:</strong> sqrt(σ₁²/n₁ + σ₂²/n₂)</li></ol></div>`
+            },
+            {
+                question: "What is the null hypothesis for two-sample z-test?",
+                correctAnswers: ["μ₁ = μ₂", "no difference in means", "μ₁ - μ₂ = 0"],
+                hint: "Think about what you're testing",
+                explanation: "H₀: μ₁ = μ₂ tests that population means are equal.",
+                steps: `<div class="step-title">Hypotheses:</div><div class="step-content"><ol><li><strong>H₀:</strong> μ₁ = μ₂</li><li><strong>H₁:</strong> μ₁ ≠ μ₂ (two-tailed)</li><li><strong>Or:</strong> μ₁ > μ₂ (one-tailed)</li></ol></div>`
+            },
+            {
+                question: "What distribution does the z-statistic follow?",
+                correctAnswers: ["standard normal", "N(0,1)", "normal with mean 0 variance 1"],
+                hint: "Think about the standard normal distribution",
+                explanation: "Under H₀, the z-statistic follows a standard normal distribution N(0,1).",
+                steps: `<div class="step-title">Distribution:</div><div class="step-content"><ol><li><strong>Under H₀:</strong> z ~ N(0,1)</li><li><strong>Critical values:</strong> ±1.96 for α = 0.05</li><li><strong>p-value:</strong> P(|Z| > |z|)</li></ol></div>`
+            },
+            {
+                question: "How do you calculate the standard error of difference?",
+                correctAnswers: ["√(σ₁²/n₁ + σ₂²/n₂)", "square root of sum of variances"],
+                hint: "Think about combining variances",
+                explanation: "Standard error = √(σ₁²/n₁ + σ₂²/n₂) combines sampling variances.",
+                steps: `<div class="step-title">Standard Error:</div><div class="step-content"><ol><li><strong>Formula:</strong> SE = √(σ₁²/n₁ + σ₂²/n₂)</li><li><strong>Variance 1:</strong> σ₁²/n₁</li><li><strong>Variance 2:</strong> σ₂²/n₂</li></ol></div>`
+            },
+            {
+                question: "What assumption is needed for independent samples?",
+                correctAnswers: ["observations are independent", "no pairing", "random samples"],
+                hint: "Think about sample independence",
+                explanation: "Observations within and between samples must be independent.",
+                steps: `<div class="step-title">Independence:</div><div class="step-content"><ol><li><strong>Within samples:</strong> No correlation within groups</li><li><strong>Between samples:</strong> No matching or pairing</li><li><strong>Random sampling:</strong> Representative samples</li></ol></div>`
+            },
+            {
+                question: "How do you interpret a significant z-test?",
+                correctAnswers: ["reject null hypothesis", "means are different", "evidence of difference"],
+                hint: "Think about what rejection means",
+                explanation: "Significant result means we reject H₀ and conclude population means are different.",
+                steps: `<div class="step-title">Interpretation:</div><div class="step-content"><ol><li><strong>Significant:</strong> Reject H₀, means differ</li><li><strong>Not significant:</strong> Fail to reject H₀</li><li><strong>Effect size:</strong> Consider practical significance</li></ol></div>`
+            },
+            {
+                question: "What is a confidence interval for the difference?",
+                correctAnswers: ["(X̄₁ - X̄₂) ± z_{α/2} × SE", "range for μ₁ - μ₂"],
+                hint: "Think about interval estimation",
+                explanation: "CI = (X̄₁ - X̄₂) ± z_{α/2}√(σ₁²/n₁ + σ₂²/n₂) estimates μ₁ - μ₂.",
+                steps: `<div class="step-title">Confidence Interval:</div><div class="step-content"><ol><li><strong>Point estimate:</strong> X̄₁ - X̄₂</li><li><strong>Margin of error:</strong> z_{α/2} × SE</li><li><strong>Interpretation:</strong> Plausible values for μ₁ - μ₂</li></ol></div>`
+            },
+            {
+                question: "When is pooling not appropriate?",
+                correctAnswers: ["unequal variances", "different populations", "independent samples"],
+                hint: "Think about when not to combine",
+                explanation: "Don't pool when variances are unequal or populations have different characteristics.",
+                steps: `<div class="step-title">No Pooling:</div><div class="step-content"><ol><li><strong>Unequal variances:</strong> σ₁² ≠ σ₂²</li><li><strong>Different populations:</strong> Distinct characteristics</li><li><strong>Use separate:</strong> Individual variance estimates</li></ol></div>`
+            },
+            {
+                question: "What is the power of a two-sample z-test?",
+                correctAnswers: ["probability of detecting difference", "1 - β", "avoiding Type II error"],
+                hint: "Think about detecting true differences",
+                explanation: "Power is the probability of correctly rejecting H₀ when means truly differ.",
+                steps: `<div class="step-title">Power:</div><div class="step-content"><ol><li><strong>Definition:</strong> P(reject H₀ | H₁ true)</li><li><strong>Factors:</strong> Effect size, sample size, α</li><li><strong>Increase:</strong> Larger n, bigger difference</li></ol></div>`
             }
         ];
 
@@ -881,6 +937,62 @@
                 hint: "Think about combining variance estimates",
                 explanation: "Pooled variance combines sample variances assuming equal population variances.",
                 steps: `<div class="step-title">Pooled Variance:</div><div class="step-content"><ol><li><strong>Formula:</strong> s²p = [(n₁-1)s₁² + (n₂-1)s₂²]/(n₁+n₂-2)</li><li><strong>Assumption:</strong> Equal population variances</li><li><strong>Weights:</strong> By degrees of freedom</li></ol></div>`
+            },
+            {
+                question: "What is Welch's t-test?",
+                correctAnswers: ["unequal variances t-test", "Satterthwaite approximation", "separate variances"],
+                hint: "Think about unequal variance assumption",
+                explanation: "Welch's t-test doesn't assume equal variances and uses adjusted degrees of freedom.",
+                steps: `<div class="step-title">Welch's t-Test:</div><div class="step-content"><ol><li><strong>Assumption:</strong> Unequal variances allowed</li><li><strong>SE:</strong> √(s₁²/n₁ + s₂²/n₂)</li><li><strong>df:</strong> Satterthwaite approximation</li></ol></div>`
+            },
+            {
+                question: "How do you test equal variances assumption?",
+                correctAnswers: ["F-test", "Levene's test", "variance ratio test"],
+                hint: "Think about testing homoscedasticity",
+                explanation: "Use F-test (F = s₁²/s₂²) or Levene's test to check equal variances assumption.",
+                steps: `<div class="step-title">Testing Equal Variances:</div><div class="step-content"><ol><li><strong>F-test:</strong> F = s₁²/s₂² (larger/smaller)</li><li><strong>Levene's test:</strong> More robust</li><li><strong>Decision:</strong> If violated, use Welch's</li></ol></div>`
+            },
+            {
+                question: "What are degrees of freedom for pooled t-test?",
+                correctAnswers: ["n₁ + n₂ - 2", "total sample size minus 2"],
+                hint: "Think about parameters estimated",
+                explanation: "df = n₁ + n₂ - 2 because we estimate two means from the combined sample.",
+                steps: `<div class="step-title">Degrees of Freedom:</div><div class="step-content"><ol><li><strong>Pooled:</strong> df = n₁ + n₂ - 2</li><li><strong>Logic:</strong> Two means estimated</li><li><strong>Total observations:</strong> n₁ + n₂</li></ol></div>`
+            },
+            {
+                question: "What is the formula for pooled t-statistic?",
+                correctAnswers: ["(X̄₁ - X̄₂)/(sp√(1/n₁ + 1/n₂))", "difference over pooled standard error"],
+                hint: "Think about using pooled variance",
+                explanation: "t = (X̄₁ - X̄₂)/(sp√(1/n₁ + 1/n₂)) uses pooled standard error.",
+                steps: `<div class="step-title">Pooled t-Statistic:</div><div class="step-content"><ol><li><strong>Numerator:</strong> Difference in means</li><li><strong>Denominator:</strong> sp√(1/n₁ + 1/n₂)</li><li><strong>sp:</strong> Pooled standard deviation</li></ol></div>`
+            },
+            {
+                question: "When is pooled t-test appropriate?",
+                correctAnswers: ["equal variances", "homoscedasticity", "σ₁² = σ₂²"],
+                hint: "Think about variance assumption",
+                explanation: "Use pooled t-test when population variances are equal (homoscedasticity).",
+                steps: `<div class="step-title">Pooled Appropriateness:</div><div class="step-content"><ol><li><strong>Assumption:</strong> σ₁² = σ₂²</li><li><strong>Test:</strong> F-test or Levene's</li><li><strong>If violated:</strong> Use Welch's t-test</li></ol></div>`
+            },
+            {
+                question: "What distribution does t-statistic follow?",
+                correctAnswers: ["t-distribution", "Student's t", "t with n₁+n₂-2 df"],
+                hint: "Think about the sampling distribution",
+                explanation: "Under H₀, t-statistic follows t-distribution with n₁ + n₂ - 2 degrees of freedom.",
+                steps: `<div class="step-title">t-Distribution:</div><div class="step-content"><ol><li><strong>Distribution:</strong> t_{n₁+n₂-2}</li><li><strong>Symmetric:</strong> Around zero</li><li><strong>Heavier tails:</strong> Than normal</li></ol></div>`
+            },
+            {
+                question: "How do you calculate confidence interval for difference?",
+                correctAnswers: ["(X̄₁ - X̄₂) ± t × SE", "point estimate ± margin of error"],
+                hint: "Think about t-based interval",
+                explanation: "CI = (X̄₁ - X̄₂) ± t_{α/2,df} × sp√(1/n₁ + 1/n₂) for mean difference.",
+                steps: `<div class="step-title">t-Confidence Interval:</div><div class="step-content"><ol><li><strong>Point estimate:</strong> X̄₁ - X̄₂</li><li><strong>Critical value:</strong> t_{α/2,df}</li><li><strong>Standard error:</strong> sp√(1/n₁ + 1/n₂)</li></ol></div>`
+            },
+            {
+                question: "What happens as sample size increases?",
+                correctAnswers: ["approaches z-test", "t approaches normal", "more precise estimates"],
+                hint: "Think about large sample behavior",
+                explanation: "As n increases, t-distribution approaches normal, and t-test approaches z-test.",
+                steps: `<div class="step-title">Large Sample Behavior:</div><div class="step-content"><ol><li><strong>t → z:</strong> As df → ∞</li><li><strong>SE decreases:</strong> More precision</li><li><strong>Power increases:</strong> Better detection</li></ol></div>`
             }
         ];
 
@@ -898,6 +1010,62 @@
                 hint: "Think about analyzing differences",
                 explanation: "t = d̄/(sd/sqrt(n)) where d̄ is mean difference and sd is standard deviation of differences.",
                 steps: `<div class="step-title">Paired t-Statistic:</div><div class="step-content"><ol><li><strong>d̄:</strong> Mean of differences di = x1i - x2i</li><li><strong>sd:</strong> Standard deviation of differences</li><li><strong>n:</strong> Number of pairs</li></ol></div>`
+            },
+            {
+                question: "What are the degrees of freedom for paired t-test?",
+                correctAnswers: ["n - 1", "number of pairs minus 1"],
+                hint: "Think about how many pairs you have",
+                explanation: "df = n - 1 where n is the number of pairs (not individual observations).",
+                steps: `<div class="step-title">Paired df:</div><div class="step-content"><ol><li><strong>df:</strong> n - 1</li><li><strong>n:</strong> Number of pairs</li><li><strong>One mean:</strong> Mean difference estimated</li></ol></div>`
+            },
+            {
+                question: "What is the null hypothesis for paired t-test?",
+                correctAnswers: ["μd = 0", "no difference", "mean difference is zero"],
+                hint: "Think about testing the mean difference",
+                explanation: "H₀: μd = 0 tests that the mean population difference equals zero.",
+                steps: `<div class="step-title">Paired Hypotheses:</div><div class="step-content"><ol><li><strong>H₀:</strong> μd = 0</li><li><strong>H₁:</strong> μd ≠ 0 (two-tailed)</li><li><strong>Or:</strong> μd > 0 (one-tailed)</li></ol></div>`
+            },
+            {
+                question: "What advantage does pairing provide?",
+                correctAnswers: ["controls individual differences", "increased power", "reduces variability"],
+                hint: "Think about what pairing eliminates",
+                explanation: "Pairing controls for individual differences, reducing variability and increasing power.",
+                steps: `<div class="step-title">Pairing Advantages:</div><div class="step-content"><ol><li><strong>Control:</strong> Individual differences removed</li><li><strong>Power:</strong> Smaller standard error</li><li><strong>Efficiency:</strong> Fewer subjects needed</li></ol></div>`
+            },
+            {
+                question: "How do you calculate the differences?",
+                correctAnswers: ["di = x1i - x2i", "first minus second", "before minus after"],
+                hint: "Think about the order of subtraction",
+                explanation: "Calculate di = x1i - x2i for each pair, keeping consistent order.",
+                steps: `<div class="step-title">Computing Differences:</div><div class="step-content"><ol><li><strong>Formula:</strong> di = x1i - x2i</li><li><strong>Consistent:</strong> Same order for all pairs</li><li><strong>Sign matters:</strong> Direction indicates which is larger</li></ol></div>`
+            },
+            {
+                question: "What assumption is needed for paired t-test?",
+                correctAnswers: ["differences are normal", "di ~ normal", "normality of differences"],
+                hint: "Think about what needs to be normal",
+                explanation: "The differences di must be approximately normally distributed.",
+                steps: `<div class="step-title">Normality Assumption:</div><div class="step-content"><ol><li><strong>Requirement:</strong> di ~ Normal</li><li><strong>Not required:</strong> Individual x1i, x2i normal</li><li><strong>Check:</strong> Plot histogram of differences</li></ol></div>`
+            },
+            {
+                question: "How do you construct confidence interval for μd?",
+                correctAnswers: ["d̄ ± t × (sd/sqrt(n))", "mean difference ± margin of error"],
+                hint: "Think about interval for mean difference",
+                explanation: "CI = d̄ ± t_{α/2,n-1} × (sd/sqrt(n)) gives interval for population mean difference.",
+                steps: `<div class="step-title">Paired CI:</div><div class="step-content"><ol><li><strong>Center:</strong> d̄ (sample mean difference)</li><li><strong>Critical value:</strong> t_{α/2,n-1}</li><li><strong>Standard error:</strong> sd/sqrt(n)</li></ol></div>`
+            },
+            {
+                question: "When is pairing inappropriate?",
+                correctAnswers: ["independent groups", "no natural matching", "different subjects"],
+                hint: "Think about when observations aren't related",
+                explanation: "Don't use paired test when observations are independent with no natural pairing.",
+                steps: `<div class="step-title">When Not to Pair:</div><div class="step-content"><ol><li><strong>Independent groups:</strong> Different subjects</li><li><strong>No matching:</strong> Random assignment</li><li><strong>Use:</strong> Two-sample t-test instead</li></ol></div>`
+            },
+            {
+                question: "What if differences are not normal?",
+                correctAnswers: ["use nonparametric test", "Wilcoxon signed-rank", "transform data"],
+                hint: "Think about alternatives to normality",
+                explanation: "If differences aren't normal, use Wilcoxon signed-rank test or transform data.",
+                steps: `<div class="step-title">Non-normal Differences:</div><div class="step-content"><ol><li><strong>Alternative:</strong> Wilcoxon signed-rank</li><li><strong>Transform:</strong> Log, square root</li><li><strong>Bootstrap:</strong> Modern alternative</li></ol></div>`
             }
         ];
 
@@ -915,6 +1083,62 @@
                 hint: "Think about combining both samples",
                 explanation: "Pooled proportion p̂ = (x₁ + x₂)/(n₁ + n₂) combines successes from both samples.",
                 steps: `<div class="step-title">Pooled Proportion:</div><div class="step-content"><ol><li><strong>Formula:</strong> p̂ = (x₁ + x₂)/(n₁ + n₂)</li><li><strong>Assumption:</strong> H₀: p₁ = p₂</li><li><strong>Use:</strong> In standard error calculation</li></ol></div>`
+            },
+            {
+                question: "What is the test statistic for two proportions?",
+                correctAnswers: ["z = (p̂₁ - p̂₂)/SE", "difference over standard error"],
+                hint: "Think about standardizing proportion difference",
+                explanation: "z = (p̂₁ - p̂₂)/√[p̂(1-p̂)(1/n₁ + 1/n₂)] where p̂ is pooled proportion.",
+                steps: `<div class="step-title">z-Statistic for Proportions:</div><div class="step-content"><ol><li><strong>Numerator:</strong> p̂₁ - p̂₂</li><li><strong>SE:</strong> √[p̂(1-p̂)(1/n₁ + 1/n₂)]</li><li><strong>Distribution:</strong> Standard normal under H₀</li></ol></div>`
+            },
+            {
+                question: "What is the null hypothesis for proportion test?",
+                correctAnswers: ["p₁ = p₂", "no difference in proportions", "equal success rates"],
+                hint: "Think about what you're comparing",
+                explanation: "H₀: p₁ = p₂ tests that population proportions are equal.",
+                steps: `<div class="step-title">Proportion Hypotheses:</div><div class="step-content"><ol><li><strong>H₀:</strong> p₁ = p₂</li><li><strong>H₁:</strong> p₁ ≠ p₂ (two-tailed)</li><li><strong>Or:</strong> p₁ > p₂ (one-tailed)</li></ol></div>`
+            },
+            {
+                question: "What conditions are needed for normal approximation?",
+                correctAnswers: ["np ≥ 5 and n(1-p) ≥ 5", "success-failure rule", "large samples"],
+                hint: "Think about sample size requirements",
+                explanation: "Need np̂ ≥ 5 and n(1-p̂) ≥ 5 for both samples for normal approximation.",
+                steps: `<div class="step-title">Normal Approximation:</div><div class="step-content"><ol><li><strong>Condition:</strong> np̂ ≥ 5 and n(1-p̂) ≥ 5</li><li><strong>Both samples:</strong> Check for each group</li><li><strong>If violated:</strong> Use exact methods</li></ol></div>`
+            },
+            {
+                question: "Why do we pool proportions under H₀?",
+                correctAnswers: ["assume equal proportions", "best estimate", "common population"],
+                hint: "Think about the null hypothesis assumption",
+                explanation: "Under H₀: p₁ = p₂, both samples come from populations with same proportion.",
+                steps: `<div class="step-title">Pooling Logic:</div><div class="step-content"><ol><li><strong>H₀ assumption:</strong> p₁ = p₂</li><li><strong>Combined data:</strong> Better estimate</li><li><strong>Standard error:</strong> Uses pooled p̂</li></ol></div>`
+            },
+            {
+                question: "What is Fisher's exact test?",
+                correctAnswers: ["exact test for proportions", "small sample alternative", "hypergeometric distribution"],
+                hint: "Think about exact methods",
+                explanation: "Fisher's exact test provides exact p-values when normal approximation fails.",
+                steps: `<div class="step-title">Fisher's Exact:</div><div class="step-content"><ol><li><strong>Use:</strong> When normal approximation fails</li><li><strong>Distribution:</strong> Hypergeometric</li><li><strong>Exact:</strong> No approximation needed</li></ol></div>`
+            },
+            {
+                question: "How do you interpret significant proportion test?",
+                correctAnswers: ["proportions are different", "reject H₀", "evidence of difference"],
+                hint: "Think about statistical significance",
+                explanation: "Significant result means population proportions are significantly different.",
+                steps: `<div class="step-title">Interpretation:</div><div class="step-content"><ol><li><strong>Significant:</strong> Reject H₀, proportions differ</li><li><strong>Effect size:</strong> |p̂₁ - p̂₂|</li><li><strong>Practical:</strong> Consider magnitude of difference</li></ol></div>`
+            },
+            {
+                question: "What is confidence interval for difference in proportions?",
+                correctAnswers: ["(p̂₁ - p̂₂) ± z × SE", "don't use pooled proportion"],
+                hint: "Think about interval estimation",
+                explanation: "CI = (p̂₁ - p̂₂) ± z√(p̂₁(1-p̂₁)/n₁ + p̂₂(1-p̂₂)/n₂) - don't pool for CI.",
+                steps: `<div class="step-title">Proportion CI:</div><div class="step-content"><ol><li><strong>Point estimate:</strong> p̂₁ - p̂₂</li><li><strong>SE:</strong> √(p̂₁(1-p̂₁)/n₁ + p̂₂(1-p̂₂)/n₂)</li><li><strong>No pooling:</strong> Use separate proportions</li></ol></div>`
+            },
+            {
+                question: "When is continuity correction used?",
+                correctAnswers: ["discrete to continuous", "small samples", "better approximation"],
+                hint: "Think about discrete vs continuous",
+                explanation: "Continuity correction improves normal approximation to discrete binomial distribution.",
+                steps: `<div class="step-title">Continuity Correction:</div><div class="step-content"><ol><li><strong>When:</strong> Small to moderate samples</li><li><strong>Adjustment:</strong> ±0.5 to test statistic</li><li><strong>Improves:</strong> Normal approximation</li></ol></div>`
             }
         ];
 
@@ -932,6 +1156,62 @@
                 hint: "Think about the ratio of sample variances",
                 explanation: "F = s₁²/s₂² where larger variance goes in numerator for two-tailed test.",
                 steps: `<div class="step-title">F-Statistic:</div><div class="step-content"><ol><li><strong>Formula:</strong> F = s₁²/s₂²</li><li><strong>Convention:</strong> Larger in numerator</li><li><strong>Always positive:</strong> Ratio of variances</li></ol></div>`
+            },
+            {
+                question: "What distribution does F-statistic follow?",
+                correctAnswers: ["F-distribution", "F(df₁, df₂)", "two degrees of freedom"],
+                hint: "Think about the sampling distribution",
+                explanation: "Under H₀, F follows F-distribution with df₁ = n₁-1 and df₂ = n₂-1.",
+                steps: `<div class="step-title">F-Distribution:</div><div class="step-content"><ol><li><strong>Distribution:</strong> F(n₁-1, n₂-1)</li><li><strong>Right-skewed:</strong> Always positive</li><li><strong>Two parameters:</strong> df₁ and df₂</li></ol></div>`
+            },
+            {
+                question: "What assumption does F-test require?",
+                correctAnswers: ["normality", "normal populations", "both samples normal"],
+                hint: "Think about distributional assumptions",
+                explanation: "F-test requires both populations to be normally distributed - very sensitive to violations.",
+                steps: `<div class="step-title">F-Test Assumptions:</div><div class="step-content"><ol><li><strong>Normality:</strong> Both populations normal</li><li><strong>Independence:</strong> Samples independent</li><li><strong>Sensitive:</strong> Violations affect results</li></ol></div>`
+            },
+            {
+                question: "What is Levene's test?",
+                correctAnswers: ["robust test for equal variances", "absolute deviations", "less sensitive to normality"],
+                hint: "Think about robust alternatives",
+                explanation: "Levene's test uses absolute deviations from group medians - more robust than F-test.",
+                steps: `<div class="step-title">Levene's Test:</div><div class="step-content"><ol><li><strong>Uses:</strong> |xi - median|</li><li><strong>Robust:</strong> Less sensitive to non-normality</li><li><strong>Alternative:</strong> To F-test</li></ol></div>`
+            },
+            {
+                question: "How do you conduct two-tailed F-test?",
+                correctAnswers: ["put larger variance in numerator", "compare to F_{α/2}", "reject if F > critical"],
+                hint: "Think about two-tailed procedure",
+                explanation: "Put larger variance in numerator, reject if F > F_{α/2, df₁, df₂}.",
+                steps: `<div class="step-title">Two-tailed F-test:</div><div class="step-content"><ol><li><strong>Setup:</strong> F = s²larger/s²smaller</li><li><strong>Critical value:</strong> F_{α/2, df₁, df₂}</li><li><strong>Decision:</strong> Reject if F > critical</li></ol></div>`
+            },
+            {
+                question: "What is Bartlett's test?",
+                correctAnswers: ["test multiple variances", "extension to k groups", "very sensitive"],
+                hint: "Think about testing more than two variances",
+                explanation: "Bartlett's test compares variances across multiple groups but is very sensitive to non-normality.",
+                steps: `<div class="step-title">Bartlett's Test:</div><div class="step-content"><ol><li><strong>Multiple groups:</strong> k > 2 variances</li><li><strong>H₀:</strong> All variances equal</li><li><strong>Very sensitive:</strong> To non-normality</li></ol></div>`
+            },
+            {
+                question: "Why is F-test not robust?",
+                correctAnswers: ["sensitive to non-normality", "outliers affect results", "variance sensitive"],
+                hint: "Think about robustness issues",
+                explanation: "F-test performance deteriorates badly with non-normal data or outliers.",
+                steps: `<div class="step-title">F-test Problems:</div><div class="step-content"><ol><li><strong>Non-normality:</strong> Inflated Type I error</li><li><strong>Outliers:</strong> Heavily influence variances</li><li><strong>Kurtosis:</strong> Heavy tails problematic</li></ol></div>`
+            },
+            {
+                question: "What is the pre-testing problem?",
+                correctAnswers: ["testing before choosing method", "inflated Type I error", "multiple testing"],
+                hint: "Think about testing assumptions first",
+                explanation: "Testing for equal variances before choosing analysis method inflates overall Type I error rate.",
+                steps: `<div class="step-title">Pre-testing Problem:</div><div class="step-content"><ol><li><strong>Issue:</strong> Test then choose method</li><li><strong>Result:</strong> Inflated α</li><li><strong>Solution:</strong> Use robust methods by default</li></ol></div>`
+            },
+            {
+                question: "What is modern recommendation for variance testing?",
+                correctAnswers: ["use Welch's by default", "avoid pre-testing", "robust methods"],
+                hint: "Think about best practices",
+                explanation: "Modern practice recommends using Welch's t-test by default rather than testing variances first.",
+                steps: `<div class="step-title">Modern Approach:</div><div class="step-content"><ol><li><strong>Default:</strong> Welch's t-test</li><li><strong>Avoid:</strong> Pre-testing variances</li><li><strong>Robust:</strong> Works for equal and unequal variances</li></ol></div>`
             }
         ];
 
@@ -949,6 +1229,62 @@
                 hint: "Think about rank-based alternatives",
                 explanation: "Mann-Whitney U test is nonparametric alternative to two-sample t-test using ranks.",
                 steps: `<div class="step-title">Mann-Whitney U:</div><div class="step-content"><ol><li><strong>Alternative to:</strong> Two-sample t-test</li><li><strong>Uses:</strong> Ranks instead of raw data</li><li><strong>Equivalent:</strong> Wilcoxon rank-sum</li></ol></div>`
+            },
+            {
+                question: "How do you compute Mann-Whitney U statistic?",
+                correctAnswers: ["rank all observations", "sum ranks by group", "U = R - n(n+1)/2"],
+                hint: "Think about ranking procedure",
+                explanation: "Rank all observations together, sum ranks for each group, compute U = R₁ - n₁(n₁+1)/2.",
+                steps: `<div class="step-title">U Statistic:</div><div class="step-content"><ol><li><strong>Step 1:</strong> Rank all n₁ + n₂ observations</li><li><strong>Step 2:</strong> Sum ranks for group 1 (R₁)</li><li><strong>Step 3:</strong> U₁ = R₁ - n₁(n₁+1)/2</li></ol></div>`
+            },
+            {
+                question: "What is Wilcoxon signed-rank test?",
+                correctAnswers: ["paired nonparametric test", "signed ranks", "alternative to paired t-test"],
+                hint: "Think about paired data alternative",
+                explanation: "Wilcoxon signed-rank is nonparametric alternative to paired t-test using signed ranks.",
+                steps: `<div class="step-title">Signed-rank Test:</div><div class="step-content"><ol><li><strong>For:</strong> Paired data</li><li><strong>Uses:</strong> Ranks of |differences|</li><li><strong>Signs:</strong> Assigned based on difference direction</li></ol></div>`
+            },
+            {
+                question: "How do you handle ties in ranking?",
+                correctAnswers: ["assign average ranks", "midrank method", "tied values get same rank"],
+                hint: "Think about equal values",
+                explanation: "Assign tied observations the average of the ranks they would occupy.",
+                steps: `<div class="step-title">Handling Ties:</div><div class="step-content"><ol><li><strong>Identify:</strong> Equal values</li><li><strong>Average:</strong> Ranks they would occupy</li><li><strong>Assign:</strong> Same average rank to all ties</li></ol></div>`
+            },
+            {
+                question: "What is the null hypothesis for Mann-Whitney test?",
+                correctAnswers: ["identical distributions", "no systematic difference", "equal medians"],
+                hint: "Think about what's being compared",
+                explanation: "H₀: The two populations have identical distributions (or equal medians).",
+                steps: `<div class="step-title">Mann-Whitney H₀:</div><div class="step-content"><ol><li><strong>Strict:</strong> Identical distributions</li><li><strong>Weaker:</strong> Equal medians</li><li><strong>Alternative:</strong> Systematic difference</li></ol></div>`
+            },
+            {
+                question: "What is the efficiency of nonparametric tests?",
+                correctAnswers: ["about 95%", "asymptotic relative efficiency", "small loss of power"],
+                hint: "Think about power comparison",
+                explanation: "Nonparametric tests have ~95% efficiency compared to parametric when assumptions hold.",
+                steps: `<div class="step-title">Efficiency:</div><div class="step-content"><ol><li><strong>ARE:</strong> ~95% of parametric</li><li><strong>Robustness gain:</strong> Works when assumptions fail</li><li><strong>Trade-off:</strong> Slight power loss for robustness</li></ol></div>`
+            },
+            {
+                question: "When is normal approximation used for U statistic?",
+                correctAnswers: ["large samples", "n₁, n₂ > 10", "continuity correction"],
+                hint: "Think about large sample behavior",
+                explanation: "For large samples (n₁, n₂ > 10), U is approximately normal with known mean and variance.",
+                steps: `<div class="step-title">Normal Approximation:</div><div class="step-content"><ol><li><strong>When:</strong> Both n₁, n₂ > 10</li><li><strong>Mean:</strong> μᵤ = n₁n₂/2</li><li><strong>Variance:</strong> σ²ᵤ = n₁n₂(n₁+n₂+1)/12</li></ol></div>`
+            },
+            {
+                question: "What is Kruskal-Wallis test?",
+                correctAnswers: ["nonparametric ANOVA", "multiple groups", "rank-based"],
+                hint: "Think about extending to multiple groups",
+                explanation: "Kruskal-Wallis extends Mann-Whitney to compare more than two groups.",
+                steps: `<div class="step-title">Kruskal-Wallis:</div><div class="step-content"><ol><li><strong>Extension:</strong> k > 2 groups</li><li><strong>Alternative:</strong> To one-way ANOVA</li><li><strong>Uses:</strong> Rank sums</li></ol></div>`
+            },
+            {
+                question: "What is the sign test?",
+                correctAnswers: ["simplest nonparametric test", "counts signs", "median test"],
+                hint: "Think about the most basic approach",
+                explanation: "Sign test only counts positive vs negative differences - simplest but least powerful.",
+                steps: `<div class="step-title">Sign Test:</div><div class="step-content"><ol><li><strong>Simplest:</strong> Only uses direction</li><li><strong>Counts:</strong> + vs - signs</li><li><strong>Less powerful:</strong> Than signed-rank</li></ol></div>`
             }
         ];
 
