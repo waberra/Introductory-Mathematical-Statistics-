@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 12: Regression and Correlation | Larsen & Marx Mathematical Statistics</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    
+    <style>
+        :root {
+            --primary-color: #0277BD;
+            --primary-light: #0288D1;
+            --primary-dark: #01579B;
+            --secondary-color: #B3E5FC;
+            --accent-color: #03A9F4;
+            --background-color: #FAFAFA;
+            --text-color: #212121;
+            --card-background: #FFFFFF;
+            --border-color: #E0E0E0;
+            --success-color: #4CAF50;
+            --error-color: #F44336;
+            --warning-color: #FF9800;
+            --shadow: 0 2px 10px rgba(2, 119, 189, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 20px;
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .chapter-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .chapter-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .chapter-description {
+            font-size: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        .section {
+            background: var(--card-background);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-content {
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .concept-explanation {
+            background: linear-gradient(135deg, rgba(2, 119, 189, 0.05), rgba(3, 169, 244, 0.05));
+            border: 1px solid var(--primary-light);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .concept-explanation h4 {
+            color: var(--primary-dark);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .key-points {
+            background: var(--secondary-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .key-points h5 {
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .key-points ul {
+            margin-left: 1.5rem;
+        }
+
+        .key-points li {
+            margin-bottom: 0.3rem;
+        }
+
+        .math-formula {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .section-practice {
+            background: linear-gradient(135deg, rgba(2, 119, 189, 0.02), rgba(3, 169, 244, 0.02));
+            border: 2px solid var(--secondary-color);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .practice-question {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .question-number {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .regenerate-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .regenerate-btn:hover {
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .question-input-area {
+            margin-bottom: 1rem;
+        }
+
+        .input-label {
+            display: block;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(2, 119, 189, 0.1);
+        }
+
+        .input-hint {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .question-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .question-buttons button {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .check-btn {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .check-btn:hover {
+            background: #45A049;
+            transform: translateY(-1px);
+        }
+
+        .steps-btn {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .steps-btn:hover {
+            background: #F57C00;
+            transform: translateY(-1px);
+        }
+
+        .new-question-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .new-question-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .question-feedback {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .correct-feedback {
+            background: linear-gradient(135deg, #E8F5E8, #C8E6C9);
+            border: 1px solid var(--success-color);
+            color: #2E7D32;
+        }
+
+        .incorrect-feedback {
+            background: linear-gradient(135deg, #FFEBEE, #FFCDD2);
+            border: 1px solid var(--error-color);
+            color: #C62828;
+        }
+
+        .question-steps {
+            background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+            border: 1px solid var(--warning-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .step-title {
+            font-weight: 700;
+            color: var(--warning-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .step-content {
+            line-height: 1.6;
+        }
+
+        .step-content ol {
+            padding-left: 1.5rem;
+        }
+
+        .step-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .chapter-title {
+                font-size: 2rem;
+            }
+            
+            .question-buttons {
+                flex-direction: column;
+            }
+            
+            .question-buttons button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="chapter-title">📈 Chapter 12: Regression and Correlation</h1>
+            <p class="chapter-subtitle">Modeling Relationships Between Variables</p>
+            <p class="chapter-description">
+                Master linear regression and correlation analysis for understanding relationships between continuous variables. 
+                Learn simple linear regression, correlation coefficients, model assumptions, diagnostics, and inference for comprehensive data modeling.
+            </p>
+        </header>
+
+        <!-- Section 12.1: Introduction to Regression and Correlation -->
+        <div class="section">
+            <h2 class="section-title">📈 12.1 Introduction to Regression and Correlation</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Regression and Correlation</h4>
+                    <p>Regression and correlation move beyond comparing groups to modeling relationships between continuous variables. While correlation measures the strength and direction of linear association, regression models the relationship to make predictions and understand how one variable changes as another changes.</p>
+                    
+                    <p>These tools answer different but related questions: "How strongly are these variables related?" (correlation) and "How can I predict one variable from another?" (regression). Both are fundamental for understanding patterns in data and making informed decisions based on those patterns.</p>
+
+                    <div class="key-points">
+                        <h5>Key Concepts:</h5>
+                        <ul>
+                            <li><strong>Correlation:</strong> Measures strength and direction of linear relationship</li>
+                            <li><strong>Regression:</strong> Models relationship for prediction and explanation</li>
+                            <li><strong>Linear Relationship:</strong> Variables change together in a straight-line pattern</li>
+                            <li><strong>Causation vs Correlation:</strong> Association doesn't imply causation</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Key Distinction:</strong> Correlation is symmetric (r(X,Y) = r(Y,X)), while regression is asymmetric - we predict Y from X, designating one as the response variable and one as the explanatory variable.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Sample Correlation Coefficient:</strong><br>
+                    r = Σ(xᵢ - x̄)(yᵢ - ȳ) / √[Σ(xᵢ - x̄)²Σ(yᵢ - ȳ)²]
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Applications and Interpretation</h4>
+                    <p>Regression and correlation are used across disciplines for understanding relationships, making predictions, and testing theories about how variables are connected.</p>
+
+                    <div class="key-points">
+                        <h5>Common Applications:</h5>
+                        <ul>
+                            <li><strong>Economics:</strong> Income vs education, supply vs demand relationships</li>
+                            <li><strong>Medicine:</strong> Drug dose vs response, risk factor relationships</li>
+                            <li><strong>Psychology:</strong> Test score relationships, behavior predictors</li>
+                            <li><strong>Business:</strong> Sales vs advertising, price vs demand</li>
+                            <li><strong>Science:</strong> Physical relationships, experimental data analysis</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Interpretation Guidelines:</strong> Strong correlation (|r| > 0.7) suggests a useful linear relationship, but always examine scatterplots to understand the actual pattern in your data.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📈 Section 12.1 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Regression and Correlation Introduction Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion121()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-121-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-121">Your Answer:</label>
+                        <input type="text" id="answer-121" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer121()">
+                        <div class="input-hint" id="hint-121"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer121()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps121()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion121()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-121" style="display: none;"></div>
+                    <div class="question-steps" id="steps-121" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 12.2: Simple Linear Regression -->
+        <div class="section">
+            <h2 class="section-title">📈 12.2 Simple Linear Regression</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Simple Linear Regression</h4>
+                    <p>Simple linear regression models the relationship between a response variable (Y) and a single explanatory variable (X) using a straight line. The goal is to find the line that best fits the data, allowing us to predict Y values for given X values and understand how Y changes as X changes.</p>
+                    
+                    <p>The regression line minimizes the sum of squared residuals (differences between observed and predicted values). This "least squares" approach gives us the best linear unbiased estimates of the slope and intercept parameters.</p>
+
+                    <div class="key-points">
+                        <h5>Simple Linear Regression Components:</h5>
+                        <ul>
+                            <li><strong>Response Variable (Y):</strong> What we're trying to predict or explain</li>
+                            <li><strong>Explanatory Variable (X):</strong> What we're using to make predictions</li>
+                            <li><strong>Slope (β₁):</strong> Change in Y for one-unit increase in X</li>
+                            <li><strong>Intercept (β₀):</strong> Expected Y value when X = 0</li>
+                            <li><strong>Residuals (eᵢ):</strong> Differences between observed and predicted values</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Key Insight:</strong> The regression line passes through the point (x̄, ȳ), and the slope tells us the rate of change in Y per unit change in X.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Simple Linear Regression Model:</strong><br>
+                    Y = β₀ + β₁X + ε<br>
+                    where ε ~ N(0, σ²)
+                </div>
+
+                <div class="math-formula">
+                    <strong>Least Squares Estimates:</strong><br>
+                    b₁ = Σ(xᵢ - x̄)(yᵢ - ȳ) / Σ(xᵢ - x̄)²<br>
+                    b₀ = ȳ - b₁x̄
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Interpretation and Prediction</h4>
+                    <p>The fitted regression equation ŷ = b₀ + b₁x provides predictions and helps interpret relationships. The slope b₁ is particularly important as it quantifies the relationship strength and direction.</p>
+
+                    <div class="key-points">
+                        <h5>Interpreting Regression Results:</h5>
+                        <ul>
+                            <li><strong>Slope Interpretation:</strong> "For each one-unit increase in X, Y increases by b₁ units on average"</li>
+                            <li><strong>Intercept Interpretation:</strong> "When X = 0, the predicted Y value is b₀" (if X = 0 is meaningful)</li>
+                            <li><strong>Prediction:</strong> ŷ = b₀ + b₁x gives predicted Y for any X value</li>
+                            <li><strong>Residuals:</strong> eᵢ = yᵢ - ŷᵢ show prediction errors</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Extrapolation Warning:</strong> Be cautious about making predictions outside the range of observed X values, as the linear relationship may not hold.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📈 Section 12.2 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Simple Linear Regression Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion122()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-122-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-122">Your Answer:</label>
+                        <input type="text" id="answer-122" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer122()">
+                        <div class="input-hint" id="hint-122"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer122()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps122()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion122()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-122" style="display: none;"></div>
+                    <div class="question-steps" id="steps-122" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 12.3: Regression Assumptions and Diagnostics -->
+        <div class="section">
+            <h2 class="section-title">📈 12.3 Regression Assumptions and Diagnostics</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Regression Assumptions</h4>
+                    <p>Linear regression relies on several key assumptions for valid inference. When these assumptions are violated, our tests, confidence intervals, and predictions may be unreliable. Diagnostic plots and tests help us assess whether assumptions are reasonably satisfied.</p>
+                    
+                    <p>The acronym "LINE" helps remember the main assumptions: Linearity, Independence, Normality, and Equal variance. Each assumption can be checked using specific diagnostic techniques.</p>
+
+                    <div class="key-points">
+                        <h5>Key Regression Assumptions (LINE):</h5>
+                        <ul>
+                            <li><strong>Linearity:</strong> True relationship between X and Y is linear</li>
+                            <li><strong>Independence:</strong> Observations are independent of each other</li>
+                            <li><strong>Normality:</strong> Residuals are normally distributed</li>
+                            <li><strong>Equal Variance:</strong> Residual variance is constant across all X values (homoscedasticity)</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Additional Considerations:</strong> No outliers with excessive influence, no measurement errors in X, and the model includes all relevant variables.</p>
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Diagnostic Methods</h4>
+                    <p>Various plots and tests help assess assumptions. Visual diagnostics are often more informative than formal tests, especially with large sample sizes where tests may be overly sensitive to minor violations.</p>
+
+                    <div class="key-points">
+                        <h5>Diagnostic Tools:</h5>
+                        <ul>
+                            <li><strong>Residual vs Fitted Plot:</strong> Check linearity and equal variance</li>
+                            <li><strong>QQ Plot of Residuals:</strong> Check normality assumption</li>
+                            <li><strong>Residual vs X Plot:</strong> Identify patterns in residuals</li>
+                            <li><strong>Scale-Location Plot:</strong> Check equal variance (homoscedasticity)</li>
+                            <li><strong>Cook's Distance:</strong> Identify influential observations</li>
+                            <li><strong>Leverage Values:</strong> Identify observations with extreme X values</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>What to Look For:</strong> Random scatter (good), curved patterns (linearity violation), funnel shapes (unequal variance), systematic departures from QQ line (non-normality).</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📈 Section 12.3 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Regression Assumptions and Diagnostics Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion123()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-123-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-123">Your Answer:</label>
+                        <input type="text" id="answer-123" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer123()">
+                        <div class="input-hint" id="hint-123"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer123()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps123()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion123()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-123" style="display: none;"></div>
+                    <div class="question-steps" id="steps-123" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 12.4: Correlation Analysis -->
+        <div class="section">
+            <h2 class="section-title">📈 12.4 Correlation Analysis</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Correlation</h4>
+                    <p>Correlation measures the strength and direction of linear relationship between two continuous variables. The sample correlation coefficient r ranges from -1 to +1, with values near 0 indicating weak linear relationship and values near ±1 indicating strong linear relationship.</p>
+                    
+                    <p>Correlation is symmetric (order doesn't matter) and unitless (unaffected by changes in scale). However, it only captures linear relationships - variables can have strong nonlinear relationships but low correlation.</p>
+
+                    <div class="key-points">
+                        <h5>Correlation Properties:</h5>
+                        <ul>
+                            <li><strong>Range:</strong> -1 ≤ r ≤ +1</li>
+                            <li><strong>Direction:</strong> Sign indicates positive or negative association</li>
+                            <li><strong>Strength:</strong> |r| indicates strength of linear relationship</li>
+                            <li><strong>Symmetric:</strong> r(X,Y) = r(Y,X)</li>
+                            <li><strong>Unitless:</strong> Unaffected by scale changes</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Important Limitation:</strong> Correlation measures only linear relationships. Variables can have strong curved relationships with r ≈ 0.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Population Correlation:</strong><br>
+                    ρ = Cov(X,Y) / (σₓσᵧ)<br>
+                    where Cov(X,Y) is the covariance
+                </div>
+
+                <div class="math-formula">
+                    <strong>Sample Correlation:</strong><br>
+                    r = sₓᵧ / (sₓsᵧ)<br>
+                    where sₓᵧ is the sample covariance
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Testing Correlation Significance</h4>
+                    <p>We can test whether the population correlation ρ is significantly different from zero (or any specified value). The test assumes bivariate normality for the (X,Y) pairs.</p>
+
+                    <div class="key-points">
+                        <h5>Correlation Test:</h5>
+                        <ul>
+                            <li><strong>Hypotheses:</strong> H₀: ρ = 0 vs H₁: ρ ≠ 0</li>
+                            <li><strong>Test Statistic:</strong> t = r√[(n-2)/(1-r²)]</li>
+                            <li><strong>Distribution:</strong> t ~ t(n-2) under H₀</li>
+                            <li><strong>Assumption:</strong> Bivariate normal distribution</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Interpretation Guidelines:</strong> |r| < 0.3 (weak), 0.3 ≤ |r| < 0.7 (moderate), |r| ≥ 0.7 (strong). However, practical significance depends on context.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📈 Section 12.4 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Correlation Analysis Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion124()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-124-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-124">Your Answer:</label>
+                        <input type="text" id="answer-124" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer124()">
+                        <div class="input-hint" id="hint-124"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer124()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps124()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion124()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-124" style="display: none;"></div>
+                    <div class="question-steps" id="steps-124" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 12.5: Inference in Regression -->
+        <div class="section">
+            <h2 class="section-title">📈 12.5 Inference in Regression</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Regression Inference</h4>
+                    <p>Inference in regression involves testing hypotheses about regression parameters and constructing confidence intervals for slopes, intercepts, mean responses, and individual predictions. These procedures help us determine if relationships are statistically significant and quantify uncertainty in our estimates.</p>
+                    
+                    <p>The most common test examines whether the slope is significantly different from zero, which is equivalent to testing whether there's a linear relationship between X and Y in the population.</p>
+
+                    <div class="key-points">
+                        <h5>Types of Regression Inference:</h5>
+                        <ul>
+                            <li><strong>Slope Testing:</strong> H₀: β₁ = 0 (no linear relationship)</li>
+                            <li><strong>Slope Confidence Intervals:</strong> Range of plausible slope values</li>
+                            <li><strong>Mean Response Intervals:</strong> CI for E(Y|X = x₀)</li>
+                            <li><strong>Prediction Intervals:</strong> PI for individual Y value at X = x₀</li>
+                            <li><strong>Overall Model Test:</strong> F-test for regression significance</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Key Distinction:</strong> Confidence intervals for mean response are narrower than prediction intervals for individual values, because individual predictions have more uncertainty.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Slope Test Statistic:</strong><br>
+                    t = (b₁ - 0) / SE(b₁)<br>
+                    where SE(b₁) = s / √Σ(xᵢ - x̄)²<br>
+                    Under H₀, t ~ t(n-2)
+                </div>
+
+                <div class="math-formula">
+                    <strong>Confidence Interval for Slope:</strong><br>
+                    b₁ ± t(α/2, n-2) × SE(b₁)
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Prediction vs Confidence Intervals</h4>
+                    <p>Understanding the difference between confidence intervals for mean response and prediction intervals for individual observations is crucial for proper interpretation.</p>
+
+                    <div class="key-points">
+                        <h5>Interval Types:</h5>
+                        <ul>
+                            <li><strong>CI for Mean Response:</strong> "We're 95% confident the average Y for this X is in this range"</li>
+                            <li><strong>PI for Individual:</strong> "We're 95% confident a single Y observation for this X is in this range"</li>
+                            <li><strong>Width Difference:</strong> PI is always wider than CI due to additional uncertainty</li>
+                            <li><strong>Both Narrowest:</strong> At x = x̄ (center of data)</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Practical Impact:</strong> Use confidence intervals when estimating population means, prediction intervals when forecasting individual values.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📈 Section 12.5 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Inference in Regression Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion125()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-125-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-125">Your Answer:</label>
+                        <input type="text" id="answer-125" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer125()">
+                        <div class="input-hint" id="hint-125"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer125()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps125()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion125()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-125" style="display: none;"></div>
+                    <div class="question-steps" id="steps-125" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 12.6: Model Assessment and R-squared -->
+        <div class="section">
+            <h2 class="section-title">📈 12.6 Model Assessment and R-squared</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Model Assessment</h4>
+                    <p>Assessing how well a regression model fits the data involves several measures and diagnostic procedures. R-squared is the most common measure, indicating the proportion of variance in Y explained by the linear relationship with X. However, model assessment goes beyond a single number.</p>
+                    
+                    <p>Good model assessment combines numerical measures (like R-squared) with visual diagnostics (residual plots) and practical considerations (interpretability, prediction accuracy). A high R-squared doesn't guarantee a good model if assumptions are violated.</p>
+
+                    <div class="key-points">
+                        <h5>Model Assessment Components:</h5>
+                        <ul>
+                            <li><strong>R-squared (r²):</strong> Proportion of variance explained</li>
+                            <li><strong>Residual Standard Error:</strong> Average prediction error</li>
+                            <li><strong>Diagnostic Plots:</strong> Visual assessment of assumptions</li>
+                            <li><strong>Outlier Analysis:</strong> Identify influential observations</li>
+                            <li><strong>Prediction Accuracy:</strong> How well model predicts new data</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Key Insight:</strong> R-squared measures explained variance but doesn't indicate whether the linear model is appropriate or assumptions are satisfied.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>R-squared (Coefficient of Determination):</strong><br>
+                    R² = SSR/SST = 1 - SSE/SST<br>
+                    where SSR = Σ(ŷᵢ - ȳ)², SSE = Σ(yᵢ - ŷᵢ)², SST = Σ(yᵢ - ȳ)²
+                </div>
+
+                <div class="math-formula">
+                    <strong>Residual Standard Error:</strong><br>
+                    s = √(SSE/(n-2))<br>
+                    Estimates σ, the standard deviation of residuals
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Interpreting R-squared and Its Limitations</h4>
+                    <p>R-squared ranges from 0 to 1, with higher values indicating better fit. However, it has important limitations and should be interpreted carefully in context.</p>
+
+                    <div class="key-points">
+                        <h5>R-squared Interpretation:</h5>
+                        <ul>
+                            <li><strong>Range:</strong> 0 ≤ R² ≤ 1</li>
+                            <li><strong>Meaning:</strong> R² = 0.75 means "75% of Y variance is explained by X"</li>
+                            <li><strong>Perfect Fit:</strong> R² = 1 means all points on regression line</li>
+                            <li><strong>No Fit:</strong> R² = 0 means no linear relationship</li>
+                            <li><strong>Context Dependent:</strong> "Good" R² varies by field and application</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Important Limitations:</strong> R² increases with any added variables, doesn't indicate causation, and can be high even with poor model (wrong functional form, violated assumptions).</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📈 Section 12.6 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Model Assessment and R-squared Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion126()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-126-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-126">Your Answer:</label>
+                        <input type="text" id="answer-126" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer126()">
+                        <div class="input-hint" id="hint-126"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer126()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps126()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion126()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-126" style="display: none;"></div>
+                    <div class="question-steps" id="steps-126" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        // Current question tracking variables for all 6 sections
+        let currentQuestion121 = null, currentQuestion122 = null, currentQuestion123 = null;
+        let currentQuestion124 = null, currentQuestion125 = null, currentQuestion126 = null;
+
+        // Question arrays with 10 questions each
+        const introRegressionQuestions = [
+            {
+                question: "What is the difference between correlation and regression?",
+                correctAnswers: ["correlation measures strength regression predicts", "correlation symmetric regression asymmetric", "correlation association regression prediction"],
+                hint: "Think about their different purposes",
+                explanation: "Correlation measures strength of linear relationship; regression models relationship for prediction.",
+                steps: `<div class="step-title">Correlation vs Regression:</div><div class="step-content"><ol><li><strong>Correlation:</strong> Measures strength and direction (symmetric)</li><li><strong>Regression:</strong> Models relationship for prediction (asymmetric)</li><li><strong>Purpose:</strong> Correlation describes, regression predicts</li></ol></div>`
+            },
+            {
+                question: "What does the correlation coefficient measure?",
+                correctAnswers: ["strength and direction of linear relationship", "linear association", "how variables co-vary"],
+                hint: "Think about what r quantifies",
+                explanation: "Correlation coefficient measures the strength and direction of linear relationship between two variables.",
+                steps: `<div class="step-title">Correlation Coefficient:</div><div class="step-content"><ol><li><strong>Strength:</strong> |r| close to 1 = strong relationship</li><li><strong>Direction:</strong> Sign indicates positive or negative</li><li><strong>Linear only:</strong> Measures linear relationships</li></ol></div>`
+            },
+            {
+                question: "What is the range of the correlation coefficient?",
+                correctAnswers: ["-1 to 1", "-1 ≤ r ≤ 1", "between -1 and +1"],
+                hint: "Think about the possible values",
+                explanation: "Correlation coefficient r ranges from -1 to +1, with 0 indicating no linear relationship.",
+                steps: `<div class="step-title">Correlation Range:</div><div class="step-content"><ol><li><strong>Maximum:</strong> r = +1 (perfect positive)</li><li><strong>Minimum:</strong> r = -1 (perfect negative)</li><li><strong>No relationship:</strong> r = 0</li></ol></div>`
+            },
+            {
+                question: "Does correlation imply causation?",
+                correctAnswers: ["no", "never", "correlation is not causation"],
+                hint: "Think about the classic warning",
+                explanation: "No, correlation never implies causation. Association doesn't mean one variable causes the other.",
+                steps: `<div class="step-title">Correlation ≠ Causation:</div><div class="step-content"><ol><li><strong>Association only:</strong> Variables move together</li><li><strong>Not causation:</strong> Doesn't show cause-effect</li><li><strong>Other factors:</strong> Could explain relationship</li></ol></div>`
+            },
+            {
+                question: "What makes regression asymmetric?",
+                correctAnswers: ["predict Y from X", "response vs explanatory", "one variable predicts other"],
+                hint: "Think about prediction direction",
+                explanation: "Regression is asymmetric because we predict one variable (Y) from another (X).",
+                steps: `<div class="step-title">Regression Asymmetry:</div><div class="step-content"><ol><li><strong>Response variable:</strong> Y (what we predict)</li><li><strong>Explanatory variable:</strong> X (what we use to predict)</li><li><strong>Direction matters:</strong> Predicting Y from X ≠ predicting X from Y</li></ol></div>`
+            },
+            {
+                question: "What are common applications of regression?",
+                correctAnswers: ["prediction forecasting modeling", "economics medicine business", "understanding relationships"],
+                hint: "Think about practical uses",
+                explanation: "Regression is used for prediction, forecasting, modeling relationships in many fields.",
+                steps: `<div class="step-title">Regression Applications:</div><div class="step-content"><ol><li><strong>Prediction:</strong> Forecast future values</li><li><strong>Explanation:</strong> Understand relationships</li><li><strong>Fields:</strong> Economics, medicine, business, science</li></ol></div>`
+            },
+            {
+                question: "What does a correlation of r = 0 mean?",
+                correctAnswers: ["no linear relationship", "variables not linearly related", "no linear association"],
+                hint: "Think about what zero correlation indicates",
+                explanation: "r = 0 means no linear relationship, but variables could still have nonlinear relationships.",
+                steps: `<div class="step-title">Zero Correlation:</div><div class="step-content"><ol><li><strong>No linear relationship:</strong> Variables don't vary together linearly</li><li><strong>Still possible:</strong> Nonlinear relationships could exist</li><li><strong>Independence:</strong> Doesn't prove variables are independent</li></ol></div>`
+            },
+            {
+                question: "Is correlation affected by units of measurement?",
+                correctAnswers: ["no", "unitless", "scale invariant"],
+                hint: "Think about standardization",
+                explanation: "No, correlation is unitless and unaffected by changes in scale or units.",
+                steps: `<div class="step-title">Correlation Properties:</div><div class="step-content"><ol><li><strong>Unitless:</strong> No units of measurement</li><li><strong>Scale invariant:</strong> Unaffected by linear transformations</li><li><strong>Standardized:</strong> Based on standard deviations</li></ol></div>`
+            },
+            {
+                question: "What does strong positive correlation mean?",
+                correctAnswers: ["r close to +1", "variables increase together", "strong upward trend"],
+                hint: "Think about positive linear relationships",
+                explanation: "Strong positive correlation (r close to +1) means as one variable increases, the other tends to increase.",
+                steps: `<div class="step-title">Strong Positive Correlation:</div><div class="step-content"><ol><li><strong>Direction:</strong> Both variables move in same direction</li><li><strong>Strength:</strong> |r| close to 1</li><li><strong>Pattern:</strong> Clear upward trend in scatterplot</li></ol></div>`
+            },
+            {
+                question: "Can you have strong relationship but low correlation?",
+                correctAnswers: ["yes", "if nonlinear", "curved relationships"],
+                hint: "Think about nonlinear patterns",
+                explanation: "Yes, variables can have strong nonlinear relationships but low correlation (which measures only linear relationships).",
+                steps: `<div class="step-title">Nonlinear Relationships:</div><div class="step-content"><ol><li><strong>Strong relationship:</strong> Variables clearly related</li><li><strong>Low correlation:</strong> r measures only linear relationships</li><li><strong>Example:</strong> Perfectly curved relationship can have r = 0</li></ol></div>`
+            }
+        ];
+
+        const simpleRegressionQuestions = [
+            {
+                question: "What is the simple linear regression model?",
+                correctAnswers: ["Y = β₀ + β₁X + ε", "linear relationship with error", "straight line plus error"],
+                hint: "Think about the mathematical model",
+                explanation: "Simple linear regression model is Y = β₀ + β₁X + ε, where ε ~ N(0, σ²).",
+                steps: `<div class="step-title">Regression Model:</div><div class="step-content"><ol><li><strong>Y:</strong> Response variable</li><li><strong>β₀:</strong> Y-intercept</li><li><strong>β₁:</strong> Slope</li><li><strong>ε:</strong> Random error term</li></ol></div>`
+            },
+            {
+                question: "What does the slope β₁ represent?",
+                correctAnswers: ["change in Y per unit change in X", "rate of change", "rise over run"],
+                hint: "Think about interpretation of slope",
+                explanation: "The slope β₁ represents the change in Y for a one-unit increase in X.",
+                steps: `<div class="step-title">Slope Interpretation:</div><div class="step-content"><ol><li><strong>Definition:</strong> Change in Y per unit change in X</li><li><strong>Units:</strong> (units of Y)/(units of X)</li><li><strong>Direction:</strong> Positive = upward, negative = downward</li></ol></div>`
+            },
+            {
+                question: "What does the intercept β₀ represent?",
+                correctAnswers: ["Y value when X = 0", "y-intercept", "starting point"],
+                hint: "Think about where line crosses Y-axis",
+                explanation: "The intercept β₀ is the predicted Y value when X equals zero.",
+                steps: `<div class="step-title">Intercept Interpretation:</div><div class="step-content"><ol><li><strong>Definition:</strong> Y value when X = 0</li><li><strong>Geometric:</strong> Where line crosses Y-axis</li><li><strong>Caution:</strong> May not be meaningful if X = 0 impossible</li></ol></div>`
+            },
+            {
+                question: "What is the least squares method?",
+                correctAnswers: ["minimize sum of squared residuals", "best fitting line", "minimize SSE"],
+                hint: "Think about how we find the best line",
+                explanation: "Least squares finds the line that minimizes the sum of squared residuals (differences).",
+                steps: `<div class="step-title">Least Squares:</div><div class="step-content"><ol><li><strong>Objective:</strong> Minimize Σ(yᵢ - ŷᵢ)²</li><li><strong>Result:</strong> Best linear unbiased estimates</li><li><strong>Unique:</strong> Only one line minimizes SSE</li></ol></div>`
+            },
+            {
+                question: "What are residuals?",
+                correctAnswers: ["observed minus predicted", "yᵢ - ŷᵢ", "prediction errors"],
+                hint: "Think about prediction errors",
+                explanation: "Residuals are the differences between observed and predicted values: eᵢ = yᵢ - ŷᵢ.",
+                steps: `<div class="step-title">Residuals:</div><div class="step-content"><ol><li><strong>Definition:</strong> eᵢ = yᵢ - ŷᵢ</li><li><strong>Interpretation:</strong> Prediction errors</li><li><strong>Use:</strong> Assess model fit and assumptions</li></ol></div>`
+            },
+            {
+                question: "How do you calculate the slope estimate b₁?",
+                correctAnswers: ["Σ(x-x̄)(y-ȳ)/Σ(x-x̄)²", "covariance over variance", "sxy/sxx"],
+                hint: "Think about the least squares formula",
+                explanation: "Slope estimate: b₁ = Σ(xᵢ-x̄)(yᵢ-ȳ)/Σ(xᵢ-x̄)² = sxy/sxx.",
+                steps: `<div class="step-title">Slope Calculation:</div><div class="step-content"><ol><li><strong>Numerator:</strong> Sum of cross-products</li><li><strong>Denominator:</strong> Sum of squared X deviations</li><li><strong>Interpretation:</strong> Sample covariance/sample variance</li></ol></div>`
+            },
+            {
+                question: "How do you calculate the intercept estimate b₀?",
+                correctAnswers: ["ȳ - b₁x̄", "y-mean minus slope times x-mean"],
+                hint: "Think about the point the line passes through",
+                explanation: "Intercept estimate: b₀ = ȳ - b₁x̄. The line always passes through (x̄, ȳ).",
+                steps: `<div class="step-title">Intercept Calculation:</div><div class="step-content"><ol><li><strong>Formula:</strong> b₀ = ȳ - b₁x̄</li><li><strong>Ensures:</strong> Line passes through (x̄, ȳ)</li><li><strong>Always true:</strong> ŷ = ȳ when x = x̄</li></ol></div>`
+            },
+            {
+                question: "What is the fitted regression line equation?",
+                correctAnswers: ["ŷ = b₀ + b₁x", "predicted y equals intercept plus slope times x"],
+                hint: "Think about the prediction equation",
+                explanation: "The fitted line is ŷ = b₀ + b₁x, used for making predictions.",
+                steps: `<div class="step-title">Fitted Line:</div><div class="step-content"><ol><li><strong>Equation:</strong> ŷ = b₀ + b₁x</li><li><strong>Use:</strong> Predict Y for any X value</li><li><strong>Estimates:</strong> Use sample estimates b₀, b₁</li></ol></div>`
+            },
+            {
+                question: "What is extrapolation in regression?",
+                correctAnswers: ["predicting outside observed range", "beyond data range", "dangerous prediction"],
+                hint: "Think about predicting beyond your data",
+                explanation: "Extrapolation is predicting Y for X values outside the observed range - potentially unreliable.",
+                steps: `<div class="step-title">Extrapolation:</div><div class="step-content"><ol><li><strong>Definition:</strong> Prediction outside observed X range</li><li><strong>Risk:</strong> Linear relationship may not hold</li><li><strong>Caution:</strong> Uncertainty increases dramatically</li></ol></div>`
+            },
+            {
+                question: "Does the regression line pass through (x̄, ȳ)?",
+                correctAnswers: ["yes", "always", "by construction"],
+                hint: "Think about a mathematical property",
+                explanation: "Yes, the regression line always passes through the point (x̄, ȳ) by construction.",
+                steps: `<div class="step-title">Line Through Means:</div><div class="step-content"><ol><li><strong>Always true:</strong> Line passes through (x̄, ȳ)</li><li><strong>Proof:</strong> When x = x̄, ŷ = b₀ + b₁x̄ = ȳ</li><li><strong>Property:</strong> Result of least squares method</li></ol></div>`
+            }
+        ];
+
+        const assumptionsQuestions = [
+            {
+                question: "What are the main regression assumptions (LINE)?",
+                correctAnswers: ["linearity independence normality equal variance", "LINE assumptions", "linear independent normal equal"],
+                hint: "Think about the acronym LINE",
+                explanation: "LINE: Linearity, Independence, Normality (of residuals), Equal variance (homoscedasticity).",
+                steps: `<div class="step-title">LINE Assumptions:</div><div class="step-content"><ol><li><strong>L:</strong> Linearity of relationship</li><li><strong>I:</strong> Independence of observations</li><li><strong>N:</strong> Normality of residuals</li><li><strong>E:</strong> Equal variance (homoscedasticity)</li></ol></div>`
+            },
+            {
+                question: "How do you check the linearity assumption?",
+                correctAnswers: ["scatterplot", "residuals vs fitted plot", "visual inspection"],
+                hint: "Think about plotting the data",
+                explanation: "Check linearity with scatterplot of Y vs X or residuals vs fitted values plot.",
+                steps: `<div class="step-title">Checking Linearity:</div><div class="step-content"><ol><li><strong>Scatterplot:</strong> Y vs X shows overall pattern</li><li><strong>Residual plot:</strong> Residuals vs fitted shows deviations</li><li><strong>Look for:</strong> Curved patterns indicate non-linearity</li></ol></div>`
+            },
+            {
+                question: "How do you check the normality assumption?",
+                correctAnswers: ["QQ plot of residuals", "histogram of residuals", "Shapiro-Wilk test"],
+                hint: "Think about examining residuals",
+                explanation: "Check normality using QQ plot of residuals, histogram of residuals, or normality tests.",
+                steps: `<div class="step-title">Checking Normality:</div><div class="step-content"><ol><li><strong>QQ plot:</strong> Residuals should follow straight line</li><li><strong>Histogram:</strong> Residuals should be bell-shaped</li><li><strong>Tests:</strong> Shapiro-Wilk, Anderson-Darling</li></ol></div>`
+            },
+            {
+                question: "How do you check equal variance assumption?",
+                correctAnswers: ["residuals vs fitted plot", "scale-location plot", "look for funnel shape"],
+                hint: "Think about variance patterns",
+                explanation: "Check equal variance with residuals vs fitted plot - look for funnel shapes or patterns.",
+                steps: `<div class="step-title">Checking Equal Variance:</div><div class="step-content"><ol><li><strong>Residual plot:</strong> Plot residuals vs fitted values</li><li><strong>Pattern:</strong> Random scatter = good</li><li><strong>Problems:</strong> Funnel shape = unequal variance</li></ol></div>`
+            },
+            {
+                question: "What is homoscedasticity?",
+                correctAnswers: ["equal variance", "constant variance", "uniform spread"],
+                hint: "Think about variance being the same",
+                explanation: "Homoscedasticity means equal variance of residuals across all X values.",
+                steps: `<div class="step-title">Homoscedasticity:</div><div class="step-content"><ol><li><strong>Definition:</strong> Equal variance of residuals</li><li><strong>Assumption:</strong> Var(ε) = σ² for all X</li><li><strong>Opposite:</strong> Heteroscedasticity (unequal variance)</li></ol></div>`
+            },
+            {
+                question: "What is an outlier in regression?",
+                correctAnswers: ["unusual observation", "extreme residual", "doesn't fit pattern"],
+                hint: "Think about observations that don't fit",
+                explanation: "An outlier is an observation with an unusually large residual that doesn't fit the pattern.",
+                steps: `<div class="step-title">Outliers:</div><div class="step-content"><ol><li><strong>Large residual:</strong> |eᵢ| much larger than others</li><li><strong>Unusual Y:</strong> Given its X value</li><li><strong>Impact:</strong> Can affect fitted line</li></ol></div>`
+            },
+            {
+                question: "What is leverage in regression?",
+                correctAnswers: ["measure of X extremeness", "how far X is from x̄", "potential influence"],
+                hint: "Think about extreme X values",
+                explanation: "Leverage measures how far an X value is from the mean - high leverage = potential influence.",
+                steps: `<div class="step-title">Leverage:</div><div class="step-content"><ol><li><strong>Definition:</strong> Measure of X extremeness</li><li><strong>High leverage:</strong> X far from x̄</li><li><strong>Potential:</strong> Could influence fitted line</li></ol></div>`
+            },
+            {
+                question: "What is Cook's distance?",
+                correctAnswers: ["measures influence", "combines leverage and residual", "overall influence measure"],
+                hint: "Think about overall influence",
+                explanation: "Cook's distance measures overall influence by combining leverage and residual size.",
+                steps: `<div class="step-title">Cook's Distance:</div><div class="step-content"><ol><li><strong>Combines:</strong> Leverage and residual size</li><li><strong>High values:</strong> Influential observations</li><li><strong>Cutoff:</strong> Often use 4/(n-2) as threshold</li></ol></div>`
+            },
+            {
+                question: "What happens if assumptions are violated?",
+                correctAnswers: ["invalid inference", "unreliable tests", "biased estimates"],
+                hint: "Think about consequences",
+                explanation: "Violated assumptions can lead to invalid tests, unreliable confidence intervals, and biased estimates.",
+                steps: `<div class="step-title">Assumption Violations:</div><div class="step-content"><ol><li><strong>Tests:</strong> Incorrect p-values</li><li><strong>Intervals:</strong> Wrong coverage probability</li><li><strong>Estimates:</strong> May be biased or inefficient</li></ol></div>`
+            },
+            {
+                question: "What diagnostic plots are most important?",
+                correctAnswers: ["residuals vs fitted", "QQ plot", "residual plots"],
+                hint: "Think about essential plots",
+                explanation: "Most important: residuals vs fitted (linearity, equal variance) and QQ plot (normality).",
+                steps: `<div class="step-title">Key Diagnostic Plots:</div><div class="step-content"><ol><li><strong>Residuals vs fitted:</strong> Check linearity and equal variance</li><li><strong>QQ plot:</strong> Check normality</li><li><strong>Scale-location:</strong> Check equal variance</li></ol></div>`
+            }
+        ];
+
+        const correlationQuestions = [
+            {
+                question: "What is the population correlation coefficient?",
+                correctAnswers: ["ρ (rho)", "Cov(X,Y)/(σxσy)", "population parameter"],
+                hint: "Think about the population parameter",
+                explanation: "Population correlation ρ = Cov(X,Y)/(σxσy) measures linear association in the population.",
+                steps: `<div class="step-title">Population Correlation:</div><div class="step-content"><ol><li><strong>Symbol:</strong> ρ (rho)</li><li><strong>Formula:</strong> Cov(X,Y)/(σxσy)</li><li><strong>Parameter:</strong> Unknown, estimated by sample r</li></ol></div>`
+            },
+            {
+                question: "How do you test if correlation is significant?",
+                correctAnswers: ["t-test", "H₀: ρ = 0", "t = r√[(n-2)/(1-r²)]"],
+                hint: "Think about hypothesis testing",
+                explanation: "Test H₀: ρ = 0 using t = r√[(n-2)/(1-r²)] with t(n-2) distribution.",
+                steps: `<div class="step-title">Correlation Test:</div><div class="step-content"><ol><li><strong>Hypotheses:</strong> H₀: ρ = 0 vs H₁: ρ ≠ 0</li><li><strong>Test statistic:</strong> t = r√[(n-2)/(1-r²)]</li><li><strong>Distribution:</strong> t with n-2 degrees freedom</li></ol></div>`
+            },
+            {
+                question: "What assumption is needed for correlation test?",
+                correctAnswers: ["bivariate normality", "normal distribution", "(X,Y) jointly normal"],
+                hint: "Think about distributional assumptions",
+                explanation: "Correlation test assumes (X,Y) follows a bivariate normal distribution.",
+                steps: `<div class="step-title">Correlation Assumptions:</div><div class="step-content"><ol><li><strong>Bivariate normal:</strong> (X,Y) jointly normal</li><li><strong>Linear relationship:</strong> Only measures linear association</li><li><strong>Continuous variables:</strong> Not for categorical data</li></ol></div>`
+            },
+            {
+                question: "What does r = 0.8 mean?",
+                correctAnswers: ["strong positive correlation", "80% linear association", "variables increase together"],
+                hint: "Think about strength and direction",
+                explanation: "r = 0.8 indicates a strong positive linear correlation - variables tend to increase together.",
+                steps: `<div class="step-title">Interpreting r = 0.8:</div><div class="step-content"><ol><li><strong>Strength:</strong> Strong (|r| > 0.7)</li><li><strong>Direction:</strong> Positive (both increase together)</li><li><strong>Practical:</strong> Useful predictive relationship</li></ol></div>`
+            },
+            {
+                question: "What does r = -0.3 mean?",
+                correctAnswers: ["weak negative correlation", "slight negative relationship", "inverse relationship"],
+                hint: "Think about negative relationship",
+                explanation: "r = -0.3 indicates a weak negative correlation - as one increases, other tends to decrease slightly.",
+                steps: `<div class="step-title">Interpreting r = -0.3:</div><div class="step-content"><ol><li><strong>Strength:</strong> Weak (|r| < 0.5)</li><li><strong>Direction:</strong> Negative (inverse relationship)</li><li><strong>Practical:</strong> Weak predictive value</li></ol></div>`
+            },
+            {
+                question: "Is correlation symmetric?",
+                correctAnswers: ["yes", "r(X,Y) = r(Y,X)", "order doesn't matter"],
+                hint: "Think about whether order matters",
+                explanation: "Yes, correlation is symmetric: r(X,Y) = r(Y,X) - order of variables doesn't matter.",
+                steps: `<div class="step-title">Correlation Symmetry:</div><div class="step-content"><ol><li><strong>Symmetric:</strong> r(X,Y) = r(Y,X)</li><li><strong>No direction:</strong> Doesn't indicate which causes which</li><li><strong>Contrast:</strong> Regression is asymmetric</li></ol></div>`
+            },
+            {
+                question: "What is the relationship between r and R²?",
+                correctAnswers: ["R² = r²", "R-squared equals r squared", "same in simple regression"],
+                hint: "Think about simple regression",
+                explanation: "In simple linear regression, R² = r² - both measure strength of linear relationship.",
+                steps: `<div class="step-title">r and R² Relationship:</div><div class="step-content"><ol><li><strong>Simple regression:</strong> R² = r²</li><li><strong>Both measure:</strong> Strength of linear relationship</li><li><strong>Range:</strong> 0 ≤ R² ≤ 1, -1 ≤ r ≤ 1</li></ol></div>`
+            },
+            {
+                question: "Can variables be related but have r = 0?",
+                correctAnswers: ["yes", "nonlinear relationships", "curved relationships"],
+                hint: "Think about nonlinear patterns",
+                explanation: "Yes, variables can have strong nonlinear relationships but r = 0 (correlation measures only linear relationships).",
+                steps: `<div class="step-title">r = 0 but Related:</div><div class="step-content"><ol><li><strong>Possible:</strong> Strong curved relationships</li><li><strong>Example:</strong> Y = X² can have r ≈ 0</li><li><strong>Limitation:</strong> Correlation only measures linear relationships</li></ol></div>`
+            },
+            {
+                question: "How do outliers affect correlation?",
+                correctAnswers: ["can inflate or deflate", "sensitive to outliers", "distort relationship"],
+                hint: "Think about sensitivity",
+                explanation: "Outliers can dramatically inflate or deflate correlation, distorting the apparent relationship.",
+                steps: `<div class="step-title">Outliers and Correlation:</div><div class="step-content"><ol><li><strong>Sensitive:</strong> Correlation affected by outliers</li><li><strong>Inflate:</strong> Outliers can create apparent correlation</li><li><strong>Deflate:</strong> Outliers can hide true correlation</li></ol></div>`
+            },
+            {
+                question: "What are guidelines for interpreting correlation strength?",
+                correctAnswers: ["|r| < 0.3 weak, 0.3-0.7 moderate, > 0.7 strong", "context dependent", "general guidelines"],
+                hint: "Think about common conventions",
+                explanation: "General guidelines: |r| < 0.3 (weak), 0.3 ≤ |r| < 0.7 (moderate), |r| ≥ 0.7 (strong), but context matters.",
+                steps: `<div class="step-title">Correlation Strength:</div><div class="step-content"><ol><li><strong>Weak:</strong> |r| < 0.3</li><li><strong>Moderate:</strong> 0.3 ≤ |r| < 0.7</li><li><strong>Strong:</strong> |r| ≥ 0.7</li><li><strong>Note:</strong> Context-dependent</li></ol></div>`
+            }
+        ];
+
+        const inferenceQuestions = [
+            {
+                question: "What is the most common regression hypothesis test?",
+                correctAnswers: ["test slope equals zero", "H₀: β₁ = 0", "test for linear relationship"],
+                hint: "Think about testing linear relationship",
+                explanation: "Most common test is H₀: β₁ = 0 vs H₁: β₁ ≠ 0 (testing for linear relationship).",
+                steps: `<div class="step-title">Slope Test:</div><div class="step-content"><ol><li><strong>H₀:</strong> β₁ = 0 (no linear relationship)</li><li><strong>H₁:</strong> β₁ ≠ 0 (linear relationship exists)</li><li><strong>Test:</strong> t = b₁/SE(b₁)</li></ol></div>`
+            },
+            {
+                question: "What is the standard error of the slope?",
+                correctAnswers: ["SE(b₁) = s/√Σ(x-x̄)²", "s over sqrt sum x deviations", "measures slope precision"],
+                hint: "Think about slope uncertainty",
+                explanation: "SE(b₁) = s/√Σ(xᵢ-x̄)² measures the precision of the slope estimate.",
+                steps: `<div class="step-title">Slope Standard Error:</div><div class="step-content"><ol><li><strong>Formula:</strong> SE(b₁) = s/√Σ(xᵢ-x̄)²</li><li><strong>s:</strong> Residual standard error</li><li><strong>Denominator:</strong> Larger spread in X = smaller SE</li></ol></div>`
+            },
+            {
+                question: "What is a confidence interval for the slope?",
+                correctAnswers: ["b₁ ± t*SE(b₁)", "range of plausible slopes", "interval estimation"],
+                hint: "Think about interval estimation",
+                explanation: "CI for slope: b₁ ± t(α/2, n-2) × SE(b₁) gives range of plausible slope values.",
+                steps: `<div class="step-title">Slope Confidence Interval:</div><div class="step-content"><ol><li><strong>Formula:</strong> b₁ ± t(α/2, n-2) × SE(b₁)</li><li><strong>Interpretation:</strong> Range of plausible β₁ values</li><li><strong>Use:</strong> Assess precision of slope estimate</li></ol></div>`
+            },
+            {
+                question: "What is the difference between CI and PI?",
+                correctAnswers: ["CI for mean response PI for individual", "CI narrower than PI", "different uncertainty"],
+                hint: "Think about what you're predicting",
+                explanation: "CI estimates mean response E(Y|X); PI predicts individual Y value. PI is always wider.",
+                steps: `<div class="step-title">CI vs PI:</div><div class="step-content"><ol><li><strong>CI:</strong> Confidence interval for mean response</li><li><strong>PI:</strong> Prediction interval for individual observation</li><li><strong>Width:</strong> PI always wider than CI</li></ol></div>`
+            },
+            {
+                question: "When are intervals narrowest?",
+                correctAnswers: ["at x = x̄", "center of data", "mean of X values"],
+                hint: "Think about where uncertainty is smallest",
+                explanation: "Both CI and PI are narrowest at x = x̄ (center of X values) where uncertainty is smallest.",
+                steps: `<div class="step-title">Interval Width:</div><div class="step-content"><ol><li><strong>Narrowest:</strong> At x = x̄</li><li><strong>Widest:</strong> At extremes of X range</li><li><strong>Reason:</strong> Less uncertainty near center of data</li></ol></div>`
+            },
+            {
+                question: "What does a significant slope test mean?",
+                correctAnswers: ["linear relationship exists", "reject H₀: β₁ = 0", "slope significantly different from zero"],
+                hint: "Think about test interpretation",
+                explanation: "Significant slope test means we reject H₀: β₁ = 0 and conclude a linear relationship exists.",
+                steps: `<div class="step-title">Significant Slope:</div><div class="step-content"><ol><li><strong>Reject H₀:</strong> β₁ = 0</li><li><strong>Conclude:</strong> Linear relationship exists</li><li><strong>Practical:</strong> X is useful for predicting Y</li></ol></div>`
+            },
+            {
+                question: "What are degrees of freedom for regression t-tests?",
+                correctAnswers: ["n - 2", "sample size minus 2", "observations minus parameters"],
+                hint: "Think about parameters estimated",
+                explanation: "df = n - 2 because we estimate 2 parameters (β₀ and β₁) from n observations.",
+                steps: `<div class="step-title">Regression df:</div><div class="step-content"><ol><li><strong>df:</strong> n - 2</li><li><strong>Logic:</strong> n observations, 2 parameters estimated</li><li><strong>Use:</strong> For all t-tests and intervals in simple regression</li></ol></div>`
+            },
+            {
+                question: "Can you test if slope equals a specific value?",
+                correctAnswers: ["yes", "H₀: β₁ = k", "test any hypothesized value"],
+                hint: "Think about testing specific values",
+                explanation: "Yes, you can test H₀: β₁ = k for any specific value k using t = (b₁-k)/SE(b₁).",
+                steps: `<div class="step-title">Testing Specific Slope:</div><div class="step-content"><ol><li><strong>Hypotheses:</strong> H₀: β₁ = k vs H₁: β₁ ≠ k</li><li><strong>Test statistic:</strong> t = (b₁-k)/SE(b₁)</li><li><strong>Common:</strong> k = 0 (no relationship)</li></ol></div>`
+            },
+            {
+                question: "What is the F-test in simple regression?",
+                correctAnswers: ["overall model significance", "equivalent to t-test", "tests same hypothesis"],
+                hint: "Think about overall model testing",
+                explanation: "F-test tests overall model significance; in simple regression it's equivalent to the slope t-test.",
+                steps: `<div class="step-title">Regression F-test:</div><div class="step-content"><ol><li><strong>Tests:</strong> Overall model significance</li><li><strong>Simple regression:</strong> F = t² (equivalent to slope test)</li><li><strong>Multiple regression:</strong> Tests if any predictor significant</li></ol></div>`
+            },
+            {
+                question: "What affects the width of confidence intervals?",
+                correctAnswers: ["sample size residual error X spread", "n s Σ(x-x̄)²", "precision factors"],
+                hint: "Think about what affects precision",
+                explanation: "CI width affected by: sample size n (larger = narrower), residual error s (smaller = narrower), X spread (larger = narrower).",
+                steps: `<div class="step-title">CI Width Factors:</div><div class="step-content"><ol><li><strong>Sample size:</strong> Larger n → narrower CI</li><li><strong>Residual error:</strong> Smaller s → narrower CI</li><li><strong>X spread:</strong> Larger Σ(x-x̄)² → narrower CI</li></ol></div>`
+            }
+        ];
+
+        const modelAssessmentQuestions = [
+            {
+                question: "What does R-squared measure?",
+                correctAnswers: ["proportion of variance explained", "explained variation", "coefficient of determination"],
+                hint: "Think about explained variance",
+                explanation: "R² measures the proportion of total variance in Y explained by the linear relationship with X.",
+                steps: `<div class="step-title">R-squared:</div><div class="step-content"><ol><li><strong>Definition:</strong> Proportion of Y variance explained by X</li><li><strong>Formula:</strong> R² = SSR/SST = 1 - SSE/SST</li><li><strong>Range:</strong> 0 ≤ R² ≤ 1</li></ol></div>`
+            },
+            {
+                question: "What is the range of R-squared?",
+                correctAnswers: ["0 to 1", "0 ≤ R² ≤ 1", "between 0 and 1"],
+                hint: "Think about possible values",
+                explanation: "R² ranges from 0 (no linear relationship) to 1 (perfect linear relationship).",
+                steps: `<div class="step-title">R-squared Range:</div><div class="step-content"><ol><li><strong>Minimum:</strong> R² = 0 (no linear relationship)</li><li><strong>Maximum:</strong> R² = 1 (perfect linear fit)</li><li><strong>Common:</strong> Values between 0.1 and 0.9</li></ol></div>`
+            },
+            {
+                question: "How do you interpret R² = 0.75?",
+                correctAnswers: ["75% of variance explained", "three-quarters explained", "strong relationship"],
+                hint: "Think about percentage interpretation",
+                explanation: "R² = 0.75 means 75% of the variance in Y is explained by the linear relationship with X.",
+                steps: `<div class="step-title">Interpreting R² = 0.75:</div><div class="step-content"><ol><li><strong>Percentage:</strong> 75% of Y variance explained</li><li><strong>Remaining:</strong> 25% unexplained (residual)</li><li><strong>Strength:</strong> Strong linear relationship</li></ol></div>`
+            },
+            {
+                question: "What is SSE in regression?",
+                correctAnswers: ["sum of squared errors", "sum of squared residuals", "unexplained variation"],
+                hint: "Think about residual variation",
+                explanation: "SSE = Σ(yᵢ - ŷᵢ)² is the sum of squared residuals, measuring unexplained variation.",
+                steps: `<div class="step-title">Sum of Squared Errors:</div><div class="step-content"><ol><li><strong>Formula:</strong> SSE = Σ(yᵢ - ŷᵢ)²</li><li><strong>Measures:</strong> Unexplained variation</li><li><strong>Smaller better:</strong> Less unexplained variation</li></ol></div>`
+            },
+            {
+                question: "What is SSR in regression?",
+                correctAnswers: ["sum of squares regression", "explained variation", "Σ(ŷᵢ - ȳ)²"],
+                hint: "Think about explained variation",
+                explanation: "SSR = Σ(ŷᵢ - ȳ)² is the regression sum of squares, measuring explained variation.",
+                steps: `<div class="step-title">Sum of Squares Regression:</div><div class="step-content"><ol><li><strong>Formula:</strong> SSR = Σ(ŷᵢ - ȳ)²</li><li><strong>Measures:</strong> Explained variation</li><li><strong>Larger better:</strong> More variation explained</li></ol></div>`
+            },
+            {
+                question: "What is the relationship SST = SSR + SSE?",
+                correctAnswers: ["total equals explained plus unexplained", "variance decomposition", "fundamental identity"],
+                hint: "Think about partitioning variance",
+                explanation: "SST = SSR + SSE decomposes total variation into explained (SSR) and unexplained (SSE) components.",
+                steps: `<div class="step-title">Variance Decomposition:</div><div class="step-content"><ol><li><strong>Total:</strong> SST = Σ(yᵢ - ȳ)²</li><li><strong>Explained:</strong> SSR = Σ(ŷᵢ - ȳ)²</li><li><strong>Unexplained:</strong> SSE = Σ(yᵢ - ŷᵢ)²</li></ol></div>`
+            },
+            {
+                question: "What is residual standard error?",
+                correctAnswers: ["s = √(SSE/(n-2))", "estimate of σ", "average residual size"],
+                hint: "Think about estimating error variance",
+                explanation: "Residual standard error s = √(SSE/(n-2)) estimates σ, the standard deviation of errors.",
+                steps: `<div class="step-title">Residual Standard Error:</div><div class="step-content"><ol><li><strong>Formula:</strong> s = √(SSE/(n-2))</li><li><strong>Estimates:</strong> σ (population error standard deviation)</li><li><strong>Interpretation:</strong> Typical prediction error</li></ol></div>`
+            },
+            {
+                question: "Can R² be negative?",
+                correctAnswers: ["no", "always non-negative", "0 ≤ R² ≤ 1"],
+                hint: "Think about the definition",
+                explanation: "No, R² cannot be negative because it's defined as a ratio of sums of squares.",
+                steps: `<div class="step-title">R-squared Non-negative:</div><div class="step-content"><ol><li><strong>Always:</strong> R² ≥ 0</li><li><strong>Reason:</strong> Ratio of non-negative sums of squares</li><li><strong>Minimum:</strong> R² = 0 when no linear relationship</li></ol></div>`
+            },
+            {
+                question: "What are limitations of R-squared?",
+                correctAnswers: ["doesn't indicate causation", "can be high with poor model", "context dependent"],
+                hint: "Think about what R² doesn't tell you",
+                explanation: "R² limitations: doesn't indicate causation, can be high even with poor model fit, interpretation depends on context.",
+                steps: `<div class="step-title">R-squared Limitations:</div><div class="step-content"><ol><li><strong>Causation:</strong> High R² doesn't imply causation</li><li><strong>Model fit:</strong> Can be high with wrong functional form</li><li><strong>Context:</strong> "Good" R² varies by field</li></ol></div>`
+            },
+            {
+                question: "What indicates a well-fitted model?",
+                correctAnswers: ["high R² good diagnostics no patterns", "assumptions satisfied", "multiple criteria"],
+                hint: "Think about comprehensive assessment",
+                explanation: "Well-fitted model: reasonably high R², satisfied assumptions, good diagnostic plots, no concerning patterns.",
+                steps: `<div class="step-title">Good Model Fit:</div><div class="step-content"><ol><li><strong>High R²:</strong> Explains substantial variance</li><li><strong>Assumptions:</strong> LINE assumptions satisfied</li><li><strong>Diagnostics:</strong> Clean residual plots</li></ol></div>`
+            }
+        ];
+
+        // Generate question functions
+        function generateQuestion121() {
+            const randomIndex = Math.floor(Math.random() * introRegressionQuestions.length);
+            currentQuestion121 = introRegressionQuestions[randomIndex];
+            displayQuestion(121, currentQuestion121);
+        }
+        
+        function generateQuestion122() {
+            const randomIndex = Math.floor(Math.random() * simpleRegressionQuestions.length);
+            currentQuestion122 = simpleRegressionQuestions[randomIndex];
+            displayQuestion(122, currentQuestion122);
+        }
+        
+        function generateQuestion123() {
+            const randomIndex = Math.floor(Math.random() * assumptionsQuestions.length);
+            currentQuestion123 = assumptionsQuestions[randomIndex];
+            displayQuestion(123, currentQuestion123);
+        }
+        
+        function generateQuestion124() {
+            const randomIndex = Math.floor(Math.random() * correlationQuestions.length);
+            currentQuestion124 = correlationQuestions[randomIndex];
+            displayQuestion(124, currentQuestion124);
+        }
+        
+        function generateQuestion125() {
+            const randomIndex = Math.floor(Math.random() * inferenceQuestions.length);
+            currentQuestion125 = inferenceQuestions[randomIndex];
+            displayQuestion(125, currentQuestion125);
+        }
+        
+        function generateQuestion126() {
+            const randomIndex = Math.floor(Math.random() * modelAssessmentQuestions.length);
+            currentQuestion126 = modelAssessmentQuestions[randomIndex];
+            displayQuestion(126, currentQuestion126);
+        }
+
+        // Helper function to display questions
+        function displayQuestion(sectionNum, question) {
+            document.getElementById(`question-${sectionNum}-content`).innerHTML = question.question;
+            document.getElementById(`hint-${sectionNum}`).innerHTML = `💡 ${question.hint}`;
+            
+            document.getElementById(`answer-${sectionNum}`).value = '';
+            document.getElementById(`feedback-${sectionNum}`).style.display = 'none';
+            document.getElementById(`steps-${sectionNum}`).style.display = 'none';
+        }
+
+        // Check answer functions
+        function checkAnswer121() { checkAnswer(121, currentQuestion121); }
+        function checkAnswer122() { checkAnswer(122, currentQuestion122); }
+        function checkAnswer123() { checkAnswer(123, currentQuestion123); }
+        function checkAnswer124() { checkAnswer(124, currentQuestion124); }
+        function checkAnswer125() { checkAnswer(125, currentQuestion125); }
+        function checkAnswer126() { checkAnswer(126, currentQuestion126); }
+
+        // Show steps functions  
+        function showSteps121() { showSteps(121, currentQuestion121); }
+        function showSteps122() { showSteps(122, currentQuestion122); }
+        function showSteps123() { showSteps(123, currentQuestion123); }
+        function showSteps124() { showSteps(124, currentQuestion124); }
+        function showSteps125() { showSteps(125, currentQuestion125); }
+        function showSteps126() { showSteps(126, currentQuestion126); }
+
+        // Helper functions
+        function checkAnswer(sectionNum, currentQuestion) {
+            const userAnswer = document.getElementById(`answer-${sectionNum}`).value.toLowerCase().trim();
+            if (!currentQuestion) return;
+            
+            const isCorrect = currentQuestion.correctAnswers.some(answer => 
+                userAnswer.includes(answer.toLowerCase()) || answer.toLowerCase().includes(userAnswer)
+            );
+            
+            const feedbackElement = document.getElementById(`feedback-${sectionNum}`);
+            if (isCorrect) {
+                feedbackElement.innerHTML = `<div class="correct">✅ Correct! ${currentQuestion.explanation}</div>`;
+                feedbackElement.className = 'question-feedback correct-feedback';
+            } else {
+                feedbackElement.innerHTML = `<div class="incorrect">❌ Incorrect. ${currentQuestion.explanation}</div>`;
+                feedbackElement.className = 'question-feedback incorrect-feedback';
+            }
+            feedbackElement.style.display = 'block';
+        }
+
+        function showSteps(sectionNum, currentQuestion) {
+            if (!currentQuestion) return;
+            const stepsElement = document.getElementById(`steps-${sectionNum}`);
+            stepsElement.innerHTML = currentQuestion.steps;
+            stepsElement.style.display = 'block';
+        }
+
+        // Initialize on page load
+        window.onload = function() {
+            generateQuestion121();
+            generateQuestion122(); 
+            generateQuestion123();
+            generateQuestion124();
+            generateQuestion125();
+            generateQuestion126();
+        }
+    </script>
+</body>
+</html>
