@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 11: Chi-Square Tests | Larsen & Marx Mathematical Statistics</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    
+    <style>
+        :root {
+            --primary-color: #7B1FA2;
+            --primary-light: #9C27B0;
+            --primary-dark: #4A148C;
+            --secondary-color: #E1BEE7;
+            --accent-color: #AB47BC;
+            --background-color: #FAFAFA;
+            --text-color: #212121;
+            --card-background: #FFFFFF;
+            --border-color: #E0E0E0;
+            --success-color: #4CAF50;
+            --error-color: #F44336;
+            --warning-color: #FF9800;
+            --shadow: 0 2px 10px rgba(123, 31, 162, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 20px;
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .chapter-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .chapter-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .chapter-description {
+            font-size: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        .section {
+            background: var(--card-background);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-content {
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .concept-explanation {
+            background: linear-gradient(135deg, rgba(123, 31, 162, 0.05), rgba(156, 39, 176, 0.05));
+            border: 1px solid var(--primary-light);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .concept-explanation h4 {
+            color: var(--primary-dark);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .key-points {
+            background: var(--secondary-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .key-points h5 {
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .key-points ul {
+            margin-left: 1.5rem;
+        }
+
+        .key-points li {
+            margin-bottom: 0.3rem;
+        }
+
+        .math-formula {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .section-practice {
+            background: linear-gradient(135deg, rgba(123, 31, 162, 0.02), rgba(156, 39, 176, 0.02));
+            border: 2px solid var(--secondary-color);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .practice-question {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .question-number {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .regenerate-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .regenerate-btn:hover {
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .question-input-area {
+            margin-bottom: 1rem;
+        }
+
+        .input-label {
+            display: block;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(123, 31, 162, 0.1);
+        }
+
+        .input-hint {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .question-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .question-buttons button {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .check-btn {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .check-btn:hover {
+            background: #45A049;
+            transform: translateY(-1px);
+        }
+
+        .steps-btn {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .steps-btn:hover {
+            background: #F57C00;
+            transform: translateY(-1px);
+        }
+
+        .new-question-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .new-question-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .question-feedback {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .correct-feedback {
+            background: linear-gradient(135deg, #E8F5E8, #C8E6C9);
+            border: 1px solid var(--success-color);
+            color: #2E7D32;
+        }
+
+        .incorrect-feedback {
+            background: linear-gradient(135deg, #FFEBEE, #FFCDD2);
+            border: 1px solid var(--error-color);
+            color: #C62828;
+        }
+
+        .question-steps {
+            background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+            border: 1px solid var(--warning-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .step-title {
+            font-weight: 700;
+            color: var(--warning-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .step-content {
+            line-height: 1.6;
+        }
+
+        .step-content ol {
+            padding-left: 1.5rem;
+        }
+
+        .step-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .chapter-title {
+                font-size: 2rem;
+            }
+            
+            .question-buttons {
+                flex-direction: column;
+            }
+            
+            .question-buttons button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="chapter-title">📊 Chapter 11: Chi-Square Tests</h1>
+            <p class="chapter-subtitle">Categorical Data Analysis and Tests of Association</p>
+            <p class="chapter-description">
+                Master chi-square tests for analyzing categorical data relationships. 
+                Learn goodness-of-fit tests, independence tests, homogeneity tests, and measures of association for comprehensive categorical data analysis.
+            </p>
+        </header>
+
+        <!-- Section 11.1: Introduction to Chi-Square Tests -->
+        <div class="section">
+            <h2 class="section-title">📊 11.1 Introduction to Chi-Square Tests</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Chi-Square Tests</h4>
+                    <p>Chi-square tests are fundamental tools for analyzing categorical (nominal or ordinal) data. Unlike t-tests and ANOVA which deal with continuous variables, chi-square tests examine frequencies and proportions in categories. They help us answer questions like "Are these variables independent?" or "Does this data follow a particular distribution?"</p>
+                    
+                    <p>The chi-square statistic measures how much observed frequencies deviate from what we would expect under a specific hypothesis. Large deviations suggest the hypothesis is false, while small deviations provide support for the hypothesis.</p>
+
+                    <div class="key-points">
+                        <h5>Types of Chi-Square Tests:</h5>
+                        <ul>
+                            <li><strong>Goodness-of-Fit:</strong> Tests if data follows a specific distribution (one variable)</li>
+                            <li><strong>Independence:</strong> Tests if two variables are independent (contingency table)</li>
+                            <li><strong>Homogeneity:</strong> Tests if populations have same distribution (multiple samples)</li>
+                            <li><strong>McNemar's Test:</strong> Tests for changes in paired categorical data</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Key Concept:</strong> Chi-square tests work by comparing observed frequencies (what we actually see) with expected frequencies (what we would expect if our hypothesis were true).</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>General Chi-Square Statistic:</strong><br>
+                    χ² = Σ [(Observed - Expected)²/Expected]<br>
+                    χ² = Σ [(Oᵢ - Eᵢ)²/Eᵢ]
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>The Chi-Square Distribution</h4>
+                    <p>The chi-square distribution is a continuous probability distribution that takes only positive values. It's characterized by its degrees of freedom (df), which determine the shape of the distribution. As df increases, the distribution becomes more symmetric and approaches a normal distribution.</p>
+
+                    <div class="key-points">
+                        <h5>Chi-Square Distribution Properties:</h5>
+                        <ul>
+                            <li><strong>Always Positive:</strong> χ² ≥ 0, since it's based on squared differences</li>
+                            <li><strong>Right-skewed:</strong> Especially with low degrees of freedom</li>
+                            <li><strong>Parameter:</strong> Determined entirely by degrees of freedom</li>
+                            <li><strong>Mean:</strong> E(χ²) = df</li>
+                            <li><strong>Variance:</strong> Var(χ²) = 2×df</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 11.1 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Introduction to Chi-Square Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion111()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-111-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-111">Your Answer:</label>
+                        <input type="text" id="answer-111" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer111()">
+                        <div class="input-hint" id="hint-111"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer111()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps111()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion111()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-111" style="display: none;"></div>
+                    <div class="question-steps" id="steps-111" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 11.2: Goodness-of-Fit Tests -->
+        <div class="section">
+            <h2 class="section-title">📊 11.2 Goodness-of-Fit Tests</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Goodness-of-Fit Tests</h4>
+                    <p>Goodness-of-fit tests determine whether observed data follows a specific theoretical distribution. For example, we might test if a die is fair by comparing observed frequencies of each face to expected frequencies under the assumption of equal probability. These tests involve a single categorical variable with multiple possible outcomes.</p>
+                    
+                    <p>The test compares observed frequencies in each category to expected frequencies calculated under the null hypothesis. If the differences are large enough, we reject the null hypothesis and conclude the data doesn't follow the proposed distribution.</p>
+
+                    <div class="key-points">
+                        <h5>Common Goodness-of-Fit Applications:</h5>
+                        <ul>
+                            <li><strong>Equal Probabilities:</strong> Testing if all categories are equally likely (uniform distribution)</li>
+                            <li><strong>Specified Probabilities:</strong> Testing if data follows a particular probability model</li>
+                            <li><strong>Theoretical Distributions:</strong> Testing fit to normal, Poisson, binomial distributions</li>
+                            <li><strong>Mendel's Laws:</strong> Testing genetic ratios in biology</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Degrees of Freedom:</strong> For goodness-of-fit tests, df = k - 1 - p, where k is the number of categories and p is the number of parameters estimated from the data.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Goodness-of-Fit Hypotheses:</strong><br>
+                    H₀: The data follows the specified distribution<br>
+                    H₁: The data does not follow the specified distribution
+                </div>
+
+                <div class="math-formula">
+                    <strong>Expected Frequencies:</strong><br>
+                    Eᵢ = n × πᵢ<br>
+                    where n = total sample size, πᵢ = hypothesized probability for category i
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Conducting Goodness-of-Fit Tests</h4>
+                    <p>The process involves calculating expected frequencies under the null hypothesis, computing the chi-square statistic, and comparing it to the critical value or calculating a p-value.</p>
+
+                    <div class="key-points">
+                        <h5>Steps for Goodness-of-Fit Test:</h5>
+                        <ul>
+                            <li><strong>State Hypotheses:</strong> H₀ specifies the distribution, H₁ is "not that distribution"</li>
+                            <li><strong>Calculate Expected:</strong> Eᵢ = n × πᵢ for each category</li>
+                            <li><strong>Check Assumptions:</strong> All expected frequencies ≥ 5</li>
+                            <li><strong>Compute χ²:</strong> Σ(Oᵢ - Eᵢ)²/Eᵢ</li>
+                            <li><strong>Find p-value:</strong> P(χ²(df) ≥ observed χ²)</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Interpretation:</strong> Large χ² values indicate poor fit to the hypothesized distribution. Small p-values (< α) lead to rejection of H₀.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 11.2 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Goodness-of-Fit Tests Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion112()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-112-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-112">Your Answer:</label>
+                        <input type="text" id="answer-112" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer112()">
+                        <div class="input-hint" id="hint-112"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer112()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps112()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion112()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-112" style="display: none;"></div>
+                    <div class="question-steps" id="steps-112" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 11.3: Tests of Independence -->
+        <div class="section">
+            <h2 class="section-title">📊 11.3 Tests of Independence</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Tests of Independence</h4>
+                    <p>Tests of independence examine whether two categorical variables are statistically independent. This is one of the most common applications of chi-square tests. We organize data into a contingency table (cross-tabulation) and test whether the row variable and column variable are independent of each other.</p>
+                    
+                    <p>Independence means that knowing the value of one variable provides no information about the other variable. For example, we might test whether choice of college major is independent of gender, or whether treatment outcome is independent of age group.</p>
+
+                    <div class="key-points">
+                        <h5>Independence Test Applications:</h5>
+                        <ul>
+                            <li><strong>Medical Research:</strong> Treatment outcome vs patient characteristics</li>
+                            <li><strong>Market Research:</strong> Product preference vs demographics</li>
+                            <li><strong>Social Science:</strong> Attitudes vs background variables</li>
+                            <li><strong>Quality Control:</strong> Defect type vs production shift</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Key Concept:</strong> If variables are independent, then P(A and B) = P(A) × P(B) for all combinations of categories A and B.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Independence Hypotheses:</strong><br>
+                    H₀: The row and column variables are independent<br>
+                    H₁: The row and column variables are not independent (associated)
+                </div>
+
+                <div class="math-formula">
+                    <strong>Expected Cell Frequencies:</strong><br>
+                    Eᵢⱼ = (Row Total × Column Total)/Grand Total<br>
+                    Eᵢⱼ = (nᵢ. × n.ⱼ)/n
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Contingency Tables and Expected Frequencies</h4>
+                    <p>A contingency table organizes data by cross-classifying observations on two categorical variables. The expected frequencies under independence are calculated using marginal totals.</p>
+
+                    <div class="key-points">
+                        <h5>Contingency Table Structure:</h5>
+                        <ul>
+                            <li><strong>Rows:</strong> Categories of first variable</li>
+                            <li><strong>Columns:</strong> Categories of second variable</li>
+                            <li><strong>Cells:</strong> Observed frequencies for each combination</li>
+                            <li><strong>Marginals:</strong> Row and column totals</li>
+                            <li><strong>Degrees of Freedom:</strong> df = (r-1)(c-1)</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Sample Size Requirements:</strong> All expected cell frequencies should be ≥ 5. For 2×2 tables, some recommend ≥ 10. Use Fisher's exact test for small samples.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 11.3 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Tests of Independence Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion113()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-113-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-113">Your Answer:</label>
+                        <input type="text" id="answer-113" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer113()">
+                        <div class="input-hint" id="hint-113"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer113()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps113()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion113()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-113" style="display: none;"></div>
+                    <div class="question-steps" id="steps-113" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 11.4: Tests of Homogeneity -->
+        <div class="section">
+            <h2 class="section-title">📊 11.4 Tests of Homogeneity</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Tests of Homogeneity</h4>
+                    <p>Tests of homogeneity determine whether several populations have the same distribution for a categorical variable. Unlike independence tests which examine association within a single population, homogeneity tests compare distributions across different populations or groups.</p>
+                    
+                    <p>For example, we might compare the distribution of political party preference across different age groups, or compare customer satisfaction ratings across different store locations. The question is whether the populations are homogeneous (have the same distribution) or heterogeneous (have different distributions).</p>
+
+                    <div class="key-points">
+                        <h5>Homogeneity Test Applications:</h5>
+                        <ul>
+                            <li><strong>Market Research:</strong> Compare preferences across regions</li>
+                            <li><strong>Medical Studies:</strong> Compare side effect rates across treatments</li>
+                            <li><strong>Education:</strong> Compare performance levels across schools</li>
+                            <li><strong>Quality Control:</strong> Compare defect rates across factories</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Key Difference from Independence:</strong> Homogeneity tests involve sampling from multiple populations separately, while independence tests involve one sample classified by two variables.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Homogeneity Hypotheses:</strong><br>
+                    H₀: All populations have the same distribution for the categorical variable<br>
+                    H₁: At least one population has a different distribution
+                </div>
+
+                <div class="math-formula">
+                    <strong>Mathematical Form:</strong><br>
+                    H₀: π₁₁ = π₂₁ = ... = πₖ₁, π₁₂ = π₂₂ = ... = πₖ₂, etc.<br>
+                    where πᵢⱼ is the probability of category j in population i
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Conducting Homogeneity Tests</h4>
+                    <p>The computational approach is identical to independence tests, but the sampling design and interpretation differ. We sample fixed numbers from each population and compare their categorical distributions.</p>
+
+                    <div class="key-points">
+                        <h5>Homogeneity Test Characteristics:</h5>
+                        <ul>
+                            <li><strong>Sampling Design:</strong> Fixed sample sizes from each population</li>
+                            <li><strong>Table Layout:</strong> Populations in rows, categories in columns (or vice versa)</li>
+                            <li><strong>Expected Frequencies:</strong> Same formula as independence: (Row×Column)/Total</li>
+                            <li><strong>Degrees of Freedom:</strong> df = (r-1)(c-1)</li>
+                            <li><strong>Interpretation:</strong> Differences in population distributions</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Post-hoc Analysis:</strong> If overall test is significant, examine standardized residuals or conduct pairwise comparisons to identify which populations differ and in which categories.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 11.4 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Tests of Homogeneity Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion114()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-114-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-114">Your Answer:</label>
+                        <input type="text" id="answer-114" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer114()">
+                        <div class="input-hint" id="hint-114"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer114()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps114()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion114()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-114" style="display: none;"></div>
+                    <div class="question-steps" id="steps-114" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 11.5: Assumptions and Alternatives -->
+        <div class="section">
+            <h2 class="section-title">📊 11.5 Chi-Square Assumptions and Alternatives</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Chi-Square Test Assumptions</h4>
+                    <p>Chi-square tests rely on several important assumptions for valid results. When these assumptions are violated, the test may give misleading p-values, leading to incorrect conclusions about relationships between variables.</p>
+                    
+                    <p>The most critical assumption is adequate sample size, specifically that expected frequencies are large enough for the chi-square approximation to be accurate. Other assumptions involve the nature of the data and sampling design.</p>
+
+                    <div class="key-points">
+                        <h5>Key Chi-Square Assumptions:</h5>
+                        <ul>
+                            <li><strong>Independent Observations:</strong> Each observation contributes to only one cell</li>
+                            <li><strong>Adequate Sample Size:</strong> All expected frequencies ≥ 5 (or ≥ 1 with 80% ≥ 5)</li>
+                            <li><strong>Categorical Data:</strong> Variables must be categorical, not continuous</li>
+                            <li><strong>Random Sampling:</strong> Data should come from appropriate random sampling</li>
+                            <li><strong>Fixed Total:</strong> Total sample size is fixed in advance</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Most Important:</strong> The expected frequency requirement is crucial. When violated, the chi-square distribution is a poor approximation to the actual sampling distribution.</p>
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Alternatives When Assumptions Fail</h4>
+                    <p>When chi-square assumptions are violated, several alternative approaches can provide valid analysis of categorical data relationships.</p>
+
+                    <div class="key-points">
+                        <h5>Alternative Methods:</h5>
+                        <ul>
+                            <li><strong>Fisher's Exact Test:</strong> Exact p-values for small samples (especially 2×2 tables)</li>
+                            <li><strong>Monte Carlo Simulation:</strong> Estimate p-values through simulation</li>
+                            <li><strong>Likelihood Ratio Test:</strong> G-test, often better for small samples</li>
+                            <li><strong>Yates' Continuity Correction:</strong> Conservative adjustment for 2×2 tables</li>
+                            <li><strong>Combining Categories:</strong> Merge small categories to increase expected frequencies</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Modern Approach:</strong> With computer software, exact tests and simulation methods are increasingly preferred over traditional approximations, especially for small samples.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Likelihood Ratio (G) Test:</strong><br>
+                    G = 2 × Σ Oᵢⱼ × ln(Oᵢⱼ/Eᵢⱼ)<br>
+                    Often better for small expected frequencies
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 11.5 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Assumptions and Alternatives Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion115()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-115-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-115">Your Answer:</label>
+                        <input type="text" id="answer-115" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer115()">
+                        <div class="input-hint" id="hint-115"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer115()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps115()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion115()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-115" style="display: none;"></div>
+                    <div class="question-steps" id="steps-115" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 11.6: Measures of Association -->
+        <div class="section">
+            <h2 class="section-title">📊 11.6 Measures of Association</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Measures of Association</h4>
+                    <p>While chi-square tests tell us whether variables are associated, they don't quantify the strength of that association. Measures of association provide effect sizes for categorical data relationships, helping us understand not just whether an association exists, but how strong it is.</p>
+                    
+                    <p>Different measures are appropriate for different types of categorical variables (nominal vs ordinal) and table dimensions. Some measures are symmetric (same regardless of which variable is considered the predictor), while others are asymmetric.</p>
+
+                    <div class="key-points">
+                        <h5>Types of Association Measures:</h5>
+                        <ul>
+                            <li><strong>Phi (φ):</strong> For 2×2 tables, based on chi-square</li>
+                            <li><strong>Cramér's V:</strong> Generalization of phi for larger tables</li>
+                            <li><strong>Contingency Coefficient:</strong> Alternative measure based on chi-square</li>
+                            <li><strong>Lambda (λ):</strong> Proportional reduction in error</li>
+                            <li><strong>Gamma (γ):</strong> For ordinal variables, based on concordant/discordant pairs</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Interpretation:</strong> Most measures range from 0 (no association) to 1 (perfect association). Some, like gamma, can be negative indicating negative association.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Common Association Measures:</strong><br>
+                    Phi: φ = √(χ²/n) for 2×2 tables<br>
+                    Cramér's V = √[χ²/(n×min(r-1, c-1))]<br>
+                    Contingency Coefficient: C = √[χ²/(χ² + n)]
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Choosing Appropriate Measures</h4>
+                    <p>The choice of association measure depends on the nature of your variables and the research question. Consider whether variables are nominal or ordinal, table dimensions, and whether you want symmetric or asymmetric measures.</p>
+
+                    <div class="key-points">
+                        <h5>Guidelines for Choosing Measures:</h5>
+                        <ul>
+                            <li><strong>2×2 Tables:</strong> Use phi (φ) for simple interpretation</li>
+                            <li><strong>Larger Tables:</strong> Use Cramér's V for general association strength</li>
+                            <li><strong>Ordinal Variables:</strong> Use gamma, tau-b, or tau-c to capture ordering</li>
+                            <li><strong>Prediction Focus:</strong> Use lambda for proportional reduction in error</li>
+                            <li><strong>Multiple Measures:</strong> Report several measures for comprehensive analysis</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Effect Size Guidelines:</strong> Cohen suggested V = 0.10 (small), 0.30 (medium), and 0.50 (large) as rough guidelines, but context-specific interpretation is always preferable.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 11.6 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Measures of Association Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion116()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-116-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-116">Your Answer:</label>
+                        <input type="text" id="answer-116" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer116()">
+                        <div class="input-hint" id="hint-116"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer116()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps116()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion116()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-116" style="display: none;"></div>
+                    <div class="question-steps" id="steps-116" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        // Current question tracking variables for all 6 sections
+        let currentQuestion111 = null, currentQuestion112 = null, currentQuestion113 = null;
+        let currentQuestion114 = null, currentQuestion115 = null, currentQuestion116 = null;
+
+        // Question arrays with 10 questions each
+        const introChiSquareQuestions = [
+            {
+                question: "What type of data do chi-square tests analyze?",
+                correctAnswers: ["categorical data", "nominal data", "frequency data"],
+                hint: "Think about the nature of the variables",
+                explanation: "Chi-square tests analyze categorical (nominal or ordinal) data in the form of frequencies.",
+                steps: `<div class="step-title">Chi-square Data Type:</div><div class="step-content"><ol><li><strong>Categorical:</strong> Variables with discrete categories</li><li><strong>Frequencies:</strong> Count data, not continuous measurements</li><li><strong>Examples:</strong> Gender, color preference, yes/no responses</li></ol></div>`
+            },
+            {
+                question: "What is the general formula for chi-square statistic?",
+                correctAnswers: ["(O-E)²/E", "sum of (observed-expected)²/expected", "χ² = Σ(Oᵢ-Eᵢ)²/Eᵢ"],
+                hint: "Think about observed vs expected frequencies",
+                explanation: "χ² = Σ(Oᵢ-Eᵢ)²/Eᵢ compares observed to expected frequencies.",
+                steps: `<div class="step-title">Chi-square Formula:</div><div class="step-content"><ol><li><strong>O:</strong> Observed frequency in each cell</li><li><strong>E:</strong> Expected frequency under H₀</li><li><strong>Sum:</strong> Over all cells in the table</li></ol></div>`
+            },
+            {
+                question: "What are the three main types of chi-square tests?",
+                correctAnswers: ["goodness-of-fit independence homogeneity", "fit independence homogeneity", "three types"],
+                hint: "Think about different research questions",
+                explanation: "The three main types are goodness-of-fit, independence, and homogeneity tests.",
+                steps: `<div class="step-title">Three Chi-square Types:</div><div class="step-content"><ol><li><strong>Goodness-of-fit:</strong> One variable, test distribution</li><li><strong>Independence:</strong> Two variables, test association</li><li><strong>Homogeneity:</strong> Multiple populations, compare distributions</li></ol></div>`
+            },
+            {
+                question: "What shape does the chi-square distribution have?",
+                correctAnswers: ["right-skewed", "positively skewed", "skewed right"],
+                hint: "Think about the range of possible values",
+                explanation: "Chi-square distribution is right-skewed, especially with low degrees of freedom.",
+                steps: `<div class="step-title">Chi-square Distribution Shape:</div><div class="step-content"><ol><li><strong>Always positive:</strong> χ² ≥ 0</li><li><strong>Right-skewed:</strong> Long tail to the right</li><li><strong>Approaches normal:</strong> As df increases</li></ol></div>`
+            },
+            {
+                question: "What determines the shape of chi-square distribution?",
+                correctAnswers: ["degrees of freedom", "df", "number of degrees of freedom"],
+                hint: "Think about the distribution parameter",
+                explanation: "Degrees of freedom (df) completely determine the shape of chi-square distribution.",
+                steps: `<div class="step-title">Chi-square Parameter:</div><div class="step-content"><ol><li><strong>Single parameter:</strong> Degrees of freedom</li><li><strong>Mean:</strong> E(χ²) = df</li><li><strong>Variance:</strong> Var(χ²) = 2×df</li></ol></div>`
+            },
+            {
+                question: "What is the mean of chi-square distribution?",
+                correctAnswers: ["degrees of freedom", "df", "equal to df"],
+                hint: "Think about the expected value",
+                explanation: "The mean of χ²(df) distribution equals the degrees of freedom: E(χ²) = df.",
+                steps: `<div class="step-title">Chi-square Mean:</div><div class="step-content"><ol><li><strong>E(χ²):</strong> = df</li><li><strong>Example:</strong> χ²(5) has mean = 5</li><li><strong>Center:</strong> Distribution centers at df value</li></ol></div>`
+            },
+            {
+                question: "When do we reject H₀ in chi-square tests?",
+                correctAnswers: ["large chi-square values", "χ² > critical value", "small p-value"],
+                hint: "Think about which tail we use",
+                explanation: "Reject H₀ when χ² is large (upper tail) because large deviations indicate poor fit.",
+                steps: `<div class="step-title">Chi-square Decision:</div><div class="step-content"><ol><li><strong>Upper tail:</strong> Only reject for large χ²</li><li><strong>Logic:</strong> Large deviations = poor fit to H₀</li><li><strong>Never reject:</strong> For small χ² values</li></ol></div>`
+            },
+            {
+                question: "What do large chi-square values indicate?",
+                correctAnswers: ["poor fit", "large deviations", "reject null hypothesis"],
+                hint: "Think about what the statistic measures",
+                explanation: "Large χ² values indicate large deviations from expected, suggesting poor fit to H₀.",
+                steps: `<div class="step-title">Large Chi-square Values:</div><div class="step-content"><ol><li><strong>Large deviations:</strong> Observed far from expected</li><li><strong>Poor fit:</strong> Data doesn't match H₀</li><li><strong>Evidence against:</strong> Null hypothesis</li></ol></div>`
+            },
+            {
+                question: "Can chi-square values be negative?",
+                correctAnswers: ["no", "never", "always non-negative"],
+                hint: "Think about the formula structure",
+                explanation: "Chi-square values are always non-negative because they involve squared differences.",
+                steps: `<div class="step-title">Chi-square Range:</div><div class="step-content"><ol><li><strong>Squared terms:</strong> (O-E)² always ≥ 0</li><li><strong>Positive denominators:</strong> E > 0</li><li><strong>Result:</strong> χ² ≥ 0 always</li></ol></div>`
+            },
+            {
+                question: "What happens to chi-square distribution as df increases?",
+                correctAnswers: ["becomes more normal", "less skewed", "approaches normality"],
+                hint: "Think about the asymptotic behavior",
+                explanation: "As degrees of freedom increase, chi-square distribution becomes more symmetric and approaches normality.",
+                steps: `<div class="step-title">Chi-square Asymptotic Behavior:</div><div class="step-content"><ol><li><strong>Low df:</strong> Highly right-skewed</li><li><strong>High df:</strong> More symmetric</li><li><strong>Limit:</strong> Approaches normal distribution</li></ol></div>`
+            }
+        ];
+
+        const goodnessOfFitQuestions = [
+            {
+                question: "What does goodness-of-fit test examine?",
+                correctAnswers: ["fit to theoretical distribution", "one variable distribution", "specified probabilities"],
+                hint: "Think about what we're testing the data against",
+                explanation: "Goodness-of-fit tests whether observed data follows a specified theoretical distribution.",
+                steps: `<div class="step-title">Goodness-of-fit Purpose:</div><div class="step-content"><ol><li><strong>One variable:</strong> Single categorical variable</li><li><strong>Theoretical:</strong> Compare to specified distribution</li><li><strong>Examples:</strong> Fair die, equal proportions</li></ol></div>`
+            },
+            {
+                question: "How do you calculate expected frequencies in goodness-of-fit?",
+                correctAnswers: ["n × πᵢ", "sample size times probability", "total × hypothesized proportion"],
+                hint: "Think about the null hypothesis probabilities",
+                explanation: "Expected frequency Eᵢ = n × πᵢ where n is sample size and πᵢ is hypothesized probability.",
+                steps: `<div class="step-title">Expected Frequencies:</div><div class="step-content"><ol><li><strong>Formula:</strong> Eᵢ = n × πᵢ</li><li><strong>n:</strong> Total sample size</li><li><strong>πᵢ:</strong> Hypothesized probability for category i</li></ol></div>`
+            },
+            {
+                question: "What are degrees of freedom for goodness-of-fit test?",
+                correctAnswers: ["k - 1", "categories minus 1", "number of categories minus 1"],
+                hint: "Think about constraints on the categories",
+                explanation: "df = k - 1 where k is number of categories (minus 1 because frequencies must sum to n).",
+                steps: `<div class="step-title">Goodness-of-fit df:</div><div class="step-content"><ol><li><strong>df:</strong> k - 1</li><li><strong>k:</strong> Number of categories</li><li><strong>Constraint:</strong> Frequencies sum to total n</li></ol></div>`
+            },
+            {
+                question: "What is H₀ for testing if a die is fair?",
+                correctAnswers: ["all faces equally likely", "p₁ = p₂ = ... = p₆ = 1/6", "uniform distribution"],
+                hint: "Think about equal probabilities",
+                explanation: "H₀: p₁ = p₂ = p₃ = p₄ = p₅ = p₆ = 1/6 (all faces equally likely).",
+                steps: `<div class="step-title">Fair Die Hypothesis:</div><div class="step-content"><ol><li><strong>Equal probabilities:</strong> Each face has prob 1/6</li><li><strong>Uniform:</strong> No face is favored</li><li><strong>Expected:</strong> Each face appears n/6 times</li></ol></div>`
+            },
+            {
+                question: "When testing Mendel's ratios, what would be expected frequencies?",
+                correctAnswers: ["based on genetic theory", "3:1 ratio", "theoretical proportions"],
+                hint: "Think about theoretical genetic ratios",
+                explanation: "Expected frequencies based on Mendelian genetics (e.g., 3:1 ratio gives E₁ = 3n/4, E₂ = n/4).",
+                steps: `<div class="step-title">Mendel's Ratios:</div><div class="step-content"><ol><li><strong>Theory:</strong> Genetic inheritance patterns</li><li><strong>3:1 ratio:</strong> Dominant:recessive</li><li><strong>Expected:</strong> E₁ = 0.75n, E₂ = 0.25n</li></ol></div>`
+            },
+            {
+                question: "What assumption is critical for goodness-of-fit tests?",
+                correctAnswers: ["expected frequencies ≥ 5", "large sample", "adequate cell counts"],
+                hint: "Think about sample size requirements",
+                explanation: "All expected frequencies should be ≥ 5 for valid chi-square approximation.",
+                steps: `<div class="step-title">Sample Size Requirement:</div><div class="step-content"><ol><li><strong>Minimum:</strong> All Eᵢ ≥ 5</li><li><strong>Approximation:</strong> Chi-square distribution accurate</li><li><strong>If violated:</strong> Use exact methods</li></ol></div>`
+            },
+            {
+                question: "How do you test if data follows normal distribution?",
+                correctAnswers: ["estimate parameters fit test goodness", "estimate μ σ then test", "two-step process"],
+                hint: "Think about unknown parameters",
+                explanation: "Estimate μ and σ from data, calculate expected frequencies, then test fit (df = k-1-2).",
+                steps: `<div class="step-title">Normal Distribution Test:</div><div class="step-content"><ol><li><strong>Step 1:</strong> Estimate μ and σ from data</li><li><strong>Step 2:</strong> Calculate expected frequencies</li><li><strong>Step 3:</strong> Test with df = k-3</li></ol></div>`
+            },
+            {
+                question: "What reduces degrees of freedom in goodness-of-fit?",
+                correctAnswers: ["estimating parameters", "unknown parameters", "parameters estimated from data"],
+                hint: "Think about what we estimate from the data",
+                explanation: "Each parameter estimated from the data reduces df by 1: df = k-1-p.",
+                steps: `<div class="step-title">Parameter Estimation Effect:</div><div class="step-content"><ol><li><strong>General formula:</strong> df = k - 1 - p</li><li><strong>p:</strong> Number of parameters estimated</li><li><strong>Example:</strong> Normal test df = k - 3</li></ol></div>`
+            },
+            {
+                question: "Can you combine categories in goodness-of-fit tests?",
+                correctAnswers: ["yes", "to increase expected frequencies", "combine small categories"],
+                hint: "Think about dealing with small expected frequencies",
+                explanation: "Yes, combine adjacent categories to ensure all expected frequencies ≥ 5.",
+                steps: `<div class="step-title">Combining Categories:</div><div class="step-content"><ol><li><strong>Purpose:</strong> Increase expected frequencies</li><li><strong>Method:</strong> Combine adjacent categories</li><li><strong>Adjust df:</strong> Reduce by number of combinations</li></ol></div>`
+            },
+            {
+                question: "What does significant goodness-of-fit test mean?",
+                correctAnswers: ["data doesn't fit distribution", "reject H₀", "poor fit"],
+                hint: "Think about what rejection means",
+                explanation: "Significant result means data doesn't follow the specified distribution (reject H₀).",
+                steps: `<div class="step-title">Significant Result:</div><div class="step-content"><ol><li><strong>Rejection:</strong> Data doesn't fit hypothesized distribution</li><li><strong>Large χ²:</strong> Substantial deviations observed</li><li><strong>Conclusion:</strong> Look for alternative distributions</li></ol></div>`
+            }
+        ];
+
+        const independenceQuestions = [
+            {
+                question: "What do tests of independence examine?",
+                correctAnswers: ["association between two variables", "independence of variables", "relationship"],
+                hint: "Think about two categorical variables",
+                explanation: "Independence tests examine whether two categorical variables are statistically independent.",
+                steps: `<div class="step-title">Independence Tests:</div><div class="step-content"><ol><li><strong>Two variables:</strong> Both categorical</li><li><strong>Independence:</strong> Variables unrelated</li><li><strong>Association:</strong> Variables related</li></ol></div>`
+            },
+            {
+                question: "What is H₀ for independence test?",
+                correctAnswers: ["variables are independent", "no association", "P(A∩B) = P(A)P(B)"],
+                hint: "Think about statistical independence",
+                explanation: "H₀: Row and column variables are independent (no association between them).",
+                steps: `<div class="step-title">Independence Null:</div><div class="step-content"><ol><li><strong>Independence:</strong> Variables unrelated</li><li><strong>Mathematical:</strong> P(A∩B) = P(A)×P(B)</li><li><strong>Practical:</strong> Knowing one tells nothing about other</li></ol></div>`
+            },
+            {
+                question: "How do you calculate expected cell frequencies?",
+                correctAnswers: ["(row total × column total)/grand total", "(ni. × n.j)/n", "marginal totals"],
+                hint: "Think about using marginal totals",
+                explanation: "Expected frequency Eᵢⱼ = (row i total × column j total)/grand total.",
+                steps: `<div class="step-title">Expected Cell Frequencies:</div><div class="step-content"><ol><li><strong>Formula:</strong> Eᵢⱼ = (nᵢ. × n.ⱼ)/n</li><li><strong>Row total:</strong> nᵢ.</li><li><strong>Column total:</strong> n.ⱼ</li></ol></div>`
+            },
+            {
+                question: "What are degrees of freedom for r×c contingency table?",
+                correctAnswers: ["(r-1)(c-1)", "rows minus 1 times columns minus 1"],
+                hint: "Think about constraints on the table",
+                explanation: "df = (r-1)(c-1) where r is number of rows and c is number of columns.",
+                steps: `<div class="step-title">Contingency Table df:</div><div class="step-content"><ol><li><strong>Formula:</strong> df = (r-1)(c-1)</li><li><strong>Constraints:</strong> Fixed marginal totals</li><li><strong>Example:</strong> 3×4 table has df = 2×3 = 6</li></ol></div>`
+            },
+            {
+                question: "What does a 2×2 contingency table analyze?",
+                correctAnswers: ["two binary variables", "2 variables with 2 categories each", "four cells"],
+                hint: "Think about the simplest case",
+                explanation: "2×2 table analyzes relationship between two binary (two-category) variables.",
+                steps: `<div class="step-title">2×2 Contingency Table:</div><div class="step-content"><ol><li><strong>Two variables:</strong> Each with 2 categories</li><li><strong>Four cells:</strong> All possible combinations</li><li><strong>df = 1:</strong> (2-1)(2-1) = 1</li></ol></div>`
+            },
+            {
+                question: "What indicates association in contingency table?",
+                correctAnswers: ["observed different from expected", "large chi-square", "significant test"],
+                hint: "Think about deviations from independence",
+                explanation: "Large deviations between observed and expected frequencies indicate association.",
+                steps: `<div class="step-title">Evidence of Association:</div><div class="step-content"><ol><li><strong>Large deviations:</strong> O far from E</li><li><strong>Pattern:</strong> Systematic differences</li><li><strong>Statistical:</strong> Significant χ² test</li></ol></div>`
+            },
+            {
+                question: "Can you determine causation from independence tests?",
+                correctAnswers: ["no", "only association", "correlation not causation"],
+                hint: "Think about what association means",
+                explanation: "No, independence tests only detect association, not causation.",
+                steps: `<div class="step-title">Association vs Causation:</div><div class="step-content"><ol><li><strong>Association:</strong> Variables related</li><li><strong>Not causation:</strong> Direction unclear</li><li><strong>Other factors:</strong> Could explain relationship</li></ol></div>`
+            },
+            {
+                question: "What is Fisher's exact test used for?",
+                correctAnswers: ["small samples", "2×2 tables", "exact p-values"],
+                hint: "Think about sample size problems",
+                explanation: "Fisher's exact test provides exact p-values for 2×2 tables when sample sizes are small.",
+                steps: `<div class="step-title">Fisher's Exact Test:</div><div class="step-content"><ol><li><strong>When:</strong> Small expected frequencies</li><li><strong>2×2 tables:</strong> Binary variables</li><li><strong>Exact:</strong> No approximation needed</li></ol></div>`
+            },
+            {
+                question: "What are marginal totals?",
+                correctAnswers: ["row and column sums", "totals for each category", "margins of table"],
+                hint: "Think about sums along edges",
+                explanation: "Marginal totals are the row and column sums in a contingency table.",
+                steps: `<div class="step-title">Marginal Totals:</div><div class="step-content"><ol><li><strong>Row totals:</strong> nᵢ. = Σⱼ nᵢⱼ</li><li><strong>Column totals:</strong> n.ⱼ = Σᵢ nᵢⱼ</li><li><strong>Grand total:</strong> n = ΣᵢΣⱼ nᵢⱼ</li></ol></div>`
+            },
+            {
+                question: "When should all expected frequencies be ≥ 5?",
+                correctAnswers: ["for valid chi-square test", "approximation accuracy", "avoid Type I error"],
+                hint: "Think about test assumptions",
+                explanation: "Expected frequencies ≥ 5 ensure chi-square distribution is good approximation.",
+                steps: `<div class="step-title">Expected Frequency Rule:</div><div class="step-content"><ol><li><strong>Minimum:</strong> All Eᵢⱼ ≥ 5</li><li><strong>Approximation:</strong> χ² distribution accurate</li><li><strong>Alternative:</strong> Use exact tests if violated</li></ol></div>`
+            }
+        ];
+
+        const homogeneityQuestions = [
+            {
+                question: "What do tests of homogeneity compare?",
+                correctAnswers: ["distributions across populations", "multiple population distributions", "population differences"],
+                hint: "Think about multiple groups",
+                explanation: "Homogeneity tests compare categorical distributions across multiple populations.",
+                steps: `<div class="step-title">Homogeneity Tests:</div><div class="step-content"><ol><li><strong>Multiple populations:</strong> Different groups</li><li><strong>Same variable:</strong> Categorical outcome</li><li><strong>Compare distributions:</strong> Are they the same?</li></ol></div>`
+            },
+            {
+                question: "What is H₀ for homogeneity test?",
+                correctAnswers: ["all populations have same distribution", "homogeneous populations", "π₁₁ = π₂₁ = π₃₁"],
+                hint: "Think about identical distributions",
+                explanation: "H₀: All populations have the same distribution for the categorical variable.",
+                steps: `<div class="step-title">Homogeneity Null:</div><div class="step-content"><ol><li><strong>Same distribution:</strong> All populations identical</li><li><strong>Equal proportions:</strong> πᵢⱼ same across populations</li><li><strong>Homogeneous:</strong> No population differences</li></ol></div>`
+            },
+            {
+                question: "How does sampling differ from independence test?",
+                correctAnswers: ["fixed sample sizes per population", "separate sampling", "stratified sampling"],
+                hint: "Think about study design",
+                explanation: "Homogeneity uses fixed sample sizes from each population; independence uses one sample.",
+                steps: `<div class="step-title">Sampling Design Difference:</div><div class="step-content"><ol><li><strong>Homogeneity:</strong> Fix nᵢ. for each population</li><li><strong>Independence:</strong> Fix total n, variables random</li><li><strong>Analysis:</strong> Same computation, different interpretation</li></ol></div>`
+            },
+            {
+                question: "Are calculations different from independence test?",
+                correctAnswers: ["no", "same formulas", "identical computation"],
+                hint: "Think about the mathematical procedures",
+                explanation: "No, calculations are identical to independence tests - only interpretation differs.",
+                steps: `<div class="step-title">Computational Equivalence:</div><div class="step-content"><ol><li><strong>Same χ²:</strong> Σ(O-E)²/E</li><li><strong>Same df:</strong> (r-1)(c-1)</li><li><strong>Different meaning:</strong> Population differences vs association</li></ol></div>`
+            },
+            {
+                question: "What does significant homogeneity test indicate?",
+                correctAnswers: ["populations have different distributions", "heterogeneous", "reject homogeneity"],
+                hint: "Think about what rejection means",
+                explanation: "Significant result means populations have different distributions (heterogeneous).",
+                steps: `<div class="step-title">Significant Homogeneity Test:</div><div class="step-content"><ol><li><strong>Reject H₀:</strong> Populations differ</li><li><strong>Heterogeneous:</strong> Not all same distribution</li><li><strong>Follow-up:</strong> Which populations differ?</li></ol></div>`
+            },
+            {
+                question: "How do you identify which populations differ?",
+                correctAnswers: ["examine residuals", "post-hoc comparisons", "pairwise tests"],
+                hint: "Think about follow-up analysis",
+                explanation: "Examine standardized residuals or conduct pairwise comparisons to identify differences.",
+                steps: `<div class="step-title">Post-hoc Analysis:</div><div class="step-content"><ol><li><strong>Residuals:</strong> Large |standardized residuals| > 2</li><li><strong>Pairwise:</strong> Compare populations two at a time</li><li><strong>Patterns:</strong> Which categories differ most</li></ol></div>`
+            },
+            {
+                question: "Can you combine small populations?",
+                correctAnswers: ["yes", "if justified", "increase sample size"],
+                hint: "Think about dealing with small samples",
+                explanation: "Yes, can combine similar populations to increase sample sizes if theoretically justified.",
+                steps: `<div class="step-title">Combining Populations:</div><div class="step-content"><ol><li><strong>Justification:</strong> Must be theoretically reasonable</li><li><strong>Purpose:</strong> Increase expected frequencies</li><li><strong>Caution:</strong> May mask important differences</li></ol></div>`
+            },
+            {
+                question: "What are examples of homogeneity tests?",
+                correctAnswers: ["compare stores satisfaction", "regions preferences", "treatments side effects"],
+                hint: "Think about comparing groups",
+                explanation: "Examples: comparing customer satisfaction across stores, preferences across regions.",
+                steps: `<div class="step-title">Homogeneity Examples:</div><div class="step-content"><ol><li><strong>Business:</strong> Customer satisfaction by location</li><li><strong>Medical:</strong> Side effects by treatment</li><li><strong>Education:</strong> Performance by school</li></ol></div>`
+            },
+            {
+                question: "How do you set up contingency table for homogeneity?",
+                correctAnswers: ["populations in rows", "categories in columns", "fixed row totals"],
+                hint: "Think about table organization",
+                explanation: "Usually put populations in rows and outcome categories in columns (row totals fixed).",
+                steps: `<div class="step-title">Table Setup:</div><div class="step-content"><ol><li><strong>Rows:</strong> Different populations</li><li><strong>Columns:</strong> Outcome categories</li><li><strong>Fixed:</strong> Row totals (sample sizes)</li></ol></div>`
+            },
+            {
+                question: "What advantage does homogeneity design have?",
+                correctAnswers: ["controls population differences", "stratified sampling", "clear comparisons"],
+                hint: "Think about design benefits",
+                explanation: "Controls for population differences by sampling fixed amounts from each group.",
+                steps: `<div class="step-title">Design Advantages:</div><div class="step-content"><ol><li><strong>Control:</strong> Population representation</li><li><strong>Balance:</strong> Equal or planned sample sizes</li><li><strong>Clear comparison:</strong> Direct population differences</li></ol></div>`
+            }
+        ];
+
+        const assumptionsQuestions = [
+            {
+                question: "What is the most critical chi-square assumption?",
+                correctAnswers: ["expected frequencies ≥ 5", "adequate sample size", "large enough cells"],
+                hint: "Think about sample size requirements",
+                explanation: "Expected frequencies ≥ 5 is most critical for valid chi-square approximation.",
+                steps: `<div class="step-title">Critical Assumption:</div><div class="step-content"><ol><li><strong>Expected frequencies:</strong> All Eᵢ ≥ 5</li><li><strong>Why critical:</strong> Chi-square approximation accuracy</li><li><strong>Violation:</strong> Leads to incorrect p-values</li></ol></div>`
+            },
+            {
+                question: "What is Fisher's exact test?",
+                correctAnswers: ["exact test for small samples", "hypergeometric distribution", "2×2 tables"],
+                hint: "Think about small sample alternative",
+                explanation: "Fisher's exact test provides exact p-values for 2×2 tables using hypergeometric distribution.",
+                steps: `<div class="step-title">Fisher's Exact Test:</div><div class="step-content"><ol><li><strong>When:</strong> Small expected frequencies</li><li><strong>Distribution:</strong> Hypergeometric (exact)</li><li><strong>Application:</strong> 2×2 contingency tables</li></ol></div>`
+            },
+            {
+                question: "What is the G-test (likelihood ratio test)?",
+                correctAnswers: ["alternative to chi-square", "G = 2ΣO ln(O/E)", "likelihood ratio"],
+                hint: "Think about alternative test statistics",
+                explanation: "G-test uses likelihood ratio: G = 2ΣOᵢⱼ ln(Oᵢⱼ/Eᵢⱼ), often better for small samples.",
+                steps: `<div class="step-title">G-test:</div><div class="step-content"><ol><li><strong>Formula:</strong> G = 2ΣO ln(O/E)</li><li><strong>Advantage:</strong> Better for small expected frequencies</li><li><strong>Distribution:</strong> Also follows χ² under H₀</li></ol></div>`
+            },
+            {
+                question: "What is Yates' continuity correction?",
+                correctAnswers: ["conservative adjustment", "subtract 0.5", "2×2 tables"],
+                hint: "Think about continuous approximation to discrete",
+                explanation: "Yates' correction subtracts 0.5 from |O-E| before squaring, making test more conservative.",
+                steps: `<div class="step-title">Yates' Correction:</div><div class="step-content"><ol><li><strong>Formula:</strong> χ² = Σ(|O-E|-0.5)²/E</li><li><strong>Purpose:</strong> Better approximation for discrete data</li><li><strong>Effect:</strong> More conservative (larger p-values)</li></ol></div>`
+            },
+            {
+                question: "What happens when expected frequencies are too small?",
+                correctAnswers: ["poor approximation", "incorrect p-values", "Type I error inflation"],
+                hint: "Think about approximation problems",
+                explanation: "Small expected frequencies make chi-square approximation poor, leading to incorrect p-values.",
+                steps: `<div class="step-title">Small Expected Frequencies:</div><div class="step-content"><ol><li><strong>Problem:</strong> Poor chi-square approximation</li><li><strong>Result:</strong> Incorrect p-values</li><li><strong>Solution:</strong> Use exact tests or combine categories</li></ol></div>`
+            },
+            {
+                question: "How can you handle small expected frequencies?",
+                correctAnswers: ["combine categories", "use exact tests", "increase sample size"],
+                hint: "Think about practical solutions",
+                explanation: "Combine categories, use exact tests like Fisher's, or increase sample size.",
+                steps: `<div class="step-title">Small Frequency Solutions:</div><div class="step-content"><ol><li><strong>Combine categories:</strong> Merge logically related groups</li><li><strong>Exact tests:</strong> Fisher's, Monte Carlo</li><li><strong>Larger sample:</strong> Increase data collection</li></ol></div>`
+            },
+            {
+                question: "What is Monte Carlo simulation for chi-square?",
+                correctAnswers: ["simulate null distribution", "computer-intensive", "exact p-values"],
+                hint: "Think about computational approaches",
+                explanation: "Monte Carlo simulates the null distribution to get exact p-values without distributional assumptions.",
+                steps: `<div class="step-title">Monte Carlo Method:</div><div class="step-content"><ol><li><strong>Simulate:</strong> Generate data under H₀</li><li><strong>Compute:</strong> χ² for each simulated dataset</li><li><strong>p-value:</strong> Proportion of simulated χ² ≥ observed</li></ol></div>`
+            },
+            {
+                question: "What assumption involves independence?",
+                correctAnswers: ["observations independent", "no clustering", "random sampling"],
+                hint: "Think about data structure",
+                explanation: "Each observation must be independent - no clustering, matching, or repeated measures.",
+                steps: `<div class="step-title">Independence Assumption:</div><div class="step-content"><ol><li><strong>Independent observations:</strong> No correlations</li><li><strong>Random sampling:</strong> Representative data</li><li><strong>Violations:</strong> Clustering, repeated measures</li></ol></div>`
+            },
+            {
+                question: "Can you use chi-square with continuous data?",
+                correctAnswers: ["no", "categorical only", "must discretize first"],
+                hint: "Think about data types",
+                explanation: "No, chi-square tests require categorical data. Must group continuous data into categories first.",
+                steps: `<div class="step-title">Data Type Requirement:</div><div class="step-content"><ol><li><strong>Categorical only:</strong> Discrete categories</li><li><strong>Continuous data:</strong> Must be grouped first</li><li><strong>Loss of information:</strong> Grouping reduces power</li></ol></div>`
+            },
+            {
+                question: "What modern approaches exist for categorical data?",
+                correctAnswers: ["logistic regression", "log-linear models", "exact methods"],
+                hint: "Think about advanced alternatives",
+                explanation: "Modern alternatives include logistic regression, log-linear models, and exact computational methods.",
+                steps: `<div class="step-title">Modern Alternatives:</div><div class="step-content"><ol><li><strong>Logistic regression:</strong> Model relationships directly</li><li><strong>Log-linear models:</strong> Complex associations</li><li><strong>Exact methods:</strong> Computer-intensive but precise</li></ol></div>`
+            }
+        ];
+
+        const associationQuestions = [
+            {
+                question: "What does Cramér's V measure?",
+                correctAnswers: ["strength of association", "effect size", "standardized chi-square"],
+                hint: "Think about association strength",
+                explanation: "Cramér's V measures the strength of association between two categorical variables.",
+                steps: `<div class="step-title">Cramér's V:</div><div class="step-content"><ol><li><strong>Formula:</strong> V = √[χ²/(n×min(r-1,c-1))]</li><li><strong>Range:</strong> 0 to 1</li><li><strong>Interpretation:</strong> 0 = no association, 1 = perfect</li></ol></div>`
+            },
+            {
+                question: "When do you use phi coefficient?",
+                correctAnswers: ["2×2 tables", "two binary variables", "φ = √(χ²/n)"],
+                hint: "Think about the simplest case",
+                explanation: "Phi coefficient is used for 2×2 tables (two binary variables): φ = √(χ²/n).",
+                steps: `<div class="step-title">Phi Coefficient:</div><div class="step-content"><ol><li><strong>For 2×2 tables:</strong> Two binary variables</li><li><strong>Formula:</strong> φ = √(χ²/n)</li><li><strong>Range:</strong> -1 to +1 (can be negative)</li></ol></div>`
+            },
+            {
+                question: "What is lambda (λ) used for?",
+                correctAnswers: ["proportional reduction in error", "prediction improvement", "asymmetric measure"],
+                hint: "Think about prediction accuracy",
+                explanation: "Lambda measures proportional reduction in error when predicting one variable from another.",
+                steps: `<div class="step-title">Lambda (λ):</div><div class="step-content"><ol><li><strong>PRE measure:</strong> Proportional reduction in error</li><li><strong>Asymmetric:</strong> λ(Y|X) ≠ λ(X|Y)</li><li><strong>Interpretation:</strong> Improvement in prediction</li></ol></div>`
+            },
+            {
+                question: "When do you use gamma (γ)?",
+                correctAnswers: ["ordinal variables", "concordant discordant pairs", "ordered categories"],
+                hint: "Think about ordered categorical data",
+                explanation: "Gamma is used when both variables are ordinal, based on concordant/discordant pairs.",
+                steps: `<div class="step-title">Gamma (γ):</div><div class="step-content"><ol><li><strong>For ordinal data:</strong> Ordered categories</li><li><strong>Based on pairs:</strong> Concordant vs discordant</li><li><strong>Range:</strong> -1 to +1</li></ol></div>`
+            },
+            {
+                question: "What are Cohen's guidelines for Cramér's V?",
+                correctAnswers: ["small 0.10 medium 0.30 large 0.50", "effect size conventions", "rough guidelines"],
+                hint: "Think about effect size conventions",
+                explanation: "Cohen suggested V = 0.10 (small), 0.30 (medium), 0.50 (large) as rough guidelines.",
+                steps: `<div class="step-title">Effect Size Guidelines:</div><div class="step-content"><ol><li><strong>Small:</strong> V = 0.10</li><li><strong>Medium:</strong> V = 0.30</li><li><strong>Large:</strong> V = 0.50</li></ol></div>`
+            },
+            {
+                question: "What is the contingency coefficient C?",
+                correctAnswers: ["C = √[χ²/(χ² + n)]", "alternative to Cramér's V", "bounded by table size"],
+                hint: "Think about alternative association measures",
+                explanation: "Contingency coefficient C = √[χ²/(χ² + n)], but maximum value depends on table size.",
+                steps: `<div class="step-title">Contingency Coefficient:</div><div class="step-content"><ol><li><strong>Formula:</strong> C = √[χ²/(χ² + n)]</li><li><strong>Problem:</strong> Maximum < 1, depends on table size</li><li><strong>Less used:</strong> Than Cramér's V</li></ol></div>`
+            },
+            {
+                question: "How do you interpret V = 0.25?",
+                correctAnswers: ["small to medium effect", "modest association", "25% scaled association"],
+                hint: "Think about practical significance",
+                explanation: "V = 0.25 indicates small to medium association strength - modest but meaningful relationship.",
+                steps: `<div class="step-title">Interpreting V = 0.25:</div><div class="step-content"><ol><li><strong>Effect size:</strong> Small to medium</li><li><strong>Practical:</strong> Modest association</li><li><strong>Context important:</strong> Field-specific interpretation</li></ol></div>`
+            },
+            {
+                question: "What are concordant pairs?",
+                correctAnswers: ["same order on both variables", "agree in direction", "positive association"],
+                hint: "Think about agreement in ordering",
+                explanation: "Concordant pairs have the same relative order on both ordinal variables.",
+                steps: `<div class="step-title">Concordant Pairs:</div><div class="step-content"><ol><li><strong>Same order:</strong> Both variables agree in direction</li><li><strong>Example:</strong> Both high-high or low-low</li><li><strong>Positive association:</strong> More concordant than discordant</li></ol></div>`
+            },
+            {
+                question: "Should you report multiple association measures?",
+                correctAnswers: ["yes", "comprehensive analysis", "different aspects"],
+                hint: "Think about complete analysis",
+                explanation: "Yes, report multiple measures as they capture different aspects of association.",
+                steps: `<div class="step-title">Multiple Measures:</div><div class="step-content"><ol><li><strong>Different aspects:</strong> Each measure captures different features</li><li><strong>Comprehensive:</strong> More complete picture</li><li><strong>Compare:</strong> Consistency across measures</li></ol></div>`
+            },
+            {
+                question: "Can association measures be negative?",
+                correctAnswers: ["some can", "phi and gamma", "indicates negative association"],
+                hint: "Think about direction of association",
+                explanation: "Some measures (phi, gamma) can be negative, indicating negative association.",
+                steps: `<div class="step-title">Negative Association:</div><div class="step-content"><ol><li><strong>Can be negative:</strong> Phi, gamma, tau</li><li><strong>Always positive:</strong> Cramér's V, contingency coefficient</li><li><strong>Interpretation:</strong> Direction of relationship</li></ol></div>`
+            }
+        ];
+
+        // Generate question functions
+        function generateQuestion111() {
+            const randomIndex = Math.floor(Math.random() * introChiSquareQuestions.length);
+            currentQuestion111 = introChiSquareQuestions[randomIndex];
+            displayQuestion(111, currentQuestion111);
+        }
+        
+        function generateQuestion112() {
+            const randomIndex = Math.floor(Math.random() * goodnessOfFitQuestions.length);
+            currentQuestion112 = goodnessOfFitQuestions[randomIndex];
+            displayQuestion(112, currentQuestion112);
+        }
+        
+        function generateQuestion113() {
+            const randomIndex = Math.floor(Math.random() * independenceQuestions.length);
+            currentQuestion113 = independenceQuestions[randomIndex];
+            displayQuestion(113, currentQuestion113);
+        }
+        
+        function generateQuestion114() {
+            const randomIndex = Math.floor(Math.random() * homogeneityQuestions.length);
+            currentQuestion114 = homogeneityQuestions[randomIndex];
+            displayQuestion(114, currentQuestion114);
+        }
+        
+        function generateQuestion115() {
+            const randomIndex = Math.floor(Math.random() * assumptionsQuestions.length);
+            currentQuestion115 = assumptionsQuestions[randomIndex];
+            displayQuestion(115, currentQuestion115);
+        }
+        
+        function generateQuestion116() {
+            const randomIndex = Math.floor(Math.random() * associationQuestions.length);
+            currentQuestion116 = associationQuestions[randomIndex];
+            displayQuestion(116, currentQuestion116);
+        }
+
+        // Helper function to display questions
+        function displayQuestion(sectionNum, question) {
+            document.getElementById(`question-${sectionNum}-content`).innerHTML = question.question;
+            document.getElementById(`hint-${sectionNum}`).innerHTML = `💡 ${question.hint}`;
+            
+            document.getElementById(`answer-${sectionNum}`).value = '';
+            document.getElementById(`feedback-${sectionNum}`).style.display = 'none';
+            document.getElementById(`steps-${sectionNum}`).style.display = 'none';
+        }
+
+        // Check answer functions
+        function checkAnswer111() { checkAnswer(111, currentQuestion111); }
+        function checkAnswer112() { checkAnswer(112, currentQuestion112); }
+        function checkAnswer113() { checkAnswer(113, currentQuestion113); }
+        function checkAnswer114() { checkAnswer(114, currentQuestion114); }
+        function checkAnswer115() { checkAnswer(115, currentQuestion115); }
+        function checkAnswer116() { checkAnswer(116, currentQuestion116); }
+
+        // Show steps functions  
+        function showSteps111() { showSteps(111, currentQuestion111); }
+        function showSteps112() { showSteps(112, currentQuestion112); }
+        function showSteps113() { showSteps(113, currentQuestion113); }
+        function showSteps114() { showSteps(114, currentQuestion114); }
+        function showSteps115() { showSteps(115, currentQuestion115); }
+        function showSteps116() { showSteps(116, currentQuestion116); }
+
+        // Helper functions
+        function checkAnswer(sectionNum, currentQuestion) {
+            const userAnswer = document.getElementById(`answer-${sectionNum}`).value.toLowerCase().trim();
+            if (!currentQuestion) return;
+            
+            const isCorrect = currentQuestion.correctAnswers.some(answer => 
+                userAnswer.includes(answer.toLowerCase()) || answer.toLowerCase().includes(userAnswer)
+            );
+            
+            const feedbackElement = document.getElementById(`feedback-${sectionNum}`);
+            if (isCorrect) {
+                feedbackElement.innerHTML = `<div class="correct">✅ Correct! ${currentQuestion.explanation}</div>`;
+                feedbackElement.className = 'question-feedback correct-feedback';
+            } else {
+                feedbackElement.innerHTML = `<div class="incorrect">❌ Incorrect. ${currentQuestion.explanation}</div>`;
+                feedbackElement.className = 'question-feedback incorrect-feedback';
+            }
+            feedbackElement.style.display = 'block';
+        }
+
+        function showSteps(sectionNum, currentQuestion) {
+            if (!currentQuestion) return;
+            const stepsElement = document.getElementById(`steps-${sectionNum}`);
+            stepsElement.innerHTML = currentQuestion.steps;
+            stepsElement.style.display = 'block';
+        }
+
+        // Initialize on page load
+        window.onload = function() {
+            generateQuestion111();
+            generateQuestion112(); 
+            generateQuestion113();
+            generateQuestion114();
+            generateQuestion115();
+            generateQuestion116();
+        }
+    </script>
+</body>
+</html>
