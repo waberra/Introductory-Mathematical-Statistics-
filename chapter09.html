@@ -387,31 +387,31 @@
                         </ul>
                     </div>
 
-                    <p><strong>Key Concept:</strong> The z-test works because under the null hypothesis H₀: μ₁ = μ₂, the difference between sample means (x̄₁ - x̄₂) follows a normal distribution with mean 0 and a known standard error. This allows us to calculate exact probabilities and make statistical decisions.</p>
+                    <p><strong>Key Concept:</strong> The z-test works because under the null hypothesis H₀: μ₁ = μ₂, the difference between sample means (X̄₁ - X̄₂) follows a normal distribution with mean 0 and a known standard error. This allows us to calculate exact probabilities and make statistical decisions.</p>
                 </div>
 
                 <div class="math-formula">
                     <strong>Null and Alternative Hypotheses:</strong><br>
-                    $H_0: \mu_1 = \mu_2$ (population means are equal)<br>
-                    $H_1: \mu_1 \neq \mu_2$ (two-tailed) or $H_1: \mu_1 > \mu_2$ (one-tailed)
+                    H₀: μ₁ = μ₂ (population means are equal)<br>
+                    H₁: μ₁ ≠ μ₂ (two-tailed) or H₁: μ₁ > μ₂ (one-tailed)
                 </div>
 
                 <div class="math-formula">
                     <strong>Test Statistic:</strong><br>
-                    $z = \frac{(\bar{x}_1 - \bar{x}_2) - (\mu_1 - \mu_2)}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}}$<br>
-                    Under H₀, this simplifies to: $z = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}}$
+                    z = (X̄₁ - X̄₂ - (μ₁ - μ₂)) / sqrt(σ₁²/n₁ + σ₂²/n₂)<br>
+                    Under H₀, this simplifies to: z = (X̄₁ - X̄₂) / sqrt(σ₁²/n₁ + σ₂²/n₂)
                 </div>
 
                 <div class="concept-explanation">
                     <h4>Understanding the Formula</h4>
-                    <p>The z-statistic measures how many standard errors our observed difference is from what we'd expect under H₀ (which is 0). The denominator √(σ₁²/n₁ + σ₂²/n₂) is the standard error of the difference, calculated using a fundamental rule: when you subtract independent random variables, their variances add.</p>
+                    <p>The z-statistic measures how many standard errors our observed difference is from what we'd expect under H₀ (which is 0). The denominator sqrt(σ₁²/n₁ + σ₂²/n₂) is the standard error of the difference, calculated using a fundamental rule: when you subtract independent random variables, their variances add.</p>
 
                     <div class="key-points">
                         <h5>Critical Decision Points:</h5>
                         <ul>
-                            <li><strong>Two-tailed test (α = 0.05):</strong> Reject H₀ if |z| > 1.96</li>
-                            <li><strong>One-tailed test (α = 0.05):</strong> Reject H₀ if z > 1.645 (or z < -1.645)</li>
-                            <li><strong>p-value approach:</strong> Reject H₀ if p-value < α</li>
+                            <li><strong>Two-tailed test (alpha = 0.05):</strong> Reject H₀ if |z| > 1.96</li>
+                            <li><strong>One-tailed test (alpha = 0.05):</strong> Reject H₀ if z > 1.645 (or z < -1.645)</li>
+                            <li><strong>p-value approach:</strong> Reject H₀ if p-value < alpha</li>
                         </ul>
                     </div>
                 </div>
@@ -469,13 +469,13 @@
 
                 <div class="math-formula">
                     <strong>Pooled t-Test Formula:</strong><br>
-                    $t = \frac{\bar{x}_1 - \bar{x}_2}{s_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}$ with $df = n_1 + n_2 - 2$<br><br>
-                    $s_p^2 = \frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1 + n_2 - 2}$ (pooled variance)
+                    t = (X̄₁ - X̄₂) / (s_p × sqrt(1/n₁ + 1/n₂)) with df = n₁ + n₂ - 2<br><br>
+                    s_p² = [(n₁-1)s₁² + (n₂-1)s₂²] / (n₁ + n₂ - 2) (pooled variance)
                 </div>
 
                 <div class="math-formula">
                     <strong>Welch's t-Test Formula:</strong><br>
-                    $t = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}$ with adjusted df (Satterthwaite approximation)
+                    t = (X̄₁ - X̄₂) / sqrt(s₁²/n₁ + s₂²/n₂) with adjusted df (Satterthwaite approximation)
                 </div>
 
                 <div class="concept-explanation">
@@ -518,12 +518,336 @@
                 </div>
             </div>
         </div>
+
+        <!-- Section 9.3: Paired t-Tests -->
+        <div class="section">
+            <h2 class="section-title">📊 9.3 Paired t-Tests</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Paired t-Tests</h4>
+                    <p>Paired t-tests are used when you have two related measurements on the same subjects or when subjects are matched in pairs. This design is fundamentally different from independent two-sample tests because it controls for individual differences between subjects, dramatically increasing statistical power.</p>
+                    
+                    <p>The key insight is that instead of comparing two separate groups, we're analyzing the differences within each pair. This eliminates much of the variability that comes from individual differences, allowing us to detect smaller treatment effects with greater confidence.</p>
+
+                    <div class="key-points">
+                        <h5>When to Use Paired t-Tests:</h5>
+                        <ul>
+                            <li><strong>Before/After Studies:</strong> Same subjects measured at two time points</li>
+                            <li><strong>Matched Pairs Design:</strong> Subjects paired by important characteristics, then randomized</li>
+                            <li><strong>Natural Pairs:</strong> Twins, husband/wife, left/right measurements</li>
+                            <li><strong>Crossover Studies:</strong> Each subject receives both treatments (with washout period)</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>The Pairing Advantage:</strong> By measuring the same people twice (or very similar people), we remove between-subject variability from our error term, making it much easier to detect true treatment effects.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Paired t-Test Procedure:</strong><br>
+                    1. Calculate differences: d_i = x₁_i - x₂_i for each pair<br>
+                    2. Test if mean difference = 0: H₀: Mu_d = 0<br>
+                    3. Use one-sample t-test on the differences
+                </div>
+
+                <div class="math-formula">
+                    <strong>Test Statistic:</strong><br>
+                    t = (d̄ - 0) / (s_d / sqrt(n))<br>
+                    where d̄ = mean of differences, s_d = std dev of differences<br>
+                    df = n - 1 (number of pairs minus 1)
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Power and Efficiency of Pairing</h4>
+                    <p>Pairing is incredibly powerful when there's correlation between the paired observations. The more similar the paired subjects are, the greater the benefit. However, pairing does cost you degrees of freedom (n-1 instead of 2n-2), so it's only worthwhile when the pairing is meaningful.</p>
+
+                    <div class="key-points">
+                        <h5>Key Assumptions:</h5>
+                        <ul>
+                            <li><strong>Normality of Differences:</strong> The differences d_i should be approximately normal</li>
+                            <li><strong>Independence of Pairs:</strong> Each pair should be independent of other pairs</li>
+                            <li><strong>Random Sampling:</strong> Pairs should represent the population of interest</li>
+                            <li><strong>No Carryover Effects:</strong> In crossover studies, treatments shouldn't interact</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>When NOT to Pair:</strong> If there's no logical basis for pairing or if subjects can't be measured twice, use independent two-sample tests instead.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 9.3 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Paired t-Tests Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion93()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-93-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-93">Your Answer:</label>
+                        <input type="text" id="answer-93" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer93()">
+                        <div class="input-hint" id="hint-93"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer93()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps93()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion93()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-93" style="display: none;"></div>
+                    <div class="question-steps" id="steps-93" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 9.4: Two-Sample Proportion Tests -->
+        <div class="section">
+            <h2 class="section-title">📊 9.4 Two-Sample Proportion Tests</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Two-Sample Proportion Tests</h4>
+                    <p>Two-sample proportion tests compare the success rates (proportions) between two independent groups when dealing with categorical data. These tests are fundamental in medical research (comparing cure rates), marketing (comparing conversion rates), and quality control (comparing defect rates).</p>
+                    
+                    <p>The key insight is that we're comparing p₁ (proportion in group 1) to p₂ (proportion in group 2). Under the null hypothesis that p₁ = p₂, we can pool the data to get our best estimate of the common proportion, which we use to calculate the standard error.</p>
+
+                    <div class="key-points">
+                        <h5>When to Use Two-Sample Proportion Tests:</h5>
+                        <ul>
+                            <li><strong>Binary Outcomes:</strong> Each observation is success/failure, yes/no, pass/fail</li>
+                            <li><strong>Independent Groups:</strong> Two separate samples from different populations</li>
+                            <li><strong>Large Samples:</strong> np ≥ 5 and n(1-p) ≥ 5 for both groups</li>
+                            <li><strong>Random Sampling:</strong> Both samples should be randomly selected</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Real-World Applications:</strong> Medical trials (drug effectiveness), A/B testing (website conversion), quality control (defect comparison), polling (support rate differences).</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Hypotheses:</strong><br>
+                    H₀: p₁ = p₂ (proportions are equal)<br>
+                    H₁: p₁ ≠ p₂ (two-tailed) or p₁ > p₂ (one-tailed)
+                </div>
+
+                <div class="math-formula">
+                    <strong>Pooled Proportion:</strong><br>
+                    p̂ pooled = (x₁ + x₂) / (n₁ + n₂)<br>
+                    where x₁, x₂ = number of successes in each group
+                </div>
+
+                <div class="math-formula">
+                    <strong>Test Statistic:</strong><br>
+                    z = (p̂₁ - p̂₂) / sqrt[p̂ pooled × (1 - p̂ pooled) × (1/n₁ + 1/n₂)]<br>
+                    Under H₀, z follows standard normal distribution
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Why Pool Under the Null Hypothesis?</h4>
+                    <p>Under H₀: p₁ = p₂, both samples are drawn from populations with the same proportion. Therefore, combining both samples gives us the best estimate of this common proportion. This pooled estimate is more precise than either individual sample proportion and provides the most accurate standard error for the test.</p>
+
+                    <div class="key-points">
+                        <h5>Important Considerations:</h5>
+                        <ul>
+                            <li><strong>Sample Size Requirements:</strong> Success-failure rule must hold for normal approximation</li>
+                            <li><strong>Confidence Intervals:</strong> Don't use pooled proportion—use separate proportions</li>
+                            <li><strong>Fisher's Exact Test:</strong> Alternative for small samples where normal approximation fails</li>
+                            <li><strong>Effect Size:</strong> Consider practical significance, not just statistical significance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 9.4 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Two-Sample Proportion Tests Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion94()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-94-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-94">Your Answer:</label>
+                        <input type="text" id="answer-94" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer94()">
+                        <div class="input-hint" id="hint-94"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer94()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps94()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion94()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-94" style="display: none;"></div>
+                    <div class="question-steps" id="steps-94" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 9.5: Tests for Equal Variances -->
+        <div class="section">
+            <h2 class="section-title">📊 9.5 Tests for Equal Variances</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Variance Tests</h4>
+                    <p>Tests for equal variances determine whether two populations have the same variability. This is crucial because many statistical procedures (like pooled t-tests) assume equal variances. Variance tests help us decide which statistical method is appropriate and whether our assumptions are reasonable.</p>
+                    
+                    <p>The most common test is the F-test, which compares the ratio of sample variances to what we'd expect if population variances were equal. However, the F-test is notoriously sensitive to departures from normality, leading to the development of more robust alternatives.</p>
+
+                    <div class="key-points">
+                        <h5>When to Test for Equal Variances:</h5>
+                        <ul>
+                            <li><strong>Before t-tests:</strong> To decide between pooled and Welch's procedures</li>
+                            <li><strong>Quality Control:</strong> Comparing consistency between processes or machines</li>
+                            <li><strong>Method Validation:</strong> Ensuring measurement methods have similar precision</li>
+                            <li><strong>ANOVA Prerequisites:</strong> Checking homoscedasticity assumption</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>The Robustness Problem:</strong> Variance tests often fail precisely when you need them most—when data are non-normal. This has led many statisticians to recommend robust alternatives or simply using Welch's procedures as the default.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>F-Test for Equal Variances:</strong><br>
+                    H₀: σ₁² = σ₂² vs H₁: σ₁² ≠ σ₂²<br>
+                    F = s₁² / s₂² (larger variance in numerator)<br>
+                    Under H₀, F follows F(df₁, df₂) where df₁ = n₁-1, df₂ = n₂-1
+                </div>
+
+                <div class="math-formula">
+                    <strong>Decision Rule:</strong><br>
+                    Reject H₀ if F > F(alpha/2, df₁, df₂) for two-tailed test<br>
+                    Critical values depend on degrees of freedom and significance level
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Robust Alternatives to the F-Test</h4>
+                    <p>Because the F-test assumes normality and is sensitive to violations, several robust alternatives have been developed:</p>
+
+                    <div class="key-points">
+                        <h5>Alternative Tests:</h5>
+                        <ul>
+                            <li><strong>Levene's Test:</strong> Uses absolute deviations from group medians</li>
+                            <li><strong>Brown-Forsythe Test:</strong> Modified Levene's test using medians instead of means</li>
+                            <li><strong>Bartlett's Test:</strong> Extension to multiple groups (but also sensitive to non-normality)</li>
+                            <li><strong>Modern Approach:</strong> Use Welch's procedures by default to avoid pre-testing</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>The Pre-testing Problem:</strong> Testing for equal variances before choosing your analysis method can inflate Type I error rates. Many statisticians now recommend using methods that don't assume equal variances (like Welch's t-test) as the default approach.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 9.5 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Equal Variances Tests Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion95()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-95-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-95">Your Answer:</label>
+                        <input type="text" id="answer-95" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer95()">
+                        <div class="input-hint" id="hint-95"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer95()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps95()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion95()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-95" style="display: none;"></div>
+                    <div class="question-steps" id="steps-95" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 9.6: Nonparametric Two-Sample Tests -->
+        <div class="section">
+            <h2 class="section-title">📊 9.6 Nonparametric Two-Sample Tests</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Nonparametric Tests</h4>
+                    <p>Nonparametric tests provide robust alternatives when the assumptions of parametric tests (like normality) are violated. Instead of comparing means directly, these tests typically compare medians or ask whether observations from one group tend to be systematically larger than observations from another group.</p>
+                    
+                    <p>The key advantage is robustness—nonparametric tests work well with skewed data, outliers, and small sample sizes. The trade-off is that they typically have slightly lower power than parametric tests when all assumptions are met, but they often have higher power when assumptions are violated.</p>
+
+                    <div class="key-points">
+                        <h5>When to Use Nonparametric Tests:</h5>
+                        <ul>
+                            <li><strong>Non-normal Data:</strong> Heavy skewness, outliers, or multiple modes</li>
+                            <li><strong>Small Samples:</strong> When you can't reliably assess normality</li>
+                            <li><strong>Ordinal Data:</strong> Ranked or ordered data (Likert scales, pain ratings)</li>
+                            <li><strong>Robust Analysis:</strong> When you want protection against assumption violations</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>The Ranking Approach:</strong> Most nonparametric tests work by ranking all observations from smallest to largest, then comparing how the ranks are distributed between groups. This makes the tests insensitive to the actual values and focuses on relative ordering.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Mann-Whitney U Test (Independent Samples):</strong><br>
+                    1. Combine all observations and rank from 1 to n₁ + n₂<br>
+                    2. Calculate sum of ranks for each group (R₁, R₂)<br>
+                    3. Compute U statistics: U₁ = R₁ - n₁(n₁+1)/2<br>
+                    4. Use smaller U as test statistic
+                </div>
+
+                <div class="math-formula">
+                    <strong>Wilcoxon Signed-Rank Test (Paired Samples):</strong><br>
+                    1. Calculate differences d_i for each pair<br>
+                    2. Rank absolute differences |d_i| (ignore zeros)<br>
+                    3. Assign signs to ranks based on original difference signs<br>
+                    4. Sum positive ranks (W+) and negative ranks (W-)
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Efficiency and Power Considerations</h4>
+                    <p>Nonparametric tests have asymptotic relative efficiency of about 95% compared to their parametric counterparts when all assumptions are met. This means you need only about 5% more data to achieve the same power—a remarkably small price for the robustness gained.</p>
+
+                    <div class="key-points">
+                        <h5>Key Nonparametric Tests:</h5>
+                        <ul>
+                            <li><strong>Mann-Whitney U:</strong> Alternative to independent t-test</li>
+                            <li><strong>Wilcoxon Signed-Rank:</strong> Alternative to paired t-test</li>
+                            <li><strong>Kruskal-Wallis:</strong> Alternative to one-way ANOVA</li>
+                            <li><strong>Sign Test:</strong> Simple alternative when only direction matters</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Handling Ties:</strong> When observations have the same value, assign each the average of the ranks they would have occupied. Most software handles ties automatically and may apply continuity corrections for better approximations.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 9.6 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Nonparametric Tests Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion96()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-96-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-96">Your Answer:</label>
+                        <input type="text" id="answer-96" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer96()">
+                        <div class="input-hint" id="hint-96"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer96()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps96()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion96()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-96" style="display: none;"></div>
+                    <div class="question-steps" id="steps-96" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
         
     </div>
 
     <script>
         // Current question tracking variables
-        let currentQuestion91 = null, currentQuestion92 = null;
+        let currentQuestion91 = null, currentQuestion92 = null, currentQuestion93 = null;
+        let currentQuestion94 = null, currentQuestion95 = null, currentQuestion96 = null;
 
         // Question arrays with simple explanations for answers
         const twoSampleZQuestions = [
@@ -536,10 +860,10 @@
             },
             {
                 question: "What is the formula for two-sample z-statistic?",
-                correctAnswers: ["(x̄₁ - x̄₂)/√(σ₁²/n₁ + σ₂²/n₂)", "difference over standard error"],
+                correctAnswers: ["(X̄₁ - X̄₂)/sqrt(σ₁²/n₁ + σ₂²/n₂)", "difference over standard error"],
                 hint: "Think about the standardization formula",
-                explanation: "z = (x̄₁ - x̄₂)/√(σ₁²/n₁ + σ₂²/n₂) standardizes the difference.",
-                steps: `<div class="step-title">z-Statistic Formula:</div><div class="step-content"><ol><li><strong>Numerator:</strong> Difference in sample means</li><li><strong>Denominator:</strong> Standard error of difference</li><li><strong>SE:</strong> √(σ₁²/n₁ + σ₂²/n₂)</li></ol></div>`
+                explanation: "z = (X̄₁ - X̄₂)/sqrt(σ₁²/n₁ + σ₂²/n₂) standardizes the difference.",
+                steps: `<div class="step-title">z-Statistic Formula:</div><div class="step-content"><ol><li><strong>Numerator:</strong> Difference in sample means</li><li><strong>Denominator:</strong> Standard error of difference</li><li><strong>SE:</strong> sqrt(σ₁²/n₁ + σ₂²/n₂)</li></ol></div>`
             }
         ];
 
@@ -553,10 +877,78 @@
             },
             {
                 question: "What is pooled variance?",
-                correctAnswers: ["weighted average of sample variances", "s²ₚ", "combined variance estimate"],
+                correctAnswers: ["weighted average of sample variances", "s²p", "combined variance estimate"],
                 hint: "Think about combining variance estimates",
                 explanation: "Pooled variance combines sample variances assuming equal population variances.",
-                steps: `<div class="step-title">Pooled Variance:</div><div class="step-content"><ol><li><strong>Formula:</strong> s²ₚ = [(n₁-1)s₁² + (n₂-1)s₂²]/(n₁+n₂-2)</li><li><strong>Assumption:</strong> Equal population variances</li><li><strong>Weights:</strong> By degrees of freedom</li></ol></div>`
+                steps: `<div class="step-title">Pooled Variance:</div><div class="step-content"><ol><li><strong>Formula:</strong> s²p = [(n₁-1)s₁² + (n₂-1)s₂²]/(n₁+n₂-2)</li><li><strong>Assumption:</strong> Equal population variances</li><li><strong>Weights:</strong> By degrees of freedom</li></ol></div>`
+            }
+        ];
+
+        const pairedTQuestions = [
+            {
+                question: "When do you use a paired t-test?",
+                correctAnswers: ["matched pairs", "before and after", "dependent samples"],
+                hint: "Think about related observations",
+                explanation: "Use paired t-test when observations are naturally paired or matched.",
+                steps: `<div class="step-title">Paired Design:</div><div class="step-content"><ol><li><strong>Matched pairs:</strong> Each subject in both groups</li><li><strong>Before/after:</strong> Same subjects, different times</li><li><strong>Natural pairs:</strong> Twins, spouse pairs</li></ol></div>`
+            },
+            {
+                question: "What is the test statistic for paired t-test?",
+                correctAnswers: ["t = d̄/(sd/sqrt(n))", "mean difference over standard error"],
+                hint: "Think about analyzing differences",
+                explanation: "t = d̄/(sd/sqrt(n)) where d̄ is mean difference and sd is standard deviation of differences.",
+                steps: `<div class="step-title">Paired t-Statistic:</div><div class="step-content"><ol><li><strong>d̄:</strong> Mean of differences di = x1i - x2i</li><li><strong>sd:</strong> Standard deviation of differences</li><li><strong>n:</strong> Number of pairs</li></ol></div>`
+            }
+        ];
+
+        const proportionTestsQuestions = [
+            {
+                question: "When do you use two-sample proportion test?",
+                correctAnswers: ["comparing proportions", "categorical data", "binomial outcomes"],
+                hint: "Think about comparing success rates",
+                explanation: "Use when comparing proportions between two groups with categorical outcomes.",
+                steps: `<div class="step-title">Proportion Test Use:</div><div class="step-content"><ol><li><strong>Binary outcomes:</strong> Success/failure</li><li><strong>Two groups:</strong> Compare proportions</li><li><strong>Large samples:</strong> Normal approximation</li></ol></div>`
+            },
+            {
+                question: "What is the pooled proportion?",
+                correctAnswers: ["p̂ = (x₁ + x₂)/(n₁ + n₂)", "combined success rate", "overall proportion"],
+                hint: "Think about combining both samples",
+                explanation: "Pooled proportion p̂ = (x₁ + x₂)/(n₁ + n₂) combines successes from both samples.",
+                steps: `<div class="step-title">Pooled Proportion:</div><div class="step-content"><ol><li><strong>Formula:</strong> p̂ = (x₁ + x₂)/(n₁ + n₂)</li><li><strong>Assumption:</strong> H₀: p₁ = p₂</li><li><strong>Use:</strong> In standard error calculation</li></ol></div>`
+            }
+        ];
+
+        const varianceTestsQuestions = [
+            {
+                question: "What does F-test compare?",
+                correctAnswers: ["two variances", "σ₁² vs σ₂²", "variance ratio"],
+                hint: "Think about what F-test is designed for",
+                explanation: "F-test compares two population variances using the ratio F = s₁²/s₂².",
+                steps: `<div class="step-title">F-Test Purpose:</div><div class="step-content"><ol><li><strong>Compares:</strong> Two population variances</li><li><strong>H₀:</strong> σ₁² = σ₂²</li><li><strong>H₁:</strong> σ₁² ≠ σ₂²</li></ol></div>`
+            },
+            {
+                question: "What is the F-statistic formula?",
+                correctAnswers: ["F = s₁²/s₂²", "larger variance over smaller", "variance ratio"],
+                hint: "Think about the ratio of sample variances",
+                explanation: "F = s₁²/s₂² where larger variance goes in numerator for two-tailed test.",
+                steps: `<div class="step-title">F-Statistic:</div><div class="step-content"><ol><li><strong>Formula:</strong> F = s₁²/s₂²</li><li><strong>Convention:</strong> Larger in numerator</li><li><strong>Always positive:</strong> Ratio of variances</li></ol></div>`
+            }
+        ];
+
+        const nonparametricQuestions = [
+            {
+                question: "When do you use nonparametric tests?",
+                correctAnswers: ["non-normal data", "ordinal data", "robust alternatives"],
+                hint: "Think about when assumptions are violated",
+                explanation: "Use nonparametric tests when normality assumptions are violated or with ordinal data.",
+                steps: `<div class="step-title">Nonparametric Use:</div><div class="step-content"><ol><li><strong>Non-normal:</strong> Skewed distributions</li><li><strong>Ordinal data:</strong> Ranked measurements</li><li><strong>Robust:</strong> Less sensitive to outliers</li></ol></div>`
+            },
+            {
+                question: "What is Mann-Whitney U test?",
+                correctAnswers: ["nonparametric two-sample test", "rank-based test", "Wilcoxon rank-sum equivalent"],
+                hint: "Think about rank-based alternatives",
+                explanation: "Mann-Whitney U test is nonparametric alternative to two-sample t-test using ranks.",
+                steps: `<div class="step-title">Mann-Whitney U:</div><div class="step-content"><ol><li><strong>Alternative to:</strong> Two-sample t-test</li><li><strong>Uses:</strong> Ranks instead of raw data</li><li><strong>Equivalent:</strong> Wilcoxon rank-sum</li></ol></div>`
             }
         ];
 
@@ -583,6 +975,54 @@
             document.getElementById('answer-92').value = '';
             document.getElementById('feedback-92').style.display = 'none';
             document.getElementById('steps-92').style.display = 'none';
+        }
+
+        function generateQuestion93() {
+            const randomIndex = Math.floor(Math.random() * pairedTQuestions.length);
+            currentQuestion93 = pairedTQuestions[randomIndex];
+            
+            document.getElementById('question-93-content').innerHTML = currentQuestion93.question;
+            document.getElementById('hint-93').innerHTML = `💡 ${currentQuestion93.hint}`;
+            
+            document.getElementById('answer-93').value = '';
+            document.getElementById('feedback-93').style.display = 'none';
+            document.getElementById('steps-93').style.display = 'none';
+        }
+
+        function generateQuestion94() {
+            const randomIndex = Math.floor(Math.random() * proportionTestsQuestions.length);
+            currentQuestion94 = proportionTestsQuestions[randomIndex];
+            
+            document.getElementById('question-94-content').innerHTML = currentQuestion94.question;
+            document.getElementById('hint-94').innerHTML = `💡 ${currentQuestion94.hint}`;
+            
+            document.getElementById('answer-94').value = '';
+            document.getElementById('feedback-94').style.display = 'none';
+            document.getElementById('steps-94').style.display = 'none';
+        }
+
+        function generateQuestion95() {
+            const randomIndex = Math.floor(Math.random() * varianceTestsQuestions.length);
+            currentQuestion95 = varianceTestsQuestions[randomIndex];
+            
+            document.getElementById('question-95-content').innerHTML = currentQuestion95.question;
+            document.getElementById('hint-95').innerHTML = `💡 ${currentQuestion95.hint}`;
+            
+            document.getElementById('answer-95').value = '';
+            document.getElementById('feedback-95').style.display = 'none';
+            document.getElementById('steps-95').style.display = 'none';
+        }
+
+        function generateQuestion96() {
+            const randomIndex = Math.floor(Math.random() * nonparametricQuestions.length);
+            currentQuestion96 = nonparametricQuestions[randomIndex];
+            
+            document.getElementById('question-96-content').innerHTML = currentQuestion96.question;
+            document.getElementById('hint-96').innerHTML = `💡 ${currentQuestion96.hint}`;
+            
+            document.getElementById('answer-96').value = '';
+            document.getElementById('feedback-96').style.display = 'none';
+            document.getElementById('steps-96').style.display = 'none';
         }
 
         // Check answer functions
@@ -624,6 +1064,82 @@
             feedbackElement.style.display = 'block';
         }
 
+        function checkAnswer93() {
+            const userAnswer = document.getElementById('answer-93').value.toLowerCase().trim();
+            if (!currentQuestion93) return;
+            
+            const isCorrect = currentQuestion93.correctAnswers.some(answer => 
+                userAnswer.includes(answer.toLowerCase()) || answer.toLowerCase().includes(userAnswer)
+            );
+            
+            const feedbackElement = document.getElementById('feedback-93');
+            if (isCorrect) {
+                feedbackElement.innerHTML = `<div class="correct">✅ Correct! ${currentQuestion93.explanation}</div>`;
+                feedbackElement.className = 'question-feedback correct-feedback';
+            } else {
+                feedbackElement.innerHTML = `<div class="incorrect">❌ Incorrect. ${currentQuestion93.explanation}</div>`;
+                feedbackElement.className = 'question-feedback incorrect-feedback';
+            }
+            feedbackElement.style.display = 'block';
+        }
+
+        function checkAnswer94() {
+            const userAnswer = document.getElementById('answer-94').value.toLowerCase().trim();
+            if (!currentQuestion94) return;
+            
+            const isCorrect = currentQuestion94.correctAnswers.some(answer => 
+                userAnswer.includes(answer.toLowerCase()) || answer.toLowerCase().includes(userAnswer)
+            );
+            
+            const feedbackElement = document.getElementById('feedback-94');
+            if (isCorrect) {
+                feedbackElement.innerHTML = `<div class="correct">✅ Correct! ${currentQuestion94.explanation}</div>`;
+                feedbackElement.className = 'question-feedback correct-feedback';
+            } else {
+                feedbackElement.innerHTML = `<div class="incorrect">❌ Incorrect. ${currentQuestion94.explanation}</div>`;
+                feedbackElement.className = 'question-feedback incorrect-feedback';
+            }
+            feedbackElement.style.display = 'block';
+        }
+
+        function checkAnswer95() {
+            const userAnswer = document.getElementById('answer-95').value.toLowerCase().trim();
+            if (!currentQuestion95) return;
+            
+            const isCorrect = currentQuestion95.correctAnswers.some(answer => 
+                userAnswer.includes(answer.toLowerCase()) || answer.toLowerCase().includes(userAnswer)
+            );
+            
+            const feedbackElement = document.getElementById('feedback-95');
+            if (isCorrect) {
+                feedbackElement.innerHTML = `<div class="correct">✅ Correct! ${currentQuestion95.explanation}</div>`;
+                feedbackElement.className = 'question-feedback correct-feedback';
+            } else {
+                feedbackElement.innerHTML = `<div class="incorrect">❌ Incorrect. ${currentQuestion95.explanation}</div>`;
+                feedbackElement.className = 'question-feedback incorrect-feedback';
+            }
+            feedbackElement.style.display = 'block';
+        }
+
+        function checkAnswer96() {
+            const userAnswer = document.getElementById('answer-96').value.toLowerCase().trim();
+            if (!currentQuestion96) return;
+            
+            const isCorrect = currentQuestion96.correctAnswers.some(answer => 
+                userAnswer.includes(answer.toLowerCase()) || answer.toLowerCase().includes(userAnswer)
+            );
+            
+            const feedbackElement = document.getElementById('feedback-96');
+            if (isCorrect) {
+                feedbackElement.innerHTML = `<div class="correct">✅ Correct! ${currentQuestion96.explanation}</div>`;
+                feedbackElement.className = 'question-feedback correct-feedback';
+            } else {
+                feedbackElement.innerHTML = `<div class="incorrect">❌ Incorrect. ${currentQuestion96.explanation}</div>`;
+                feedbackElement.className = 'question-feedback incorrect-feedback';
+            }
+            feedbackElement.style.display = 'block';
+        }
+
         // Show steps functions
         function showSteps91() {
             if (!currentQuestion91) return;
@@ -639,10 +1155,42 @@
             stepsElement.style.display = 'block';
         }
 
+        function showSteps93() {
+            if (!currentQuestion93) return;
+            const stepsElement = document.getElementById('steps-93');
+            stepsElement.innerHTML = currentQuestion93.steps;
+            stepsElement.style.display = 'block';
+        }
+
+        function showSteps94() {
+            if (!currentQuestion94) return;
+            const stepsElement = document.getElementById('steps-94');
+            stepsElement.innerHTML = currentQuestion94.steps;
+            stepsElement.style.display = 'block';
+        }
+
+        function showSteps95() {
+            if (!currentQuestion95) return;
+            const stepsElement = document.getElementById('steps-95');
+            stepsElement.innerHTML = currentQuestion95.steps;
+            stepsElement.style.display = 'block';
+        }
+
+        function showSteps96() {
+            if (!currentQuestion96) return;
+            const stepsElement = document.getElementById('steps-96');
+            stepsElement.innerHTML = currentQuestion96.steps;
+            stepsElement.style.display = 'block';
+        }
+
         // Initialize on page load
         window.onload = function() {
             generateQuestion91();
             generateQuestion92();
+            generateQuestion93();
+            generateQuestion94();
+            generateQuestion95();
+            generateQuestion96();
         }
     </script>
 </body>
