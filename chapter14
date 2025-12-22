@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 14: Two-Way ANOVA | Larsen & Marx Mathematical Statistics</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    
+    <style>
+        :root {
+            --primary-color: #D84315;
+            --primary-light: #FF5722;
+            --primary-dark: #BF360C;
+            --secondary-color: #FFCCBC;
+            --accent-color: #FF7043;
+            --background-color: #FAFAFA;
+            --text-color: #212121;
+            --card-background: #FFFFFF;
+            --border-color: #E0E0E0;
+            --success-color: #4CAF50;
+            --error-color: #F44336;
+            --warning-color: #FF9800;
+            --shadow: 0 2px 10px rgba(216, 67, 21, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 20px;
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .chapter-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .chapter-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .chapter-description {
+            font-size: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        .section {
+            background: var(--card-background);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-content {
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .concept-explanation {
+            background: linear-gradient(135deg, rgba(216, 67, 21, 0.05), rgba(255, 112, 67, 0.05));
+            border: 1px solid var(--primary-light);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .concept-explanation h4 {
+            color: var(--primary-dark);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .key-points {
+            background: var(--secondary-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .key-points h5 {
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .key-points ul {
+            margin-left: 1.5rem;
+        }
+
+        .key-points li {
+            margin-bottom: 0.3rem;
+        }
+
+        .math-formula {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .section-practice {
+            background: linear-gradient(135deg, rgba(216, 67, 21, 0.02), rgba(255, 112, 67, 0.02));
+            border: 2px solid var(--secondary-color);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .practice-question {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .question-number {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .regenerate-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .regenerate-btn:hover {
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .question-input-area {
+            margin-bottom: 1rem;
+        }
+
+        .input-label {
+            display: block;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(216, 67, 21, 0.1);
+        }
+
+        .input-hint {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .question-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .question-buttons button {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .check-btn {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .check-btn:hover {
+            background: #45A049;
+            transform: translateY(-1px);
+        }
+
+        .steps-btn {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .steps-btn:hover {
+            background: #F57C00;
+            transform: translateY(-1px);
+        }
+
+        .new-question-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .new-question-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .question-feedback {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .correct-feedback {
+            background: linear-gradient(135deg, #E8F5E8, #C8E6C9);
+            border: 1px solid var(--success-color);
+            color: #2E7D32;
+        }
+
+        .incorrect-feedback {
+            background: linear-gradient(135deg, #FFEBEE, #FFCDD2);
+            border: 1px solid var(--error-color);
+            color: #C62828;
+        }
+
+        .question-steps {
+            background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+            border: 1px solid var(--warning-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .step-title {
+            font-weight: 700;
+            color: var(--warning-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .step-content {
+            line-height: 1.6;
+        }
+
+        .step-content ol {
+            padding-left: 1.5rem;
+        }
+
+        .step-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .chapter-title {
+                font-size: 2rem;
+            }
+            
+            .question-buttons {
+                flex-direction: column;
+            }
+            
+            .question-buttons button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="chapter-title">📊 Chapter 14: Two-Way ANOVA</h1>
+            <p class="chapter-subtitle">Factorial Designs and Interaction Effects</p>
+            <p class="chapter-description">
+                Master two-way ANOVA for analyzing two factors simultaneously. 
+                Learn main effects, interaction effects, factorial designs, effect sizes, and multiple comparisons for comprehensive multi-factor analysis.
+            </p>
+        </header>
+
+        <!-- Section 14.1: Introduction to Two-Way ANOVA -->
+        <div class="section">
+            <h2 class="section-title">📊 14.1 Introduction to Two-Way ANOVA</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Two-Way ANOVA</h4>
+                    <p>Two-way ANOVA extends one-way ANOVA to analyze the effects of two categorical factors simultaneously. Instead of testing just one factor's effect on a response variable, we can examine two factors (Factor A and Factor B) and their potential interaction. This allows us to answer more complex research questions while being more efficient than conducting separate one-way ANOVAs.</p>
+                    
+                    <p>The key advantage is that two-way ANOVA can detect interaction effects - situations where the effect of one factor depends on the level of the other factor. This provides richer insights into how variables work together to influence outcomes.</p>
+
+                    <div class="key-points">
+                        <h5>Two-Way ANOVA Components:</h5>
+                        <ul>
+                            <li><strong>Factor A (Main Effect):</strong> Overall effect of first factor</li>
+                            <li><strong>Factor B (Main Effect):</strong> Overall effect of second factor</li>
+                            <li><strong>A × B Interaction:</strong> How factors work together</li>
+                            <li><strong>Error:</strong> Unexplained variation within cells</li>
+                            <li><strong>Factorial Design:</strong> All combinations of factor levels</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Key Concept:</strong> Two-way ANOVA tests three hypotheses simultaneously: no effect of Factor A, no effect of Factor B, and no interaction between A and B.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Two-Way ANOVA Model:</strong><br>
+                    Yᵢⱼₖ = μ + αᵢ + βⱼ + (αβ)ᵢⱼ + εᵢⱼₖ<br>
+                    where αᵢ = Factor A effect, βⱼ = Factor B effect, (αβ)ᵢⱼ = interaction
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Factorial Design Concepts</h4>
+                    <p>Factorial designs systematically combine levels of multiple factors. A 2×3 factorial design has 2 levels of Factor A and 3 levels of Factor B, creating 6 treatment combinations. This design allows efficient investigation of multiple factors simultaneously.</p>
+
+                    <div class="key-points">
+                        <h5>Design Notation and Benefits:</h5>
+                        <ul>
+                            <li><strong>a × b Design:</strong> a levels of A, b levels of B, ab total cells</li>
+                            <li><strong>Balanced Design:</strong> Equal sample sizes in all cells (preferred)</li>
+                            <li><strong>Efficiency:</strong> More information per observation than separate studies</li>
+                            <li><strong>Interaction Detection:</strong> Can identify when factors work together</li>
+                            <li><strong>Generalizability:</strong> Results apply across levels of both factors</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Example:</strong> A 2×2 design might examine Drug Type (A: placebo vs treatment) and Gender (B: male vs female), creating 4 treatment groups to test both main effects and their interaction.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 14.1 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Two-Way ANOVA Introduction Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion141()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-141-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-141">Your Answer:</label>
+                        <input type="text" id="answer-141" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer141()">
+                        <div class="input-hint" id="hint-141"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer141()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps141()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion141()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-141" style="display: none;"></div>
+                    <div class="question-steps" id="steps-141" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 14.2: Main Effects and Interaction Effects -->
+        <div class="section">
+            <h2 class="section-title">📊 14.2 Main Effects and Interaction Effects</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Main Effects</h4>
+                    <p>Main effects represent the overall impact of each factor averaged across all levels of the other factor. The main effect of Factor A compares the marginal means of Factor A (averaging over all levels of B). Similarly, the main effect of Factor B compares marginal means of Factor B (averaging over all levels of A).</p>
+                    
+                    <p>Main effects tell us whether each factor has an overall influence on the response variable, ignoring any interaction effects. However, main effects can be misleading when significant interactions are present.</p>
+
+                    <div class="key-points">
+                        <h5>Main Effect Characteristics:</h5>
+                        <ul>
+                            <li><strong>Factor A Main Effect:</strong> Difference in marginal means for Factor A</li>
+                            <li><strong>Factor B Main Effect:</strong> Difference in marginal means for Factor B</li>
+                            <li><strong>Marginal Means:</strong> Cell means averaged across other factor</li>
+                            <li><strong>Overall Effect:</strong> Effect averaged across all conditions</li>
+                            <li><strong>Independent Testing:</strong> Can test each main effect separately</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Important Note:</strong> Main effects are most meaningful when interaction effects are not significant. With significant interactions, focus shifts to simple effects within specific factor combinations.</p>
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Understanding Interaction Effects</h4>
+                    <p>Interaction effects occur when the effect of one factor depends on the level of the other factor. This means the factors don't simply add their effects - they work together in ways that produce effects different from what we'd expect from adding main effects.</p>
+
+                    <div class="key-points">
+                        <h5>Interaction Patterns:</h5>
+                        <ul>
+                            <li><strong>No Interaction:</strong> Factor effects are additive (parallel lines)</li>
+                            <li><strong>Ordinal Interaction:</strong> Lines not parallel but don't cross</li>
+                            <li><strong>Disordinal Interaction:</strong> Lines cross, creating rank reversals</li>
+                            <li><strong>Synergistic:</strong> Combined effect greater than sum of parts</li>
+                            <li><strong>Antagonistic:</strong> Factors work against each other</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Visual Interpretation:</strong> Interaction plots show factor levels on x-axis, response on y-axis, with separate lines for each level of the second factor. Parallel lines indicate no interaction; non-parallel lines suggest interaction effects.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Three Hypotheses in Two-Way ANOVA:</strong><br>
+                    H₁: No main effect of A (α₁ = α₂ = ... = αₐ = 0)<br>
+                    H₂: No main effect of B (β₁ = β₂ = ... = βᵦ = 0)<br>
+                    H₃: No interaction (all (αβ)ᵢⱼ = 0)
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 14.2 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Main Effects and Interaction Effects Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion142()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-142-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-142">Your Answer:</label>
+                        <input type="text" id="answer-142" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer142()">
+                        <div class="input-hint" id="hint-142"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer142()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps142()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion142()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-142" style="display: none;"></div>
+                    <div class="question-steps" id="steps-142" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 14.3: Sum of Squares and F-Tests -->
+        <div class="section">
+            <h2 class="section-title">📊 14.3 Sum of Squares and F-Tests</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Partitioning Sum of Squares in Two-Way ANOVA</h4>
+                    <p>Two-way ANOVA partitions the total sum of squares into four components: main effect of A, main effect of B, interaction A×B, and error. This partitioning allows us to separate and test different sources of variation in the data.</p>
+                    
+                    <p>Each sum of squares component measures a different type of variation: between groups (main effects and interaction) and within groups (error). The F-tests compare these variance components to determine statistical significance.</p>
+
+                    <div class="key-points">
+                        <h5>Sum of Squares Components:</h5>
+                        <ul>
+                            <li><strong>SSTotal:</strong> Total variation from grand mean</li>
+                            <li><strong>SSA:</strong> Variation due to Factor A main effect</li>
+                            <li><strong>SSB:</strong> Variation due to Factor B main effect</li>
+                            <li><strong>SSAB:</strong> Variation due to A×B interaction</li>
+                            <li><strong>SSError:</strong> Unexplained variation within cells</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Partition Identity:</strong> SSTotal = SSA + SSB + SSAB + SSError. Each component has associated degrees of freedom for calculating mean squares.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Degrees of Freedom:</strong><br>
+                    df_A = a - 1, df_B = b - 1<br>
+                    df_AB = (a-1)(b-1), df_Error = ab(n-1)<br>
+                    df_Total = abn - 1
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>F-Tests in Two-Way ANOVA</h4>
+                    <p>Three separate F-tests examine the main effects and interaction. Each F-statistic compares the relevant mean square to the error mean square. The error term (MSE) serves as the denominator for all three tests.</p>
+
+                    <div class="key-points">
+                        <h5>Three F-Tests:</h5>
+                        <ul>
+                            <li><strong>Factor A:</strong> F_A = MSA/MSE</li>
+                            <li><strong>Factor B:</strong> F_B = MSB/MSE</li>
+                            <li><strong>Interaction:</strong> F_AB = MSAB/MSE</li>
+                            <li><strong>Error Term:</strong> MSE same for all tests</li>
+                            <li><strong>Independence:</strong> Can test each effect separately</li>
+                        </ul>
+                    </div>
+
+                    <div class="math-formula">
+                        <strong>F-Statistics:</strong><br>
+                        F_A = MSA/MSE ~ F(a-1, ab(n-1))<br>
+                        F_B = MSB/MSE ~ F(b-1, ab(n-1))<br>
+                        F_AB = MSAB/MSE ~ F((a-1)(b-1), ab(n-1))
+                    </div>
+
+                    <p><strong>Testing Order:</strong> Often test interaction first. If significant, focus on simple effects rather than main effects. If not significant, interpret main effects directly.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 14.3 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Sum of Squares and F-Tests Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion143()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-143-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-143">Your Answer:</label>
+                        <input type="text" id="answer-143" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer143()">
+                        <div class="input-hint" id="hint-143"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer143()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps143()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion143()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-143" style="display: none;"></div>
+                    <div class="question-steps" id="steps-143" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 14.4: Simple Effects and Multiple Comparisons -->
+        <div class="section">
+            <h2 class="section-title">📊 14.4 Simple Effects and Multiple Comparisons</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Simple Effects</h4>
+                    <p>Simple effects analyze the effect of one factor at specific levels of another factor. When interactions are significant, main effects can be misleading because the effect of one factor varies across levels of the other factor. Simple effects provide more precise understanding of how factors work at specific combinations.</p>
+                    
+                    <p>For example, if there's a significant interaction between treatment and gender, we might examine the treatment effect separately for males and females (simple effects of treatment) or examine gender differences within each treatment group (simple effects of gender).</p>
+
+                    <div class="key-points">
+                        <h5>Simple Effects Analysis:</h5>
+                        <ul>
+                            <li><strong>When to Use:</strong> Significant interactions present</li>
+                            <li><strong>Simple Effect of A:</strong> Effect of A at each level of B</li>
+                            <li><strong>Simple Effect of B:</strong> Effect of B at each level of A</li>
+                            <li><strong>More Specific:</strong> Than main effects when interactions exist</li>
+                            <li><strong>Follow-up:</strong> To significant interaction effects</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Interpretation Strategy:</strong> When interaction is significant, focus on simple effects rather than main effects for clearer understanding of factor relationships.</p>
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Multiple Comparisons in Two-Way ANOVA</h4>
+                    <p>Two-way ANOVA often requires multiple comparison procedures to identify which specific means differ. These can involve comparing main effect means (when no interaction) or cell means (when interactions are present).</p>
+
+                    <div class="key-points">
+                        <h5>Types of Multiple Comparisons:</h5>
+                        <ul>
+                            <li><strong>Main Effect Comparisons:</strong> Marginal means when no interaction</li>
+                            <li><strong>Simple Effect Comparisons:</strong> Means within levels of other factor</li>
+                            <li><strong>Cell Mean Comparisons:</strong> All pairwise comparisons of cells</li>
+                            <li><strong>Planned Contrasts:</strong> Pre-specified theoretically motivated comparisons</li>
+                            <li><strong>Post-hoc Tests:</strong> All possible comparisons (Tukey, Bonferroni)</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Error Rate Control:</strong> Use appropriate multiple comparison procedures to control familywise error rate across all tests being conducted.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Simple Effect F-Test:</strong><br>
+                    F_simple = MS_simple / MSE<br>
+                    where MS_simple calculated at specific factor level
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 14.4 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Simple Effects and Multiple Comparisons Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion144()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-144-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-144">Your Answer:</label>
+                        <input type="text" id="answer-144" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer144()">
+                        <div class="input-hint" id="hint-144"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer144()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps144()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion144()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-144" style="display: none;"></div>
+                    <div class="question-steps" id="steps-144" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 14.5: Effect Sizes and Power -->
+        <div class="section">
+            <h2 class="section-title">📊 14.5 Effect Sizes and Power</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Effect Sizes in Two-Way ANOVA</h4>
+                    <p>Effect sizes quantify the practical significance of main effects and interactions in two-way ANOVA. Like in one-way ANOVA, we can calculate eta-squared (η²) and omega-squared (ω²) for each effect. These measures help determine not just whether effects are statistically significant, but whether they're practically meaningful.</p>
+                    
+                    <p>In factorial designs, we can calculate separate effect sizes for each main effect and the interaction. This provides a comprehensive view of which factors contribute most to explaining variance in the outcome.</p>
+
+                    <div class="key-points">
+                        <h5>Two-Way ANOVA Effect Sizes:</h5>
+                        <ul>
+                            <li><strong>η²_A:</strong> Proportion of total variance due to Factor A</li>
+                            <li><strong>η²_B:</strong> Proportion of total variance due to Factor B</li>
+                            <li><strong>η²_AB:</strong> Proportion of total variance due to interaction</li>
+                            <li><strong>Partial η²:</strong> Proportion of explained variance due to each effect</li>
+                            <li><strong>ω²:</strong> Less biased estimates correcting for chance</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Interpretation:</strong> Effect sizes help determine relative importance of main effects vs interaction effects in explaining outcome variance.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Effect Size Formulas:</strong><br>
+                    η²_A = SSA/SSTotal<br>
+                    η²_B = SSB/SSTotal<br>
+                    η²_AB = SSAB/SSTotal<br>
+                    Partial η²_A = SSA/(SSA + SSError)
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Power Analysis in Factorial Designs</h4>
+                    <p>Power analysis in two-way ANOVA is more complex because we have multiple effects to consider. Power depends on effect sizes for main effects and interactions, sample sizes, error variance, and the specific factorial design used.</p>
+
+                    <div class="key-points">
+                        <h5>Power Considerations:</h5>
+                        <ul>
+                            <li><strong>Multiple Effects:</strong> Different power for each main effect and interaction</li>
+                            <li><strong>Cell Sizes:</strong> Balanced designs generally more powerful</li>
+                            <li><strong>Effect Size:</strong> Larger effects easier to detect</li>
+                            <li><strong>Design Efficiency:</strong> Factorial designs efficient for studying interactions</li>
+                            <li><strong>Sample Size Planning:</strong> Consider power for most important effect</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Practical Considerations:</strong> When planning studies, consider which effect (main or interaction) is most important for your research question and power the study accordingly.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 14.5 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Effect Sizes and Power Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion145()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-145-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-145">Your Answer:</label>
+                        <input type="text" id="answer-145" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer145()">
+                        <div class="input-hint" id="hint-145"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer145()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps145()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion145()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-145" style="display: none;"></div>
+                    <div class="question-steps" id="steps-145" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 14.6: Assumptions and Extensions -->
+        <div class="section">
+            <h2 class="section-title">📊 14.6 Assumptions and Extensions</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Two-Way ANOVA Assumptions</h4>
+                    <p>Two-way ANOVA relies on the same basic assumptions as one-way ANOVA, but with additional considerations for factorial designs. Violations can be more complex to detect and address because we have multiple factors and their combinations to consider.</p>
+                    
+                    <p>The assumptions must hold within each cell of the factorial design. With many cells, checking assumptions becomes more involved, and we need adequate sample sizes in each cell for reliable results.</p>
+
+                    <div class="key-points">
+                        <h5>Key Assumptions:</h5>
+                        <ul>
+                            <li><strong>Independence:</strong> Observations independent within and between cells</li>
+                            <li><strong>Normality:</strong> Response variable normally distributed within each cell</li>
+                            <li><strong>Homoscedasticity:</strong> Equal variances across all cells</li>
+                            <li><strong>Balanced Design:</strong> Preferred but not required</li>
+                            <li><strong>Adequate Sample Size:</strong> Sufficient observations per cell</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Checking Assumptions:</strong> Use residual plots, normality tests, and homogeneity tests, but be aware that with many cells, some violations may occur by chance alone.</p>
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Extensions and Alternatives</h4>
+                    <p>When assumptions are violated or when designs become more complex, several extensions and alternatives to traditional two-way ANOVA are available.</p>
+
+                    <div class="key-points">
+                        <h5>Extensions and Alternatives:</h5>
+                        <ul>
+                            <li><strong>Unbalanced ANOVA:</strong> When cell sizes are unequal</li>
+                            <li><strong>Mixed Effects Models:</strong> When some factors are random</li>
+                            <li><strong>Repeated Measures:</strong> When observations are repeated on subjects</li>
+                            <li><strong>MANOVA:</strong> Multiple dependent variables</li>
+                            <li><strong>Nonparametric Alternatives:</strong> When normality fails</li>
+                            <li><strong>Robust Methods:</strong> Less sensitive to assumption violations</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Modern Approaches:</strong> Mixed effects models and robust methods are increasingly used for complex factorial designs with real-world data complications.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📊 Section 14.6 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Assumptions and Extensions Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion146()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-146-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-146">Your Answer:</label>
+                        <input type="text" id="answer-146" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer146()">
+                        <div class="input-hint" id="hint-146"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer146()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps146()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion146()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-146" style="display: none;"></div>
+                    <div class="question-steps" id="steps-146" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        // Current question tracking variables for all 6 sections
+        let currentQuestion141 = null, currentQuestion142 = null, currentQuestion143 = null;
+        let currentQuestion144 = null, currentQuestion145 = null, currentQuestion146 = null;
+
+        // Question arrays with 10 questions each
+        const introTwoWayAnovaQuestions = [
+            {
+                question: "What is the main advantage of two-way ANOVA over one-way ANOVA?",
+                correctAnswers: ["can analyze two factors", "detect interactions", "more efficient"],
+                hint: "Think about multiple factors",
+                explanation: "Two-way ANOVA can analyze two factors simultaneously and detect their interaction effects.",
+                steps: `<div class="step-title">Two-way ANOVA Advantages:</div><div class="step-content"><ol><li><strong>Two factors:</strong> Analyze A and B together</li><li><strong>Interactions:</strong> Detect how factors work together</li><li><strong>Efficiency:</strong> More information per observation</li></ol></div>`
+            },
+            {
+                question: "How many treatment groups are in a 3×4 factorial design?",
+                correctAnswers: ["12", "twelve"],
+                hint: "Think about all combinations",
+                explanation: "A 3×4 factorial design has 3×4 = 12 treatment combinations.",
+                steps: `<div class="step-title">Factorial Design Size:</div><div class="step-content"><ol><li><strong>Factor A:</strong> 3 levels</li><li><strong>Factor B:</strong> 4 levels</li><li><strong>Combinations:</strong> 3×4 = 12 cells</li></ol></div>`
+            },
+            {
+                question: "How many hypotheses does two-way ANOVA test?",
+                correctAnswers: ["three", "3"],
+                hint: "Think about main effects and interaction",
+                explanation: "Two-way ANOVA tests three hypotheses: Factor A main effect, Factor B main effect, and A×B interaction.",
+                steps: `<div class="step-title">Three Hypotheses:</div><div class="step-content"><ol><li><strong>H₁:</strong> No main effect of Factor A</li><li><strong>H₂:</strong> No main effect of Factor B</li><li><strong>H₃:</strong> No A×B interaction</li></ol></div>`
+            },
+            {
+                question: "What is a factorial design?",
+                correctAnswers: ["all combinations of factors", "crossed factors", "complete design"],
+                hint: "Think about systematic combinations",
+                explanation: "Factorial design includes all possible combinations of factor levels.",
+                steps: `<div class="step-title">Factorial Design:</div><div class="step-content"><ol><li><strong>Complete crossing:</strong> All factor combinations</li><li><strong>Systematic:</strong> Every level of A with every level of B</li><li><strong>Efficient:</strong> Maximum information from design</li></ol></div>`
+            },
+            {
+                question: "What does balanced design mean?",
+                correctAnswers: ["equal sample sizes", "same n in each cell", "equal cell counts"],
+                hint: "Think about sample sizes across groups",
+                explanation: "Balanced design has equal sample sizes in all treatment combinations.",
+                steps: `<div class="step-title">Balanced Design:</div><div class="step-content"><ol><li><strong>Equal n:</strong> Same sample size in each cell</li><li><strong>Preferred:</strong> Simplifies analysis and interpretation</li><li><strong>Power:</strong> More powerful than unbalanced</li></ol></div>`
+            },
+            {
+                question: "What is the two-way ANOVA model?",
+                correctAnswers: ["Yijk = μ + αi + βj + (αβ)ij + εijk", "includes interaction term", "additive plus interaction"],
+                hint: "Think about model components",
+                explanation: "Two-way ANOVA model: Yᵢⱼₖ = μ + αᵢ + βⱼ + (αβ)ᵢⱼ + εᵢⱼₖ.",
+                steps: `<div class="step-title">Model Components:</div><div class="step-content"><ol><li><strong>μ:</strong> Grand mean</li><li><strong>αᵢ:</strong> Factor A effect</li><li><strong>βⱼ:</strong> Factor B effect</li><li><strong>(αβ)ᵢⱼ:</strong> Interaction effect</li></ol></div>`
+            },
+            {
+                question: "When is two-way ANOVA appropriate?",
+                correctAnswers: ["two categorical factors", "factorial design", "interaction of interest"],
+                hint: "Think about design requirements",
+                explanation: "Use two-way ANOVA with two categorical factors in a factorial design, especially when interaction is of interest.",
+                steps: `<div class="step-title">When to Use Two-way ANOVA:</div><div class="step-content"><ol><li><strong>Two factors:</strong> Both categorical</li><li><strong>Factorial design:</strong> All combinations represented</li><li><strong>Interaction interest:</strong> Want to test factor combinations</li></ol></div>`
+            },
+            {
+                question: "What are cells in factorial design?",
+                correctAnswers: ["treatment combinations", "factor level pairs", "groups"],
+                hint: "Think about specific combinations",
+                explanation: "Cells are the treatment combinations formed by crossing factor levels.",
+                steps: `<div class="step-title">Factorial Cells:</div><div class="step-content"><ol><li><strong>Combinations:</strong> Specific factor level pairs</li><li><strong>Example:</strong> Drug A + Male = one cell</li><li><strong>Data:</strong> Observations within each combination</li></ol></div>`
+            },
+            {
+                question: "What is a 2×2 factorial design?",
+                correctAnswers: ["two factors each with two levels", "four treatment groups", "2 by 2"],
+                hint: "Think about the simplest factorial",
+                explanation: "2×2 design has two factors, each with two levels, creating four treatment combinations.",
+                steps: `<div class="step-title">2×2 Factorial:</div><div class="step-content"><ol><li><strong>Factor A:</strong> 2 levels (A₁, A₂)</li><li><strong>Factor B:</strong> 2 levels (B₁, B₂)</li><li><strong>Combinations:</strong> A₁B₁, A₁B₂, A₂B₁, A₂B₂</li></ol></div>`
+            },
+            {
+                question: "What makes two-way ANOVA more efficient than separate one-way ANOVAs?",
+                correctAnswers: ["uses all data together", "controls for other factor", "detects interactions"],
+                hint: "Think about using information efficiently",
+                explanation: "Two-way ANOVA uses all data simultaneously, controls for both factors, and can detect interactions.",
+                steps: `<div class="step-title">Efficiency Benefits:</div><div class="step-content"><ol><li><strong>All data:</strong> Uses complete dataset</li><li><strong>Control:</strong> Each factor controlled for other</li><li><strong>Interactions:</strong> Can detect factor combinations</li></ol></div>`
+            }
+        ];
+
+        const mainEffectsInteractionQuestions = [
+            {
+                question: "What is a main effect in two-way ANOVA?",
+                correctAnswers: ["overall effect of one factor", "marginal means difference", "factor effect averaged over other factor"],
+                hint: "Think about average effect",
+                explanation: "Main effect is the overall effect of one factor, averaged across all levels of the other factor.",
+                steps: `<div class="step-title">Main Effect:</div><div class="step-content"><ol><li><strong>Overall effect:</strong> One factor's impact</li><li><strong>Averaged:</strong> Across all levels of other factor</li><li><strong>Marginal means:</strong> Row/column averages</li></ol></div>`
+            },
+            {
+                question: "What does it mean when there is no interaction?",
+                correctAnswers: ["parallel lines", "additive effects", "no synergy"],
+                hint: "Think about interaction plots",
+                explanation: "No interaction means factor effects are additive (parallel lines in interaction plot).",
+                steps: `<div class="step-title">No Interaction:</div><div class="step-content"><ol><li><strong>Parallel lines:</strong> In interaction plot</li><li><strong>Additive:</strong> Effects simply add</li><li><strong>Constant effect:</strong> Factor A effect same at all B levels</li></ol></div>`
+            },
+            {
+                question: "What is an interaction effect?",
+                correctAnswers: ["effect of one factor depends on other", "non-additive", "synergy between factors"],
+                hint: "Think about factors working together",
+                explanation: "Interaction occurs when the effect of one factor depends on the level of the other factor.",
+                steps: `<div class="step-title">Interaction Effect:</div><div class="step-content"><ol><li><strong>Dependence:</strong> A's effect depends on B level</li><li><strong>Non-parallel:</strong> Lines not parallel in plot</li><li><strong>Synergy:</strong> Factors work together</li></ol></div>`
+            },
+            {
+                question: "What do marginal means represent?",
+                correctAnswers: ["row and column averages", "main effect means", "factor level means"],
+                hint: "Think about table margins",
+                explanation: "Marginal means are row and column averages in the factorial table, representing main effects.",
+                steps: `<div class="step-title">Marginal Means:</div><div class="step-content"><ol><li><strong>Row means:</strong> Average across columns (Factor B)</li><li><strong>Column means:</strong> Average across rows (Factor A)</li><li><strong>Main effects:</strong> Differences among marginal means</li></ol></div>`
+            },
+            {
+                question: "When should you focus on simple effects instead of main effects?",
+                correctAnswers: ["when interaction is significant", "significant A×B", "non-parallel lines"],
+                hint: "Think about when main effects are misleading",
+                explanation: "Focus on simple effects when interaction is significant, as main effects can be misleading.",
+                steps: `<div class="step-title">Simple vs Main Effects:</div><div class="step-content"><ol><li><strong>Significant interaction:</strong> Main effects misleading</li><li><strong>Simple effects:</strong> Effect of A at each B level</li><li><strong>More precise:</strong> Shows where differences occur</li></ol></div>`
+            },
+            {
+                question: "What is a disordinal interaction?",
+                correctAnswers: ["lines cross", "rank reversal", "crossing interaction"],
+                hint: "Think about crossing lines",
+                explanation: "Disordinal interaction occurs when interaction plot lines cross, creating rank reversals.",
+                steps: `<div class="step-title">Disordinal Interaction:</div><div class="step-content"><ol><li><strong>Crossing lines:</strong> Lines intersect in interaction plot</li><li><strong>Rank reversal:</strong> Best level changes across factors</li><li><strong>Strong interaction:</strong> Complete reversal of effects</li></ol></div>`
+            },
+            {
+                question: "What is an ordinal interaction?",
+                correctAnswers: ["non-parallel but don't cross", "no rank reversal", "consistent ordering"],
+                hint: "Think about non-parallel lines that don't cross",
+                explanation: "Ordinal interaction has non-parallel lines that don't cross (no rank reversal).",
+                steps: `<div class="step-title">Ordinal Interaction:</div><div class="step-content"><ol><li><strong>Non-parallel:</strong> Lines not parallel</li><li><strong>Don't cross:</strong> No intersection within range</li><li><strong>Same ordering:</strong> Rank order consistent</li></ol></div>`
+            },
+            {
+                question: "How do you visualize interactions?",
+                correctAnswers: ["interaction plots", "line graphs", "profile plots"],
+                hint: "Think about graphical displays",
+                explanation: "Interaction plots show factor levels on x-axis with separate lines for other factor levels.",
+                steps: `<div class="step-title">Interaction Plots:</div><div class="step-content"><ol><li><strong>X-axis:</strong> Levels of one factor</li><li><strong>Y-axis:</strong> Response variable</li><li><strong>Lines:</strong> Different levels of other factor</li></ol></div>`
+            },
+            {
+                question: "What indicates significant interaction in interaction plot?",
+                correctAnswers: ["non-parallel lines", "lines not parallel", "different slopes"],
+                hint: "Think about line patterns",
+                explanation: "Non-parallel lines in interaction plot suggest significant interaction effects.",
+                steps: `<div class="step-title">Visual Interaction Signs:</div><div class="step-content"><ol><li><strong>Parallel lines:</strong> No interaction</li><li><strong>Non-parallel:</strong> Interaction present</li><li><strong>Statistical test:</strong> Confirms visual impression</li></ol></div>`
+            },
+            {
+                question: "Can you have main effects without interaction?",
+                correctAnswers: ["yes", "independent effects", "additive model"],
+                hint: "Think about independence",
+                explanation: "Yes, you can have significant main effects with no interaction (additive model).",
+                steps: `<div class="step-title">Main Effects Only:</div><div class="step-content"><ol><li><strong>Additive model:</strong> Effects simply add</li><li><strong>Independent:</strong> Factor effects don't depend on each other</li><li><strong>Parallel lines:</strong> Equal slopes in interaction plot</li></ol></div>`
+            }
+        ];
+
+        const sumSquaresFTestQuestions = [
+            {
+                question: "How is total sum of squares partitioned in two-way ANOVA?",
+                correctAnswers: ["SST = SSA + SSB + SSAB + SSE", "four components", "main effects interaction error"],
+                hint: "Think about sources of variation",
+                explanation: "SSTotal = SSA + SSB + SSAB + SSError, partitioning into main effects, interaction, and error.",
+                steps: `<div class="step-title">SS Partition:</div><div class="step-content"><ol><li><strong>SSA:</strong> Main effect of Factor A</li><li><strong>SSB:</strong> Main effect of Factor B</li><li><strong>SSAB:</strong> A×B interaction</li><li><strong>SSE:</strong> Error (within cells)</li></ol></div>`
+            },
+            {
+                question: "What are the degrees of freedom for Factor A main effect?",
+                correctAnswers: ["a - 1", "levels of A minus 1"],
+                hint: "Think about factor levels",
+                explanation: "df for Factor A main effect = a - 1, where a is the number of levels of Factor A.",
+                steps: `<div class="step-title">Factor A df:</div><div class="step-content"><ol><li><strong>Levels:</strong> a levels of Factor A</li><li><strong>df:</strong> a - 1</li><li><strong>Constraint:</strong> Effects sum to zero</li></ol></div>`
+            },
+            {
+                question: "What are the degrees of freedom for interaction?",
+                correctAnswers: ["(a-1)(b-1)", "df_A times df_B"],
+                hint: "Think about combining factor degrees of freedom",
+                explanation: "df for A×B interaction = (a-1)(b-1), the product of main effect degrees of freedom.",
+                steps: `<div class="step-title">Interaction df:</div><div class="step-content"><ol><li><strong>Factor A df:</strong> a - 1</li><li><strong>Factor B df:</strong> b - 1</li><li><strong>Interaction df:</strong> (a-1)(b-1)</li></ol></div>`
+            },
+            {
+                question: "What is the error term for all F-tests in two-way ANOVA?",
+                correctAnswers: ["MSE", "mean square error", "within cells variance"],
+                hint: "Think about common denominator",
+                explanation: "MSE (mean square error) is the denominator for all three F-tests in two-way ANOVA.",
+                steps: `<div class="step-title">Common Error Term:</div><div class="step-content"><ol><li><strong>MSE:</strong> Same denominator for all tests</li><li><strong>Within cells:</strong> Variation within treatment combinations</li><li><strong>df:</strong> ab(n-1) for balanced design</li></ol></div>`
+            },
+            {
+                question: "How do you calculate MSA?",
+                correctAnswers: ["SSA/(a-1)", "SSA divided by df_A"],
+                hint: "Think about mean square calculation",
+                explanation: "MSA = SSA/(a-1), dividing sum of squares by degrees of freedom.",
+                steps: `<div class="step-title">Mean Square A:</div><div class="step-content"><ol><li><strong>Formula:</strong> MSA = SSA/(a-1)</li><li><strong>SS:</strong> Sum of squares for Factor A</li><li><strong>df:</strong> Degrees of freedom for Factor A</li></ol></div>`
+            },
+            {
+                question: "What F-statistic tests the interaction effect?",
+                correctAnswers: ["F = MSAB/MSE", "interaction MS over error MS"],
+                hint: "Think about interaction test",
+                explanation: "F = MSAB/MSE tests the A×B interaction effect.",
+                steps: `<div class="step-title">Interaction F-test:</div><div class="step-content"><ol><li><strong>Numerator:</strong> MSAB (interaction mean square)</li><li><strong>Denominator:</strong> MSE (error mean square)</li><li><strong>Distribution:</strong> F with (a-1)(b-1) and ab(n-1) df</li></ol></div>`
+            },
+            {
+                question: "What does a significant F-test for Factor A indicate?",
+                correctAnswers: ["main effect of A", "Factor A levels differ", "marginal means differ"],
+                hint: "Think about main effect interpretation",
+                explanation: "Significant F for Factor A indicates the marginal means of Factor A levels differ significantly.",
+                steps: `<div class="step-title">Significant Factor A:</div><div class="step-content"><ol><li><strong>Main effect:</strong> Factor A has overall effect</li><li><strong>Marginal means:</strong> At least two differ</li><li><strong>Interpretation:</strong> Depends on interaction significance</li></ol></div>`
+            },
+            {
+                question: "In what order should you interpret F-tests?",
+                correctAnswers: ["interaction first", "test interaction before main effects", "A×B then A and B"],
+                hint: "Think about interpretation hierarchy",
+                explanation: "Test interaction first; if significant, focus on simple effects rather than main effects.",
+                steps: `<div class="step-title">Testing Hierarchy:</div><div class="step-content"><ol><li><strong>First:</strong> Test A×B interaction</li><li><strong>If significant:</strong> Examine simple effects</li><li><strong>If not significant:</strong> Interpret main effects</li></ol></div>`
+            },
+            {
+                question: "What are the degrees of freedom for error in balanced design?",
+                correctAnswers: ["ab(n-1)", "cells times within-cell df"],
+                hint: "Think about within-cell variation",
+                explanation: "df for error = ab(n-1), where ab is number of cells and (n-1) is df within each cell.",
+                steps: `<div class="step-title">Error df:</div><div class="step-content"><ol><li><strong>Number of cells:</strong> ab</li><li><strong>Within each cell:</strong> n-1 df</li><li><strong>Total error df:</strong> ab(n-1)</li></ol></div>`
+            },
+            {
+                question: "What does SSE measure in two-way ANOVA?",
+                correctAnswers: ["within-cell variation", "unexplained variance", "random error"],
+                hint: "Think about what remains unexplained",
+                explanation: "SSE measures variation within cells after accounting for main effects and interaction.",
+                steps: `<div class="step-title">Sum of Squares Error:</div><div class="step-content"><ol><li><strong>Within cells:</strong> Variation around cell means</li><li><strong>Unexplained:</strong> Not due to factors or interaction</li><li><strong>Random error:</strong> Individual differences</li></ol></div>`
+            }
+        ];
+
+        const simpleEffectsMultipleQuestions = [
+            {
+                question: "When should you analyze simple effects?",
+                correctAnswers: ["significant interaction", "when A×B is significant", "non-parallel lines"],
+                hint: "Think about when main effects are misleading",
+                explanation: "Analyze simple effects when interaction is significant, as main effects can be misleading.",
+                steps: `<div class="step-title">When to Use Simple Effects:</div><div class="step-content"><ol><li><strong>Significant interaction:</strong> A×B effect present</li><li><strong>Main effects misleading:</strong> Effect varies across levels</li><li><strong>More informative:</strong> Shows specific patterns</li></ol></div>`
+            },
+            {
+                question: "What is simple effect of Factor A?",
+                correctAnswers: ["effect of A at specific level of B", "A effect within B level", "conditional effect"],
+                hint: "Think about conditional effects",
+                explanation: "Simple effect of A is the effect of Factor A at a specific level of Factor B.",
+                steps: `<div class="step-title">Simple Effect of A:</div><div class="step-content"><ol><li><strong>Conditional:</strong> Effect of A given B level</li><li><strong>Specific:</strong> At one level of B at a time</li><li><strong>Multiple tests:</strong> One for each B level</li></ol></div>`
+            },
+            {
+                question: "How do you test simple effects?",
+                correctAnswers: ["F-test using MSE", "one-way ANOVA within levels", "subset analysis"],
+                hint: "Think about testing within factor levels",
+                explanation: "Test simple effects using F-tests with MSE from overall analysis as error term.",
+                steps: `<div class="step-title">Simple Effects Testing:</div><div class="step-content"><ol><li><strong>F-test:</strong> F = MS_simple/MSE</li><li><strong>Error term:</strong> Use MSE from full analysis</li><li><strong>Multiple tests:</strong> One for each level</li></ol></div>`
+            },
+            {
+                question: "What is the difference between simple effects and main effects?",
+                correctAnswers: ["simple are conditional", "main effects are marginal", "simple within levels"],
+                hint: "Think about conditional vs marginal",
+                explanation: "Simple effects are conditional (at specific levels) while main effects are marginal (averaged across levels).",
+                steps: `<div class="step-title">Simple vs Main Effects:</div><div class="step-content"><ol><li><strong>Simple:</strong> Conditional on other factor level</li><li><strong>Main:</strong> Marginal (averaged) effect</li><li><strong>Use simple when:</strong> Interaction significant</li></ol></div>`
+            },
+            {
+                question: "Why use multiple comparison procedures in two-way ANOVA?",
+                correctAnswers: ["control family-wise error", "multiple testing", "many comparisons"],
+                hint: "Think about error rate inflation",
+                explanation: "Multiple comparisons control family-wise error rate when making many pairwise tests.",
+                steps: `<div class="step-title">Multiple Comparisons:</div><div class="step-content"><ol><li><strong>Many tests:</strong> Multiple pairwise comparisons</li><li><strong>Error inflation:</strong> Overall α increases</li><li><strong>Control:</strong> Use appropriate procedures</li></ol></div>`
+            },
+            {
+                question: "When do you compare marginal means?",
+                correctAnswers: ["non-significant interaction", "main effects only", "no A×B effect"],
+                hint: "Think about when main effects are interpretable",
+                explanation: "Compare marginal means when interaction is not significant and main effects are interpretable.",
+                steps: `<div class="step-title">Marginal Mean Comparisons:</div><div class="step-content"><ol><li><strong>No interaction:</strong> Main effects interpretable</li><li><strong>Marginal means:</strong> Row/column averages</li><li><strong>Post-hoc tests:</strong> Pairwise comparisons</li></ol></div>`
+            },
+            {
+                question: "What are planned contrasts in factorial designs?",
+                correctAnswers: ["pre-specified comparisons", "theory-driven", "a priori hypotheses"],
+                hint: "Think about predetermined tests",
+                explanation: "Planned contrasts are pre-specified, theory-driven comparisons planned before data analysis.",
+                steps: `<div class="step-title">Planned Contrasts:</div><div class="step-content"><ol><li><strong>Pre-specified:</strong> Planned before analysis</li><li><strong>Theory-driven:</strong> Based on hypotheses</li><li><strong>Less stringent:</strong> No multiple comparison adjustment needed</li></ol></div>`
+            },
+            {
+                question: "How many simple effects of A are there in an a×b design?",
+                correctAnswers: ["b", "number of B levels"],
+                hint: "Think about levels of the other factor",
+                explanation: "There are b simple effects of Factor A (one for each level of Factor B).",
+                steps: `<div class="step-title">Number of Simple Effects:</div><div class="step-content"><ol><li><strong>Simple effects of A:</strong> b tests (one per B level)</li><li><strong>Simple effects of B:</strong> a tests (one per A level)</li><li><strong>Total:</strong> a + b simple effects tests</li></ol></div>`
+            },
+            {
+                question: "What is Tukey's HSD for factorial designs?",
+                correctAnswers: ["controls FWER", "all pairwise comparisons", "honest significant difference"],
+                hint: "Think about comprehensive pairwise testing",
+                explanation: "Tukey's HSD controls family-wise error rate for all pairwise comparisons of means.",
+                steps: `<div class="step-title">Tukey's HSD:</div><div class="step-content"><ol><li><strong>All pairwise:</strong> Every mean compared to every other</li><li><strong>FWER control:</strong> Overall error rate ≤ α</li><li><strong>Conservative:</strong> Maintains error control</li></ol></div>`
+            },
+            {
+                question: "When should you compare cell means directly?",
+                correctAnswers: ["significant interaction", "specific combinations of interest", "complex patterns"],
+                hint: "Think about when cells are the focus",
+                explanation: "Compare cell means directly when interaction is significant and specific factor combinations are of interest.",
+                steps: `<div class="step-title">Cell Mean Comparisons:</div><div class="step-content"><ol><li><strong>Significant interaction:</strong> Focus on specific combinations</li><li><strong>All cells:</strong> Each combination compared</li><li><strong>Complex patterns:</strong> Most comprehensive analysis</li></ol></div>`
+            }
+        ];
+
+        const effectSizesPowerQuestions = [
+            {
+                question: "How do you calculate eta-squared for Factor A?",
+                correctAnswers: ["SSA/SSTotal", "SS_A divided by total SS"],
+                hint: "Think about proportion of total variance",
+                explanation: "η²_A = SSA/SSTotal, the proportion of total variance explained by Factor A.",
+                steps: `<div class="step-title">Eta-squared for Factor A:</div><div class="step-content"><ol><li><strong>Formula:</strong> η²_A = SSA/SSTotal</li><li><strong>Interpretation:</strong> Proportion of variance due to A</li><li><strong>Range:</strong> 0 to 1</li></ol></div>`
+            },
+            {
+                question: "What is partial eta-squared?",
+                correctAnswers: ["proportion of explained variance", "SSA/(SSA + SSE)", "excludes other factors"],
+                hint: "Think about variance explained excluding other effects",
+                explanation: "Partial η² measures proportion of explained variance, excluding effects of other factors.",
+                steps: `<div class="step-title">Partial Eta-squared:</div><div class="step-content"><ol><li><strong>Formula:</strong> SSA/(SSA + SSError)</li><li><strong>Excludes:</strong> Other factor effects</li><li><strong>Focus:</strong> Just this factor vs error</li></ol></div>`
+            },
+            {
+                question: "Why might you prefer omega-squared over eta-squared?",
+                correctAnswers: ["less biased", "corrects for chance", "more conservative"],
+                hint: "Think about bias correction",
+                explanation: "Omega-squared is less biased because it corrects for chance capitalization on sampling error.",
+                steps: `<div class="step-title">Omega-squared Advantage:</div><div class="step-content"><ol><li><strong>Less biased:</strong> Corrects for chance</li><li><strong>Conservative:</strong> Usually smaller than η²</li><li><strong>Population estimate:</strong> Better estimate of true effect size</li></ol></div>`
+            },
+            {
+                question: "How do you interpret effect sizes in factorial designs?",
+                correctAnswers: ["compare relative importance", "which effects matter most", "practical significance"],
+                hint: "Think about comparing different effects",
+                explanation: "Compare effect sizes to determine relative importance of main effects vs interaction.",
+                steps: `<div class="step-title">Interpreting Effect Sizes:</div><div class="step-content"><ol><li><strong>Relative importance:</strong> Which effect explains most variance</li><li><strong>Practical significance:</strong> Beyond statistical significance</li><li><strong>Context dependent:</strong> Field-specific interpretation</li></ol></div>`
+            },
+            {
+                question: "What affects power in two-way ANOVA?",
+                correctAnswers: ["effect size sample size alpha", "multiple factors", "design efficiency"],
+                hint: "Think about power components",
+                explanation: "Power depends on effect size, sample size, α level, and design efficiency.",
+                steps: `<div class="step-title">Power Factors:</div><div class="step-content"><ol><li><strong>Effect size:</strong> Larger effects easier to detect</li><li><strong>Sample size:</strong> More power with larger n</li><li><strong>Design:</strong> Balanced designs more efficient</li></ol></div>`
+            },
+            {
+                question: "Why might interaction effects have lower power?",
+                correctAnswers: ["smaller effect sizes typically", "more complex", "harder to detect"],
+                hint: "Think about interaction detection difficulty",
+                explanation: "Interactions often have smaller effect sizes and require larger samples to detect reliably.",
+                steps: `<div class="step-title">Interaction Power:</div><div class="step-content"><ol><li><strong>Typically smaller:</strong> Interaction effects often modest</li><li><strong>Complex pattern:</strong> Harder to detect than main effects</li><li><strong>Sample size:</strong> Need adequate power for interactions</li></ol></div>`
+            },
+            {
+                question: "How do you plan sample size for factorial designs?",
+                correctAnswers: ["power analysis", "most important effect", "interaction considerations"],
+                hint: "Think about which effect to power for",
+                explanation: "Plan sample size based on power analysis for the most important effect (often interaction).",
+                steps: `<div class="step-title">Sample Size Planning:</div><div class="step-content"><ol><li><strong>Identify priority:</strong> Which effect most important?</li><li><strong>Power analysis:</strong> Calculate required n</li><li><strong>Interaction focus:</strong> Often need larger n</li></ol></div>`
+            },
+            {
+                question: "What is Cohen's convention for large effect size?",
+                correctAnswers: ["η² = 0.14", "14% variance explained", "0.14"],
+                hint: "Think about Cohen's guidelines",
+                explanation: "Cohen suggested η² = 0.14 as a large effect size (14% of variance explained).",
+                steps: `<div class="step-title">Cohen's Conventions:</div><div class="step-content"><ol><li><strong>Small:</strong> η² = 0.01</li><li><strong>Medium:</strong> η² = 0.06</li><li><strong>Large:</strong> η² = 0.14</li></ol></div>`
+            },
+            {
+                question: "How do effect sizes help in interpretation?",
+                correctAnswers: ["practical significance", "magnitude of difference", "clinical importance"],
+                hint: "Think about beyond p-values",
+                explanation: "Effect sizes indicate practical significance and magnitude of differences beyond statistical significance.",
+                steps: `<div class="step-title">Effect Size Benefits:</div><div class="step-content"><ol><li><strong>Practical significance:</strong> Is effect meaningful?</li><li><strong>Magnitude:</strong> How big is the difference?</li><li><strong>Comparison:</strong> Which effects are largest?</li></ol></div>`
+            },
+            {
+                question: "Can you have significant F-test but small effect size?",
+                correctAnswers: ["yes", "with large sample", "statistical vs practical"],
+                hint: "Think about sample size and significance",
+                explanation: "Yes, with large samples you can have statistically significant but practically small effects.",
+                steps: `<div class="step-title">Significance vs Effect Size:</div><div class="step-content"><ol><li><strong>Large samples:</strong> Can detect small effects</li><li><strong>Statistical:</strong> p < 0.05</li><li><strong>Practical:</strong> Effect size indicates importance</li></ol></div>`
+            }
+        ];
+
+        const assumptionsExtensionsQuestions = [
+            {
+                question: "What assumptions must hold for each cell in two-way ANOVA?",
+                correctAnswers: ["normality equal variance independence", "same as one-way", "within each cell"],
+                hint: "Think about cell-specific requirements",
+                explanation: "Normality, equal variance, and independence must hold within each factorial cell.",
+                steps: `<div class="step-title">Cell-wise Assumptions:</div><div class="step-content"><ol><li><strong>Normality:</strong> Within each cell</li><li><strong>Equal variance:</strong> Across all cells</li><li><strong>Independence:</strong> Between observations</li></ol></div>`
+            },
+            {
+                question: "How does unbalanced design affect two-way ANOVA?",
+                correctAnswers: ["complicates interpretation", "unequal cell sizes", "Type I vs Type III SS"],
+                hint: "Think about unequal sample sizes",
+                explanation: "Unbalanced designs complicate interpretation and require careful attention to sum of squares types.",
+                steps: `<div class="step-title">Unbalanced Design Issues:</div><div class="step-content"><ol><li><strong>Interpretation:</strong> Main effects and interactions confounded</li><li><strong>SS Types:</strong> Different ways to partition variance</li><li><strong>Power:</strong> Reduced and unequal across tests</li></ol></div>`
+            },
+            {
+                question: "What is a mixed effects model?",
+                correctAnswers: ["fixed and random factors", "some factors random", "hierarchical model"],
+                hint: "Think about different types of factors",
+                explanation: "Mixed effects models include both fixed factors (of direct interest) and random factors (sampling factors).",
+                steps: `<div class="step-title">Mixed Effects:</div><div class="step-content"><ol><li><strong>Fixed factors:</strong> Specific levels of interest</li><li><strong>Random factors:</strong> Sample from population</li><li><strong>Error structure:</strong> More complex than fixed effects</li></ol></div>`
+            },
+            {
+                question: "When might you use repeated measures ANOVA?",
+                correctAnswers: ["same subjects measured repeatedly", "within-subjects factor", "matched observations"],
+                hint: "Think about correlated observations",
+                explanation: "Use repeated measures when same subjects measured under different conditions (within-subjects factor).",
+                steps: `<div class="step-title">Repeated Measures:</div><div class="step-content"><ol><li><strong>Within-subjects:</strong> Same subjects in multiple conditions</li><li><strong>Correlated:</strong> Observations not independent</li><li><strong>Sphericity:</strong> Additional assumption required</li></ol></div>`
+            },
+            {
+                question: "What is MANOVA?",
+                correctAnswers: ["multivariate ANOVA", "multiple dependent variables", "vector of outcomes"],
+                hint: "Think about multiple outcomes",
+                explanation: "MANOVA analyzes multiple dependent variables simultaneously in factorial designs.",
+                steps: `<div class="step-title">MANOVA:</div><div class="step-content"><ol><li><strong>Multiple DVs:</strong> Several outcomes at once</li><li><strong>Factorial design:</strong> Two or more factors</li><li><strong>Multivariate:</strong> Tests vector of means</li></ol></div>`
+            },
+            {
+                question: "How do you check equal variance assumption across cells?",
+                correctAnswers: ["Levene's test", "Box's test", "residual plots"],
+                hint: "Think about testing homogeneity",
+                explanation: "Use Levene's test, Box's test, or residual plots to check equal variance across all cells.",
+                steps: `<div class="step-title">Testing Equal Variances:</div><div class="step-content"><ol><li><strong>Levene's test:</strong> Robust to non-normality</li><li><strong>Box's test:</strong> More sensitive</li><li><strong>Residual plots:</strong> Visual inspection</li></ol></div>`
+            },
+            {
+                question: "What happens with missing data in factorial designs?",
+                correctAnswers: ["becomes unbalanced", "reduced power", "missing cell problems"],
+                hint: "Think about design complications",
+                explanation: "Missing data creates unbalanced designs, reduces power, and may create empty cells.",
+                steps: `<div class="step-title">Missing Data Effects:</div><div class="step-content"><ol><li><strong>Unbalanced:</strong> Unequal cell sizes</li><li><strong>Empty cells:</strong> Cannot estimate interactions</li><li><strong>Power loss:</strong> Reduced statistical power</li></ol></div>`
+            },
+            {
+                question: "What are robust alternatives to two-way ANOVA?",
+                correctAnswers: ["nonparametric tests", "robust ANOVA", "bootstrapping"],
+                hint: "Think about assumption violations",
+                explanation: "Use robust methods, nonparametric alternatives, or bootstrapping when assumptions violated.",
+                steps: `<div class="step-title">Robust Alternatives:</div><div class="step-content"><ol><li><strong>Nonparametric:</strong> Rank-based methods</li><li><strong>Robust ANOVA:</strong> Trimmed means, M-estimators</li><li><strong>Bootstrap:</strong> Resampling methods</li></ol></div>`
+            },
+            {
+                question: "What is an empty cell problem?",
+                correctAnswers: ["no observations in some cells", "missing combinations", "cannot estimate effects"],
+                hint: "Think about missing factor combinations",
+                explanation: "Empty cells occur when some factor combinations have no observations, preventing effect estimation.",
+                steps: `<div class="step-title">Empty Cell Problems:</div><div class="step-content"><ol><li><strong>Missing data:</strong> Some combinations not observed</li><li><strong>Estimation:</strong> Cannot estimate all effects</li><li><strong>Design:</strong> May need to reduce model complexity</li></ol></div>`
+            },
+            {
+                question: "How do modern approaches handle complex factorial designs?",
+                correctAnswers: ["mixed models", "generalized linear models", "advanced software"],
+                hint: "Think about current methods",
+                explanation: "Modern approaches use mixed models, GLMs, and advanced software to handle complex designs and assumption violations.",
+                steps: `<div class="step-title">Modern Approaches:</div><div class="step-content"><ol><li><strong>Mixed models:</strong> Random effects, unbalanced data</li><li><strong>GLMs:</strong> Non-normal outcomes</li><li><strong>Software:</strong> Advanced computational methods</li></ol></div>`
+            }
+        ];
+
+        // Generate question functions
+        function generateQuestion141() {
+            const randomIndex = Math.floor(Math.random() * introTwoWayAnovaQuestions.length);
+            currentQuestion141 = introTwoWayAnovaQuestions[randomIndex];
+            displayQuestion(141, currentQuestion141);
+        }
+        
+        function generateQuestion142() {
+            const randomIndex = Math.floor(Math.random() * mainEffectsInteractionQuestions.length);
+            currentQuestion142 = mainEffectsInteractionQuestions[randomIndex];
+            displayQuestion(142, currentQuestion142);
+        }
+        
+        function generateQuestion143() {
+            const randomIndex = Math.floor(Math.random() * sumSquaresFTestQuestions.length);
+            currentQuestion143 = sumSquaresFTestQuestions[randomIndex];
+            displayQuestion(143, currentQuestion143);
+        }
+        
+        function generateQuestion144() {
+            const randomIndex = Math.floor(Math.random() * simpleEffectsMultipleQuestions.length);
+            currentQuestion144 = simpleEffectsMultipleQuestions[randomIndex];
+            displayQuestion(144, currentQuestion144);
+        }
+        
+        function generateQuestion145() {
+            const randomIndex = Math.floor(Math.random() * effectSizesPowerQuestions.length);
+            currentQuestion145 = effectSizesPowerQuestions[randomIndex];
+            displayQuestion(145, currentQuestion145);
+        }
+        
+        function generateQuestion146() {
+            const randomIndex = Math.floor(Math.random() * assumptionsExtensionsQuestions.length);
+            currentQuestion146 = assumptionsExtensionsQuestions[randomIndex];
+            displayQuestion(146, currentQuestion146);
+        }
+
+        // Helper function to display questions
+        function displayQuestion(sectionNum, question) {
+            document.getElementById(`question-${sectionNum}-content`).innerHTML = question.question;
+            document.getElementById(`hint-${sectionNum}`).innerHTML = `💡 ${question.hint}`;
+            
+            document.getElementById(`answer-${sectionNum}`).value = '';
+            document.getElementById(`feedback-${sectionNum}`).style.display = 'none';
+            document.getElementById(`steps-${sectionNum}`).style.display = 'none';
+        }
+
+        // Check answer functions
+        function checkAnswer141() { checkAnswer(141, currentQuestion141); }
+        function checkAnswer142() { checkAnswer(142, currentQuestion142); }
+        function checkAnswer143() { checkAnswer(143, currentQuestion143); }
+        function checkAnswer144() { checkAnswer(144, currentQuestion144); }
+        function checkAnswer145() { checkAnswer(145, currentQuestion145); }
+        function checkAnswer146() { checkAnswer(146, currentQuestion146); }
+
+        // Show steps functions  
+        function showSteps141() { showSteps(141, currentQuestion141); }
+        function showSteps142() { showSteps(142, currentQuestion142); }
+        function showSteps143() { showSteps(143, currentQuestion143); }
+        function showSteps144() { showSteps(144, currentQuestion144); }
+        function showSteps145() { showSteps(145, currentQuestion145); }
+        function showSteps146() { showSteps(146, currentQuestion146); }
+
+        // Helper functions
+        function checkAnswer(sectionNum, currentQuestion) {
+            const userAnswer = document.getElementById(`answer-${sectionNum}`).value.toLowerCase().trim();
+            if (!currentQuestion) return;
+            
+            const isCorrect = currentQuestion.correctAnswers.some(answer => 
+                userAnswer.includes(answer.toLowerCase()) || answer.toLowerCase().includes(userAnswer)
+            );
+            
+            const feedbackElement = document.getElementById(`feedback-${sectionNum}`);
+            if (isCorrect) {
+                feedbackElement.innerHTML = `<div class="correct">✅ Correct! ${currentQuestion.explanation}</div>`;
+                feedbackElement.className = 'question-feedback correct-feedback';
+            } else {
+                feedbackElement.innerHTML = `<div class="incorrect">❌ Incorrect. ${currentQuestion.explanation}</div>`;
+                feedbackElement.className = 'question-feedback incorrect-feedback';
+            }
+            feedbackElement.style.display = 'block';
+        }
+
+        function showSteps(sectionNum, currentQuestion) {
+            if (!currentQuestion) return;
+            const stepsElement = document.getElementById(`steps-${sectionNum}`);
+            stepsElement.innerHTML = currentQuestion.steps;
+            stepsElement.style.display = 'block';
+        }
+
+        // Initialize on page load
+        window.onload = function() {
+            generateQuestion141();
+            generateQuestion142(); 
+            generateQuestion143();
+            generateQuestion144();
+            generateQuestion145();
+            generateQuestion146();
+        }
+    </script>
+</body>
+</html>
