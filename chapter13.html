@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 13: Multiple Regression | Larsen & Marx Mathematical Statistics</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    
+    <style>
+        :root {
+            --primary-color: #6A1B9A;
+            --primary-light: #8E24AA;
+            --primary-dark: #4A148C;
+            --secondary-color: #E1BEE7;
+            --accent-color: #9C27B0;
+            --background-color: #FAFAFA;
+            --text-color: #212121;
+            --card-background: #FFFFFF;
+            --border-color: #E0E0E0;
+            --success-color: #4CAF50;
+            --error-color: #F44336;
+            --warning-color: #FF9800;
+            --shadow: 0 2px 10px rgba(106, 27, 154, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 20px;
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .chapter-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .chapter-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .chapter-description {
+            font-size: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        .section {
+            background: var(--card-background);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-content {
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .concept-explanation {
+            background: linear-gradient(135deg, rgba(106, 27, 154, 0.05), rgba(156, 39, 176, 0.05));
+            border: 1px solid var(--primary-light);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .concept-explanation h4 {
+            color: var(--primary-dark);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .key-points {
+            background: var(--secondary-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .key-points h5 {
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .key-points ul {
+            margin-left: 1.5rem;
+        }
+
+        .key-points li {
+            margin-bottom: 0.3rem;
+        }
+
+        .math-formula {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .section-practice {
+            background: linear-gradient(135deg, rgba(106, 27, 154, 0.02), rgba(156, 39, 176, 0.02));
+            border: 2px solid var(--secondary-color);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .practice-question {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .question-number {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .regenerate-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .regenerate-btn:hover {
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .question-input-area {
+            margin-bottom: 1rem;
+        }
+
+        .input-label {
+            display: block;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.1);
+        }
+
+        .input-hint {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .question-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .question-buttons button {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .check-btn {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .check-btn:hover {
+            background: #45A049;
+            transform: translateY(-1px);
+        }
+
+        .steps-btn {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .steps-btn:hover {
+            background: #F57C00;
+            transform: translateY(-1px);
+        }
+
+        .new-question-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .new-question-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .question-feedback {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .correct-feedback {
+            background: linear-gradient(135deg, #E8F5E8, #C8E6C9);
+            border: 1px solid var(--success-color);
+            color: #2E7D32;
+        }
+
+        .incorrect-feedback {
+            background: linear-gradient(135deg, #FFEBEE, #FFCDD2);
+            border: 1px solid var(--error-color);
+            color: #C62828;
+        }
+
+        .question-steps {
+            background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+            border: 1px solid var(--warning-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .step-title {
+            font-weight: 700;
+            color: var(--warning-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .step-content {
+            line-height: 1.6;
+        }
+
+        .step-content ol {
+            padding-left: 1.5rem;
+        }
+
+        .step-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .chapter-title {
+                font-size: 2rem;
+            }
+            
+            .question-buttons {
+                flex-direction: column;
+            }
+            
+            .question-buttons button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="chapter-title">📈 Chapter 13: Multiple Regression</h1>
+            <p class="chapter-subtitle">Advanced Modeling with Multiple Predictors</p>
+            <p class="chapter-description">
+                Master multiple regression analysis for modeling complex relationships with several predictor variables. 
+                Learn model building, variable selection, interaction effects, diagnostics, and inference for comprehensive multivariate modeling.
+            </p>
+        </header>
+
+        <!-- Section 13.1: Introduction to Multiple Regression -->
+        <div class="section">
+            <h2 class="section-title">📈 13.1 Introduction to Multiple Regression</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Multiple Regression</h4>
+                    <p>Multiple regression extends simple linear regression to include multiple predictor variables simultaneously. Instead of modeling Y as a function of one X variable, we model Y as a function of several X variables: X₁, X₂, X₃, etc. This allows us to account for the complex, multifaceted relationships typically found in real-world data.</p>
+                    
+                    <p>The key advantage is that multiple regression can separate the individual effects of each predictor while controlling for the others. This helps us understand the unique contribution of each variable and make more accurate predictions by incorporating multiple sources of information.</p>
+
+                    <div class="key-points">
+                        <h5>Multiple Regression Advantages:</h5>
+                        <ul>
+                            <li><strong>Control for Confounders:</strong> Isolate effects by holding other variables constant</li>
+                            <li><strong>Better Predictions:</strong> More information typically improves prediction accuracy</li>
+                            <li><strong>Realistic Modeling:</strong> Most phenomena depend on multiple factors</li>
+                            <li><strong>Individual Effects:</strong> Separate contribution of each predictor</li>
+                            <li><strong>Reduced Bias:</strong> Account for omitted variable bias</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Key Concept:</strong> Each regression coefficient represents the change in Y for a one-unit increase in that predictor, holding all other predictors constant.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Multiple Regression Model:</strong><br>
+                    Y = β₀ + β₁X₁ + β₂X₂ + ... + βₚXₚ + ε<br>
+                    where ε ~ N(0, σ²)
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Interpretation in Multiple Regression</h4>
+                    <p>Interpretation becomes more nuanced with multiple predictors. Each slope coefficient has a "holding other variables constant" interpretation, which is fundamentally different from simple regression.</p>
+
+                    <div class="key-points">
+                        <h5>Interpretation Guidelines:</h5>
+                        <ul>
+                            <li><strong>Partial Effects:</strong> βⱼ = change in Y per unit change in Xⱼ, holding others constant</li>
+                            <li><strong>Intercept:</strong> Expected Y when all X variables equal zero</li>
+                            <li><strong>Ceteris Paribus:</strong> Latin for "all else equal" - key assumption</li>
+                            <li><strong>Context Matters:</strong> Interpretation depends on other variables in model</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Important Note:</strong> Coefficients in multiple regression differ from simple regression coefficients because they account for relationships among predictors.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📈 Section 13.1 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Multiple Regression Introduction Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion131()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-131-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-131">Your Answer:</label>
+                        <input type="text" id="answer-131" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer131()">
+                        <div class="input-hint" id="hint-131"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer131()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps131()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion131()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-131" style="display: none;"></div>
+                    <div class="question-steps" id="steps-131" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 13.2: Model Building and Variable Selection -->
+        <div class="section">
+            <h2 class="section-title">📈 13.2 Model Building and Variable Selection</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Model Building</h4>
+                    <p>Building effective multiple regression models requires balancing complexity with interpretability and predictive power. We want to include variables that meaningfully contribute to explaining Y while avoiding overfitting and multicollinearity problems.</p>
+                    
+                    <p>The process involves both statistical criteria (significance tests, goodness-of-fit measures) and subject-matter expertise (theoretical considerations, practical constraints). Good models are parsimonious - they explain the data well with as few variables as reasonably possible.</p>
+
+                    <div class="key-points">
+                        <h5>Model Building Considerations:</h5>
+                        <ul>
+                            <li><strong>Theory:</strong> Include variables suggested by domain knowledge</li>
+                            <li><strong>Statistical Significance:</strong> Variables should contribute meaningfully</li>
+                            <li><strong>Multicollinearity:</strong> Avoid highly correlated predictors</li>
+                            <li><strong>Parsimony:</strong> Prefer simpler models when performance is similar</li>
+                            <li><strong>Prediction vs Explanation:</strong> Goals affect variable selection strategy</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Key Principle:</strong> All models are wrong, but some are useful. Focus on building useful models for your specific purpose.</p>
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Variable Selection Methods</h4>
+                    <p>Several systematic approaches exist for selecting which variables to include in the model. Each has advantages and limitations, and the choice depends on your goals and constraints.</p>
+
+                    <div class="key-points">
+                        <h5>Common Selection Methods:</h5>
+                        <ul>
+                            <li><strong>Forward Selection:</strong> Start empty, add variables one by one</li>
+                            <li><strong>Backward Elimination:</strong> Start full, remove variables one by one</li>
+                            <li><strong>Stepwise:</strong> Combination of forward and backward</li>
+                            <li><strong>Best Subsets:</strong> Consider all possible combinations</li>
+                            <li><strong>Regularization:</strong> LASSO, Ridge regression for automatic selection</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Modern Approach:</strong> Use cross-validation and information criteria (AIC, BIC) rather than relying solely on p-values for selection decisions.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Information Criteria:</strong><br>
+                    AIC = n ln(SSE/n) + 2p<br>
+                    BIC = n ln(SSE/n) + p ln(n)<br>
+                    where p = number of parameters
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📈 Section 13.2 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Model Building and Variable Selection Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion132()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-132-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-132">Your Answer:</label>
+                        <input type="text" id="answer-132" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer132()">
+                        <div class="input-hint" id="hint-132"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer132()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps132()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion132()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-132" style="display: none;"></div>
+                    <div class="question-steps" id="steps-132" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 13.3: Multicollinearity and Remedies -->
+        <div class="section">
+            <h2 class="section-title">📈 13.3 Multicollinearity and Remedies</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Multicollinearity</h4>
+                    <p>Multicollinearity occurs when predictor variables are highly correlated with each other. This creates problems because the least squares estimation becomes unstable - small changes in data can lead to large changes in coefficient estimates. The individual effects become difficult to separate.</p>
+                    
+                    <p>Perfect multicollinearity makes the model impossible to estimate, while high (but not perfect) multicollinearity inflates standard errors and makes coefficients unreliable. The model may still predict well, but individual coefficient interpretation becomes problematic.</p>
+
+                    <div class="key-points">
+                        <h5>Signs of Multicollinearity:</h5>
+                        <ul>
+                            <li><strong>High R² but few significant coefficients</strong></li>
+                            <li><strong>Large changes in coefficients when adding/removing variables</strong></li>
+                            <li><strong>Coefficients with unexpected signs</strong></li>
+                            <li><strong>High standard errors for coefficients</strong></li>
+                            <li><strong>High correlation matrix values (>0.8)</strong></li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Key Impact:</strong> Multicollinearity affects coefficient interpretation and stability but doesn't necessarily hurt prediction accuracy.</p>
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Detecting and Measuring Multicollinearity</h4>
+                    <p>Several diagnostic tools help identify and quantify multicollinearity problems. The Variance Inflation Factor (VIF) is the most commonly used measure.</p>
+
+                    <div class="key-points">
+                        <h5>Multicollinearity Diagnostics:</h5>
+                        <ul>
+                            <li><strong>Correlation Matrix:</strong> Pairwise correlations among predictors</li>
+                            <li><strong>Variance Inflation Factor:</strong> VIF > 10 indicates serious problems</li>
+                            <li><strong>Tolerance:</strong> 1/VIF, values < 0.1 problematic</li>
+                            <li><strong>Condition Index:</strong> Eigenvalue-based measure</li>
+                            <li><strong>Condition Number:</strong> Ratio of largest to smallest eigenvalue</li>
+                        </ul>
+                    </div>
+
+                    <div class="math-formula">
+                        <strong>Variance Inflation Factor:</strong><br>
+                        VIFⱼ = 1/(1 - R²ⱼ)<br>
+                        where R²ⱼ is from regressing Xⱼ on other predictors
+                    </div>
+
+                    <p><strong>Rule of Thumb:</strong> VIF > 10 (or condition number > 30) suggests serious multicollinearity requiring attention.</p>
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Remedies for Multicollinearity</h4>
+                    <p>Several approaches can address multicollinearity, ranging from simple variable removal to sophisticated regularization techniques.</p>
+
+                    <div class="key-points">
+                        <h5>Multicollinearity Solutions:</h5>
+                        <ul>
+                            <li><strong>Remove Variables:</strong> Drop one from each highly correlated pair</li>
+                            <li><strong>Combine Variables:</strong> Create composite indices or averages</li>
+                            <li><strong>Principal Components:</strong> Use PC regression on orthogonal components</li>
+                            <li><strong>Ridge Regression:</strong> Add penalty term to shrink coefficients</li>
+                            <li><strong>Increase Sample Size:</strong> More data can help stabilize estimates</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📈 Section 13.3 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Multicollinearity and Remedies Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion133()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-133-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-133">Your Answer:</label>
+                        <input type="text" id="answer-133" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer133()">
+                        <div class="input-hint" id="hint-133"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer133()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps133()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion133()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-133" style="display: none;"></div>
+                    <div class="question-steps" id="steps-133" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 13.4: Inference in Multiple Regression -->
+        <div class="section">
+            <h2 class="section-title">📈 13.4 Inference in Multiple Regression</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Multiple Regression Inference</h4>
+                    <p>Inference in multiple regression involves testing hypotheses about individual coefficients, sets of coefficients, and the overall model. We can test whether individual predictors are significant, whether groups of predictors collectively matter, and whether the overall model explains significant variation.</p>
+                    
+                    <p>The key tools are t-tests for individual coefficients, F-tests for multiple coefficients simultaneously, and confidence intervals for coefficients and predictions. Multiple regression inference requires careful attention to the simultaneous nature of testing multiple hypotheses.</p>
+
+                    <div class="key-points">
+                        <h5>Types of Multiple Regression Tests:</h5>
+                        <ul>
+                            <li><strong>Individual t-tests:</strong> Test H₀: βⱼ = 0 for each coefficient</li>
+                            <li><strong>Overall F-test:</strong> Test if any predictors are significant</li>
+                            <li><strong>Partial F-test:</strong> Test subsets of coefficients simultaneously</li>
+                            <li><strong>Confidence Intervals:</strong> For individual coefficients</li>
+                            <li><strong>Prediction Intervals:</strong> For responses at specific X values</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Key Principle:</strong> Always interpret individual tests in context of the overall model and other variables present.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Individual Coefficient Test:</strong><br>
+                    t = βⱼ / SE(βⱼ) ~ t(n-p-1)<br>
+                    where p = number of predictors
+                </div>
+
+                <div class="math-formula">
+                    <strong>Overall F-test:</strong><br>
+                    F = MSR/MSE = [SSR/p] / [SSE/(n-p-1)]<br>
+                    F ~ F(p, n-p-1) under H₀: β₁ = β₂ = ... = βₚ = 0
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Partial F-tests and Model Comparisons</h4>
+                    <p>Partial F-tests allow us to test whether a subset of predictors collectively contributes to the model. This is particularly useful for testing groups of related variables or comparing nested models.</p>
+
+                    <div class="key-points">
+                        <h5>Partial F-test Applications:</h5>
+                        <ul>
+                            <li><strong>Group Testing:</strong> Test if several related variables matter together</li>
+                            <li><strong>Model Comparison:</strong> Compare full vs reduced models</li>
+                            <li><strong>Variable Sets:</strong> Test categorical variables with multiple dummies</li>
+                            <li><strong>Interaction Terms:</strong> Test if interaction effects are needed</li>
+                        </ul>
+                    </div>
+
+                    <div class="math-formula">
+                        <strong>Partial F-test:</strong><br>
+                        F = [(SSE_reduced - SSE_full)/q] / [SSE_full/(n-p-1)]<br>
+                        where q = number of variables being tested
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📈 Section 13.4 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Inference in Multiple Regression Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion134()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-134-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-134">Your Answer:</label>
+                        <input type="text" id="answer-134" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer134()">
+                        <div class="input-hint" id="hint-134"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer134()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps134()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion134()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-134" style="display: none;"></div>
+                    <div class="question-steps" id="steps-134" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 13.5: Categorical Predictors and Interactions -->
+        <div class="section">
+            <h2 class="section-title">📈 13.5 Categorical Predictors and Interactions</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Categorical Predictors</h4>
+                    <p>Categorical variables require special handling in regression through dummy (indicator) variables. Each category level (except one reference category) gets its own binary (0/1) variable. This allows regression to handle qualitative predictors like gender, treatment group, or geographic region.</p>
+                    
+                    <p>The coefficients for dummy variables represent differences in mean response between each category and the reference category, holding other variables constant. Choosing the reference category thoughtfully can make interpretation more meaningful.</p>
+
+                    <div class="key-points">
+                        <h5>Dummy Variable Coding:</h5>
+                        <ul>
+                            <li><strong>k categories → k-1 dummy variables</strong></li>
+                            <li><strong>Reference category:</strong> All dummies = 0</li>
+                            <li><strong>Coefficient interpretation:</strong> Difference from reference group</li>
+                            <li><strong>Overall test:</strong> Use partial F-test for all dummies together</li>
+                            <li><strong>Ordering:</strong> Choose reference category meaningfully</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Example:</strong> For a 3-level factor (A, B, C), create dummies D₁ (=1 if B, 0 otherwise) and D₂ (=1 if C, 0 otherwise), with A as reference.</p>
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Understanding Interaction Effects</h4>
+                    <p>Interactions occur when the effect of one predictor depends on the level of another predictor. The relationship between X₁ and Y changes as X₂ changes. This is common in real applications where effects are not simply additive.</p>
+
+                    <div class="key-points">
+                        <h5>Types of Interactions:</h5>
+                        <ul>
+                            <li><strong>Continuous × Continuous:</strong> X₁X₂ product term</li>
+                            <li><strong>Categorical × Continuous:</strong> Different slopes for each group</li>
+                            <li><strong>Categorical × Categorical:</strong> Different effects across group combinations</li>
+                            <li><strong>Higher-order:</strong> Three-way or higher interactions</li>
+                        </ul>
+                    </div>
+
+                    <div class="math-formula">
+                        <strong>Interaction Model Example:</strong><br>
+                        Y = β₀ + β₁X₁ + β₂X₂ + β₃X₁X₂ + ε<br>
+                        Effect of X₁ = β₁ + β₃X₂ (depends on X₂ level)
+                    </div>
+
+                    <p><strong>Hierarchical Principle:</strong> When including interaction terms, always include the main effects (lower-order terms) even if not significant.</p>
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📈 Section 13.5 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Categorical Predictors and Interactions Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion135()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-135-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-135">Your Answer:</label>
+                        <input type="text" id="answer-135" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer135()">
+                        <div class="input-hint" id="hint-135"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer135()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps135()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion135()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-135" style="display: none;"></div>
+                    <div class="question-steps" id="steps-135" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 13.6: Model Diagnostics and Validation -->
+        <div class="section">
+            <h2 class="section-title">📈 13.6 Model Diagnostics and Validation</h2>
+            <div class="section-content">
+                <div class="concept-explanation">
+                    <h4>Understanding Model Diagnostics</h4>
+                    <p>Multiple regression diagnostics extend simple regression diagnostics to handle multiple predictors. We need to check the same basic assumptions (linearity, independence, normality, equal variance) but also examine more complex issues like multicollinearity and influential observations.</p>
+                    
+                    <p>Good diagnostics combine visual plots, numerical measures, and statistical tests. The goal is to identify assumption violations, outliers, and influential points that could affect model validity and interpretation.</p>
+
+                    <div class="key-points">
+                        <h5>Key Diagnostic Tools:</h5>
+                        <ul>
+                            <li><strong>Residual Plots:</strong> Check linearity and equal variance</li>
+                            <li><strong>Added Variable Plots:</strong> Assess individual predictor relationships</li>
+                            <li><strong>Leverage Values:</strong> Identify extreme X combinations</li>
+                            <li><strong>Cook's Distance:</strong> Measure overall influence</li>
+                            <li><strong>DFFITS/DFBETAS:</strong> Measure influence on fitted values/coefficients</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Comprehensive Approach:</strong> Use multiple diagnostic tools together rather than relying on any single measure.</p>
+                </div>
+
+                <div class="concept-explanation">
+                    <h4>Model Validation Strategies</h4>
+                    <p>Model validation assesses how well our model will perform on new, unseen data. This is crucial for understanding whether our model captures genuine relationships or just fits noise in our particular sample.</p>
+
+                    <div class="key-points">
+                        <h5>Validation Methods:</h5>
+                        <ul>
+                            <li><strong>Cross-Validation:</strong> Split data, train on some, test on others</li>
+                            <li><strong>Hold-out Validation:</strong> Reserve portion of data for testing</li>
+                            <li><strong>Bootstrap:</strong> Resample data to assess stability</li>
+                            <li><strong>External Validation:</strong> Test on completely independent data</li>
+                            <li><strong>Information Criteria:</strong> AIC, BIC for model comparison</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Overfitting Warning:</strong> Complex models may fit training data well but perform poorly on new data. Validation helps detect this problem.</p>
+                </div>
+
+                <div class="math-formula">
+                    <strong>Key Diagnostic Measures:</strong><br>
+                    Leverage: hᵢ = xᵢᵀ(XᵀX)⁻¹xᵢ<br>
+                    Cook's D: Dᵢ = (eᵢ²/p·MSE) × [hᵢ/(1-hᵢ)²]<br>
+                    where eᵢ is the i-th residual
+                </div>
+            </div>
+
+            <div class="section-practice">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">📈 Section 13.6 Practice (10 Question Options)</h3>
+                
+                <div class="practice-question">
+                    <div class="question-header">
+                        <span class="question-number">Model Diagnostics and Validation Practice</span>
+                        <button class="regenerate-btn" onclick="generateQuestion136()">🔄 New Question</button>
+                    </div>
+                    <div class="question-content" id="question-136-content"></div>
+                    <div class="question-input-area">
+                        <label class="input-label" for="answer-136">Your Answer:</label>
+                        <input type="text" id="answer-136" class="answer-input" placeholder="Enter your answer here..." onkeypress="if(event.key==='Enter') checkAnswer136()">
+                        <div class="input-hint" id="hint-136"></div>
+                    </div>
+                    <div class="question-buttons">
+                        <button class="check-btn" onclick="checkAnswer136()">✓ Check Answer</button>
+                        <button class="steps-btn" onclick="showSteps136()">📝 Show Steps</button>
+                        <button class="new-question-btn" onclick="generateQuestion136()">🔄 New Question</button>
+                    </div>
+                    <div class="question-feedback" id="feedback-136" style="display: none;"></div>
+                    <div class="question-steps" id="steps-136" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        // Current question tracking variables for all 6 sections
+        let currentQuestion131 = null, currentQuestion132 = null, currentQuestion133 = null;
+        let currentQuestion134 = null, currentQuestion135 = null, currentQuestion136 = null;
+
+        // Question arrays with 10 questions each
+        const introMultipleRegressionQuestions = [
+            {
+                question: "What is the main advantage of multiple regression over simple regression?",
+                correctAnswers: ["control for other variables", "account for multiple factors", "separate individual effects"],
+                hint: "Think about holding other variables constant",
+                explanation: "Multiple regression controls for other variables, allowing us to isolate individual effects of each predictor.",
+                steps: `<div class="step-title">Multiple Regression Advantage:</div><div class="step-content"><ol><li><strong>Control:</strong> Hold other variables constant</li><li><strong>Separate effects:</strong> Individual contribution of each predictor</li><li><strong>Realistic:</strong> Most phenomena depend on multiple factors</li></ol></div>`
+            },
+            {
+                question: "What does βⱼ represent in multiple regression?",
+                correctAnswers: ["change in Y per unit change in Xⱼ holding others constant", "partial effect", "ceteris paribus effect"],
+                hint: "Think about the 'holding other variables constant' interpretation",
+                explanation: "βⱼ represents the change in Y for a one-unit increase in Xⱼ, holding all other predictors constant.",
+                steps: `<div class="step-title">Coefficient Interpretation:</div><div class="step-content"><ol><li><strong>Partial effect:</strong> Effect of Xⱼ alone</li><li><strong>Holding constant:</strong> Other variables unchanged</li><li><strong>Ceteris paribus:</strong> Latin for 'all else equal'</li></ol></div>`
+            },
+            {
+                question: "How is multiple regression different from simple regression in interpretation?",
+                correctAnswers: ["coefficients hold other variables constant", "partial effects", "context dependent"],
+                hint: "Think about what changes with multiple predictors",
+                explanation: "Multiple regression coefficients are partial effects, controlling for other variables in the model.",
+                steps: `<div class="step-title">Interpretation Difference:</div><div class="step-content"><ol><li><strong>Simple regression:</strong> Total effect of X on Y</li><li><strong>Multiple regression:</strong> Partial effect holding others constant</li><li><strong>Context matters:</strong> Depends on other variables included</li></ol></div>`
+            },
+            {
+                question: "What is the general form of multiple regression model?",
+                correctAnswers: ["Y = β₀ + β₁X₁ + β₂X₂ + ... + βₚXₚ + ε", "linear combination of predictors", "additive model"],
+                hint: "Think about extending simple regression",
+                explanation: "Multiple regression: Y = β₀ + β₁X₁ + β₂X₂ + ... + βₚXₚ + ε, where ε ~ N(0, σ²).",
+                steps: `<div class="step-title">Multiple Regression Model:</div><div class="step-content"><ol><li><strong>Y:</strong> Response variable</li><li><strong>β₀:</strong> Intercept</li><li><strong>βⱼ:</strong> Slope for predictor Xⱼ</li><li><strong>ε:</strong> Random error</li></ol></div>`
+            },
+            {
+                question: "Why might you get different coefficients in multiple vs simple regression?",
+                correctAnswers: ["correlation between predictors", "confounding variables", "omitted variable bias"],
+                hint: "Think about relationships among predictors",
+                explanation: "Coefficients differ because multiple regression accounts for correlations among predictors.",
+                steps: `<div class="step-title">Coefficient Differences:</div><div class="step-content"><ol><li><strong>Correlation:</strong> Predictors related to each other</li><li><strong>Confounding:</strong> Simple regression may be biased</li><li><strong>Control:</strong> Multiple regression separates effects</li></ol></div>`
+            },
+            {
+                question: "What does 'holding other variables constant' mean?",
+                correctAnswers: ["ceteris paribus", "fixing other predictors", "isolating effect"],
+                hint: "Think about the Latin phrase",
+                explanation: "'Holding other variables constant' (ceteris paribus) means examining the effect of one predictor while keeping all others fixed.",
+                steps: `<div class="step-title">Ceteris Paribus:</div><div class="step-content"><ol><li><strong>Fixed values:</strong> Other predictors don't change</li><li><strong>Isolation:</strong> Pure effect of one variable</li><li><strong>Interpretation:</strong> Key to understanding coefficients</li></ol></div>`
+            },
+            {
+                question: "When is multiple regression more appropriate than simple regression?",
+                correctAnswers: ["multiple factors influence Y", "need to control confounders", "complex relationships"],
+                hint: "Think about real-world complexity",
+                explanation: "Multiple regression is appropriate when multiple factors influence Y or when you need to control for confounding variables.",
+                steps: `<div class="step-title">When to Use Multiple Regression:</div><div class="step-content"><ol><li><strong>Multiple causes:</strong> Several factors affect outcome</li><li><strong>Confounding:</strong> Need to control for other variables</li><li><strong>Better prediction:</strong> More information usually helps</li></ol></div>`
+            },
+            {
+                question: "What is omitted variable bias?",
+                correctAnswers: ["bias from excluding relevant variables", "confounding bias", "missing predictor bias"],
+                hint: "Think about leaving out important variables",
+                explanation: "Omitted variable bias occurs when we exclude relevant predictors that are correlated with included predictors.",
+                steps: `<div class="step-title">Omitted Variable Bias:</div><div class="step-content"><ol><li><strong>Excluded variable:</strong> Important predictor left out</li><li><strong>Correlated:</strong> Omitted variable related to included ones</li><li><strong>Bias:</strong> Coefficients become unreliable</li></ol></div>`
+            },
+            {
+                question: "How does multiple regression improve prediction?",
+                correctAnswers: ["uses more information", "accounts for multiple factors", "reduces unexplained variation"],
+                hint: "Think about additional information",
+                explanation: "Multiple regression often improves prediction by using more relevant information and accounting for multiple factors.",
+                steps: `<div class="step-title">Prediction Improvement:</div><div class="step-content"><ol><li><strong>More information:</strong> Additional predictors</li><li><strong>Reduced error:</strong> Less unexplained variation</li><li><strong>Realistic:</strong> Accounts for complexity</li></ol></div>`
+            },
+            {
+                question: "What assumption is added in multiple regression?",
+                correctAnswers: ["no perfect multicollinearity", "predictors not perfectly correlated", "multicollinearity assumption"],
+                hint: "Think about relationships among predictors",
+                explanation: "Multiple regression adds the assumption of no perfect multicollinearity among predictors.",
+                steps: `<div class="step-title">Additional Assumption:</div><div class="step-content"><ol><li><strong>No perfect correlation:</strong> Among predictors</li><li><strong>Allows estimation:</strong> Unique solution possible</li><li><strong>High correlation:</strong> Still problematic</li></ol></div>`
+            }
+        ];
+
+        const modelBuildingQuestions = [
+            {
+                question: "What is the principle of parsimony in model building?",
+                correctAnswers: ["simpler models preferred", "fewer variables better", "Occam's razor"],
+                hint: "Think about model complexity",
+                explanation: "Parsimony means preferring simpler models when they perform similarly to complex ones.",
+                steps: `<div class="step-title">Parsimony Principle:</div><div class="step-content"><ol><li><strong>Simpler better:</strong> When performance similar</li><li><strong>Fewer parameters:</strong> Less overfitting risk</li><li><strong>Interpretability:</strong> Easier to understand</li></ol></div>`
+            },
+            {
+                question: "What is forward selection?",
+                correctAnswers: ["start empty add variables", "begin with intercept only", "add most significant"],
+                hint: "Think about building up the model",
+                explanation: "Forward selection starts with no predictors and adds variables one by one based on significance.",
+                steps: `<div class="step-title">Forward Selection:</div><div class="step-content"><ol><li><strong>Start empty:</strong> Intercept-only model</li><li><strong>Add variables:</strong> Most significant first</li><li><strong>Stop:</strong> When no more significant variables</li></ol></div>`
+            },
+            {
+                question: "What is backward elimination?",
+                correctAnswers: ["start full remove variables", "begin with all predictors", "remove least significant"],
+                hint: "Think about reducing the model",
+                explanation: "Backward elimination starts with all predictors and removes the least significant ones.",
+                steps: `<div class="step-title">Backward Elimination:</div><div class="step-content"><ol><li><strong>Start full:</strong> All possible predictors</li><li><strong>Remove variables:</strong> Least significant first</li><li><strong>Stop:</strong> When all remaining significant</li></ol></div>`
+            },
+            {
+                question: "What is stepwise selection?",
+                correctAnswers: ["combination forward backward", "can add and remove", "bidirectional"],
+                hint: "Think about combining approaches",
+                explanation: "Stepwise selection combines forward and backward, allowing both addition and removal of variables.",
+                steps: `<div class="step-title">Stepwise Selection:</div><div class="step-content"><ol><li><strong>Forward step:</strong> Consider adding variables</li><li><strong>Backward step:</strong> Consider removing variables</li><li><strong>Flexible:</strong> Can reverse previous decisions</li></ol></div>`
+            },
+            {
+                question: "What is AIC used for?",
+                correctAnswers: ["model comparison", "information criterion", "penalizes complexity"],
+                hint: "Think about comparing models",
+                explanation: "AIC (Akaike Information Criterion) compares models by balancing fit and complexity.",
+                steps: `<div class="step-title">AIC Purpose:</div><div class="step-content"><ol><li><strong>Model comparison:</strong> Which fits better?</li><li><strong>Penalizes complexity:</strong> Adds penalty for parameters</li><li><strong>Lower better:</strong> Prefer models with lower AIC</li></ol></div>`
+            },
+            {
+                question: "How does BIC differ from AIC?",
+                correctAnswers: ["stronger penalty for complexity", "depends on sample size", "more conservative"],
+                hint: "Think about penalty differences",
+                explanation: "BIC penalizes model complexity more strongly than AIC, especially with larger sample sizes.",
+                steps: `<div class="step-title">BIC vs AIC:</div><div class="step-content"><ol><li><strong>Stronger penalty:</strong> BIC penalizes more</li><li><strong>Sample size dependent:</strong> Penalty grows with n</li><li><strong>More conservative:</strong> Prefers simpler models</li></ol></div>`
+            },
+            {
+                question: "What should guide variable selection besides statistics?",
+                correctAnswers: ["theory", "domain knowledge", "practical considerations"],
+                hint: "Think beyond just numbers",
+                explanation: "Theory and domain knowledge should guide selection, not just statistical significance.",
+                steps: `<div class="step-title">Beyond Statistics:</div><div class="step-content"><ol><li><strong>Theory:</strong> What should matter?</li><li><strong>Domain knowledge:</strong> Expert understanding</li><li><strong>Practical:</strong> Cost, availability of data</li></ol></div>`
+            },
+            {
+                question: "What is best subsets regression?",
+                correctAnswers: ["consider all possible combinations", "exhaustive search", "compare all subsets"],
+                hint: "Think about trying everything",
+                explanation: "Best subsets considers all possible combinations of predictors and finds the best for each size.",
+                steps: `<div class="step-title">Best Subsets:</div><div class="step-content"><ol><li><strong>Exhaustive:</strong> All possible combinations</li><li><strong>Compare:</strong> Best 1-variable, 2-variable, etc.</li><li><strong>Computationally intensive:</strong> 2^p models</li></ol></div>`
+            },
+            {
+                question: "Why might automated selection be problematic?",
+                correctAnswers: ["ignores theory", "p-hacking", "overfitting"],
+                hint: "Think about limitations",
+                explanation: "Automated selection can ignore theory, lead to p-hacking, and increase overfitting risk.",
+                steps: `<div class="step-title">Selection Problems:</div><div class="step-content"><ol><li><strong>Atheoretical:</strong> Ignores domain knowledge</li><li><strong>Multiple testing:</strong> P-hacking issues</li><li><strong>Overfitting:</strong> Fits sample-specific noise</li></ol></div>`
+            },
+            {
+                question: "What is cross-validation in model selection?",
+                correctAnswers: ["split data test performance", "validation approach", "out-of-sample testing"],
+                hint: "Think about testing on new data",
+                explanation: "Cross-validation splits data to test how well models perform on unseen observations.",
+                steps: `<div class="step-title">Cross-validation:</div><div class="step-content"><ol><li><strong>Split data:</strong> Training and testing sets</li><li><strong>Build model:</strong> On training data</li><li><strong>Test performance:</strong> On validation data</li></ol></div>`
+            }
+        ];
+
+        const multicollinearityQuestions = [
+            {
+                question: "What is multicollinearity?",
+                correctAnswers: ["high correlation among predictors", "predictors related", "collinear predictors"],
+                hint: "Think about relationships among X variables",
+                explanation: "Multicollinearity occurs when predictor variables are highly correlated with each other.",
+                steps: `<div class="step-title">Multicollinearity:</div><div class="step-content"><ol><li><strong>Definition:</strong> High correlation among predictors</li><li><strong>Perfect:</strong> One predictor is exact linear combination</li><li><strong>High:</strong> Strong but not perfect correlation</li></ol></div>`
+            },
+            {
+                question: "What problems does multicollinearity cause?",
+                correctAnswers: ["unstable coefficients", "large standard errors", "unreliable estimates"],
+                hint: "Think about estimation problems",
+                explanation: "Multicollinearity causes unstable coefficients, large standard errors, and unreliable estimates.",
+                steps: `<div class="step-title">Multicollinearity Problems:</div><div class="step-content"><ol><li><strong>Instability:</strong> Coefficients change dramatically</li><li><strong>Large SE:</strong> Inflated standard errors</li><li><strong>Unreliable:</strong> Coefficients not trustworthy</li></ol></div>`
+            },
+            {
+                question: "What is the Variance Inflation Factor (VIF)?",
+                correctAnswers: ["VIF = 1/(1-R²)", "measures multicollinearity", "inflation factor"],
+                hint: "Think about variance inflation",
+                explanation: "VIF measures how much the variance of a coefficient increases due to multicollinearity.",
+                steps: `<div class="step-title">Variance Inflation Factor:</div><div class="step-content"><ol><li><strong>Formula:</strong> VIF = 1/(1-R²ⱼ)</li><li><strong>R²ⱼ:</strong> From regressing Xⱼ on other predictors</li><li><strong>Interpretation:</strong> Variance inflation factor</li></ol></div>`
+            },
+            {
+                question: "What VIF value indicates serious multicollinearity?",
+                correctAnswers: ["VIF > 10", "greater than 10", "above 10"],
+                hint: "Think about the common threshold",
+                explanation: "VIF > 10 is commonly used as the threshold indicating serious multicollinearity problems.",
+                steps: `<div class="step-title">VIF Threshold:</div><div class="step-content"><ol><li><strong>Rule of thumb:</strong> VIF > 10</li><li><strong>Conservative:</strong> Some use VIF > 5</li><li><strong>Perfect correlation:</strong> VIF = ∞</li></ol></div>`
+            },
+            {
+                question: "How can you detect multicollinearity?",
+                correctAnswers: ["correlation matrix", "VIF", "condition number"],
+                hint: "Think about diagnostic tools",
+                explanation: "Detect multicollinearity using correlation matrices, VIF values, and condition indices.",
+                steps: `<div class="step-title">Detection Methods:</div><div class="step-content"><ol><li><strong>Correlation matrix:</strong> Pairwise correlations</li><li><strong>VIF:</strong> Variance inflation factors</li><li><strong>Condition number:</strong> Eigenvalue-based measure</li></ol></div>`
+            },
+            {
+                question: "What are signs of multicollinearity in regression output?",
+                correctAnswers: ["high R² few significant", "unexpected signs", "large coefficient changes"],
+                hint: "Think about symptoms in results",
+                explanation: "Signs include high R² with few significant coefficients, unexpected signs, and unstable estimates.",
+                steps: `<div class="step-title">Multicollinearity Signs:</div><div class="step-content"><ol><li><strong>High R² but:</strong> Few significant coefficients</li><li><strong>Unexpected signs:</strong> Coefficients have wrong direction</li><li><strong>Instability:</strong> Large changes when adding/removing variables</li></ol></div>`
+            },
+            {
+                question: "How can you fix multicollinearity by removing variables?",
+                correctAnswers: ["drop one from correlated pair", "remove redundant variables", "eliminate highly correlated"],
+                hint: "Think about variable selection",
+                explanation: "Remove one variable from each highly correlated pair to reduce multicollinearity.",
+                steps: `<div class="step-title">Variable Removal:</div><div class="step-content"><ol><li><strong>Identify pairs:</strong> High correlation (>0.8)</li><li><strong>Remove one:</strong> Keep more important theoretically</li><li><strong>Check VIF:</strong> Verify improvement</li></ol></div>`
+            },
+            {
+                question: "What is Ridge regression?",
+                correctAnswers: ["adds penalty term", "shrinks coefficients", "regularization method"],
+                hint: "Think about penalized regression",
+                explanation: "Ridge regression adds a penalty term to shrink coefficients and reduce multicollinearity problems.",
+                steps: `<div class="step-title">Ridge Regression:</div><div class="step-content"><ol><li><strong>Penalty:</strong> Adds λΣβⱼ² to objective</li><li><strong>Shrinkage:</strong> Coefficients toward zero</li><li><strong>Bias-variance tradeoff:</strong> Reduces variance</li></ol></div>`
+            },
+            {
+                question: "Can multicollinearity affect prediction?",
+                correctAnswers: ["usually not much", "mainly affects interpretation", "less impact on prediction"],
+                hint: "Think about prediction vs interpretation",
+                explanation: "Multicollinearity mainly affects interpretation; prediction is often still reasonably good.",
+                steps: `<div class="step-title">Prediction Impact:</div><div class="step-content"><ol><li><strong>Less affected:</strong> Prediction often still good</li><li><strong>Interpretation:</strong> Individual coefficients unreliable</li><li><strong>Overall fit:</strong> R² not much affected</li></ol></div>`
+            },
+            {
+                question: "What is tolerance in multicollinearity?",
+                correctAnswers: ["1/VIF", "1 minus R²", "inverse of VIF"],
+                hint: "Think about the inverse of VIF",
+                explanation: "Tolerance = 1/VIF = 1 - R²ⱼ, measuring how much a predictor is not explained by others.",
+                steps: `<div class="step-title">Tolerance:</div><div class="step-content"><ol><li><strong>Definition:</strong> Tolerance = 1/VIF</li><li><strong>Range:</strong> 0 to 1</li><li><strong>Interpretation:</strong> Proportion not explained by other predictors</li></ol></div>`
+            }
+        ];
+
+        const inferenceMultipleQuestions = [
+            {
+                question: "How do degrees of freedom change in multiple regression?",
+                correctAnswers: ["n - p - 1", "sample minus predictors minus 1", "n minus parameters"],
+                hint: "Think about parameters estimated",
+                explanation: "Multiple regression has n - p - 1 degrees of freedom, where p is number of predictors.",
+                steps: `<div class="step-title">Multiple Regression df:</div><div class="step-content"><ol><li><strong>df:</strong> n - p - 1</li><li><strong>n:</strong> Sample size</li><li><strong>p:</strong> Number of predictors</li><li><strong>1:</strong> For intercept</li></ol></div>`
+            },
+            {
+                question: "What does the overall F-test in multiple regression test?",
+                correctAnswers: ["H₀: all slopes zero", "any predictors significant", "overall model significance"],
+                hint: "Think about testing all coefficients together",
+                explanation: "Overall F-test tests H₀: β₁ = β₂ = ... = βₚ = 0 (no predictors are significant).",
+                steps: `<div class="step-title">Overall F-test:</div><div class="step-content"><ol><li><strong>H₀:</strong> All slope coefficients = 0</li><li><strong>H₁:</strong> At least one coefficient ≠ 0</li><li><strong>Tests:</strong> Overall model significance</li></ol></div>`
+            },
+            {
+                question: "What is a partial F-test?",
+                correctAnswers: ["test subset of coefficients", "compare nested models", "multiple coefficients simultaneously"],
+                hint: "Think about testing groups of variables",
+                explanation: "Partial F-test tests whether a subset of predictors collectively contributes to the model.",
+                steps: `<div class="step-title">Partial F-test:</div><div class="step-content"><ol><li><strong>Tests:</strong> Subset of coefficients = 0</li><li><strong>Compares:</strong> Full vs reduced model</li><li><strong>Example:</strong> Testing all dummy variables together</li></ol></div>`
+            },
+            {
+                question: "How do you calculate partial F-test statistic?",
+                correctAnswers: ["(SSE_reduced - SSE_full)/q divided by MSE_full", "difference in SSE", "F-ratio"],
+                hint: "Think about comparing error sum of squares",
+                explanation: "F = [(SSE_reduced - SSE_full)/q] / [SSE_full/(n-p-1)] where q is number of variables tested.",
+                steps: `<div class="step-title">Partial F Calculation:</div><div class="step-content"><ol><li><strong>Numerator:</strong> (SSE_reduced - SSE_full)/q</li><li><strong>Denominator:</strong> MSE_full</li><li><strong>q:</strong> Number of variables being tested</li></ol></div>`
+            },
+            {
+                question: "What is the standard error of a coefficient in multiple regression?",
+                correctAnswers: ["depends on other predictors", "involves (X'X)^-1", "more complex than simple"],
+                hint: "Think about matrix calculations",
+                explanation: "Standard errors depend on relationships among all predictors through the (X'X)⁻¹ matrix.",
+                steps: `<div class="step-title">Multiple Regression SE:</div><div class="step-content"><ol><li><strong>Matrix form:</strong> SE(βⱼ) = s√cⱼⱼ</li><li><strong>cⱼⱼ:</strong> j-th diagonal element of (X'X)⁻¹</li><li><strong>Depends on:</strong> All predictors, not just Xⱼ</li></ol></div>`
+            },
+            {
+                question: "How do confidence intervals work in multiple regression?",
+                correctAnswers: ["βⱼ ± t*SE(βⱼ)", "same form as simple", "use t with n-p-1 df"],
+                hint: "Think about extending simple regression",
+                explanation: "Confidence intervals: βⱼ ± t(α/2, n-p-1) × SE(βⱼ), similar to simple regression.",
+                steps: `<div class="step-title">Multiple Regression CI:</div><div class="step-content"><ol><li><strong>Form:</strong> βⱼ ± t(α/2, n-p-1) × SE(βⱼ)</li><li><strong>t-distribution:</strong> With n-p-1 degrees of freedom</li><li><strong>Interpretation:</strong> Range of plausible values for βⱼ</li></ol></div>`
+            },
+            {
+                question: "Can you test if βⱼ equals a specific non-zero value?",
+                correctAnswers: ["yes", "H₀: βⱼ = k", "t = (bⱼ - k)/SE(bⱼ)"],
+                hint: "Think about testing specific hypotheses",
+                explanation: "Yes, test H₀: βⱼ = k using t = (bⱼ - k)/SE(bⱼ) with t(n-p-1) distribution.",
+                steps: `<div class="step-title">Specific Value Test:</div><div class="step-content"><ol><li><strong>H₀:</strong> βⱼ = k (any specific value)</li><li><strong>Test statistic:</strong> t = (bⱼ - k)/SE(bⱼ)</li><li><strong>Distribution:</strong> t(n-p-1)</li></ol></div>`
+            },
+            {
+                question: "What affects the width of confidence intervals in multiple regression?",
+                correctAnswers: ["sample size", "residual error", "multicollinearity"],
+                hint: "Think about precision factors",
+                explanation: "CI width affected by sample size, residual error, and multicollinearity among predictors.",
+                steps: `<div class="step-title">CI Width Factors:</div><div class="step-content"><ol><li><strong>Sample size:</strong> Larger n → narrower CI</li><li><strong>Residual error:</strong> Smaller s → narrower CI</li><li><strong>Multicollinearity:</strong> Higher correlation → wider CI</li></ol></div>`
+            },
+            {
+                question: "Why might individual t-tests be unreliable with many predictors?",
+                correctAnswers: ["multiple testing problem", "inflated Type I error", "need adjustment"],
+                hint: "Think about multiple comparisons",
+                explanation: "With many predictors, multiple testing inflates overall Type I error rate beyond α.",
+                steps: `<div class="step-title">Multiple Testing Problem:</div><div class="step-content"><ol><li><strong>Many tests:</strong> Each at α = 0.05</li><li><strong>Overall rate:</strong> Much higher than 0.05</li><li><strong>Solution:</strong> Use overall F-test or adjust α</li></ol></div>`
+            },
+            {
+                question: "When should you use overall F-test vs individual t-tests?",
+                correctAnswers: ["F-test first", "overall before individual", "hierarchical testing"],
+                hint: "Think about testing order",
+                explanation: "Use overall F-test first to establish model significance, then examine individual t-tests.",
+                steps: `<div class="step-title">Testing Hierarchy:</div><div class="step-content"><ol><li><strong>First:</strong> Overall F-test for model significance</li><li><strong>If significant:</strong> Examine individual t-tests</li><li><strong>If not significant:</strong> Model not useful</li></ol></div>`
+            }
+        ];
+
+        const categoricalInteractionQuestions = [
+            {
+                question: "How many dummy variables do you need for a categorical variable with k categories?",
+                correctAnswers: ["k - 1", "categories minus 1", "one less than categories"],
+                hint: "Think about avoiding perfect multicollinearity",
+                explanation: "Need k-1 dummy variables for k categories to avoid perfect multicollinearity.",
+                steps: `<div class="step-title">Dummy Variables:</div><div class="step-content"><ol><li><strong>k categories:</strong> k-1 dummy variables</li><li><strong>Reference category:</strong> All dummies = 0</li><li><strong>Avoids:</strong> Perfect multicollinearity</li></ol></div>`
+            },
+            {
+                question: "What does a dummy variable coefficient represent?",
+                correctAnswers: ["difference from reference category", "mean difference", "contrast with baseline"],
+                hint: "Think about interpretation",
+                explanation: "Dummy variable coefficient represents the difference in mean Y between that category and the reference category.",
+                steps: `<div class="step-title">Dummy Coefficient:</div><div class="step-content"><ol><li><strong>Interpretation:</strong> Difference from reference</li><li><strong>Holding constant:</strong> Other variables unchanged</li><li><strong>Example:</strong> Male vs Female difference</li></ol></div>`
+            },
+            {
+                question: "How do you test overall effect of a categorical variable?",
+                correctAnswers: ["partial F-test", "test all dummies together", "F-test for group"],
+                hint: "Think about testing multiple coefficients",
+                explanation: "Test overall effect using partial F-test for all dummy variables together.",
+                steps: `<div class="step-title">Overall Categorical Test:</div><div class="step-content"><ol><li><strong>Partial F-test:</strong> All dummy coefficients = 0</li><li><strong>Don't:</strong> Test dummies individually</li><li><strong>Degrees of freedom:</strong> k-1 in numerator</li></ol></div>`
+            },
+            {
+                question: "What is an interaction effect?",
+                correctAnswers: ["effect depends on other variable", "multiplicative effect", "non-additive"],
+                hint: "Think about variables influencing each other's effects",
+                explanation: "Interaction occurs when the effect of one variable depends on the level of another variable.",
+                steps: `<div class="step-title">Interaction Effect:</div><div class="step-content"><ol><li><strong>Dependence:</strong> Effect of X₁ depends on X₂</li><li><strong>Non-additive:</strong> Effects don't simply add</li><li><strong>Multiplicative:</strong> Include X₁×X₂ term</li></ol></div>`
+            },
+            {
+                question: "How do you include interaction in the model?",
+                correctAnswers: ["product term", "X₁ × X₂", "multiplicative term"],
+                hint: "Think about creating new variables",
+                explanation: "Include interaction by adding product terms (X₁ × X₂) to the model.",
+                steps: `<div class="step-title">Interaction Terms:</div><div class="step-content"><ol><li><strong>Product:</strong> X₁ × X₂ new variable</li><li><strong>Model:</strong> Y = β₀ + β₁X₁ + β₂X₂ + β₃X₁X₂</li><li><strong>Effect of X₁:</strong> β₁ + β₃X₂ (depends on X₂)</li></ol></div>`
+            },
+            {
+                question: "What is the hierarchical principle?",
+                correctAnswers: ["include main effects with interactions", "lower-order terms first", "don't remove main effects"],
+                hint: "Think about term hierarchy",
+                explanation: "Always include main effects when including interaction terms, even if main effects not significant.",
+                steps: `<div class="step-title">Hierarchical Principle:</div><div class="step-content"><ol><li><strong>Include main effects:</strong> When interactions present</li><li><strong>Even if:</strong> Main effects not significant</li><li><strong>Interpretation:</strong> Interaction assumes main effects present</li></ol></div>`
+            },
+            {
+                question: "How do you interpret interaction between continuous variables?",
+                correctAnswers: ["slope depends on other variable", "effect modification", "conditional effect"],
+                hint: "Think about changing slopes",
+                explanation: "In Y = β₀ + β₁X₁ + β₂X₂ + β₃X₁X₂, the effect of X₁ is β₁ + β₃X₂.",
+                steps: `<div class="step-title">Continuous Interaction:</div><div class="step-content"><ol><li><strong>Effect of X₁:</strong> β₁ + β₃X₂</li><li><strong>Depends on X₂:</strong> Slope changes with X₂</li><li><strong>Visualization:</strong> Different slopes for different X₂ values</li></ol></div>`
+            },
+            {
+                question: "What is a categorical by continuous interaction?",
+                correctAnswers: ["different slopes for each group", "group-specific slopes", "varying effects by group"],
+                hint: "Think about different regression lines",
+                explanation: "Different slopes of continuous variable for each category level (different regression lines).",
+                steps: `<div class="step-title">Categorical × Continuous:</div><div class="step-content"><ol><li><strong>Different slopes:</strong> Each group has different slope</li><li><strong>Parallel lines:</strong> No interaction (same slopes)</li><li><strong>Non-parallel:</strong> Interaction present</li></ol></div>`
+            },
+            {
+                question: "How do you choose reference category?",
+                correctAnswers: ["meaningful comparison", "largest group", "natural baseline"],
+                hint: "Think about interpretation",
+                explanation: "Choose reference category that makes interpretation meaningful (natural baseline, largest group, control condition).",
+                steps: `<div class="step-title">Reference Category Choice:</div><div class="step-content"><ol><li><strong>Meaningful baseline:</strong> Natural comparison group</li><li><strong>Largest group:</strong> Most stable estimates</li><li><strong>Control condition:</strong> In experimental studies</li></ol></div>`
+            },
+            {
+                question: "Can you have three-way interactions?",
+                correctAnswers: ["yes", "higher-order interactions", "X₁×X₂×X₃"],
+                hint: "Think about extending interactions",
+                explanation: "Yes, three-way and higher-order interactions are possible but become complex to interpret.",
+                steps: `<div class="step-title">Higher-order Interactions:</div><div class="step-content"><ol><li><strong>Three-way:</strong> X₁×X₂×X₃ term</li><li><strong>Complex interpretation:</strong> Effect depends on two other variables</li><li><strong>Hierarchy:</strong> Include all lower-order terms</li></ol></div>`
+            }
+        ];
+
+        const diagnosticsValidationQuestions = [
+            {
+                question: "What additional diagnostic issues arise in multiple regression?",
+                correctAnswers: ["multicollinearity", "leverage points", "influential observations"],
+                hint: "Think about multiple predictor complications",
+                explanation: "Multiple regression adds concerns about multicollinearity, high-leverage points, and influential observations.",
+                steps: `<div class="step-title">Additional Diagnostics:</div><div class="step-content"><ol><li><strong>Multicollinearity:</strong> Correlated predictors</li><li><strong>Leverage:</strong> Extreme X combinations</li><li><strong>Influence:</strong> Points affecting fitted line</li></ol></div>`
+            },
+            {
+                question: "What is leverage in multiple regression?",
+                correctAnswers: ["measure of X extremeness", "hat matrix diagonal", "potential influence"],
+                hint: "Think about extreme predictor combinations",
+                explanation: "Leverage measures how extreme an observation's X values are in the multivariate space.",
+                steps: `<div class="step-title">Leverage:</div><div class="step-content"><ol><li><strong>Definition:</strong> hᵢ = xᵢᵀ(XᵀX)⁻¹xᵢ</li><li><strong>Range:</strong> 1/n ≤ hᵢ ≤ 1</li><li><strong>High leverage:</strong> Extreme X combinations</li></ol></div>`
+            },
+            {
+                question: "What is Cook's distance?",
+                correctAnswers: ["measures overall influence", "combines leverage and residual", "influence measure"],
+                hint: "Think about overall influence measure",
+                explanation: "Cook's distance measures overall influence by combining leverage and residual size.",
+                steps: `<div class="step-title">Cook's Distance:</div><div class="step-content"><ol><li><strong>Combines:</strong> Leverage and residual size</li><li><strong>Formula:</strong> Dᵢ = (eᵢ²/p·MSE) × [hᵢ/(1-hᵢ)²]</li><li><strong>Threshold:</strong> Often use 4/(n-p-1)</li></ol></div>`
+            },
+            {
+                question: "What are added variable plots?",
+                correctAnswers: ["partial regression plots", "show individual predictor effect", "residual plots"],
+                hint: "Think about isolating predictor effects",
+                explanation: "Added variable plots show the relationship between Y and one predictor after removing effects of other predictors.",
+                steps: `<div class="step-title">Added Variable Plots:</div><div class="step-content"><ol><li><strong>Purpose:</strong> Isolate individual predictor effect</li><li><strong>Method:</strong> Regress Y and Xⱼ on other predictors</li><li><strong>Plot:</strong> Residuals from these regressions</li></ol></div>`
+            },
+            {
+                question: "What is overfitting?",
+                correctAnswers: ["model fits noise", "too complex for data", "poor generalization"],
+                hint: "Think about model complexity",
+                explanation: "Overfitting occurs when model is too complex and fits sample-specific noise rather than true relationships.",
+                steps: `<div class="step-title">Overfitting:</div><div class="step-content"><ol><li><strong>Too complex:</strong> Model fits noise</li><li><strong>Training:</strong> Excellent fit to sample data</li><li><strong>Testing:</strong> Poor performance on new data</li></ol></div>`
+            },
+            {
+                question: "What is cross-validation?",
+                correctAnswers: ["split data test performance", "validate on unseen data", "assess generalization"],
+                hint: "Think about testing on new data",
+                explanation: "Cross-validation splits data to test model performance on unseen observations.",
+                steps: `<div class="step-title">Cross-validation:</div><div class="step-content"><ol><li><strong>Split:</strong> Training and validation sets</li><li><strong>Train:</strong> Build model on training data</li><li><strong>Test:</strong> Evaluate on validation data</li></ol></div>`
+            },
+            {
+                question: "What is k-fold cross-validation?",
+                correctAnswers: ["split into k folds", "rotate training/testing", "average performance"],
+                hint: "Think about systematic splitting",
+                explanation: "K-fold CV splits data into k parts, uses k-1 for training and 1 for testing, rotating through all splits.",
+                steps: `<div class="step-title">K-fold Cross-validation:</div><div class="step-content"><ol><li><strong>Split:</strong> Data into k equal parts</li><li><strong>Iterate:</strong> Train on k-1, test on 1</li><li><strong>Average:</strong> Performance across all k iterations</li></ol></div>`
+            },
+            {
+                question: "What is leave-one-out cross-validation?",
+                correctAnswers: ["k = n", "remove one observation", "extreme case"],
+                hint: "Think about the most extreme splitting",
+                explanation: "Leave-one-out is k-fold CV with k=n, removing one observation at a time for testing.",
+                steps: `<div class="step-title">Leave-one-out CV:</div><div class="step-content"><ol><li><strong>Extreme case:</strong> k = n</li><li><strong>Training:</strong> n-1 observations</li><li><strong>Testing:</strong> 1 observation at a time</li></ol></div>`
+            },
+            {
+                question: "How do you detect overfitting?",
+                correctAnswers: ["training error << test error", "large gap", "validation performance"],
+                hint: "Think about performance gaps",
+                explanation: "Overfitting detected when training error is much smaller than test/validation error.",
+                steps: `<div class="step-title">Overfitting Detection:</div><div class="step-content"><ol><li><strong>Training error:</strong> Very small</li><li><strong>Test error:</strong> Much larger</li><li><strong>Gap:</strong> Indicates overfitting</li></ol></div>`
+            },
+            {
+                question: "What is external validation?",
+                correctAnswers: ["completely independent data", "new study", "ultimate test"],
+                hint: "Think about the strongest validation",
+                explanation: "External validation tests model on completely independent data from a different study or time period.",
+                steps: `<div class="step-title">External Validation:</div><div class="step-content"><ol><li><strong>Independent:</strong> Completely new data</li><li><strong>Different:</strong> Study, time, population</li><li><strong>Ultimate test:</strong> True generalizability</li></ol></div>`
+            }
+        ];
+
+        // Generate question functions
+        function generateQuestion131() {
+            const randomIndex = Math.floor(Math.random() * introMultipleRegressionQuestions.length);
+            currentQuestion131 = introMultipleRegressionQuestions[randomIndex];
+            displayQuestion(131, currentQuestion131);
+        }
+        
+        function generateQuestion132() {
+            const randomIndex = Math.floor(Math.random() * modelBuildingQuestions.length);
+            currentQuestion132 = modelBuildingQuestions[randomIndex];
+            displayQuestion(132, currentQuestion132);
+        }
+        
+        function generateQuestion133() {
+            const randomIndex = Math.floor(Math.random() * multicollinearityQuestions.length);
+            currentQuestion133 = multicollinearityQuestions[randomIndex];
+            displayQuestion(133, currentQuestion133);
+        }
+        
+        function generateQuestion134() {
+            const randomIndex = Math.floor(Math.random() * inferenceMultipleQuestions.length);
+            currentQuestion134 = inferenceMultipleQuestions[randomIndex];
+            displayQuestion(134, currentQuestion134);
+        }
+        
+        function generateQuestion135() {
+            const randomIndex = Math.floor(Math.random() * categoricalInteractionQuestions.length);
+            currentQuestion135 = categoricalInteractionQuestions[randomIndex];
+            displayQuestion(135, currentQuestion135);
+        }
+        
+        function generateQuestion136() {
+            const randomIndex = Math.floor(Math.random() * diagnosticsValidationQuestions.length);
+            currentQuestion136 = diagnosticsValidationQuestions[randomIndex];
+            displayQuestion(136, currentQuestion136);
+        }
+
+        // Helper function to display questions
+        function displayQuestion(sectionNum, question) {
+            document.getElementById(`question-${sectionNum}-content`).innerHTML = question.question;
+            document.getElementById(`hint-${sectionNum}`).innerHTML = `💡 ${question.hint}`;
+            
+            document.getElementById(`answer-${sectionNum}`).value = '';
+            document.getElementById(`feedback-${sectionNum}`).style.display = 'none';
+            document.getElementById(`steps-${sectionNum}`).style.display = 'none';
+        }
+
+        // Check answer functions
+        function checkAnswer131() { checkAnswer(131, currentQuestion131); }
+        function checkAnswer132() { checkAnswer(132, currentQuestion132); }
+        function checkAnswer133() { checkAnswer(133, currentQuestion133); }
+        function checkAnswer134() { checkAnswer(134, currentQuestion134); }
+        function checkAnswer135() { checkAnswer(135, currentQuestion135); }
+        function checkAnswer136() { checkAnswer(136, currentQuestion136); }
+
+        // Show steps functions  
+        function showSteps131() { showSteps(131, currentQuestion131); }
+        function showSteps132() { showSteps(132, currentQuestion132); }
+        function showSteps133() { showSteps(133, currentQuestion133); }
+        function showSteps134() { showSteps(134, currentQuestion134); }
+        function showSteps135() { showSteps(135, currentQuestion135); }
+        function showSteps136() { showSteps(136, currentQuestion136); }
+
+        // Helper functions
+        function checkAnswer(sectionNum, currentQuestion) {
+            const userAnswer = document.getElementById(`answer-${sectionNum}`).value.toLowerCase().trim();
+            if (!currentQuestion) return;
+            
+            const isCorrect = currentQuestion.correctAnswers.some(answer => 
+                userAnswer.includes(answer.toLowerCase()) || answer.toLowerCase().includes(userAnswer)
+            );
+            
+            const feedbackElement = document.getElementById(`feedback-${sectionNum}`);
+            if (isCorrect) {
+                feedbackElement.innerHTML = `<div class="correct">✅ Correct! ${currentQuestion.explanation}</div>`;
+                feedbackElement.className = 'question-feedback correct-feedback';
+            } else {
+                feedbackElement.innerHTML = `<div class="incorrect">❌ Incorrect. ${currentQuestion.explanation}</div>`;
+                feedbackElement.className = 'question-feedback incorrect-feedback';
+            }
+            feedbackElement.style.display = 'block';
+        }
+
+        function showSteps(sectionNum, currentQuestion) {
+            if (!currentQuestion) return;
+            const stepsElement = document.getElementById(`steps-${sectionNum}`);
+            stepsElement.innerHTML = currentQuestion.steps;
+            stepsElement.style.display = 'block';
+        }
+
+        // Initialize on page load
+        window.onload = function() {
+            generateQuestion131();
+            generateQuestion132(); 
+            generateQuestion133();
+            generateQuestion134();
+            generateQuestion135();
+            generateQuestion136();
+        }
+    </script>
+</body>
+</html>
